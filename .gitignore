@@ -1,0 +1,19 @@
+# Local development and backup files
+work/
+*.bak
+*.tmp
+*.log
+
+# LifeOps personal exports and imports
+lifeops-backup-*.json
+lifeops-weekly-review-*.txt
+*.personal.json
+*.private.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/

@@ -1,0 +1,3217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LifeOps Dashboard</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f4;
+      --panel: #ffffff;
+      --panel-soft: #eef3ed;
+      --ink: #1c2520;
+      --muted: #657168;
+      --line: #d9e0da;
+      --green: #2d6a4f;
+      --blue: #2f5f8f;
+      --gold: #b57918;
+      --red: #b44335;
+      --shadow: 0 14px 34px rgba(31, 45, 37, .10);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+
+    .sidebar {
+      background: #17251f;
+      color: #f6faf6;
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 4px 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #dfeee2;
+      color: #17251f;
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: #bdd0c4;
+      font-size: 13px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-color: #5b6d62 #22342b;
+    }
+
+    .nav button {
+      border: 0;
+      border-radius: var(--radius);
+      background: transparent;
+      color: #dfe9e2;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: #2b3c34;
+      color: #ffffff;
+    }
+
+    .nav svg,
+    .icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      color: #d0ded5;
+      font-size: 13px;
+    }
+
+    .app-version {
+      display: block;
+      margin-top: 8px;
+      color: #aebfb4;
+      font-size: 12px;
+    }
+
+    main {
+      padding: 28px;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .topbar p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 40px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .btn.danger {
+      color: var(--red);
+    }
+
+    .btn.small {
+      min-height: 34px;
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.cols-6 {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .panel,
+    .metric,
+    .item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .panel h3 {
+      margin: 0 0 14px;
+      font-size: 17px;
+    }
+
+    .metric {
+      padding: 16px;
+      min-height: 112px;
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+    }
+
+    .metric .label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric strong {
+      font-size: 28px;
+      font-weight: 750;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .score-card {
+      padding: 14px;
+      min-height: 132px;
+    }
+
+    .score-card strong {
+      font-size: 30px;
+    }
+
+    .status {
+      width: max-content;
+      max-width: 100%;
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef3ed;
+      color: #375343;
+    }
+
+    .status.watch {
+      background: #fff2d9;
+      color: #7a4b00;
+    }
+
+    .status.attention {
+      background: #fde5e1;
+      color: #8f2d22;
+    }
+
+    .action-focus {
+      margin-top: 16px;
+      border-color: #b8cbbb;
+      background: #fbfdfb;
+    }
+
+    .action-focus .item {
+      background: #f7faf7;
+    }
+
+    .about-grid {
+      align-items: start;
+    }
+
+    .about-lede {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .setup-hero,
+    .report-preview {
+      background: #f7faf7;
+      border: 1px solid #cddbd0;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .report-preview {
+      min-height: 340px;
+      white-space: pre-wrap;
+      overflow: auto;
+      font: 13px/1.5 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      color: #233028;
+    }
+
+    .prompt-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .daily-summary {
+      margin-bottom: 16px;
+      background: #fbfdfb;
+      border-color: #cddbd0;
+    }
+
+    .daily-summary h3 {
+      font-size: 22px;
+    }
+
+    .summary-card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .summary-card {
+      min-height: 126px;
+      padding: 14px;
+      display: grid;
+      align-content: space-between;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+
+    .summary-card .item-title {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .summary-card .item-meta {
+      margin-top: 0;
+    }
+
+    .summary-card.priority {
+      grid-column: span 2;
+      background: #f7faf7;
+      border-color: #c5d7c9;
+    }
+
+    .summary-card.warning {
+      background: #fff8e8;
+      border-color: #ebd4a8;
+    }
+
+    .summary-card.focus {
+      grid-column: span 2;
+      background: #eef5f8;
+      border-color: #c8dbe2;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(23, 37, 31, .56);
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal {
+      width: min(680px, 100%);
+      max-height: min(760px, 92vh);
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .25);
+      padding: 20px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 40px;
+      padding: 9px 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 74px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: end;
+    }
+
+    .form-grid .wide {
+      grid-column: 1 / -1;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .item {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      box-shadow: none;
+    }
+
+    .item-title {
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .item-meta {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+    }
+
+    .icon-btn:hover {
+      color: var(--ink);
+      border-color: #b8c4ba;
+    }
+
+    .checkline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 44px;
+    }
+
+    .checkline input {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      accent-color: var(--green);
+    }
+
+    .progress {
+      height: 12px;
+      background: #e3e9e4;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #d2dbd4;
+    }
+
+    .progress div {
+      height: 100%;
+      background: var(--green);
+      width: 0%;
+    }
+
+    .chart {
+      display: grid;
+      gap: 10px;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 110px 1fr 70px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #e3e9e4;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+      width: 0%;
+    }
+
+    .score-ring {
+      width: min(210px, 100%);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      margin: 8px auto 16px;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--green) 0deg, var(--green) var(--score-deg), #e3e9e4 var(--score-deg), #e3e9e4 360deg);
+    }
+
+    .score-ring div {
+      width: 72%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid var(--line);
+    }
+
+    .score-ring strong {
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .tab {
+      display: none;
+    }
+
+    .tab.active {
+      display: block;
+    }
+
+    .empty {
+      border: 1px dashed #bac6bd;
+      color: var(--muted);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #fbfcfb;
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--panel-soft);
+      color: #375343;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .split {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .insight {
+      border-left: 4px solid var(--green);
+      background: #f7faf7;
+      border-radius: var(--radius);
+      padding: 12px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+        padding: 16px;
+        overflow: visible;
+      }
+
+      .nav {
+        grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
+        overflow: visible;
+        padding-right: 0;
+      }
+
+      .nav button {
+        justify-content: center;
+        min-height: 48px;
+      }
+
+      .nav span {
+        display: none;
+      }
+
+      .sidebar-footer {
+        display: none;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .metric-row,
+      .summary-card-grid,
+      .grid.cols-2,
+      .grid.cols-3,
+      .grid.cols-6 {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card.priority,
+      .summary-card.focus {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        display: grid;
+      }
+
+      .actions {
+        justify-content: stretch;
+      }
+
+      .actions .btn {
+        flex: 1 1 140px;
+        justify-content: center;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bar {
+        grid-template-columns: 1fr;
+      }
+
+      .item {
+        grid-template-columns: 1fr;
+      }
+
+      .item-actions {
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 13a8 8 0 0 1 16 0"></path>
+            <path d="M12 13l4-5"></path>
+            <path d="M7 17h10"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>LifeOps</h1>
+          <p>Daily control center</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main sections">
+        <button class="active" data-tab="setup" title="Setup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+          <span>Setup</span>
+        </button>
+        <button data-tab="today" title="Today">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M3 10h18"></path></svg>
+          <span>Today</span>
+        </button>
+        <button data-tab="money" title="Money">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg>
+          <span>Money</span>
+        </button>
+        <button data-tab="fitness" title="Fitness">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7v10"></path><path d="M18 7v10"></path><path d="M3 9v6"></path><path d="M21 9v6"></path><path d="M6 12h12"></path></svg>
+          <span>Fitness</span>
+        </button>
+        <button data-tab="food" title="Food">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3v7a4 4 0 0 0 8 0V3"></path><path d="M8 3v18"></path><path d="M19 3v18"></path><path d="M15 3h4a3 3 0 0 1 0 6h-4"></path></svg>
+          <span>Food</span>
+        </button>
+        <button data-tab="goals" title="Goals">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          <span>Goals</span>
+        </button>
+        <button data-tab="wellness" title="Wellness">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11z"></path></svg>
+          <span>Wellness</span>
+        </button>
+        <button data-tab="plan" title="Plan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span>Plan</span>
+        </button>
+        <button data-tab="history" title="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M7 16l3-4 4 2 4-7"></path></svg>
+          <span>History</span>
+        </button>
+        <button data-tab="review" title="Review">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"></path><path d="M8 7h6"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>
+          <span>Review</span>
+        </button>
+        <button data-tab="reports" title="Reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M8 13h8"></path><path d="M8 17h6"></path></svg>
+          <span>Reports</span>
+        </button>
+        <button data-tab="coach" title="Coach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a7 7 0 0 0-7 7v3a4 4 0 0 0 4 4h1v-5H7v-2a5 5 0 0 1 10 0v2h-3v5h1a4 4 0 0 0 4-4v-3a7 7 0 0 0-7-7z"></path><path d="M9 21h6"></path></svg>
+          <span>Coach</span>
+        </button>
+        <button data-tab="about" title="About">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+          <span>About</span>
+        </button>
+        <button data-tab="dashboard" title="Dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13h8V3H3z"></path><path d="M13 21h8V11h-8z"></path><path d="M13 3h8v6h-8z"></path><path d="M3 21h8v-6H3z"></path></svg>
+          <span>Dashboard</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        Build one steady day at a time: money, health, and priorities in one place.
+        <span class="app-version" id="appVersionLabel">Version 1.0.0</span>
+      </div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div>
+          <h2 id="pageTitle">Set Up Your LifeOps Profile</h2>
+          <p id="pageSubtitle">Set the targets that power the dashboard, coach, weekly review, and reports.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" id="exportBtn" title="Download a backup file">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+            Export
+          </button>
+          <button class="btn" id="importBtn" title="Restore from a LifeOps JSON backup">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M17 8l-5-5-5 5"></path><path d="M12 3v12"></path></svg>
+            Restore
+          </button>
+          <input class="hidden-input" id="importFileInput" type="file" accept="application/json,.json">
+          <button class="btn" id="emptyTestBtn" title="Load empty local test data">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M9 9h6"></path><path d="M9 15h6"></path></svg>
+            Empty Test
+          </button>
+          <button class="btn" id="exportReviewBtn" title="Download a weekly review report">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M8 13h8"></path><path d="M8 17h6"></path></svg>
+            Export Review
+          </button>
+          <button class="btn danger" id="resetBtn" title="Clear demo data">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path></svg>
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <section class="metric-row" aria-label="Key metrics">
+        <article class="metric">
+          <div class="label">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Monthly cash left
+          </div>
+          <strong id="cashLeft">$0</strong>
+          <span>Income minus bills, spending, and debt payments.</span>
+        </article>
+        <article class="metric">
+          <div class="label">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"></path><circle cx="12" cy="12" r="10"></circle></svg>
+            Daily completion
+          </div>
+          <strong id="dailyScore">0%</strong>
+          <span>Checklist progress for today.</span>
+        </article>
+        <article class="metric">
+          <div class="label">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            Fitness week
+          </div>
+          <strong id="fitnessScore">0%</strong>
+          <span>Workouts completed against weekly target.</span>
+        </article>
+        <article class="metric">
+          <div class="label">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16"></path><path d="M6 19V9a6 6 0 0 1 12 0v10"></path><path d="M8 11h8"></path></svg>
+            Food budget
+          </div>
+          <strong id="foodBudgetScore">0%</strong>
+          <span>Meal spending against the weekly food budget.</span>
+        </article>
+        <article class="metric">
+          <div class="label">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M7 14l3-3 4 4 5-7"></path></svg>
+            Life score
+          </div>
+          <strong id="lifeScore">0</strong>
+          <span>Simple blended score across money, habits, and fitness.</span>
+        </article>
+      </section>
+
+      <section id="setup" class="tab active">
+        <div class="setup-hero">
+          <h3>Set Up Your LifeOps Profile</h3>
+          <p class="about-lede">Start with the goals that drive the whole dashboard. These targets feed the score cards, coach suggestions, weekly review, and reports.</p>
+        </div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Core Targets</h3>
+            <div class="form-grid">
+              <label>
+                Weekly food budget
+                <input id="setupFoodBudgetInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Daily calories
+                <input id="setupCalorieGoalInput" type="number" min="0" step="50">
+              </label>
+              <label>
+                Daily protein grams
+                <input id="setupProteinGoalInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Daily carbs grams
+                <input id="setupCarbGoalInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Daily fat grams
+                <input id="setupFatGoalInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Savings goal
+                <input id="setupSavingsGoalInput" type="number" min="0" step="50">
+              </label>
+              <label>
+                Weekly workout goal
+                <input id="setupWorkoutGoalInput" type="number" min="0" max="14" step="1">
+              </label>
+              <label>
+                Sleep goal hours
+                <input id="setupSleepGoalInput" type="number" min="0" max="16" step="0.5" value="8">
+              </label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Setup Summary</h3>
+            <div id="setupSummaryList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="today" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <div class="split">
+              <h3>Today’s Plan</h3>
+              <span class="pill" id="todayDate"></span>
+            </div>
+            <label>
+              Top priority
+              <input id="priorityInput" placeholder="Example: Finish resume project">
+            </label>
+            <label>
+              Notes
+              <textarea id="notesInput" placeholder="Quick notes for the day"></textarea>
+            </label>
+            <div class="grid">
+              <label class="checkline"><input type="checkbox" data-check="budget"> Budget checked</label>
+              <label class="checkline"><input type="checkbox" data-check="workout"> Workout completed</label>
+              <label class="checkline"><input type="checkbox" data-check="water"> Water goal hit</label>
+              <label class="checkline"><input type="checkbox" data-check="sleep"> Sleep reviewed</label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Add A Daily Task</h3>
+            <div class="form-grid">
+              <label class="wide">
+                Task
+                <input id="taskName" placeholder="Example: Meal prep for tomorrow">
+              </label>
+              <label>
+                Area
+                <select id="taskArea">
+                  <option>Money</option>
+                  <option>Fitness</option>
+                  <option>Career</option>
+                  <option>Home</option>
+                  <option>Wellness</option>
+                </select>
+              </label>
+              <button class="btn primary" id="addTaskBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Add Task
+              </button>
+            </div>
+            <div id="taskList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="money" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Monthly Money Setup</h3>
+            <div class="form-grid">
+              <label>
+                Monthly income
+                <input id="incomeInput" type="number" min="0" step="50">
+              </label>
+              <label>
+                Savings goal
+                <input id="savingsGoalInput" type="number" min="0" step="50">
+              </label>
+              <label>
+                Current savings
+                <input id="currentSavingsInput" type="number" min="0" step="50">
+              </label>
+              <label>
+                Emergency fund target
+                <input id="emergencyTargetInput" type="number" min="0" step="50">
+              </label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Add Bill Or Expense</h3>
+            <div class="form-grid">
+              <label>
+                Name
+                <input id="expenseName" placeholder="Rent, phone, groceries">
+              </label>
+              <label>
+                Amount
+                <input id="expenseAmount" type="number" min="0" step="5">
+              </label>
+              <label>
+                Type
+                <select id="expenseType">
+                  <option>Bill</option>
+                  <option>Variable</option>
+                  <option>Debt Payment</option>
+                </select>
+              </label>
+              <label>
+                Due date
+                <input id="expenseDueDate" type="date">
+              </label>
+              <button class="btn primary" id="addExpenseBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Add
+              </button>
+            </div>
+            <div id="expenseList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="fitness" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Weekly Fitness Setup</h3>
+            <div class="form-grid">
+              <label>
+                Weekly workout goal
+                <input id="workoutGoalInput" type="number" min="0" max="14" step="1">
+              </label>
+              <label>
+                Completed workouts
+                <input id="workoutsDoneInput" type="number" min="0" max="14" step="1">
+              </label>
+              <label>
+                Step goal
+                <input id="stepGoalInput" type="number" min="0" step="500">
+              </label>
+              <label>
+                Steps today
+                <input id="stepsTodayInput" type="number" min="0" step="500">
+              </label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Add Workout</h3>
+            <div class="form-grid">
+              <label>
+                Workout
+                <input id="workoutName" placeholder="Strength, walk, cardio">
+              </label>
+              <label>
+                Minutes
+                <input id="workoutMinutes" type="number" min="0" step="5">
+              </label>
+              <label>
+                Intensity
+                <select id="workoutIntensity">
+                  <option>Easy</option>
+                  <option>Moderate</option>
+                  <option>Hard</option>
+                </select>
+              </label>
+              <button class="btn primary" id="addWorkoutBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Add
+              </button>
+            </div>
+            <div id="workoutList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="food" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Macro And Food Budget Targets</h3>
+            <div class="form-grid">
+              <label>
+                Daily calories
+                <input id="calorieGoalInput" type="number" min="0" step="50">
+              </label>
+              <label>
+                Daily protein grams
+                <input id="proteinGoalInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Daily carbs grams
+                <input id="carbGoalInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Daily fat grams
+                <input id="fatGoalInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Weekly food budget
+                <input id="foodBudgetInput" type="number" min="0" step="5">
+              </label>
+              <label>
+                Water goal cups
+                <input id="waterGoalInput" type="number" min="0" step="1">
+              </label>
+            </div>
+            <div class="list" id="macroRemainingList"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Add Meal</h3>
+            <div class="form-grid">
+              <label>
+                Meal
+                <input id="mealName" placeholder="Chicken bowl, breakfast shake">
+              </label>
+              <label>
+                Source
+                <select id="mealSource">
+                  <option>Home</option>
+                  <option>Restaurant</option>
+                  <option>Snack</option>
+                </select>
+              </label>
+              <label>
+                Calories
+                <input id="mealCalories" type="number" min="0" step="25">
+              </label>
+              <label>
+                Protein
+                <input id="mealProtein" type="number" min="0" step="1">
+              </label>
+              <label>
+                Carbs
+                <input id="mealCarbs" type="number" min="0" step="1">
+              </label>
+              <label>
+                Fat
+                <input id="mealFat" type="number" min="0" step="1">
+              </label>
+              <label>
+                Cost
+                <input id="mealCost" type="number" min="0" step="0.50">
+              </label>
+              <button class="btn primary" id="addMealBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Add Meal
+              </button>
+            </div>
+            <div id="mealList" class="list"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Smart Food Log</h3>
+            <div class="form-grid">
+              <label>
+                Saved meal
+                <select id="savedMealSelect"></select>
+              </label>
+              <button class="btn primary" id="quickAddSavedMealBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Quick Add
+              </button>
+              <button class="btn" id="copyLastMealBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+                Copy Last Meal
+              </button>
+            </div>
+            <div class="chart" id="foodCostCompareChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>AI Meal Suggestions</h3>
+            <div id="mealSuggestionList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="goals" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Add Long-Term Goal</h3>
+            <div class="form-grid">
+              <label class="wide">
+                Goal
+                <input id="goalName" placeholder="Lose 20 pounds, build emergency fund, finish portfolio">
+              </label>
+              <label>
+                Area
+                <select id="goalArea">
+                  <option>Health</option>
+                  <option>Money</option>
+                  <option>Career</option>
+                  <option>Wellness</option>
+                  <option>Home</option>
+                </select>
+              </label>
+              <label>
+                Target date
+                <input id="goalDate" type="date">
+              </label>
+              <label>
+                Progress %
+                <input id="goalProgress" type="number" min="0" max="100" step="5">
+              </label>
+              <button class="btn primary" id="addGoalBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Add Goal
+              </button>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Goal Roadmap</h3>
+            <div id="goalList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="wellness" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Daily Wellness Check-In</h3>
+            <div class="form-grid">
+              <label>
+                Sleep hours
+                <input id="sleepHoursInput" type="number" min="0" max="16" step="0.5">
+              </label>
+              <label>
+                Water cups today
+                <input id="waterCupsInput" type="number" min="0" step="1">
+              </label>
+              <label>
+                Mood
+                <select id="moodInput">
+                  <option value="5">Great</option>
+                  <option value="4">Good</option>
+                  <option value="3">Okay</option>
+                  <option value="2">Low</option>
+                  <option value="1">Rough</option>
+                </select>
+              </label>
+              <label>
+                Stress
+                <select id="stressInput">
+                  <option value="1">Low</option>
+                  <option value="2">Manageable</option>
+                  <option value="3">Moderate</option>
+                  <option value="4">High</option>
+                  <option value="5">Very high</option>
+                </select>
+              </label>
+              <label>
+                Energy
+                <select id="energyInput">
+                  <option value="5">High</option>
+                  <option value="4">Solid</option>
+                  <option value="3">Average</option>
+                  <option value="2">Low</option>
+                  <option value="1">Drained</option>
+                </select>
+              </label>
+              <label>
+                Focus for tomorrow
+                <input id="tomorrowFocusInput" placeholder="Example: Meal prep and 30 minute walk">
+              </label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Wellness Signals</h3>
+            <div class="chart" id="wellnessChart"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="plan" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Add Weekly Action</h3>
+            <div class="form-grid">
+              <label class="wide">
+                Action
+                <input id="planActionName" placeholder="Example: Meal prep 3 lunches">
+              </label>
+              <label>
+                Area
+                <select id="planActionArea">
+                  <option>Money</option>
+                  <option>Nutrition</option>
+                  <option>Fitness</option>
+                  <option>Wellness</option>
+                  <option>Goals</option>
+                </select>
+              </label>
+              <label>
+                Deadline
+                <input id="planActionDeadline" type="date">
+              </label>
+              <label>
+                Linked goal
+                <input id="planActionGoal" placeholder="Emergency fund, protein routine">
+              </label>
+              <label>
+                Expected impact
+                <select id="planActionImpact">
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </label>
+              <button class="btn primary" id="addPlanActionBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                Add Action
+              </button>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>This Week's Action Plan</h3>
+            <div id="planActionList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="history" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <div class="split">
+              <h3>Daily Snapshot</h3>
+              <button class="btn primary" id="saveSnapshotBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>
+                Save Today
+              </button>
+            </div>
+            <div id="historySummaryList" class="list"></div>
+          </article>
+
+          <article class="panel">
+            <h3>7-Day Trend</h3>
+            <div class="chart" id="historyTrendChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Score Direction</h3>
+            <div id="historyDirectionList" class="list"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Recent Daily Snapshots</h3>
+            <div id="historyList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="review" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Weekly Review</h3>
+            <div class="list" id="weeklyReviewList"></div>
+          </article>
+
+          <article class="panel">
+            <h3>AI Coach Preview</h3>
+            <div class="list" id="aiPreviewList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="reports" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Report Builder</h3>
+            <label>
+              Report type
+              <select id="reportTypeInput">
+                <option value="weekly">Weekly Review</option>
+                <option value="daily">Daily Snapshot</option>
+                <option value="portfolio">Portfolio Summary</option>
+              </select>
+            </label>
+            <div class="actions" style="justify-content: flex-start;">
+              <button class="btn primary" id="downloadReportBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+                Download Report
+              </button>
+              <button class="btn" id="refreshReportBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-15 6.7"></path><path d="M3 12a9 9 0 0 1 15-6.7"></path><path d="M18 3v5h-5"></path><path d="M6 21v-5h5"></path></svg>
+                Refresh Preview
+              </button>
+            </div>
+            <div id="reportSummaryList" class="list"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Report Preview</h3>
+            <pre class="report-preview" id="reportPreview"></pre>
+          </article>
+        </div>
+      </section>
+
+      <section id="coach" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Ask LifeOps Coach</h3>
+            <div class="prompt-row">
+              <button class="btn small" data-coach-prompt="Why is my score low?">Why is my score low?</button>
+              <button class="btn small" data-coach-prompt="What should I focus on this week?">Weekly focus</button>
+              <button class="btn small" data-coach-prompt="How can I improve my food budget?">Food budget</button>
+              <button class="btn small" data-coach-prompt="What habit helps both health and money?">Health + money</button>
+            </div>
+            <label>
+              Question
+              <input id="coachQuestionInput" placeholder="Ask about your score, food budget, protein, sleep, goals, or next action">
+            </label>
+            <button class="btn primary" id="askCoachBtn">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4z"></path></svg>
+              Ask Coach
+            </button>
+          </article>
+
+          <article class="panel">
+            <h3>Coach Response</h3>
+            <div id="coachAnswerList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="tab">
+        <div class="grid cols-2 about-grid">
+          <article class="panel">
+            <h3>About This Project</h3>
+            <p class="about-lede">LifeOps is a personal operating dashboard that connects money, nutrition, fitness, wellness, and long-term goals in one place.</p>
+            <div class="list">
+              <div class="item"><div><div class="item-title">What it does</div><div class="item-meta">Tracks daily habits, macro progress, food cost, weekly actions, wellness signals, money health, and goal progress.</div></div></div>
+              <div class="item"><div><div class="item-title">Who it is for</div><div class="item-meta">People trying to build a healthier, more stable life without juggling separate apps for food, money, habits, and goals.</div></div></div>
+              <div class="item"><div><div class="item-title">Problem it solves</div><div class="item-meta">Most trackers show one part of life. LifeOps shows how choices connect across budget, health, energy, and progress.</div></div></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Why It Is Different</h3>
+            <div class="list">
+              <div class="item"><div><div class="item-title">More than food tracking</div><div class="item-meta">It keeps food logging and macro visibility, then adds meal cost, savings pressure, wellness, actions, and goals.</div></div></div>
+              <div class="item"><div><div class="item-title">More than budget tracking</div><div class="item-meta">It treats money as one life signal, not the whole picture. Food, sleep, workouts, stress, and priorities are part of the same weekly review.</div></div></div>
+              <div class="item"><div><div class="item-title">Portfolio value</div><div class="item-meta">This demonstrates dashboard design, KPI scoring, user workflows, local data storage, trend tracking, and practical product thinking.</div></div></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Future AI Roadmap</h3>
+            <div class="list">
+              <div class="item"><div><div class="item-title">AI weekly coach</div><div class="item-meta">Summarize the biggest win, biggest risk, weakest area, and three realistic actions for next week.</div></div></div>
+              <div class="item"><div><div class="item-title">AI pattern detection</div><div class="item-meta">Explain why a score changed by comparing food cost, protein, sleep, workouts, and completed actions over time.</div></div></div>
+              <div class="item"><div><div class="item-title">AI meal and budget guidance</div><div class="item-meta">Suggest practical meals that support protein goals without breaking the weekly food budget.</div></div></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Employer Walkthrough</h3>
+            <div class="list">
+              <div class="item"><div><div class="item-title">Business question</div><div class="item-meta">What is the next best action when money, health, and goals compete for attention?</div></div></div>
+              <div class="item"><div><div class="item-title">Dashboard answer</div><div class="item-meta">A single LifeOps score, clean category health cards, trend history, weekly review, and exportable report.</div></div></div>
+              <div class="item"><div><div class="item-title">Next build phase</div><div class="item-meta">Turn the rule-based coach into a real AI assistant once the app has enough history to give useful context.</div></div></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h3>Case Study</h3>
+            <div class="list">
+              <div class="item"><div><div class="item-title">Problem</div><div class="item-meta">People make food, money, fitness, and wellness decisions in separate tools, so tradeoffs are easy to miss.</div></div></div>
+              <div class="item"><div><div class="item-title">Solution</div><div class="item-meta">LifeOps combines key daily inputs, category scores, history, reports, and action planning into one practical dashboard.</div></div></div>
+              <div class="item"><div><div class="item-title">Features</div><div class="item-meta">Onboarding, macro and cost logging, money setup, wellness check-ins, trends, weekly actions, reports, and coach preview.</div></div></div>
+              <div class="item"><div><div class="item-title">Skills demonstrated</div><div class="item-meta">Dashboard UX, KPI design, state management, local storage, export workflows, product positioning, and business analysis.</div></div></div>
+              <div class="item"><div><div class="item-title">Future roadmap</div><div class="item-meta">Real AI coaching, better meal database tools, richer trend analysis, account integrations, and PDF-quality report exports.</div></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="dashboard" class="tab">
+        <article class="panel daily-summary">
+          <h3 id="dailyGreeting">Good morning, Dallas.</h3>
+          <div id="dashboardSummaryList" class="list"></div>
+        </article>
+
+        <div class="grid cols-6" id="scoreCategoryGrid"></div>
+
+        <article class="panel action-focus">
+          <div class="split">
+            <h3>Next Best Action</h3>
+            <span class="pill">Priority</span>
+          </div>
+          <div id="nextActionList" class="list"></div>
+        </article>
+
+        <div class="grid cols-3" style="margin-top: 16px;">
+          <article class="panel">
+            <h3>Overall LifeOps Score</h3>
+            <div class="score-ring" id="scoreRing" style="--score-deg: 0deg;">
+              <div>
+                <strong id="scoreRingValue">0</strong>
+                <span>out of 100</span>
+              </div>
+            </div>
+            <div class="progress"><div id="scoreProgress"></div></div>
+          </article>
+
+          <article class="panel">
+            <h3>Money Health</h3>
+            <div class="chart" id="moneyChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Fitness Health</h3>
+            <div class="chart" id="fitnessChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Food And Macros</h3>
+            <div class="chart" id="foodChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Wellness Health</h3>
+            <div class="chart" id="dashboardWellnessChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Goal Progress</h3>
+            <div class="chart" id="goalChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Connected Insight</h3>
+            <div id="insightList" class="list"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="editModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal">
+      <div class="split">
+        <h3 id="editModalTitle">Edit Item</h3>
+        <button class="icon-btn" id="closeEditModalBtn" title="Close editor" aria-label="Close editor">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18"></path><path d="M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <form id="editModalForm">
+        <div class="form-grid" id="editModalFields"></div>
+        <div class="modal-footer">
+          <button class="btn" type="button" id="cancelEditModalBtn">Cancel</button>
+          <button class="btn primary" type="submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const appVersion = "1.1.0";
+    const storageKey = "lifeops-dashboard-v1";
+    const state = loadState();
+
+    const titles = {
+      setup: ["Set Up Your LifeOps Profile", "Set the targets that power the dashboard, coach, weekly review, and reports."],
+      today: ["Today", "Plan the day, check core habits, and keep your money and fitness choices visible."],
+      money: ["Money", "Track income, bills, spending, debt payments, savings, and emergency fund progress."],
+      fitness: ["Fitness", "Log workouts, weekly consistency, steps, and the small actions that support health."],
+      food: ["Food", "Log meals, macros, and food cost so nutrition and spending connect in one place."],
+      goals: ["Goals", "Break long-term plans into visible progress across health, money, career, and wellness."],
+      wellness: ["Wellness", "Track sleep, mood, stress, energy, and water so well-being has its own score."],
+      plan: ["Plan", "Turn weak spots and goals into a clear weekly action plan."],
+      history: ["History", "Save daily snapshots and watch the 7-day score trend."],
+      review: ["Weekly Review", "Summarize wins, leaks, weak spots, and next week’s focus."],
+      reports: ["Reports", "Preview and export weekly, daily, and portfolio-ready summaries."],
+      coach: ["Coach", "Ask a rule-based LifeOps coach for practical next steps before real AI is connected."],
+      about: ["About", "Position LifeOps as a career-ready portfolio project and future AI coach."],
+      dashboard: ["Dashboard", "Review the clean score categories across money, nutrition, fitness, wellness, goals, and overall progress."]
+    };
+
+    function defaultState() {
+      return {
+        profile: {
+          income: 3600,
+          savingsGoal: 500,
+          currentSavings: 1200,
+          emergencyTarget: 3000,
+          workoutGoal: 4,
+          workoutsDone: 2,
+          stepGoal: 8000,
+          stepsToday: 5200,
+          calorieGoal: 2200,
+          proteinGoal: 160,
+          carbGoal: 220,
+          fatGoal: 70,
+          foodBudget: 125,
+          waterGoal: 8,
+          sleepGoal: 8,
+          sleepHours: 7,
+          waterCups: 5,
+          mood: 4,
+          stress: 2,
+          energy: 3,
+          tomorrowFocus: "Protect sleep, hit protein, and keep food spending planned.",
+          priority: "Build the first LifeOps app version",
+          notes: "Keep the first version simple, useful, and easy to improve."
+        },
+        checks: { budget: false, workout: false, water: false, sleep: false },
+        tasks: [
+          { id: crypto.randomUUID(), name: "Review monthly budget", area: "Money", done: false },
+          { id: crypto.randomUUID(), name: "30 minute walk", area: "Fitness", done: false },
+          { id: crypto.randomUUID(), name: "Update portfolio notes", area: "Career", done: false }
+        ],
+        expenses: [
+          { id: crypto.randomUUID(), name: "Rent", amount: 1200, type: "Bill", dueDate: "2026-07-15" },
+          { id: crypto.randomUUID(), name: "Utilities", amount: 180, type: "Bill", dueDate: "2026-07-20" },
+          { id: crypto.randomUUID(), name: "Groceries", amount: 450, type: "Variable", dueDate: "" },
+          { id: crypto.randomUUID(), name: "Debt payment", amount: 300, type: "Debt Payment", dueDate: "2026-07-22" }
+        ],
+        workouts: [
+          { id: crypto.randomUUID(), name: "Strength training", minutes: 40, intensity: "Moderate" },
+          { id: crypto.randomUUID(), name: "Evening walk", minutes: 30, intensity: "Easy" }
+        ],
+        meals: [
+          { id: crypto.randomUUID(), name: "Chicken rice bowl", source: "Home", calories: 620, protein: 48, carbs: 62, fat: 18, cost: 5.75 },
+          { id: crypto.randomUUID(), name: "Protein shake", source: "Home", calories: 260, protein: 32, carbs: 18, fat: 6, cost: 2.50 },
+          { id: crypto.randomUUID(), name: "Lunch out", source: "Restaurant", calories: 850, protein: 38, carbs: 92, fat: 31, cost: 16.25 }
+        ],
+        savedMeals: [
+          { id: crypto.randomUUID(), name: "Chicken rice bowl", source: "Home", calories: 620, protein: 48, carbs: 62, fat: 18, cost: 5.75 },
+          { id: crypto.randomUUID(), name: "Protein shake", source: "Home", calories: 260, protein: 32, carbs: 18, fat: 6, cost: 2.50 },
+          { id: crypto.randomUUID(), name: "Turkey wrap", source: "Home", calories: 430, protein: 35, carbs: 42, fat: 12, cost: 4.25 },
+          { id: crypto.randomUUID(), name: "Greek yogurt bowl", source: "Home", calories: 360, protein: 30, carbs: 44, fat: 8, cost: 3.75 }
+        ],
+        goals: [
+          { id: crypto.randomUUID(), name: "Build a career-ready LifeOps portfolio app", area: "Career", targetDate: "2026-09-30", progress: 20 },
+          { id: crypto.randomUUID(), name: "Reach emergency fund milestone", area: "Money", targetDate: "2026-12-31", progress: 40 },
+          { id: crypto.randomUUID(), name: "Hit weekly workout and protein routine", area: "Health", targetDate: "2026-08-31", progress: 35 }
+        ],
+        planActions: [
+          { id: crypto.randomUUID(), name: "Meal prep 3 lunches", area: "Nutrition", deadline: "2026-07-12", goal: "Protein routine", impact: "High", done: false },
+          { id: crypto.randomUUID(), name: "Move $50 toward emergency fund", area: "Money", deadline: "2026-07-13", goal: "Emergency fund milestone", impact: "High", done: false },
+          { id: crypto.randomUUID(), name: "Walk 30 minutes 4 times", area: "Fitness", deadline: "2026-07-15", goal: "Workout routine", impact: "Medium", done: false }
+        ],
+        history: [
+          { date: "2026-07-03", lifeScore: 48, money: 62, nutrition: 58, fitness: 42, wellness: 55, goals: 24, calories: 2350, protein: 116, foodCost: 38, sleep: 6.5, water: 4, completedActions: 1 },
+          { date: "2026-07-04", lifeScore: 51, money: 64, nutrition: 61, fitness: 48, wellness: 58, goals: 26, calories: 2200, protein: 130, foodCost: 31, sleep: 7, water: 5, completedActions: 1 },
+          { date: "2026-07-05", lifeScore: 50, money: 60, nutrition: 55, fitness: 52, wellness: 62, goals: 28, calories: 2450, protein: 108, foodCost: 44, sleep: 7.5, water: 6, completedActions: 2 },
+          { date: "2026-07-06", lifeScore: 54, money: 65, nutrition: 63, fitness: 55, wellness: 64, goals: 30, calories: 2100, protein: 145, foodCost: 24, sleep: 7, water: 6, completedActions: 2 },
+          { date: "2026-07-07", lifeScore: 57, money: 66, nutrition: 68, fitness: 57, wellness: 65, goals: 31, calories: 2050, protein: 152, foodCost: 22, sleep: 7.5, water: 7, completedActions: 2 },
+          { date: "2026-07-08", lifeScore: 55, money: 64, nutrition: 62, fitness: 60, wellness: 63, goals: 32, calories: 2300, protein: 138, foodCost: 34, sleep: 6.5, water: 6, completedActions: 1 }
+        ]
+      };
+    }
+
+    function emptyState() {
+      const blank = defaultState();
+      blank.profile = {
+        ...blank.profile,
+        income: 0,
+        savingsGoal: 0,
+        currentSavings: 0,
+        emergencyTarget: 0,
+        workoutGoal: 0,
+        workoutsDone: 0,
+        stepGoal: 0,
+        stepsToday: 0,
+        calorieGoal: 0,
+        proteinGoal: 0,
+        carbGoal: 0,
+        fatGoal: 0,
+        foodBudget: 0,
+        sleepHours: 0,
+        waterCups: 0,
+        priority: "",
+        notes: "",
+        tomorrowFocus: ""
+      };
+      blank.checks = { budget: false, workout: false, water: false, sleep: false };
+      blank.tasks = [];
+      blank.expenses = [];
+      blank.workouts = [];
+      blank.meals = [];
+      blank.goals = [];
+      blank.planActions = [];
+      blank.history = [];
+      return blank;
+    }
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(storageKey);
+        return saved ? mergeState(defaultState(), JSON.parse(saved)) : defaultState();
+      } catch {
+        return defaultState();
+      }
+    }
+
+    function mergeState(base, saved) {
+      return {
+        ...base,
+        ...saved,
+        profile: { ...base.profile, ...(saved.profile || {}) },
+        checks: { ...base.checks, ...(saved.checks || {}) },
+        tasks: Array.isArray(saved.tasks) ? saved.tasks : base.tasks,
+        expenses: Array.isArray(saved.expenses) ? saved.expenses : base.expenses,
+        workouts: Array.isArray(saved.workouts) ? saved.workouts : base.workouts,
+        meals: Array.isArray(saved.meals) ? saved.meals : base.meals,
+        savedMeals: Array.isArray(saved.savedMeals) ? saved.savedMeals : base.savedMeals,
+        goals: Array.isArray(saved.goals) ? saved.goals : base.goals,
+        planActions: Array.isArray(saved.planActions) ? saved.planActions : base.planActions,
+        history: Array.isArray(saved.history) ? saved.history : base.history
+      };
+    }
+
+    function save() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      render();
+    }
+
+    function cleanNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return min;
+      return Math.min(max, Math.max(min, number));
+    }
+
+    function cashLeft() {
+      return cleanNumber(state.profile.income) - totalExpenses() - cleanNumber(state.profile.savingsGoal);
+    }
+
+    function daysUntil(dateText) {
+      if (!dateText) return null;
+      const due = new Date(`${dateText}T00:00:00`);
+      if (Number.isNaN(due.getTime())) return null;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return Math.round((due - today) / 86400000);
+    }
+
+    function upcomingPayments(days = 7) {
+      return state.expenses
+        .filter(expense => ["Bill", "Debt Payment"].includes(expense.type))
+        .map(expense => ({ ...expense, daysUntil: daysUntil(expense.dueDate) }))
+        .filter(expense => expense.daysUntil !== null && expense.daysUntil >= 0 && expense.daysUntil <= days)
+        .sort((a, b) => a.daysUntil - b.daysUntil);
+    }
+
+    function upcomingPaymentText() {
+      const nextPayment = upcomingPayments(7)[0];
+      if (!nextPayment) return "No dated bills or debt payments are due in the next 7 days.";
+      const timing = nextPayment.daysUntil === 0 ? "due today" : `due in ${nextPayment.daysUntil} day${nextPayment.daysUntil === 1 ? "" : "s"}`;
+      return `${nextPayment.name} is ${timing}: ${money(cleanNumber(nextPayment.amount))}.`;
+    }
+
+    function money(value) {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value || 0);
+    }
+
+    function percent(value) {
+      return `${Math.round(Math.max(0, Math.min(100, value || 0)))}%`;
+    }
+
+    function totalExpenses() {
+      return state.expenses.reduce((sum, item) => sum + cleanNumber(item.amount), 0);
+    }
+
+    function mealTotals() {
+      return state.meals.reduce((totals, meal) => {
+        totals.calories += cleanNumber(meal.calories);
+        totals.protein += cleanNumber(meal.protein);
+        totals.carbs += cleanNumber(meal.carbs);
+        totals.fat += cleanNumber(meal.fat);
+        totals.cost += cleanNumber(meal.cost);
+        if (meal.source === "Home") totals.homeCost += cleanNumber(meal.cost);
+        if (meal.source === "Restaurant") totals.restaurantCost += cleanNumber(meal.cost);
+        return totals;
+      }, { calories: 0, protein: 0, carbs: 0, fat: 0, cost: 0, homeCost: 0, restaurantCost: 0 });
+    }
+
+    function remainingNutrition() {
+      const meals = mealTotals();
+      return {
+        calories: cleanNumber(state.profile.calorieGoal) - meals.calories,
+        protein: cleanNumber(state.profile.proteinGoal) - meals.protein,
+        carbs: cleanNumber(state.profile.carbGoal) - meals.carbs,
+        fat: cleanNumber(state.profile.fatGoal) - meals.fat,
+        foodBudget: cleanNumber(state.profile.foodBudget) - meals.cost
+      };
+    }
+
+    function dailyCompletion() {
+      const checkValues = Object.values(state.checks);
+      const checked = checkValues.filter(Boolean).length;
+      const completedTasks = state.tasks.filter(task => task.done).length;
+      const total = checkValues.length + state.tasks.length;
+      return total ? ((checked + completedTasks) / total) * 100 : 0;
+    }
+
+    function fitnessCompletion() {
+      const goal = cleanNumber(state.profile.workoutGoal);
+      const done = cleanNumber(state.profile.workoutsDone);
+      return goal ? (done / goal) * 100 : 0;
+    }
+
+    function stepsCompletion() {
+      const goal = cleanNumber(state.profile.stepGoal);
+      const done = cleanNumber(state.profile.stepsToday);
+      return goal ? (done / goal) * 100 : 0;
+    }
+
+    function savingsCompletion() {
+      const target = cleanNumber(state.profile.emergencyTarget);
+      const current = cleanNumber(state.profile.currentSavings);
+      return target ? (current / target) * 100 : 0;
+    }
+
+    function macroCompletion(actual, target) {
+      if (!target) return 0;
+      const ratio = actual / target;
+      if (ratio <= 1) return ratio * 100;
+      return Math.max(0, 100 - ((ratio - 1) * 80));
+    }
+
+    function foodBudgetCompletion() {
+      const budget = Number(state.profile.foodBudget || 0);
+      const spent = mealTotals().cost;
+      if (!budget) return 0;
+      return Math.max(0, 100 - Math.max(0, ((spent - budget) / budget) * 100));
+    }
+
+    function goalCompletion() {
+      if (!state.goals.length) return 0;
+      return state.goals.reduce((sum, goal) => sum + Number(goal.progress || 0), 0) / state.goals.length;
+    }
+
+    function moneyHealthScore() {
+      const remainingCash = cashLeft();
+      const moneyScore = remainingCash >= 0 ? 100 : Math.max(0, 100 + (remainingCash / Math.max(1, cleanNumber(state.profile.income, 1))) * 100);
+      return Math.round((moneyScore * .45) + (savingsCompletion() * .35) + (dailyCompletion() * .20));
+    }
+
+    function nutritionHealthScore() {
+      const meals = mealTotals();
+      return Math.round(
+        macroCompletion(meals.calories, cleanNumber(state.profile.calorieGoal)) * .25 +
+        macroCompletion(meals.protein, cleanNumber(state.profile.proteinGoal)) * .30 +
+        foodBudgetCompletion() * .30 +
+        macroCompletion(meals.fat, cleanNumber(state.profile.fatGoal)) * .15
+      );
+    }
+
+    function fitnessHealthScore() {
+      const workoutMinutes = state.workouts.reduce((sum, workout) => sum + Number(workout.minutes || 0), 0);
+      const minuteScore = Math.min(100, (workoutMinutes / 150) * 100);
+      return Math.round((fitnessCompletion() * .45) + (stepsCompletion() * .35) + (minuteScore * .20));
+    }
+
+    function wellnessHealthScore() {
+      const sleepScore = macroCompletion(cleanNumber(state.profile.sleepHours), cleanNumber(state.profile.sleepGoal, 1));
+      const waterScore = macroCompletion(cleanNumber(state.profile.waterCups), cleanNumber(state.profile.waterGoal));
+      const moodScore = (cleanNumber(state.profile.mood, 0, 5) / 5) * 100;
+      const stressScore = ((6 - cleanNumber(state.profile.stress, 0, 5)) / 5) * 100;
+      const energyScore = (cleanNumber(state.profile.energy, 0, 5) / 5) * 100;
+      return Math.round((sleepScore * .25) + (waterScore * .20) + (moodScore * .20) + (stressScore * .20) + (energyScore * .15));
+    }
+
+    function lifeScore() {
+      return Math.round(
+        (moneyHealthScore() * .20) +
+        (nutritionHealthScore() * .18) +
+        (fitnessHealthScore() * .18) +
+        (wellnessHealthScore() * .18) +
+        (goalCompletion() * .16) +
+        (dailyCompletion() * .10)
+      );
+    }
+
+    function scoreStatus(score) {
+      if (score >= 80) return { label: "On track", className: "status", arrow: "Up" };
+      if (score >= 60) return { label: "Watch", className: "status watch", arrow: "Flat" };
+      return { label: "Needs attention", className: "status attention", arrow: "Down" };
+    }
+
+    function render() {
+      document.getElementById("appVersionLabel").textContent = `Version ${appVersion}`;
+      document.getElementById("todayDate").textContent = new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+      document.getElementById("priorityInput").value = state.profile.priority || "";
+      document.getElementById("notesInput").value = state.profile.notes || "";
+      document.querySelectorAll("[data-check]").forEach(input => {
+        input.checked = Boolean(state.checks[input.dataset.check]);
+      });
+
+      setNumberInput("incomeInput", state.profile.income);
+      setNumberInput("savingsGoalInput", state.profile.savingsGoal);
+      setNumberInput("currentSavingsInput", state.profile.currentSavings);
+      setNumberInput("emergencyTargetInput", state.profile.emergencyTarget);
+      setNumberInput("workoutGoalInput", state.profile.workoutGoal);
+      setNumberInput("workoutsDoneInput", state.profile.workoutsDone);
+      setNumberInput("stepGoalInput", state.profile.stepGoal);
+      setNumberInput("stepsTodayInput", state.profile.stepsToday);
+      setNumberInput("calorieGoalInput", state.profile.calorieGoal);
+      setNumberInput("proteinGoalInput", state.profile.proteinGoal);
+      setNumberInput("carbGoalInput", state.profile.carbGoal);
+      setNumberInput("fatGoalInput", state.profile.fatGoal);
+      setNumberInput("foodBudgetInput", state.profile.foodBudget);
+      setNumberInput("waterGoalInput", state.profile.waterGoal);
+      setNumberInput("sleepHoursInput", state.profile.sleepHours);
+      setNumberInput("waterCupsInput", state.profile.waterCups);
+      setNumberInput("setupFoodBudgetInput", state.profile.foodBudget);
+      setNumberInput("setupCalorieGoalInput", state.profile.calorieGoal);
+      setNumberInput("setupProteinGoalInput", state.profile.proteinGoal);
+      setNumberInput("setupCarbGoalInput", state.profile.carbGoal);
+      setNumberInput("setupFatGoalInput", state.profile.fatGoal);
+      setNumberInput("setupSavingsGoalInput", state.profile.savingsGoal);
+      setNumberInput("setupWorkoutGoalInput", state.profile.workoutGoal);
+      setNumberInput("setupSleepGoalInput", state.profile.sleepGoal || 8);
+      document.getElementById("moodInput").value = String(state.profile.mood || 3);
+      document.getElementById("stressInput").value = String(state.profile.stress || 3);
+      document.getElementById("energyInput").value = String(state.profile.energy || 3);
+      document.getElementById("tomorrowFocusInput").value = state.profile.tomorrowFocus || "";
+
+      const remainingCash = cashLeft();
+      const score = lifeScore();
+      document.getElementById("cashLeft").textContent = money(remainingCash);
+      document.getElementById("dailyScore").textContent = percent(dailyCompletion());
+      document.getElementById("fitnessScore").textContent = percent(fitnessCompletion());
+      document.getElementById("foodBudgetScore").textContent = percent(foodBudgetCompletion());
+      document.getElementById("lifeScore").textContent = score;
+      document.getElementById("scoreRingValue").textContent = score;
+      document.getElementById("scoreRing").style.setProperty("--score-deg", `${Math.max(0, Math.min(100, score)) * 3.6}deg`);
+      document.getElementById("scoreProgress").style.width = percent(score);
+
+      renderList("taskList", state.tasks, taskTemplate);
+      renderList("expenseList", state.expenses, expenseTemplate);
+      renderList("workoutList", state.workouts, workoutTemplate);
+      renderList("mealList", state.meals, mealTemplate);
+      renderList("goalList", state.goals, goalTemplate);
+      renderList("planActionList", state.planActions, planActionTemplate);
+      renderCharts();
+      renderDailySummary();
+      renderScoreCards();
+      renderWeeklyReview();
+      renderNextBestAction();
+      renderSmartFoodLog();
+      renderHistory();
+      renderSetupSummary();
+      renderReportPreview();
+      renderCoachAnswer();
+    }
+
+    function setNumberInput(id, value) {
+      const input = document.getElementById(id);
+      if (document.activeElement !== input) input.value = value ?? "";
+    }
+
+    function renderList(id, items, template) {
+      const list = document.getElementById(id);
+      list.innerHTML = "";
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        const messages = {
+          taskList: "Add your first task.",
+          expenseList: "Add your first bill or expense.",
+          workoutList: "Add your first workout.",
+          mealList: "Add your first meal.",
+          goalList: "Add your first long-term goal.",
+          planActionList: "Create one weekly action."
+        };
+        empty.textContent = messages[id] || "Nothing added yet.";
+        list.appendChild(empty);
+        return;
+      }
+      items.forEach(item => list.appendChild(template(item)));
+    }
+
+    function taskTemplate(task) {
+      const row = itemShell(task.name, task.area);
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = task.done;
+      checkbox.title = "Mark complete";
+      checkbox.addEventListener("change", () => {
+        task.done = checkbox.checked;
+        save();
+      });
+      row.querySelector(".item-actions").prepend(checkbox);
+      row.querySelector(".edit-btn").addEventListener("click", () => editTask(task));
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        state.tasks = state.tasks.filter(item => item.id !== task.id);
+        save();
+      });
+      return row;
+    }
+
+    function expenseTemplate(expense) {
+      const dueText = expense.dueDate ? ` • Due ${expense.dueDate}` : "";
+      const row = itemShell(expense.name, `${expense.type} • ${money(cleanNumber(expense.amount))}${dueText}`);
+      row.querySelector(".edit-btn").addEventListener("click", () => editExpense(expense));
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        state.expenses = state.expenses.filter(item => item.id !== expense.id);
+        save();
+      });
+      return row;
+    }
+
+    function workoutTemplate(workout) {
+      const row = itemShell(workout.name, `${workout.minutes || 0} min • ${workout.intensity}`);
+      row.querySelector(".edit-btn").addEventListener("click", () => editWorkout(workout));
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        state.workouts = state.workouts.filter(item => item.id !== workout.id);
+        save();
+      });
+      return row;
+    }
+
+    function mealTemplate(meal) {
+      const meta = `${meal.source} • ${meal.calories || 0} cal • ${meal.protein || 0}g protein • ${money(Number(meal.cost || 0))}`;
+      const row = itemShell(meal.name, meta);
+      row.querySelector(".edit-btn").addEventListener("click", () => editMeal(meal));
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        state.meals = state.meals.filter(item => item.id !== meal.id);
+        save();
+      });
+      return row;
+    }
+
+    function goalTemplate(goal) {
+      const row = itemShell(goal.name, `${goal.area} • ${goal.progress || 0}% • Target ${goal.targetDate || "No date"}`);
+      const progress = document.createElement("div");
+      progress.className = "progress";
+      progress.innerHTML = `<div style="width: ${percent(goal.progress)}"></div>`;
+      row.querySelector(".item-meta").after(progress);
+      row.querySelector(".edit-btn").addEventListener("click", () => editGoal(goal));
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        state.goals = state.goals.filter(item => item.id !== goal.id);
+        save();
+      });
+      return row;
+    }
+
+    function planActionTemplate(action) {
+      const row = itemShell(action.name, `${action.area} • ${action.impact} impact • Due ${action.deadline || "No date"} • ${action.goal || "No linked goal"}`);
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = action.done;
+      checkbox.title = "Mark action complete";
+      checkbox.addEventListener("change", () => {
+        action.done = checkbox.checked;
+        save();
+      });
+      row.querySelector(".item-actions").prepend(checkbox);
+      row.querySelector(".edit-btn").addEventListener("click", () => editPlanAction(action));
+      row.querySelector(".delete-btn").addEventListener("click", () => {
+        state.planActions = state.planActions.filter(item => item.id !== action.id);
+        save();
+      });
+      return row;
+    }
+
+    function itemShell(title, meta) {
+      const row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = `
+        <div>
+          <div class="item-title"></div>
+          <div class="item-meta"></div>
+        </div>
+        <div class="item-actions">
+          <button class="icon-btn edit-btn" title="Edit item" aria-label="Edit item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+            </svg>
+          </button>
+          <button class="icon-btn delete-btn" title="Delete item" aria-label="Delete item">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path>
+            </svg>
+          </button>
+        </div>`;
+      row.querySelector(".item-title").textContent = title;
+      row.querySelector(".item-meta").textContent = meta;
+      return row;
+    }
+
+    function openEditModal(title, fields, onSave) {
+      const backdrop = document.getElementById("editModalBackdrop");
+      const form = document.getElementById("editModalForm");
+      const fieldGrid = document.getElementById("editModalFields");
+      document.getElementById("editModalTitle").textContent = title;
+      fieldGrid.innerHTML = "";
+      fields.forEach(field => {
+        const label = document.createElement("label");
+        if (field.wide) label.className = "wide";
+        label.textContent = field.label;
+        let input;
+        if (field.type === "select") {
+          input = document.createElement("select");
+          field.options.forEach(optionValue => {
+            const option = document.createElement("option");
+            option.value = optionValue;
+            option.textContent = optionValue;
+            input.appendChild(option);
+          });
+        } else {
+          input = document.createElement("input");
+          input.type = field.type || "text";
+          if (field.min !== undefined) input.min = field.min;
+          if (field.max !== undefined) input.max = field.max;
+          if (field.step !== undefined) input.step = field.step;
+        }
+        input.name = field.name;
+        input.value = field.value ?? "";
+        label.appendChild(input);
+        fieldGrid.appendChild(label);
+      });
+      form.onsubmit = event => {
+        event.preventDefault();
+        const values = {};
+        fields.forEach(field => {
+          const input = form.elements[field.name];
+          values[field.name] = field.type === "number" ? cleanNumber(input.value, field.min ?? 0, field.max ?? Number.MAX_SAFE_INTEGER) : input.value.trim();
+        });
+        onSave(values);
+        closeEditModal();
+        save();
+      };
+      backdrop.classList.add("active");
+      const firstInput = fieldGrid.querySelector("input, select");
+      if (firstInput) firstInput.focus();
+    }
+
+    function closeEditModal() {
+      document.getElementById("editModalBackdrop").classList.remove("active");
+      document.getElementById("editModalForm").onsubmit = null;
+    }
+
+    function editTask(task) {
+      openEditModal("Edit Task", [
+        { name: "name", label: "Task", value: task.name, wide: true },
+        { name: "area", label: "Area", type: "select", value: task.area, options: ["Money", "Fitness", "Career", "Home", "Wellness"] }
+      ], values => {
+        if (!values.name) return;
+        task.name = values.name;
+        task.area = values.area;
+      });
+    }
+
+    function editExpense(expense) {
+      openEditModal("Edit Bill Or Expense", [
+        { name: "name", label: "Name", value: expense.name, wide: true },
+        { name: "amount", label: "Amount", type: "number", value: expense.amount, min: 0, step: 5 },
+        { name: "type", label: "Type", type: "select", value: expense.type, options: ["Bill", "Variable", "Debt Payment"] },
+        { name: "dueDate", label: "Due date", type: "date", value: expense.dueDate || "" }
+      ], values => {
+        if (!values.name) return;
+        expense.name = values.name;
+        expense.amount = values.amount;
+        expense.type = values.type;
+        expense.dueDate = values.dueDate;
+      });
+    }
+
+    function editWorkout(workout) {
+      openEditModal("Edit Workout", [
+        { name: "name", label: "Workout", value: workout.name, wide: true },
+        { name: "minutes", label: "Minutes", type: "number", value: workout.minutes, min: 0, step: 5 },
+        { name: "intensity", label: "Intensity", type: "select", value: workout.intensity, options: ["Easy", "Moderate", "Hard"] }
+      ], values => {
+        if (!values.name) return;
+        workout.name = values.name;
+        workout.minutes = values.minutes;
+        workout.intensity = values.intensity;
+      });
+    }
+
+    function editMeal(meal) {
+      openEditModal("Edit Meal", [
+        { name: "name", label: "Meal", value: meal.name, wide: true },
+        { name: "source", label: "Source", type: "select", value: meal.source, options: ["Home", "Restaurant", "Snack"] },
+        { name: "calories", label: "Calories", type: "number", value: meal.calories, min: 0, step: 25 },
+        { name: "protein", label: "Protein", type: "number", value: meal.protein, min: 0, step: 1 },
+        { name: "carbs", label: "Carbs", type: "number", value: meal.carbs, min: 0, step: 1 },
+        { name: "fat", label: "Fat", type: "number", value: meal.fat, min: 0, step: 1 },
+        { name: "cost", label: "Cost", type: "number", value: meal.cost, min: 0, step: 0.5 }
+      ], values => {
+        if (!values.name) return;
+        Object.assign(meal, values);
+      });
+    }
+
+    function editGoal(goal) {
+      openEditModal("Edit Goal", [
+        { name: "name", label: "Goal", value: goal.name, wide: true },
+        { name: "area", label: "Area", type: "select", value: goal.area, options: ["Health", "Money", "Career", "Wellness", "Home"] },
+        { name: "targetDate", label: "Target date", type: "date", value: goal.targetDate || "" },
+        { name: "progress", label: "Progress %", type: "number", value: goal.progress, min: 0, max: 100, step: 5 }
+      ], values => {
+        if (!values.name) return;
+        goal.name = values.name;
+        goal.area = values.area;
+        goal.targetDate = values.targetDate;
+        goal.progress = values.progress;
+      });
+    }
+
+    function editPlanAction(action) {
+      openEditModal("Edit Weekly Action", [
+        { name: "name", label: "Action", value: action.name, wide: true },
+        { name: "area", label: "Area", type: "select", value: action.area, options: ["Money", "Nutrition", "Fitness", "Wellness", "Goals"] },
+        { name: "deadline", label: "Deadline", type: "date", value: action.deadline || "" },
+        { name: "goal", label: "Linked goal", value: action.goal || "" },
+        { name: "impact", label: "Impact", type: "select", value: action.impact, options: ["High", "Medium", "Low"] }
+      ], values => {
+        if (!values.name) return;
+        Object.assign(action, values);
+      });
+    }
+
+    function recommendedDailyFocus() {
+      const remainingCash = cashLeft();
+      const currentSavings = cleanNumber(state.profile.currentSavings);
+      const emergencyTarget = cleanNumber(state.profile.emergencyTarget);
+      if (remainingCash < 0) {
+        return "Expenses and planned savings are above income. Review bills and variable spending before adding new commitments.";
+      }
+      const nextPayment = upcomingPayments(7)[0];
+      if (nextPayment) {
+        return `${nextPayment.name} is coming up. Keep enough cash available before optional spending.`;
+      }
+      if (emergencyTarget && currentSavings < emergencyTarget) {
+        return "Protect cash and keep building the emergency fund before increasing optional spending.";
+      }
+      if (fitnessCompletion() < 100) {
+        return "Complete a workout or active walk to keep the weekly fitness goal moving.";
+      }
+      if (state.tasks.some(task => !task.done)) {
+        return "Finish one open task tied to today's priority.";
+      }
+      return "Maintain the routine and save today's snapshot so trends stay useful.";
+    }
+
+    function renderDailySummary() {
+      const billTotal = state.expenses.filter(expense => expense.type === "Bill").reduce((sum, expense) => sum + cleanNumber(expense.amount), 0);
+      const debtTotal = state.expenses.filter(expense => expense.type === "Debt Payment").reduce((sum, expense) => sum + cleanNumber(expense.amount), 0);
+      const completedTasks = state.tasks.filter(task => task.done).length;
+      const completedHabits = Object.values(state.checks).filter(Boolean).length;
+      document.getElementById("dailyGreeting").textContent = "Good morning, Dallas.";
+      renderSummaryCards("dashboardSummaryList", [
+        { title: "Current Priority", value: state.profile.priority || "Set one priority", meta: "Main focus for today", className: "priority" },
+        { title: "Emergency Fund", value: percent(savingsCompletion()), meta: `${money(cleanNumber(state.profile.currentSavings))} of ${money(cleanNumber(state.profile.emergencyTarget))}` },
+        { title: "Savings Goal", value: money(cleanNumber(state.profile.savingsGoal)), meta: "Planned this month" },
+        { title: "Income", value: money(cleanNumber(state.profile.income)), meta: "Monthly income" },
+        { title: "Expenses", value: money(totalExpenses()), meta: `${money(billTotal)} bills • ${money(debtTotal)} debt` },
+        { title: "Upcoming Payment", value: upcomingPayments(7)[0]?.name || "None soon", meta: upcomingPaymentText(), className: upcomingPayments(7)[0] ? "warning" : "" },
+        { title: "Cash Flow", value: money(cashLeft()), meta: "Estimated remaining after savings" },
+        { title: "Tasks", value: `${completedTasks}/${state.tasks.length}`, meta: "Completed today" },
+        { title: "Habits", value: `${completedHabits}/${Object.keys(state.checks).length}`, meta: "Daily checks complete" },
+        { title: "Workout Goal", value: percent(fitnessCompletion()), meta: `${state.profile.workoutsDone || 0} of ${state.profile.workoutGoal || 0} workouts` },
+        { title: "Steps", value: cleanNumber(state.profile.stepsToday).toLocaleString(), meta: `${cleanNumber(state.profile.stepGoal).toLocaleString()} step goal` },
+        { title: "Recommended Focus", value: "Next move", meta: recommendedDailyFocus(), className: "focus" }
+      ]);
+    }
+
+    function renderCharts() {
+      const expenseTotal = totalExpenses();
+      const income = Number(state.profile.income || 0);
+      const cashLeft = income - expenseTotal - Number(state.profile.savingsGoal || 0);
+      const meals = mealTotals();
+      const moneyRows = [
+        ["Expenses", income ? (expenseTotal / income) * 100 : 0, money(expenseTotal)],
+        ["Savings", income ? (Number(state.profile.savingsGoal || 0) / income) * 100 : 0, money(Number(state.profile.savingsGoal || 0))],
+        ["Cash left", income ? (Math.max(0, cashLeft) / income) * 100 : 0, money(cashLeft)],
+        ["Emergency fund", savingsCompletion(), percent(savingsCompletion())]
+      ];
+      const workoutMinutes = state.workouts.reduce((sum, workout) => sum + Number(workout.minutes || 0), 0);
+      const fitnessRows = [
+        ["Workouts", fitnessCompletion(), percent(fitnessCompletion())],
+        ["Steps", stepsCompletion(), percent(stepsCompletion())],
+        ["Workout min", Math.min(100, (workoutMinutes / 150) * 100), `${workoutMinutes}/150`]
+      ];
+      const foodRows = [
+        ["Calories", macroCompletion(meals.calories, Number(state.profile.calorieGoal || 0)), `${meals.calories}/${state.profile.calorieGoal}`],
+        ["Protein", macroCompletion(meals.protein, Number(state.profile.proteinGoal || 0)), `${meals.protein}g/${state.profile.proteinGoal}g`],
+        ["Food cost", Number(state.profile.foodBudget || 0) ? (meals.cost / Number(state.profile.foodBudget || 0)) * 100 : 0, money(meals.cost)]
+      ];
+      const goalRows = [
+        ["Goal average", goalCompletion(), percent(goalCompletion())],
+        ["Health goals", areaGoalCompletion("Health"), percent(areaGoalCompletion("Health"))],
+        ["Money goals", areaGoalCompletion("Money"), percent(areaGoalCompletion("Money"))]
+      ];
+      const wellnessRows = [
+        ["Sleep", macroCompletion(cleanNumber(state.profile.sleepHours), cleanNumber(state.profile.sleepGoal, 1)), `${state.profile.sleepHours}/${state.profile.sleepGoal || 8}h`],
+        ["Water", macroCompletion(Number(state.profile.waterCups || 0), Number(state.profile.waterGoal || 0)), `${state.profile.waterCups}/${state.profile.waterGoal}`],
+        ["Stress", ((6 - Number(state.profile.stress || 0)) / 5) * 100, `${state.profile.stress}/5`],
+        ["Energy", (Number(state.profile.energy || 0) / 5) * 100, `${state.profile.energy}/5`]
+      ];
+      renderBars("moneyChart", moneyRows);
+      renderBars("fitnessChart", fitnessRows);
+      renderBars("foodChart", foodRows);
+      renderBars("wellnessChart", wellnessRows);
+      renderBars("dashboardWellnessChart", wellnessRows);
+      renderBars("goalChart", goalRows);
+      renderInsights(cashLeft, meals);
+    }
+
+    function renderSmartFoodLog() {
+      const select = document.getElementById("savedMealSelect");
+      const selected = select.value;
+      select.innerHTML = "";
+      state.savedMeals.forEach(meal => {
+        const option = document.createElement("option");
+        option.value = meal.id;
+        option.textContent = `${meal.name} (${meal.protein}g protein, ${money(meal.cost)})`;
+        select.appendChild(option);
+      });
+      if (selected && state.savedMeals.some(meal => meal.id === selected)) select.value = selected;
+
+      const remaining = remainingNutrition();
+      renderTextRows("macroRemainingList", [
+        ["Calories left", `${Math.max(0, Math.round(remaining.calories))} remaining`],
+        ["Protein left", `${Math.max(0, Math.round(remaining.protein))}g remaining`],
+        ["Food budget left", money(Math.max(0, remaining.foodBudget))]
+      ]);
+
+      const meals = mealTotals();
+      renderBars("foodCostCompareChart", [
+        ["Home", Number(state.profile.foodBudget || 0) ? (meals.homeCost / Number(state.profile.foodBudget || 0)) * 100 : 0, money(meals.homeCost)],
+        ["Restaurant", Number(state.profile.foodBudget || 0) ? (meals.restaurantCost / Number(state.profile.foodBudget || 0)) * 100 : 0, money(meals.restaurantCost)],
+        ["Budget used", Number(state.profile.foodBudget || 0) ? (meals.cost / Number(state.profile.foodBudget || 0)) * 100 : 0, percent(Number(state.profile.foodBudget || 0) ? (meals.cost / Number(state.profile.foodBudget || 0)) * 100 : 0)]
+      ]);
+
+      renderTextRows("mealSuggestionList", mealSuggestions());
+    }
+
+    function mealSuggestions() {
+      const remaining = remainingNutrition();
+      const meals = mealTotals();
+      const budget = Number(state.profile.foodBudget || 0);
+      const restaurantShare = meals.cost ? (meals.restaurantCost / meals.cost) * 100 : 0;
+      const suggestions = [];
+      if (remaining.protein > 25) {
+        suggestions.push(["Protein gap", `You need about ${Math.round(remaining.protein)}g protein left. Try a saved high-protein home meal before adding restaurant cost.`]);
+      }
+      if (budget && meals.cost > budget * .75) {
+        suggestions.push(["Budget watch", `Food spending has used ${percent((meals.cost / budget) * 100)} of the weekly budget.`]);
+      }
+      if (restaurantShare >= 35) {
+        suggestions.push(["Restaurant pressure", `Restaurant meals are ${percent(restaurantShare)} of food cost. One home meal could improve both nutrition and money scores.`]);
+      }
+      if (remaining.calories < 0) {
+        suggestions.push(["Calories over target", `Calories are ${Math.abs(Math.round(remaining.calories))} over target. Keep the next meal lighter and protein-focused.`]);
+      }
+      if (!suggestions.length) {
+        suggestions.push(["On track", "Macros and food spending are balanced so far. Keep using saved meals to make logging faster."]);
+      }
+      return suggestions.slice(0, 4);
+    }
+
+    function renderScoreCards() {
+      const categories = [
+        ["Money Health", moneyHealthScore(), "Cash flow, savings, emergency fund"],
+        ["Nutrition Health", nutritionHealthScore(), "Macros, protein, food budget"],
+        ["Fitness Health", fitnessHealthScore(), "Workouts, steps, active minutes"],
+        ["Wellness Health", wellnessHealthScore(), "Sleep, mood, stress, energy, water"],
+        ["Goal Progress", goalCompletion(), "Long-term roadmap completion"],
+        ["Overall LifeOps", lifeScore(), "Blended life operating score"]
+      ];
+      const grid = document.getElementById("scoreCategoryGrid");
+      grid.innerHTML = "";
+      categories.forEach(([name, score, caption]) => {
+        const status = scoreStatus(score);
+        const card = document.createElement("article");
+        card.className = "metric score-card";
+        card.innerHTML = `
+          <div class="label"></div>
+          <strong></strong>
+          <span></span>
+          <div class="${status.className}"></div>
+          <div class="progress"><div></div></div>`;
+        card.querySelector(".label").textContent = name;
+        card.querySelector("strong").textContent = Math.round(score);
+        card.querySelector("span").textContent = caption;
+        card.querySelector(".status").textContent = `${status.arrow} ${status.label}`;
+        card.querySelector(".progress div").style.width = percent(score);
+        grid.appendChild(card);
+      });
+    }
+
+    function weeklyReviewRows() {
+      const meals = mealTotals();
+      const variableExpenses = state.expenses.filter(expense => expense.type === "Variable");
+      const biggestVariable = variableExpenses.reduce((top, expense) => Number(expense.amount || 0) > Number(top.amount || 0) ? expense : top, { name: "No variable expenses logged", amount: 0 });
+      const scores = [
+        ["Money", moneyHealthScore()],
+        ["Nutrition", nutritionHealthScore()],
+        ["Fitness", fitnessHealthScore()],
+        ["Wellness", wellnessHealthScore()],
+        ["Goals", goalCompletion()]
+      ];
+      const best = scores.reduce((top, item) => item[1] > top[1] ? item : top, scores[0]);
+      const weakest = scores.reduce((low, item) => item[1] < low[1] ? item : low, scores[0]);
+      return [
+        ["Biggest win", `${best[0]} is the strongest area at ${Math.round(best[1])}.`],
+        ["Biggest money leak", `${biggestVariable.name}: ${money(Number(biggestVariable.amount || 0))}. Food logged separately: ${money(meals.cost)}.`],
+        ["Best health habit", fitnessCompletion() >= nutritionHealthScore() ? "Workout consistency is carrying health progress." : "Nutrition logging is creating useful visibility."],
+        ["Weakest area", `${weakest[0]} needs the most attention at ${Math.round(weakest[1])}.`],
+        ["Next week's focus", state.profile.tomorrowFocus || "Pick one money action and one health action to repeat all week."]
+      ];
+    }
+
+    function renderSetupSummary() {
+      renderTextRows("setupSummaryList", [
+        ["Food budget", `${money(Number(state.profile.foodBudget || 0))} per week for logged meals.`],
+        ["Macro targets", `${state.profile.calorieGoal || 0} calories, ${state.profile.proteinGoal || 0}g protein, ${state.profile.carbGoal || 0}g carbs, ${state.profile.fatGoal || 0}g fat.`],
+        ["Savings goal", `${money(Number(state.profile.savingsGoal || 0))} planned monthly savings.`],
+        ["Fitness goal", `${state.profile.workoutGoal || 0} workouts per week.`],
+        ["Sleep goal", `${state.profile.sleepGoal || 8} hours per night.`]
+      ]);
+    }
+
+    function renderWeeklyReview() {
+      const reviewRows = weeklyReviewRows();
+      renderTextRows("weeklyReviewList", reviewRows);
+
+      renderTextRows("aiPreviewList", coachPreviewRows());
+    }
+
+    function coachPreviewRows() {
+      const [weakArea, weakScore] = lowestScoreArea();
+      const meals = mealTotals();
+      const remaining = remainingNutrition();
+      const budget = Number(state.profile.foodBudget || 0);
+      const restaurantShare = meals.cost ? (meals.restaurantCost / meals.cost) * 100 : 0;
+      const openActions = state.planActions.filter(action => !action.done);
+      const nextAction = openActions.find(action => action.area === weakArea) || openActions.find(action => action.impact === "High") || openActions[0];
+      const rows = [
+        ["Coach readout", `${weakArea} is the lowest score at ${Math.round(weakScore)}. Focus there before adding more tracking.`],
+        ["Next move", nextAction ? `${nextAction.name} (${nextAction.impact} impact).` : recommendedFallbackAction(weakArea)]
+      ];
+
+      if (remaining.protein > 0) {
+        rows.push(["Nutrition cue", `You need about ${Math.round(remaining.protein)}g protein left today. A saved home meal can close the gap without overspending.`]);
+      }
+      if (budget && meals.cost > budget * .7) {
+        rows.push(["Money cue", `Food spending has used ${percent((meals.cost / budget) * 100)} of the weekly food budget.`]);
+      }
+      if (restaurantShare >= 35) {
+        rows.push(["Pattern", `Restaurant meals are ${percent(restaurantShare)} of food cost, so this habit affects both money and nutrition.`]);
+      }
+      if (Number(state.profile.sleepHours || 0) < 7) {
+        rows.push(["Wellness cue", "Sleep is below 7 hours. Protecting sleep may improve energy, workouts, and food choices tomorrow."]);
+      }
+      rows.push(["Action plan", "Pick one money action, one health action, and one wellness action for the week. Keep it realistic enough to finish."]);
+      return rows.slice(0, 6);
+    }
+
+    function scoreBreakdown() {
+      return [
+        ["Money", moneyHealthScore()],
+        ["Nutrition", nutritionHealthScore()],
+        ["Fitness", fitnessHealthScore()],
+        ["Wellness", wellnessHealthScore()],
+        ["Goals", goalCompletion()]
+      ];
+    }
+
+    function todayKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function sortedHistory() {
+      return [...state.history].sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function recentHistory(days = 7) {
+      return sortedHistory().slice(-days);
+    }
+
+    function completedActionsCount() {
+      return state.planActions.filter(action => action.done).length;
+    }
+
+    function currentSnapshot() {
+      const meals = mealTotals();
+      return {
+        date: todayKey(),
+        lifeScore: lifeScore(),
+        money: moneyHealthScore(),
+        nutrition: nutritionHealthScore(),
+        fitness: fitnessHealthScore(),
+        wellness: wellnessHealthScore(),
+        goals: Math.round(goalCompletion()),
+        calories: Math.round(meals.calories),
+        protein: Math.round(meals.protein),
+        foodCost: Number(meals.cost.toFixed(2)),
+        sleep: Number(state.profile.sleepHours || 0),
+        water: Number(state.profile.waterCups || 0),
+        completedActions: completedActionsCount()
+      };
+    }
+
+    function saveTodaySnapshot() {
+      const snapshot = currentSnapshot();
+      const withoutToday = state.history.filter(item => item.date !== snapshot.date);
+      state.history = [...withoutToday, snapshot].sort((a, b) => a.date.localeCompare(b.date));
+      save();
+    }
+
+    function average(values) {
+      return values.length ? values.reduce((sum, value) => sum + Number(value || 0), 0) / values.length : 0;
+    }
+
+    function trendDirection(history) {
+      if (history.length < 2) return "Not enough history";
+      const firstHalf = history.slice(0, Math.ceil(history.length / 2));
+      const secondHalf = history.slice(Math.floor(history.length / 2));
+      const change = average(secondHalf.map(item => item.lifeScore)) - average(firstHalf.map(item => item.lifeScore));
+      if (change >= 3) return "Improving";
+      if (change <= -3) return "Slipping";
+      return "Flat";
+    }
+
+    function renderHistory() {
+      const history = recentHistory(7);
+      const current = currentSnapshot();
+      const best = history.reduce((top, item) => item.lifeScore > top.lifeScore ? item : top, history[0] || current);
+      const weakest = history.reduce((low, item) => item.lifeScore < low.lifeScore ? item : low, history[0] || current);
+      const averageScore = Math.round(average(history.map(item => item.lifeScore)));
+      const direction = trendDirection(history);
+
+      renderTextRows("historySummaryList", [
+        ["Today snapshot", `${current.date}: LifeOps ${current.lifeScore}, ${current.calories} calories, ${current.protein}g protein, ${money(current.foodCost)} food cost.`],
+        ["7-day average", history.length ? `${averageScore} across ${history.length} saved days.` : "No saved days yet."],
+        ["Best day", best ? `${best.date}: ${best.lifeScore}` : "No history yet."],
+        ["Weakest day", weakest ? `${weakest.date}: ${weakest.lifeScore}` : "No history yet."]
+      ]);
+
+      renderBars("historyTrendChart", history.map(item => [
+        item.date.slice(5),
+        item.lifeScore,
+        String(item.lifeScore)
+      ]));
+
+      const latest = history[history.length - 1];
+      const previous = history[history.length - 2];
+      const delta = latest && previous ? latest.lifeScore - previous.lifeScore : 0;
+      renderTextRows("historyDirectionList", [
+        ["Direction", direction],
+        ["Latest change", latest && previous ? `${delta >= 0 ? "+" : ""}${delta} from previous saved day.` : "Save at least two days to compare."],
+        ["AI unlock", "History lets the coach explain what changed this week and what habits are moving the score."]
+      ]);
+
+      const list = document.getElementById("historyList");
+      list.innerHTML = "";
+      [...history].reverse().forEach(item => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.innerHTML = `<div><div class="item-title"></div><div class="item-meta"></div></div>`;
+        row.querySelector(".item-title").textContent = item.date;
+        row.querySelector(".item-meta").textContent = `LifeOps ${item.lifeScore} • Food ${money(item.foodCost)} • Protein ${item.protein}g • Sleep ${item.sleep}h • Actions ${item.completedActions}`;
+        list.appendChild(row);
+      });
+      if (!history.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Save today's snapshot.";
+        list.appendChild(empty);
+      }
+    }
+
+    function lowestScoreArea() {
+      return scoreBreakdown().reduce((low, item) => item[1] < low[1] ? item : low, scoreBreakdown()[0]);
+    }
+
+    function recommendedFallbackAction(area) {
+      const actions = {
+        Money: "Review variable expenses and move one small amount toward savings or debt.",
+        Nutrition: "Plan one high-protein low-cost meal before the next restaurant purchase.",
+        Fitness: "Schedule a 30 minute walk or workout before the day gets crowded.",
+        Wellness: "Protect sleep tonight and log water, mood, stress, and energy tomorrow.",
+        Goals: "Pick one long-term goal and define a 20 minute next step."
+      };
+      return actions[area] || "Choose one practical action that improves the weakest score area.";
+    }
+
+    function renderNextBestAction() {
+      const [area, score] = lowestScoreArea();
+      const openActions = state.planActions.filter(action => !action.done);
+      const matching = openActions.find(action => action.area === area) || openActions.find(action => action.impact === "High") || openActions[0];
+      const rows = matching ? [
+        ["Weakest area", `${area} is currently lowest at ${Math.round(score)}.`],
+        ["Recommended action", matching.name],
+        ["Why it matters", `${matching.impact} impact for ${matching.area}${matching.goal ? `, linked to ${matching.goal}` : ""}.`],
+        ["Deadline", matching.deadline || "No deadline set"]
+      ] : [
+        ["Weakest area", `${area} is currently lowest at ${Math.round(score)}.`],
+        ["Recommended action", recommendedFallbackAction(area)],
+        ["Why it matters", "Add this to the Plan tab so it can be tracked and reviewed."],
+        ["Deadline", "Set one for this week"]
+      ];
+      renderTextRows("nextActionList", rows);
+    }
+
+    function nextBestActionText() {
+      const [area, score] = lowestScoreArea();
+      const openActions = state.planActions.filter(action => !action.done);
+      const matching = openActions.find(action => action.area === area) || openActions.find(action => action.impact === "High") || openActions[0];
+      if (matching) {
+        return `${matching.name} (${matching.impact} impact for ${matching.area}; weakest area is ${area} at ${Math.round(score)}).`;
+      }
+      return `${recommendedFallbackAction(area)} Weakest area is ${area} at ${Math.round(score)}.`;
+    }
+
+    function weeklyReviewReportText() {
+      const scores = scoreBreakdown();
+      const strongest = scores.reduce((top, item) => item[1] > top[1] ? item : top, scores[0]);
+      const weakest = scores.reduce((low, item) => item[1] < low[1] ? item : low, scores[0]);
+      const meals = mealTotals();
+      const remaining = remainingNutrition();
+      const budget = Number(state.profile.foodBudget || 0);
+      const foodBudgetStatus = budget
+        ? `${money(Math.max(0, remaining.foodBudget))} left of ${money(budget)} weekly budget; ${money(meals.cost)} logged.`
+        : `${money(meals.cost)} logged; no weekly food budget set.`;
+      const proteinStatus = `${Math.round(meals.protein)}g logged of ${state.profile.proteinGoal || 0}g target; ${Math.max(0, Math.round(remaining.protein))}g left.`;
+      const lines = [
+        "LifeOps Weekly Review",
+        `Generated: ${new Date().toLocaleString()}`,
+        "",
+        `LifeOps score: ${lifeScore()}/100`,
+        `Strongest area: ${strongest[0]} (${Math.round(strongest[1])})`,
+        `Weakest area: ${weakest[0]} (${Math.round(weakest[1])})`,
+        `Food budget status: ${foodBudgetStatus}`,
+        `Protein status: ${proteinStatus}`,
+        `Next best action: ${nextBestActionText()}`,
+        "",
+        "Weekly Review"
+      ];
+      weeklyReviewRows().forEach(([title, text]) => lines.push(`- ${title}: ${text}`));
+      lines.push("", "AI Coach Preview");
+      coachPreviewRows().forEach(([title, text]) => lines.push(`- ${title}: ${text}`));
+      return lines.join("\n");
+    }
+
+    function dailySnapshotReportText() {
+      const snapshot = currentSnapshot();
+      return [
+        "LifeOps Daily Snapshot",
+        `Generated: ${new Date().toLocaleString()}`,
+        "",
+        `Date: ${snapshot.date}`,
+        `LifeOps score: ${snapshot.lifeScore}/100`,
+        `Money Health: ${snapshot.money}`,
+        `Nutrition Health: ${snapshot.nutrition}`,
+        `Fitness Health: ${snapshot.fitness}`,
+        `Wellness Health: ${snapshot.wellness}`,
+        `Goal Progress: ${snapshot.goals}`,
+        "",
+        `Calories: ${snapshot.calories}`,
+        `Protein: ${snapshot.protein}g`,
+        `Food cost: ${money(snapshot.foodCost)}`,
+        `Sleep: ${snapshot.sleep} hours`,
+        `Water: ${snapshot.water} cups`,
+        `Completed actions: ${snapshot.completedActions}`,
+        "",
+        `Next best action: ${nextBestActionText()}`
+      ].join("\n");
+    }
+
+    function portfolioSummaryReportText() {
+      return [
+        "LifeOps Portfolio Summary",
+        `Generated: ${new Date().toLocaleString()}`,
+        "",
+        "Problem",
+        "People make food, money, fitness, and wellness decisions in separate tools, so tradeoffs are easy to miss.",
+        "",
+        "Solution",
+        "LifeOps combines daily targets, category health scores, history, reports, and coach-style actions in one dashboard.",
+        "",
+        "Features",
+        "- Onboarding profile setup",
+        "- Money, food, fitness, wellness, goals, and action tracking",
+        "- LifeOps score and category health cards",
+        "- Daily history and weekly review",
+        "- Report exports and rule-based AI coach preview",
+        "",
+        "Skills demonstrated",
+        "Dashboard UX, KPI design, state management, local storage, report generation, product positioning, and practical business analysis.",
+        "",
+        "Future roadmap",
+        "Real AI coaching, richer trend analysis, account integrations, meal database improvements, and polished PDF exports."
+      ].join("\n");
+    }
+
+    function reportTextByType(type) {
+      if (type === "daily") return dailySnapshotReportText();
+      if (type === "portfolio") return portfolioSummaryReportText();
+      return weeklyReviewReportText();
+    }
+
+    function reportFilename(type) {
+      const date = new Date().toISOString().slice(0, 10);
+      if (type === "daily") return `lifeops-daily-snapshot-${date}.txt`;
+      if (type === "portfolio") return `lifeops-portfolio-summary-${date}.txt`;
+      return `lifeops-weekly-review-${date}.txt`;
+    }
+
+    function renderReportPreview() {
+      const select = document.getElementById("reportTypeInput");
+      if (!select) return;
+      const type = select.value;
+      document.getElementById("reportPreview").textContent = reportTextByType(type);
+      renderTextRows("reportSummaryList", [
+        ["Weekly Review", "Best for a weekly check-in or accountability summary."],
+        ["Daily Snapshot", "Best for saving one day of score, macro, cost, sleep, and action data."],
+        ["Portfolio Summary", "Best for explaining this project in an interview or portfolio walkthrough."]
+      ]);
+    }
+
+    function coachRowsForQuestion(question) {
+      const q = (question || "").toLowerCase();
+      const [weakArea, weakScore] = lowestScoreArea();
+      const meals = mealTotals();
+      const remaining = remainingNutrition();
+      const budget = Number(state.profile.foodBudget || 0);
+      if (q.includes("food") || q.includes("budget") || q.includes("protein")) {
+        return [
+          ["Coach answer", budget ? `You have ${money(Math.max(0, remaining.foodBudget))} left in the weekly food budget and ${Math.max(0, Math.round(remaining.protein))}g protein left today.` : `You have logged ${money(meals.cost)} in food cost. Add a weekly food budget in Setup to make this sharper.`],
+          ["Best move", "Use a saved home meal before adding another restaurant meal. That helps both cost control and protein consistency."],
+          ["Why it matters", "Food is one of the clearest links between money health and nutrition health."]
+        ];
+      }
+      if (q.includes("week") || q.includes("focus") || q.includes("next")) {
+        return [
+          ["Coach answer", `${weakArea} is the best focus area this week because it is the lowest score at ${Math.round(weakScore)}.`],
+          ["Best move", nextBestActionText()],
+          ["Keep it realistic", "Choose one money action, one health action, and one wellness action instead of trying to fix everything at once."]
+        ];
+      }
+      if (q.includes("health") || q.includes("money") || q.includes("habit")) {
+        return [
+          ["Coach answer", "Meal planning is the highest-leverage habit because it can reduce food cost while improving protein and calorie consistency."],
+          ["Second habit", "Sleep protection supports energy, workouts, and better food choices the next day."],
+          ["Track it", "Save a daily snapshot after logging meals, sleep, water, and completed actions."]
+        ];
+      }
+      return [
+        ["Coach answer", `${weakArea} is currently pulling the LifeOps score down the most at ${Math.round(weakScore)}.`],
+        ["Best move", nextBestActionText()],
+        ["What to watch", "Compare this week against your saved history so the coach can explain whether the score is improving, flat, or slipping."]
+      ];
+    }
+
+    function renderCoachAnswer() {
+      const input = document.getElementById("coachQuestionInput");
+      if (!input) return;
+      renderTextRows("coachAnswerList", coachRowsForQuestion(input.value || "What should I focus on this week?"));
+    }
+
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function validateBackupData(data) {
+      if (!data || typeof data !== "object" || Array.isArray(data)) {
+        return { ok: false, message: "The selected file is not a valid LifeOps backup object." };
+      }
+      const allowedArrays = ["tasks", "expenses", "workouts", "meals", "savedMeals", "goals", "planActions", "history"];
+      const invalidArray = allowedArrays.find(key => key in data && !Array.isArray(data[key]));
+      if (invalidArray) {
+        return { ok: false, message: `The backup field "${invalidArray}" must be a list.` };
+      }
+      if ("profile" in data && (!data.profile || typeof data.profile !== "object" || Array.isArray(data.profile))) {
+        return { ok: false, message: "The backup profile must be an object." };
+      }
+      return { ok: true, data: sanitizeState(mergeState(defaultState(), data)) };
+    }
+
+    function sanitizeState(nextState) {
+      const numericProfileKeys = [
+        "income", "savingsGoal", "currentSavings", "emergencyTarget", "workoutGoal", "workoutsDone",
+        "stepGoal", "stepsToday", "calorieGoal", "proteinGoal", "carbGoal", "fatGoal", "foodBudget",
+        "waterGoal", "sleepGoal", "sleepHours", "waterCups", "mood", "stress", "energy"
+      ];
+      numericProfileKeys.forEach(key => {
+        nextState.profile[key] = cleanNumber(nextState.profile[key]);
+      });
+      nextState.goals.forEach(goal => {
+        goal.progress = cleanNumber(goal.progress, 0, 100);
+      });
+      nextState.expenses.forEach(expense => {
+        expense.amount = cleanNumber(expense.amount);
+        expense.dueDate = expense.dueDate || "";
+      });
+      nextState.workouts.forEach(workout => {
+        workout.minutes = cleanNumber(workout.minutes);
+      });
+      [...nextState.meals, ...nextState.savedMeals].forEach(meal => {
+        ["calories", "protein", "carbs", "fat", "cost"].forEach(key => {
+          meal[key] = cleanNumber(meal[key]);
+        });
+      });
+      return nextState;
+    }
+
+    function restoreState(nextState) {
+      Object.keys(state).forEach(key => delete state[key]);
+      Object.assign(state, nextState);
+      save();
+    }
+
+    function renderTextRows(id, rows) {
+      const list = document.getElementById(id);
+      list.innerHTML = "";
+      rows.forEach(([title, text]) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.innerHTML = `<div><div class="item-title"></div><div class="item-meta"></div></div>`;
+        row.querySelector(".item-title").textContent = title;
+        row.querySelector(".item-meta").textContent = text;
+        list.appendChild(row);
+      });
+    }
+
+    function renderSummaryCards(id, cards) {
+      const list = document.getElementById(id);
+      list.className = "summary-card-grid";
+      list.innerHTML = "";
+      cards.forEach(cardData => {
+        const card = document.createElement("article");
+        card.className = `summary-card ${cardData.className || ""}`.trim();
+        card.innerHTML = `
+          <div class="item-title"></div>
+          <strong></strong>
+          <div class="item-meta"></div>`;
+        card.querySelector(".item-title").textContent = cardData.title;
+        card.querySelector("strong").textContent = cardData.value;
+        card.querySelector(".item-meta").textContent = cardData.meta;
+        list.appendChild(card);
+      });
+    }
+
+    function areaGoalCompletion(area) {
+      const goals = state.goals.filter(goal => goal.area === area);
+      if (!goals.length) return 0;
+      return goals.reduce((sum, goal) => sum + Number(goal.progress || 0), 0) / goals.length;
+    }
+
+    function renderInsights(cashLeft, meals) {
+      const insights = [];
+      const budget = Number(state.profile.foodBudget || 0);
+      const restaurantShare = meals.cost ? (meals.restaurantCost / meals.cost) * 100 : 0;
+      if (budget && meals.cost > budget) {
+        insights.push(`Food spending is ${money(meals.cost - budget)} over the weekly budget. That can pressure savings or debt payoff if it becomes a pattern.`);
+      } else if (budget) {
+        insights.push(`Food spending is ${money(Math.max(0, budget - meals.cost))} under the weekly budget so far.`);
+      }
+      if (restaurantShare >= 35) {
+        insights.push(`Restaurant meals are ${percent(restaurantShare)} of logged food cost. This is the clearest place to connect better macros with lower spending.`);
+      }
+      if (meals.protein >= Number(state.profile.proteinGoal || 0)) {
+        insights.push("Protein target is on track today, which supports the fitness score.");
+      }
+      if (cashLeft < 0) {
+        insights.push("Monthly cash left is negative after planned savings. Lower variable expenses or adjust the savings target before adding new spending.");
+      }
+      if (!insights.length) {
+        insights.push("The dashboard has enough balance to keep building. Log more meals and goals to make the connections sharper.");
+      }
+
+      const list = document.getElementById("insightList");
+      list.innerHTML = "";
+      insights.slice(0, 4).forEach(text => {
+        const item = document.createElement("div");
+        item.className = "insight";
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
+
+    function renderBars(id, rows) {
+      const chart = document.getElementById(id);
+      chart.innerHTML = "";
+      rows.forEach(([label, value, display]) => {
+        const row = document.createElement("div");
+        row.className = "bar";
+        row.innerHTML = `
+          <span></span>
+          <div class="bar-track"><div class="bar-fill"></div></div>
+          <strong></strong>`;
+        row.querySelector("span").textContent = label;
+        row.querySelector(".bar-fill").style.width = percent(value);
+        row.querySelector("strong").textContent = display;
+        chart.appendChild(row);
+      });
+    }
+
+    function addItem(collection, item) {
+      collection.push({ id: crypto.randomUUID(), ...item });
+      save();
+    }
+
+    document.querySelectorAll(".nav button").forEach(button => {
+      button.addEventListener("click", () => {
+        const tab = button.dataset.tab;
+        document.querySelectorAll(".nav button").forEach(item => item.classList.toggle("active", item === button));
+        document.querySelectorAll(".tab").forEach(item => item.classList.toggle("active", item.id === tab));
+        document.getElementById("pageTitle").textContent = titles[tab][0];
+        document.getElementById("pageSubtitle").textContent = titles[tab][1];
+      });
+    });
+
+    document.getElementById("priorityInput").addEventListener("input", event => {
+      state.profile.priority = event.target.value;
+      save();
+    });
+
+    document.getElementById("notesInput").addEventListener("input", event => {
+      state.profile.notes = event.target.value;
+      save();
+    });
+
+    document.querySelectorAll("[data-check]").forEach(input => {
+      input.addEventListener("change", () => {
+        state.checks[input.dataset.check] = input.checked;
+        save();
+      });
+    });
+
+    [
+      ["incomeInput", "income"],
+      ["savingsGoalInput", "savingsGoal"],
+      ["currentSavingsInput", "currentSavings"],
+      ["emergencyTargetInput", "emergencyTarget"],
+      ["workoutGoalInput", "workoutGoal"],
+      ["workoutsDoneInput", "workoutsDone"],
+      ["stepGoalInput", "stepGoal"],
+      ["stepsTodayInput", "stepsToday"],
+      ["calorieGoalInput", "calorieGoal"],
+      ["proteinGoalInput", "proteinGoal"],
+      ["carbGoalInput", "carbGoal"],
+      ["fatGoalInput", "fatGoal"],
+      ["foodBudgetInput", "foodBudget"],
+      ["waterGoalInput", "waterGoal"],
+      ["sleepHoursInput", "sleepHours"],
+      ["waterCupsInput", "waterCups"],
+      ["setupFoodBudgetInput", "foodBudget"],
+      ["setupCalorieGoalInput", "calorieGoal"],
+      ["setupProteinGoalInput", "proteinGoal"],
+      ["setupCarbGoalInput", "carbGoal"],
+      ["setupFatGoalInput", "fatGoal"],
+      ["setupSavingsGoalInput", "savingsGoal"],
+      ["setupWorkoutGoalInput", "workoutGoal"],
+      ["setupSleepGoalInput", "sleepGoal"]
+    ].forEach(([inputId, key]) => {
+      document.getElementById(inputId).addEventListener("input", event => {
+        state.profile[key] = cleanNumber(event.target.value);
+        save();
+      });
+    });
+
+    [
+      ["moodInput", "mood"],
+      ["stressInput", "stress"],
+      ["energyInput", "energy"]
+    ].forEach(([inputId, key]) => {
+      document.getElementById(inputId).addEventListener("change", event => {
+        state.profile[key] = cleanNumber(event.target.value, 0, 5);
+        save();
+      });
+    });
+
+    document.getElementById("tomorrowFocusInput").addEventListener("input", event => {
+      state.profile.tomorrowFocus = event.target.value;
+      save();
+    });
+
+    document.getElementById("addTaskBtn").addEventListener("click", () => {
+      const name = document.getElementById("taskName").value.trim();
+      if (!name) return;
+      addItem(state.tasks, { name, area: document.getElementById("taskArea").value, done: false });
+      document.getElementById("taskName").value = "";
+    });
+
+    document.getElementById("addExpenseBtn").addEventListener("click", () => {
+      const name = document.getElementById("expenseName").value.trim();
+      const amount = cleanNumber(document.getElementById("expenseAmount").value);
+      if (!name || amount <= 0) return;
+      addItem(state.expenses, { name, amount, type: document.getElementById("expenseType").value, dueDate: document.getElementById("expenseDueDate").value });
+      document.getElementById("expenseName").value = "";
+      document.getElementById("expenseAmount").value = "";
+      document.getElementById("expenseDueDate").value = "";
+    });
+
+    document.getElementById("addWorkoutBtn").addEventListener("click", () => {
+      const name = document.getElementById("workoutName").value.trim();
+      const minutes = cleanNumber(document.getElementById("workoutMinutes").value);
+      if (!name || minutes <= 0) return;
+      addItem(state.workouts, { name, minutes, intensity: document.getElementById("workoutIntensity").value });
+      document.getElementById("workoutName").value = "";
+      document.getElementById("workoutMinutes").value = "";
+    });
+
+    document.getElementById("addMealBtn").addEventListener("click", () => {
+      const name = document.getElementById("mealName").value.trim();
+      const calories = cleanNumber(document.getElementById("mealCalories").value);
+      if (!name || calories <= 0) return;
+      addItem(state.meals, {
+        name,
+        source: document.getElementById("mealSource").value,
+        calories,
+        protein: cleanNumber(document.getElementById("mealProtein").value),
+        carbs: cleanNumber(document.getElementById("mealCarbs").value),
+        fat: cleanNumber(document.getElementById("mealFat").value),
+        cost: cleanNumber(document.getElementById("mealCost").value)
+      });
+      ["mealName", "mealCalories", "mealProtein", "mealCarbs", "mealFat", "mealCost"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+    });
+
+    document.getElementById("quickAddSavedMealBtn").addEventListener("click", () => {
+      const selectedId = document.getElementById("savedMealSelect").value;
+      const meal = state.savedMeals.find(item => item.id === selectedId);
+      if (!meal) return;
+      addItem(state.meals, {
+        name: meal.name,
+        source: meal.source,
+        calories: cleanNumber(meal.calories),
+        protein: cleanNumber(meal.protein),
+        carbs: cleanNumber(meal.carbs),
+        fat: cleanNumber(meal.fat),
+        cost: cleanNumber(meal.cost)
+      });
+    });
+
+    document.getElementById("copyLastMealBtn").addEventListener("click", () => {
+      const lastMeal = state.meals[state.meals.length - 1];
+      if (!lastMeal) return;
+      addItem(state.meals, {
+        name: lastMeal.name,
+        source: lastMeal.source,
+        calories: cleanNumber(lastMeal.calories),
+        protein: cleanNumber(lastMeal.protein),
+        carbs: cleanNumber(lastMeal.carbs),
+        fat: cleanNumber(lastMeal.fat),
+        cost: cleanNumber(lastMeal.cost)
+      });
+    });
+
+    document.getElementById("addGoalBtn").addEventListener("click", () => {
+      const name = document.getElementById("goalName").value.trim();
+      if (!name) return;
+      addItem(state.goals, {
+        name,
+        area: document.getElementById("goalArea").value,
+        targetDate: document.getElementById("goalDate").value,
+        progress: cleanNumber(document.getElementById("goalProgress").value, 0, 100)
+      });
+      ["goalName", "goalDate", "goalProgress"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+    });
+
+    document.getElementById("addPlanActionBtn").addEventListener("click", () => {
+      const name = document.getElementById("planActionName").value.trim();
+      if (!name) return;
+      addItem(state.planActions, {
+        name,
+        area: document.getElementById("planActionArea").value,
+        deadline: document.getElementById("planActionDeadline").value,
+        goal: document.getElementById("planActionGoal").value.trim(),
+        impact: document.getElementById("planActionImpact").value,
+        done: false
+      });
+      ["planActionName", "planActionDeadline", "planActionGoal"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+    });
+
+    document.getElementById("saveSnapshotBtn").addEventListener("click", () => {
+      saveTodaySnapshot();
+    });
+
+    document.getElementById("reportTypeInput").addEventListener("change", renderReportPreview);
+    document.getElementById("refreshReportBtn").addEventListener("click", renderReportPreview);
+    document.getElementById("downloadReportBtn").addEventListener("click", () => {
+      const type = document.getElementById("reportTypeInput").value;
+      downloadText(reportFilename(type), reportTextByType(type));
+    });
+
+    document.querySelectorAll("[data-coach-prompt]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.getElementById("coachQuestionInput").value = button.dataset.coachPrompt;
+        renderCoachAnswer();
+      });
+    });
+
+    document.getElementById("askCoachBtn").addEventListener("click", renderCoachAnswer);
+    document.getElementById("coachQuestionInput").addEventListener("keydown", event => {
+      if (event.key === "Enter") renderCoachAnswer();
+    });
+
+    document.getElementById("exportBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `lifeops-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById("importBtn").addEventListener("click", () => {
+      document.getElementById("importFileInput").click();
+    });
+
+    document.getElementById("importFileInput").addEventListener("change", event => {
+      const file = event.target.files[0];
+      event.target.value = "";
+      if (!file) return;
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || ""));
+          const validation = validateBackupData(parsed);
+          if (!validation.ok) {
+            alert(validation.message);
+            return;
+          }
+          if (!confirm("Restore this LifeOps backup? This will replace the current local dashboard data.")) return;
+          restoreState(validation.data);
+        } catch {
+          alert("This file could not be read as valid JSON.");
+        }
+      });
+      reader.readAsText(file);
+    });
+
+    document.getElementById("emptyTestBtn").addEventListener("click", () => {
+      if (!confirm("Load empty LifeOps test data? Export a backup first if you want to keep the current local data.")) return;
+      restoreState(emptyState());
+    });
+
+    document.getElementById("cancelEditModalBtn").addEventListener("click", closeEditModal);
+    document.getElementById("closeEditModalBtn").addEventListener("click", closeEditModal);
+    document.getElementById("editModalBackdrop").addEventListener("click", event => {
+      if (event.target.id === "editModalBackdrop") closeEditModal();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeEditModal();
+    });
+
+    document.getElementById("exportReviewBtn").addEventListener("click", () => {
+      downloadText(`lifeops-weekly-review-${new Date().toISOString().slice(0, 10)}.txt`, weeklyReviewReportText());
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      if (!confirm("Clear the current LifeOps data and reload the starter sample?")) return;
+      localStorage.removeItem(storageKey);
+      location.reload();
+    });
+
+    render();
+  </script>
+</body>
+</html>
