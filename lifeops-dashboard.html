@@ -417,6 +417,204 @@
       border-color: #c8dbe2;
     }
 
+    .reward-hero {
+      background: #f7faf7;
+      border: 1px solid #c8d9cc;
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .reward-hero h3 {
+      margin-bottom: 6px;
+      font-size: 20px;
+    }
+
+    .reward-hero p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .reward-card {
+      min-height: 138px;
+    }
+
+    .reward-card strong {
+      font-size: 30px;
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .badge-card {
+      min-height: 112px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8faf8;
+      display: grid;
+      gap: 8px;
+      align-content: space-between;
+    }
+
+    .badge-card.locked {
+      color: var(--muted);
+      background: #f4f6f4;
+      border-style: dashed;
+    }
+
+    .badge-card strong {
+      font-size: 15px;
+    }
+
+    .badge-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .companion-hero {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid #c8dbe2;
+      border-radius: var(--radius);
+      background: #eef5f8;
+      margin-bottom: 16px;
+    }
+
+    .companion-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #18313d;
+      background: #d7e8ee;
+      border: 1px solid #bdd5dd;
+    }
+
+    .companion-hero h3 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+
+    .companion-hero p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .companion-message {
+      border: 1px solid #c8dbe2;
+      background: #f5fafc;
+      border-radius: var(--radius);
+      padding: 14px;
+      color: #203139;
+    }
+
+    .companion-message strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .companion-hero.calm {
+      background: #eef5f8;
+      border-color: #c8dbe2;
+    }
+
+    .companion-hero.direct {
+      background: #f7faf7;
+      border-color: #c8d9cc;
+    }
+
+    .companion-hero.energized {
+      background: #fff8e8;
+      border-color: #ebd4a8;
+    }
+
+    .dashboard-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .life-value-card {
+      min-height: 260px;
+      padding: 20px;
+      border: 1px solid #c8d9cc;
+      border-radius: var(--radius);
+      background: #f7faf7;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 14px;
+      align-content: space-between;
+    }
+
+    .life-value-card strong {
+      display: block;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .life-value-card p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    .trend-line {
+      height: 74px;
+      display: flex;
+      align-items: end;
+      gap: 6px;
+      padding: 12px 0 4px;
+    }
+
+    .trend-bar {
+      flex: 1 1 0;
+      min-width: 10px;
+      height: 10%;
+      border-radius: 999px 999px 3px 3px;
+      background: var(--green);
+      transition: height .24s ease;
+    }
+
+    .market-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .market-card {
+      min-height: 124px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      display: grid;
+      align-content: space-between;
+      gap: 8px;
+    }
+
+    .market-card strong {
+      font-size: 24px;
+    }
+
+    .market-card .item-title {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
     .hidden-input {
       display: none;
     }
@@ -703,7 +901,10 @@
       }
 
       .metric-row,
+      .dashboard-hero,
       .summary-card-grid,
+      .badge-grid,
+      .market-card-grid,
       .grid.cols-2,
       .grid.cols-3,
       .grid.cols-6 {
@@ -798,6 +999,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           <span>Plan</span>
         </button>
+        <button data-tab="rewards" title="Rewards">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v4a5 5 0 0 1-10 0z"></path><path d="M5 5H3a3 3 0 0 0 3 3h1"></path><path d="M19 5h2a3 3 0 0 1-3 3h-1"></path></svg>
+          <span>Rewards</span>
+        </button>
         <button data-tab="history" title="History">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M7 16l3-4 4 2 4-7"></path></svg>
           <span>History</span>
@@ -810,9 +1015,9 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M8 13h8"></path><path d="M8 17h6"></path></svg>
           <span>Reports</span>
         </button>
-        <button data-tab="coach" title="Coach">
+        <button data-tab="coach" title="Companion">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a7 7 0 0 0-7 7v3a4 4 0 0 0 4 4h1v-5H7v-2a5 5 0 0 1 10 0v2h-3v5h1a4 4 0 0 0 4-4v-3a7 7 0 0 0-7-7z"></path><path d="M9 21h6"></path></svg>
-          <span>Coach</span>
+          <span>Companion</span>
         </button>
         <button data-tab="about" title="About">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
@@ -1364,6 +1569,45 @@
         </div>
       </section>
 
+      <section id="rewards" class="tab">
+        <div class="reward-hero">
+          <h3>LifeOps Rewards</h3>
+          <p>Earn XP from healthy routines, money discipline, completed actions, and saved progress. Rewards are local-only and based on your own dashboard activity.</p>
+        </div>
+        <section class="grid cols-3" aria-label="Reward summary">
+          <article class="metric reward-card">
+            <div class="label">Current Level</div>
+            <strong id="rewardLevel">1</strong>
+            <span id="rewardLevelCaption">Build momentum</span>
+            <div class="progress"><div id="rewardLevelProgress"></div></div>
+          </article>
+          <article class="metric reward-card">
+            <div class="label">Today XP</div>
+            <strong id="rewardTodayXp">0</strong>
+            <span id="rewardTodayCaption">Log actions to earn points</span>
+          </article>
+          <article class="metric reward-card">
+            <div class="label">Saved-Day Streak</div>
+            <strong id="rewardStreak">0</strong>
+            <span id="rewardStreakCaption">Save snapshots to build a streak</span>
+          </article>
+        </section>
+        <div class="grid cols-2" style="margin-top:16px;">
+          <article class="panel">
+            <h3>Today's XP Sources</h3>
+            <div id="rewardBreakdownList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Reward Badges</h3>
+            <div id="rewardBadgeGrid" class="badge-grid"></div>
+          </article>
+        </div>
+        <article class="panel action-focus">
+          <h3>Next Unlock</h3>
+          <div id="rewardNextUnlockList" class="list"></div>
+        </article>
+      </section>
+
       <section id="history" class="tab">
         <div class="grid cols-2">
           <article class="panel">
@@ -1402,7 +1646,7 @@
           </article>
 
           <article class="panel">
-            <h3>AI Coach Preview</h3>
+            <h3>AI Companion Preview</h3>
             <div class="list" id="aiPreviewList"></div>
           </article>
         </div>
@@ -1441,28 +1685,89 @@
       </section>
 
       <section id="coach" class="tab">
+        <div class="companion-hero" id="companionHero">
+          <div class="companion-avatar" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a7 7 0 0 0-7 7v3a4 4 0 0 0 4 4h1v-5H7v-2a5 5 0 0 1 10 0v2h-3v5h1a4 4 0 0 0 4-4v-3a7 7 0 0 0-7-7z"></path><path d="M9 21h6"></path></svg>
+          </div>
+          <div>
+            <h3 id="companionHeroName">LifeOps Companion</h3>
+            <p id="companionHeroText">A local-first companion preview that reads your dashboard signals and explains the next practical move. No personal data leaves this browser.</p>
+          </div>
+        </div>
         <div class="grid cols-2">
           <article class="panel">
-            <h3>Ask LifeOps Coach</h3>
+            <h3>Ask LifeOps Companion</h3>
             <div class="prompt-row">
               <button class="btn small" data-coach-prompt="Why is my score low?">Why is my score low?</button>
               <button class="btn small" data-coach-prompt="What should I focus on this week?">Weekly focus</button>
               <button class="btn small" data-coach-prompt="How can I improve my food budget?">Food budget</button>
               <button class="btn small" data-coach-prompt="What habit helps both health and money?">Health + money</button>
+              <button class="btn small" data-coach-prompt="What did I earn rewards for today?">Rewards</button>
+              <button class="btn small" data-coach-prompt="Give me a simple daily plan.">Daily plan</button>
             </div>
             <label>
               Question
-              <input id="coachQuestionInput" placeholder="Ask about your score, food budget, protein, sleep, goals, or next action">
+              <input id="coachQuestionInput" placeholder="Ask about your score, rewards, food budget, sleep, goals, or next action">
             </label>
             <button class="btn primary" id="askCoachBtn">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4z"></path></svg>
-              Ask Coach
+              Ask Companion
             </button>
           </article>
 
           <article class="panel">
-            <h3>Coach Response</h3>
+            <h3>Companion Response</h3>
             <div id="coachAnswerList" class="list"></div>
+          </article>
+        </div>
+        <div class="grid cols-2" style="margin-top:16px;">
+          <article class="panel">
+            <h3>Customize Companion</h3>
+            <div class="form-grid">
+              <label>
+                Companion name
+                <input id="companionNameInput" placeholder="LifeOps Companion">
+              </label>
+              <label>
+                Tone
+                <select id="companionToneInput">
+                  <option value="supportive">Supportive</option>
+                  <option value="direct">Direct</option>
+                  <option value="motivational">Motivational</option>
+                </select>
+              </label>
+              <label>
+                Style
+                <select id="companionStyleInput">
+                  <option value="calm">Calm</option>
+                  <option value="direct">Direct</option>
+                  <option value="energized">Energized</option>
+                </select>
+              </label>
+              <label>
+                Dashboard focus
+                <select id="dashboardFocusInput">
+                  <option value="balanced">Balanced</option>
+                  <option value="money">Money</option>
+                  <option value="health">Health</option>
+                  <option value="goals">Goals</option>
+                </select>
+              </label>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Daily Companion Check-In</h3>
+            <div id="companionCheckInList" class="list"></div>
+          </article>
+        </div>
+        <div class="grid cols-2" style="margin-top:16px;">
+          <article class="panel">
+            <h3>Data Used</h3>
+            <div id="companionDataList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Companion Behavior</h3>
+            <div id="companionBehaviorList" class="list"></div>
           </article>
         </div>
       </section>
@@ -1502,7 +1807,7 @@
             <div class="list">
               <div class="item"><div><div class="item-title">Business question</div><div class="item-meta">What is the next best action when money, health, and goals compete for attention?</div></div></div>
               <div class="item"><div><div class="item-title">Dashboard answer</div><div class="item-meta">A single LifeOps score, clean category health cards, trend history, weekly review, and exportable report.</div></div></div>
-              <div class="item"><div><div class="item-title">Next build phase</div><div class="item-meta">Turn the rule-based coach into a real AI assistant once the app has enough history to give useful context.</div></div></div>
+              <div class="item"><div><div class="item-title">Next build phase</div><div class="item-meta">Turn the local companion preview into a real AI assistant once the app has enough history to give useful context.</div></div></div>
             </div>
           </article>
 
@@ -1511,15 +1816,31 @@
             <div class="list">
               <div class="item"><div><div class="item-title">Problem</div><div class="item-meta">People make food, money, fitness, and wellness decisions in separate tools, so tradeoffs are easy to miss.</div></div></div>
               <div class="item"><div><div class="item-title">Solution</div><div class="item-meta">LifeOps combines key daily inputs, category scores, history, reports, and action planning into one practical dashboard.</div></div></div>
-              <div class="item"><div><div class="item-title">Features</div><div class="item-meta">Onboarding, macro and cost logging, money setup, wellness check-ins, trends, weekly actions, reports, and coach preview.</div></div></div>
+              <div class="item"><div><div class="item-title">Features</div><div class="item-meta">Onboarding, macro and cost logging, money setup, wellness check-ins, trends, weekly actions, reports, rewards, and companion preview.</div></div></div>
               <div class="item"><div><div class="item-title">Skills demonstrated</div><div class="item-meta">Dashboard UX, KPI design, state management, local storage, export workflows, product positioning, and business analysis.</div></div></div>
-              <div class="item"><div><div class="item-title">Future roadmap</div><div class="item-meta">Real AI coaching, better meal database tools, richer trend analysis, account integrations, and PDF-quality report exports.</div></div></div>
+              <div class="item"><div><div class="item-title">Future roadmap</div><div class="item-meta">Real AI companion support, better meal database tools, richer trend analysis, account integrations, and PDF-quality report exports.</div></div></div>
             </div>
           </article>
         </div>
       </section>
 
       <section id="dashboard" class="tab">
+        <section class="dashboard-hero" aria-label="Dashboard overview">
+          <article class="life-value-card">
+            <div>
+              <span class="pill" id="dashboardFocusPill">Balanced view</span>
+              <h3 id="dashboardHeroTitle">LifeOps Value</h3>
+              <strong id="dashboardHeroScore">0</strong>
+              <p id="dashboardHeroText">A cleaner view of your current life operating score, trend, and best next move.</p>
+            </div>
+            <div>
+              <div class="trend-line" id="dashboardTrendLine" aria-label="Recent LifeOps score trend"></div>
+              <div class="progress"><div id="dashboardHeroProgress"></div></div>
+            </div>
+          </article>
+          <div class="market-card-grid" id="dashboardMarketCards"></div>
+        </section>
+
         <article class="panel daily-summary">
           <h3 id="dailyGreeting">Good morning, Dallas.</h3>
           <div id="dashboardSummaryList" class="list"></div>
@@ -1600,7 +1921,7 @@
   </div>
 
   <script>
-    const appVersion = "1.1.0";
+    const appVersion = "1.4.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
 
@@ -1613,12 +1934,13 @@
       goals: ["Goals", "Break long-term plans into visible progress across health, money, career, and wellness."],
       wellness: ["Wellness", "Track sleep, mood, stress, energy, and water so well-being has its own score."],
       plan: ["Plan", "Turn weak spots and goals into a clear weekly action plan."],
+      rewards: ["Rewards", "Earn XP, unlock badges, and turn progress into visible momentum."],
       history: ["History", "Save daily snapshots and watch the 7-day score trend."],
       review: ["Weekly Review", "Summarize wins, leaks, weak spots, and next week’s focus."],
       reports: ["Reports", "Preview and export weekly, daily, and portfolio-ready summaries."],
-      coach: ["Coach", "Ask a rule-based LifeOps coach for practical next steps before real AI is connected."],
-      about: ["About", "Position LifeOps as a career-ready portfolio project and future AI coach."],
-      dashboard: ["Dashboard", "Review the clean score categories across money, nutrition, fitness, wellness, goals, and overall progress."]
+      coach: ["Companion", "Ask a local-first LifeOps companion for practical next steps before real AI is connected."],
+      about: ["About", "Position LifeOps as a career-ready portfolio project and future AI companion."],
+      dashboard: ["Dashboard", "Review a cleaner life value view with focused cards, trend movement, and your next action."]
     };
 
     function defaultState() {
@@ -1646,7 +1968,11 @@
           energy: 3,
           tomorrowFocus: "Protect sleep, hit protein, and keep food spending planned.",
           priority: "Build the first LifeOps app version",
-          notes: "Keep the first version simple, useful, and easy to improve."
+          notes: "Keep the first version simple, useful, and easy to improve.",
+          companionName: "LifeOps Companion",
+          companionTone: "supportive",
+          companionStyle: "calm",
+          dashboardFocus: "balanced"
         },
         checks: { budget: false, workout: false, water: false, sleep: false },
         tasks: [
@@ -1924,6 +2250,121 @@
       return { label: "Needs attention", className: "status attention", arrow: "Down" };
     }
 
+    function rewardBreakdown() {
+      const meals = mealTotals();
+      const completedTasks = state.tasks.filter(task => task.done).length;
+      const completedActions = state.planActions.filter(action => action.done).length;
+      const foodBudget = cleanNumber(state.profile.foodBudget);
+      const waterGoal = cleanNumber(state.profile.waterGoal);
+      const sleepGoal = cleanNumber(state.profile.sleepGoal, 1);
+      return [
+        { title: "Meals logged", points: Math.min(state.meals.length, 3) * 10, done: state.meals.length > 0, meta: `${state.meals.length} meals today` },
+        { title: "Workout logged", points: state.workouts.length ? 25 : 0, done: state.workouts.length > 0, meta: `${state.workouts.length} workouts logged` },
+        { title: "Food budget protected", points: foodBudget && state.meals.length && meals.cost <= foodBudget ? 20 : 0, done: foodBudget && state.meals.length && meals.cost <= foodBudget, meta: `${money(meals.cost)} of ${money(foodBudget)} used` },
+        { title: "Tasks completed", points: completedTasks * 8, done: completedTasks > 0, meta: `${completedTasks} of ${state.tasks.length} tasks complete` },
+        { title: "Water goal met", points: waterGoal && cleanNumber(state.profile.waterCups) >= waterGoal ? 15 : 0, done: waterGoal && cleanNumber(state.profile.waterCups) >= waterGoal, meta: `${state.profile.waterCups || 0} of ${waterGoal} cups` },
+        { title: "Sleep goal met", points: cleanNumber(state.profile.sleepHours) >= sleepGoal ? 15 : 0, done: cleanNumber(state.profile.sleepHours) >= sleepGoal, meta: `${state.profile.sleepHours || 0} of ${sleepGoal} hours` },
+        { title: "Weekly actions finished", points: completedActions * 20, done: completedActions > 0, meta: `${completedActions} of ${state.planActions.length} actions complete` },
+        { title: "Emergency fund progress", points: cleanNumber(state.profile.currentSavings) > 0 ? 15 : 0, done: cleanNumber(state.profile.currentSavings) > 0, meta: `${percent(savingsCompletion())} funded` }
+      ];
+    }
+
+    function todayRewardPoints() {
+      return rewardBreakdown().reduce((sum, item) => sum + cleanNumber(item.points), 0);
+    }
+
+    function totalRewardPoints() {
+      const historyPoints = state.history.reduce((sum, item) => {
+        return sum + cleanNumber(item.lifeScore) + (cleanNumber(item.completedActions) * 20);
+      }, 0);
+      return todayRewardPoints() + historyPoints;
+    }
+
+    function rewardLevelInfo() {
+      const total = totalRewardPoints();
+      const level = Math.floor(total / 250) + 1;
+      const currentLevelStart = (level - 1) * 250;
+      const nextLevel = level * 250;
+      return {
+        total,
+        level,
+        nextLevel,
+        progress: ((total - currentLevelStart) / 250) * 100,
+        remaining: Math.max(0, nextLevel - total)
+      };
+    }
+
+    function savedDayStreak() {
+      const days = [...state.history]
+        .filter(item => cleanNumber(item.lifeScore) >= 55)
+        .map(item => item.date)
+        .sort((a, b) => b.localeCompare(a));
+      if (!days.length) return dailyCompletion() >= 60 ? 1 : 0;
+      let streak = 1;
+      let previous = new Date(`${days[0]}T00:00:00`);
+      for (let index = 1; index < days.length; index += 1) {
+        const current = new Date(`${days[index]}T00:00:00`);
+        const gap = Math.round((previous - current) / 86400000);
+        if (gap !== 1) break;
+        streak += 1;
+        previous = current;
+      }
+      return streak;
+    }
+
+    function rewardBadges() {
+      const meals = mealTotals();
+      return [
+        { title: "First Snapshot", unlocked: state.history.length > 0, meta: "Save at least one daily history snapshot." },
+        { title: "Routine Builder", unlocked: dailyCompletion() >= 75, meta: "Complete 75% of daily tasks and checks." },
+        { title: "Protein Starter", unlocked: cleanNumber(state.profile.proteinGoal) && meals.protein >= cleanNumber(state.profile.proteinGoal) * .75, meta: "Reach 75% of your protein goal." },
+        { title: "Budget Protector", unlocked: state.meals.length > 0 && cleanNumber(state.profile.foodBudget) && meals.cost <= cleanNumber(state.profile.foodBudget), meta: "Log meals while staying inside food budget." },
+        { title: "Emergency Builder", unlocked: savingsCompletion() >= 40, meta: "Reach 40% of your emergency fund target." },
+        { title: "Action Finisher", unlocked: state.planActions.some(action => action.done), meta: "Complete one weekly action." }
+      ];
+    }
+
+    function nextRewardUnlock() {
+      const lockedBadge = rewardBadges().find(badge => !badge.unlocked);
+      if (lockedBadge) return `Next badge: ${lockedBadge.title}. ${lockedBadge.meta}`;
+      const level = rewardLevelInfo();
+      return `Next level: earn ${level.remaining} more XP to reach Level ${level.level + 1}.`;
+    }
+
+    function companionToneText() {
+      const tone = state.profile.companionTone || "supportive";
+      if (tone === "direct") return "Direct mode: clear priorities, fewer soft edges, and practical next steps.";
+      if (tone === "motivational") return "Motivational mode: higher energy, streaks, rewards, and forward momentum.";
+      return "Supportive mode: calm guidance, steady progress, and realistic next actions.";
+    }
+
+    function dashboardFocusLabel() {
+      const focus = state.profile.dashboardFocus || "balanced";
+      const labels = { balanced: "Balanced view", money: "Money focus", health: "Health focus", goals: "Goal focus" };
+      return labels[focus] || labels.balanced;
+    }
+
+    function dashboardFocusScore() {
+      const focus = state.profile.dashboardFocus || "balanced";
+      if (focus === "money") return moneyHealthScore();
+      if (focus === "health") return Math.round((nutritionHealthScore() + fitnessHealthScore() + wellnessHealthScore()) / 3);
+      if (focus === "goals") return Math.round(goalCompletion());
+      return lifeScore();
+    }
+
+    function dashboardFocusTitle() {
+      const focus = state.profile.dashboardFocus || "balanced";
+      if (focus === "money") return "Money Value";
+      if (focus === "health") return "Health Value";
+      if (focus === "goals") return "Goal Value";
+      return "LifeOps Value";
+    }
+
+    function dashboardTrendValues() {
+      const history = state.history.slice(-7).map(item => cleanNumber(item.lifeScore));
+      return [...history, lifeScore()].slice(-7);
+    }
+
     function render() {
       document.getElementById("appVersionLabel").textContent = `Version ${appVersion}`;
       document.getElementById("todayDate").textContent = new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
@@ -1961,6 +2402,10 @@
       document.getElementById("stressInput").value = String(state.profile.stress || 3);
       document.getElementById("energyInput").value = String(state.profile.energy || 3);
       document.getElementById("tomorrowFocusInput").value = state.profile.tomorrowFocus || "";
+      document.getElementById("companionNameInput").value = state.profile.companionName || "LifeOps Companion";
+      document.getElementById("companionToneInput").value = state.profile.companionTone || "supportive";
+      document.getElementById("companionStyleInput").value = state.profile.companionStyle || "calm";
+      document.getElementById("dashboardFocusInput").value = state.profile.dashboardFocus || "balanced";
 
       const remainingCash = cashLeft();
       const score = lifeScore();
@@ -1980,8 +2425,10 @@
       renderList("goalList", state.goals, goalTemplate);
       renderList("planActionList", state.planActions, planActionTemplate);
       renderCharts();
+      renderDashboardHero();
       renderDailySummary();
       renderScoreCards();
+      renderRewards();
       renderWeeklyReview();
       renderNextBestAction();
       renderSmartFoodLog();
@@ -1989,6 +2436,7 @@
       renderSetupSummary();
       renderReportPreview();
       renderCoachAnswer();
+      renderCompanionPanels();
     }
 
     function setNumberInput(id, value) {
@@ -2301,7 +2749,37 @@
         { title: "Habits", value: `${completedHabits}/${Object.keys(state.checks).length}`, meta: "Daily checks complete" },
         { title: "Workout Goal", value: percent(fitnessCompletion()), meta: `${state.profile.workoutsDone || 0} of ${state.profile.workoutGoal || 0} workouts` },
         { title: "Steps", value: cleanNumber(state.profile.stepsToday).toLocaleString(), meta: `${cleanNumber(state.profile.stepGoal).toLocaleString()} step goal` },
+        { title: "Today XP", value: todayRewardPoints(), meta: nextRewardUnlock() },
+        { title: "LifeOps Level", value: `Level ${rewardLevelInfo().level}`, meta: `${rewardLevelInfo().remaining} XP to next level` },
         { title: "Recommended Focus", value: "Next move", meta: recommendedDailyFocus(), className: "focus" }
+      ]);
+    }
+
+    function renderDashboardHero() {
+      const score = dashboardFocusScore();
+      const values = dashboardTrendValues();
+      document.getElementById("dashboardFocusPill").textContent = dashboardFocusLabel();
+      document.getElementById("dashboardHeroTitle").textContent = dashboardFocusTitle();
+      document.getElementById("dashboardHeroScore").textContent = Math.round(score);
+      document.getElementById("dashboardHeroText").textContent = `${state.profile.companionName || "LifeOps Companion"} is watching ${dashboardFocusLabel().toLowerCase()} and recommends: ${recommendedDailyFocus()}`;
+      document.getElementById("dashboardHeroProgress").style.width = percent(score);
+
+      const trend = document.getElementById("dashboardTrendLine");
+      trend.innerHTML = "";
+      const max = Math.max(100, ...values);
+      values.forEach(value => {
+        const bar = document.createElement("div");
+        bar.className = "trend-bar";
+        bar.style.height = `${Math.max(8, (value / max) * 100)}%`;
+        bar.title = `LifeOps ${Math.round(value)}`;
+        trend.appendChild(bar);
+      });
+
+      renderMarketCards("dashboardMarketCards", [
+        { title: "Cash Flow", value: money(cashLeft()), meta: cashLeft() >= 0 ? "Available after expenses and savings" : "Watch spending against income" },
+        { title: "Health Avg", value: Math.round((nutritionHealthScore() + fitnessHealthScore() + wellnessHealthScore()) / 3), meta: "Nutrition, fitness, and wellness" },
+        { title: "Reward Level", value: `Level ${rewardLevelInfo().level}`, meta: `${todayRewardPoints()} XP earned today` },
+        { title: "Next Move", value: "Focus", meta: recommendedDailyFocus() }
       ]);
     }
 
@@ -2428,6 +2906,43 @@
         card.querySelector(".progress div").style.width = percent(score);
         grid.appendChild(card);
       });
+    }
+
+    function renderRewards() {
+      const level = rewardLevelInfo();
+      const streak = savedDayStreak();
+      document.getElementById("rewardLevel").textContent = `Level ${level.level}`;
+      document.getElementById("rewardLevelCaption").textContent = `${level.total} total XP. ${level.remaining} XP to Level ${level.level + 1}.`;
+      document.getElementById("rewardLevelProgress").style.width = percent(level.progress);
+      document.getElementById("rewardTodayXp").textContent = todayRewardPoints();
+      document.getElementById("rewardTodayCaption").textContent = todayRewardPoints() ? "Earned from today's logged activity." : "Complete one action to start earning XP.";
+      document.getElementById("rewardStreak").textContent = `${streak} day${streak === 1 ? "" : "s"}`;
+      document.getElementById("rewardStreakCaption").textContent = streak ? "Saved days with steady LifeOps progress." : "Save snapshots to build a streak.";
+
+      renderTextRows("rewardBreakdownList", rewardBreakdown().map(item => [
+        item.title,
+        `${item.done ? "+" : ""}${item.points} XP - ${item.meta}`
+      ]));
+
+      const badgeGrid = document.getElementById("rewardBadgeGrid");
+      badgeGrid.innerHTML = "";
+      rewardBadges().forEach(badge => {
+        const card = document.createElement("article");
+        card.className = `badge-card ${badge.unlocked ? "" : "locked"}`.trim();
+        card.innerHTML = `
+          <div class="pill"></div>
+          <strong></strong>
+          <span></span>`;
+        card.querySelector(".pill").textContent = badge.unlocked ? "Unlocked" : "Locked";
+        card.querySelector("strong").textContent = badge.title;
+        card.querySelector("span").textContent = badge.meta;
+        badgeGrid.appendChild(card);
+      });
+
+      renderTextRows("rewardNextUnlockList", [
+        ["Next unlock", nextRewardUnlock()],
+        ["Reward rule", "XP is based on logged habits, meals, workouts, tasks, savings progress, and weekly actions."]
+      ]);
     }
 
     function weeklyReviewRows() {
@@ -2680,7 +3195,7 @@
         "Weekly Review"
       ];
       weeklyReviewRows().forEach(([title, text]) => lines.push(`- ${title}: ${text}`));
-      lines.push("", "AI Coach Preview");
+      lines.push("", "AI Companion Preview");
       coachPreviewRows().forEach(([title, text]) => lines.push(`- ${title}: ${text}`));
       return lines.join("\n");
     }
@@ -2726,13 +3241,13 @@
         "- Money, food, fitness, wellness, goals, and action tracking",
         "- LifeOps score and category health cards",
         "- Daily history and weekly review",
-        "- Report exports and rule-based AI coach preview",
+        "- Report exports, rewards, and rule-based AI companion preview",
         "",
         "Skills demonstrated",
         "Dashboard UX, KPI design, state management, local storage, report generation, product positioning, and practical business analysis.",
         "",
         "Future roadmap",
-        "Real AI coaching, richer trend analysis, account integrations, meal database improvements, and polished PDF exports."
+        "Real AI companion support, richer trend analysis, account integrations, meal database improvements, and polished PDF exports."
       ].join("\n");
     }
 
@@ -2767,31 +3282,59 @@
       const meals = mealTotals();
       const remaining = remainingNutrition();
       const budget = Number(state.profile.foodBudget || 0);
+      if (q.includes("reward") || q.includes("xp") || q.includes("level") || q.includes("badge")) {
+        const level = rewardLevelInfo();
+        const topEarners = rewardBreakdown()
+          .filter(item => item.points > 0)
+          .sort((a, b) => b.points - a.points)
+          .slice(0, 3)
+          .map(item => `${item.title}: +${item.points} XP`)
+          .join("; ");
+        return [
+          ["Companion answer", `You earned ${todayRewardPoints()} XP today and you are at Level ${level.level}.`],
+          ["Best XP sources", topEarners || "No XP sources yet. Complete one task, habit, meal log, workout, or weekly action."],
+          ["Next unlock", nextRewardUnlock()],
+          ["Data used", "Meals, workouts, completed tasks, daily checks, weekly actions, savings progress, and saved history."]
+        ];
+      }
+      if (q.includes("daily plan") || q.includes("simple plan") || q.includes("today plan")) {
+        return [
+          ["Companion answer", `Today's plan should focus on ${weakArea}, because it is the lowest category at ${Math.round(weakScore)}.`],
+          ["Step 1", recommendedDailyFocus()],
+          ["Step 2", nextBestActionText()],
+          ["Step 3", "Earn easy XP by completing one task, logging water or sleep, and saving today's snapshot."],
+          ["Data used", "Lowest score area, upcoming bills, open tasks, daily checks, rewards, and weekly actions."]
+        ];
+      }
       if (q.includes("food") || q.includes("budget") || q.includes("protein")) {
         return [
-          ["Coach answer", budget ? `You have ${money(Math.max(0, remaining.foodBudget))} left in the weekly food budget and ${Math.max(0, Math.round(remaining.protein))}g protein left today.` : `You have logged ${money(meals.cost)} in food cost. Add a weekly food budget in Setup to make this sharper.`],
+          ["Companion answer", budget ? `You have ${money(Math.max(0, remaining.foodBudget))} left in the weekly food budget and ${Math.max(0, Math.round(remaining.protein))}g protein left today.` : `You have logged ${money(meals.cost)} in food cost. Add a weekly food budget in Setup to make this sharper.`],
           ["Best move", "Use a saved home meal before adding another restaurant meal. That helps both cost control and protein consistency."],
-          ["Why it matters", "Food is one of the clearest links between money health and nutrition health."]
+          ["Why it matters", "Food is one of the clearest links between money health and nutrition health."],
+          ["Data used", "Meal cost, food budget, protein target, and logged meals."]
         ];
       }
       if (q.includes("week") || q.includes("focus") || q.includes("next")) {
         return [
-          ["Coach answer", `${weakArea} is the best focus area this week because it is the lowest score at ${Math.round(weakScore)}.`],
+          ["Companion answer", `${weakArea} is the best focus area this week because it is the lowest score at ${Math.round(weakScore)}.`],
           ["Best move", nextBestActionText()],
-          ["Keep it realistic", "Choose one money action, one health action, and one wellness action instead of trying to fix everything at once."]
+          ["Keep it realistic", "Choose one money action, one health action, and one wellness action instead of trying to fix everything at once."],
+          ["Data used", "Category scores, weekly actions, goal progress, and current priority."]
         ];
       }
       if (q.includes("health") || q.includes("money") || q.includes("habit")) {
         return [
-          ["Coach answer", "Meal planning is the highest-leverage habit because it can reduce food cost while improving protein and calorie consistency."],
+          ["Companion answer", "Meal planning is the highest-leverage habit because it can reduce food cost while improving protein and calorie consistency."],
           ["Second habit", "Sleep protection supports energy, workouts, and better food choices the next day."],
-          ["Track it", "Save a daily snapshot after logging meals, sleep, water, and completed actions."]
+          ["Track it", "Save a daily snapshot after logging meals, sleep, water, and completed actions."],
+          ["Data used", "Food budget, protein target, wellness score, workouts, water, and sleep."]
         ];
       }
       return [
-        ["Coach answer", `${weakArea} is currently pulling the LifeOps score down the most at ${Math.round(weakScore)}.`],
+        ["Companion answer", `${weakArea} is currently pulling the LifeOps score down the most at ${Math.round(weakScore)}.`],
         ["Best move", nextBestActionText()],
-        ["What to watch", "Compare this week against your saved history so the coach can explain whether the score is improving, flat, or slipping."]
+        ["What to watch", "Compare this week against your saved history so the companion can explain whether the score is improving, flat, or slipping."],
+        ["Data used", "Money, nutrition, fitness, wellness, goal, daily completion, rewards, and saved history scores."]
       ];
     }
 
@@ -2799,6 +3342,51 @@
       const input = document.getElementById("coachQuestionInput");
       if (!input) return;
       renderTextRows("coachAnswerList", coachRowsForQuestion(input.value || "What should I focus on this week?"));
+    }
+
+    function companionCheckInRows() {
+      const [weakArea, weakScore] = lowestScoreArea();
+      const level = rewardLevelInfo();
+      const remaining = remainingNutrition();
+      const mood = cleanNumber(state.profile.mood, 0, 5);
+      const energy = cleanNumber(state.profile.energy, 0, 5);
+      const tone = energy >= 4 ? "High-energy day" : energy <= 2 ? "Low-energy day" : "Steady day";
+      return [
+        ["Companion mode", `${tone}. Mood ${mood}/5, energy ${energy}/5.`],
+        ["Today read", `${weakArea} needs the most attention at ${Math.round(weakScore)}.`],
+        ["Best next move", recommendedDailyFocus()],
+        ["Reward nudge", `Earn more XP by finishing one task or weekly action. You have ${todayRewardPoints()} XP today and ${level.remaining} XP to Level ${level.level + 1}.`],
+        ["Food cue", `${Math.max(0, Math.round(remaining.protein))}g protein left and ${money(Math.max(0, remaining.foodBudget))} food budget left.`]
+      ];
+    }
+
+    function companionDataRows() {
+      return [
+        ["Scores", `LifeOps ${lifeScore()}, money ${moneyHealthScore()}, nutrition ${nutritionHealthScore()}, fitness ${fitnessHealthScore()}, wellness ${wellnessHealthScore()}, goals ${Math.round(goalCompletion())}.`],
+        ["Today", `${state.tasks.filter(task => task.done).length}/${state.tasks.length} tasks, ${Object.values(state.checks).filter(Boolean).length}/${Object.keys(state.checks).length} habits, ${state.workouts.length} workouts, ${state.meals.length} meals.`],
+        ["Money", `${money(cashLeft())} estimated cash flow and ${percent(savingsCompletion())} emergency fund progress.`],
+        ["Rewards", `${todayRewardPoints()} XP today, Level ${rewardLevelInfo().level}, ${savedDayStreak()} saved-day streak.`],
+        ["Privacy", "This preview uses local dashboard data only. No account, cloud sync, or external AI call is connected yet."]
+      ];
+    }
+
+    function renderCompanionPanels() {
+      if (!document.getElementById("companionCheckInList")) return;
+      const name = state.profile.companionName || "LifeOps Companion";
+      const style = state.profile.companionStyle || "calm";
+      const hero = document.getElementById("companionHero");
+      hero.className = `companion-hero ${style}`;
+      document.getElementById("companionHeroName").textContent = name;
+      document.getElementById("companionHeroText").textContent = `${companionToneText()} No personal data leaves this browser.`;
+      renderTextRows("companionCheckInList", companionCheckInRows());
+      renderTextRows("companionDataList", companionDataRows());
+      renderTextRows("companionBehaviorList", [
+        ["Name", name],
+        ["Tone", companionToneText()],
+        ["Visual style", `${style.charAt(0).toUpperCase()}${style.slice(1)} companion theme.`],
+        ["Dashboard focus", dashboardFocusLabel()],
+        ["Privacy", "This is a local rule-based companion preview. Real AI and integrations can be added later with stronger privacy controls."]
+      ]);
     }
 
     function downloadText(filename, text) {
@@ -2890,6 +3478,23 @@
       });
     }
 
+    function renderMarketCards(id, cards) {
+      const list = document.getElementById(id);
+      list.innerHTML = "";
+      cards.forEach(cardData => {
+        const card = document.createElement("article");
+        card.className = "market-card";
+        card.innerHTML = `
+          <div class="item-title"></div>
+          <strong></strong>
+          <div class="item-meta"></div>`;
+        card.querySelector(".item-title").textContent = cardData.title;
+        card.querySelector("strong").textContent = cardData.value;
+        card.querySelector(".item-meta").textContent = cardData.meta;
+        list.appendChild(card);
+      });
+    }
+
     function areaGoalCompletion(area) {
       const goals = state.goals.filter(goal => goal.area === area);
       if (!goals.length) return 0;
@@ -2968,6 +3573,22 @@
     document.getElementById("notesInput").addEventListener("input", event => {
       state.profile.notes = event.target.value;
       save();
+    });
+
+    document.getElementById("companionNameInput").addEventListener("input", event => {
+      state.profile.companionName = event.target.value.trim() || "LifeOps Companion";
+      save();
+    });
+
+    [
+      ["companionToneInput", "companionTone"],
+      ["companionStyleInput", "companionStyle"],
+      ["dashboardFocusInput", "dashboardFocus"]
+    ].forEach(([inputId, key]) => {
+      document.getElementById(inputId).addEventListener("change", event => {
+        state.profile[key] = event.target.value;
+        save();
+      });
     });
 
     document.querySelectorAll("[data-check]").forEach(input => {
