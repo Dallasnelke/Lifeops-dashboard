@@ -30,6 +30,16 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Daily history snapshots and trend summaries
 - Weekly review and report preview/export
 - Rule-based companion chatbot mockup with message bubbles, quick replies, typing animation, session history, and action buttons
+- Always-available Companion drawer for asking questions from any screen
+- Companion customization for name, initials, avatar color, tone, coaching style, and preferred focus
+- Premium startup overlay with skip control, reduced-motion support, and dashboard entrance animation
+- Optional built-in browser voice guidance using SpeechSynthesis, clearly separate from real AI
+- Optional locally generated LifeOps Pulse startup sound using the Web Audio API
+- Morning briefing button with visible briefing text, voice status, pause/resume/stop, voice selection, and speaking rate controls
+- Five-destination app navigation with Home as the default screen
+- Secondary tabs that keep detailed sections accessible without crowding the primary navigation
+- Mobile bottom navigation for Home, Money, Health, Growth, and More
+- More screen for data backup, reports, companion tools, settings, about, and developer details
 - Portfolio/About and Case Study sections
 - JSON backup export and validated restore
 - Reset with confirmation
@@ -113,6 +123,10 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Upcoming payment warnings depend on due dates entered on expenses.
 - Financial calculations are simple cash-flow and progress calculations only.
 - The companion chatbot is rule-based, session-only, and not connected to a real AI model.
+- Voice guidance uses the browser's built-in SpeechSynthesis feature and may vary by browser/device.
+- Voice is off by default and does not speak unless enabled by the user.
+- Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
+- Some browsers block automatic startup sound or speech until the user presses a page button such as Start Voice Experience.
 - No encryption is implemented yet.
 - No App Store wrapper exists yet.
 
@@ -127,7 +141,7 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 
 LifeOps is currently a responsive static web app. To prepare for public mobile distribution, future work should consider:
 
-- Mobile-first navigation with fewer visible top-level sections
+- Five primary mobile destinations with secondary tabs for deeper sections
 - Offline-first storage strategy
 - Secure local storage or encrypted storage
 - Clear onboarding and privacy disclosures
@@ -252,11 +266,27 @@ Manual Version 1 checks:
 - Test report preview and download for all report types.
 - Test the Companion tab quick replies, chat input, mission cards, and action buttons.
 - Test Dashboard home cards, mission progress, XP cards, streak card, and recent trend.
+- Test the five primary navigation destinations: Home, Money, Health, Growth, and More.
+- Test secondary tabs inside each primary destination.
+- Test More screen backup, restore, reset, report, settings, coach, about, and developer shortcuts.
+- Test startup animation, Skip Animation, reduced-motion behavior, and Home entrance animation.
+- Test voice Off, startup greeting only, morning briefing only, both voice modes, preview, play, pause, resume, stop, and repeated button presses.
+- Test startup sound Off and On, Preview LifeOps Pulse, preview startup experience, and Start Voice Experience.
+- Test missing or unavailable browser voice fallback.
 - Test desktop width.
 - Test common mobile widths such as 390px, 430px, and 768px.
 
 ## Version History
 
+- `1.12.0` - Set the default voice mode to startup greeting plus morning briefing and refined the LifeOps Pulse with a smoother futuristic two-chime Web Audio design.
+- `1.11.2` - Added a timeout around blocked browser audio startup so the app falls back without stalling.
+- `1.11.1` - Changed startup audio to attempt the LifeOps Pulse first, then show Start Voice Experience only if the browser blocks playback.
+- `1.11.0` - Replaced the generic startup tone with the branded LifeOps Pulse and added best-effort UK English male voice preference for startup speech.
+- `1.10.0` - Added optional local Web Audio startup sound, startup volume, preview startup sound, preview startup experience, and Start Voice Experience fallback for browser autoplay restrictions.
+- `1.9.0` - Added premium startup animation, Home entrance motion, optional built-in browser voice guidance, and Morning Briefing controls.
+- `1.8.0` - Added Phase 1 navigation shell with five primary destinations, secondary tabs, mobile bottom navigation, and More utilities.
+- `1.7.0` - Added Companion customization with saved name, initials, avatar style, tone, coaching style, and preferred focus.
+- `1.6.0` - Added persistent Companion drawer, grouped navigation, refreshed app shell styling, and Dashboard-first landing behavior.
 - `1.5.0` - Added app-style dashboard home screen, daily missions, visual reward momentum, and chat-style LifeOps Companion interface.
 - `1.1.0` - Added in-app edit modal, bill due dates, upcoming payment warnings, and empty-data test mode.
 - `1.0.0` - Core local-first LifeOps dashboard with setup, money, food, fitness, wellness, goals, actions, history, reports, rule-based coach mockup, JSON export/restore, and dashboard summary.
