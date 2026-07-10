@@ -12,8 +12,10 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 
 ## Current Features
 
-- Redesigned dashboard overview with LifeOps value, focused cards, trend movement, and category score cards
+- Home-style dashboard overview with LifeOps score, companion check-in, daily missions, reward momentum, and category score cards
 - Daily summary: current priority, emergency fund progress, savings, income, expenses, cash flow, tasks, habits, workouts, steps, and recommended focus
+- Daily mission system with three focused actions, mission XP, and progress status
+- Visual rewards with XP, level progress, streak status, badges, and next unlock
 - Profile setup for food budget, macro targets, savings goal, workout goal, and sleep goal
 - Monthly income, current savings, savings goal, and emergency fund target
 - Expense, bill, and debt payment tracking
@@ -24,11 +26,10 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Workout tracking and step goal tracking
 - Food and macro logging with food cost tracking
 - Goal tracking and weekly action planning
-- LifeOps reward points, levels, streak signals, badges, and next unlock guidance
 - Wellness tracking for sleep, water, mood, stress, and energy
 - Daily history snapshots and trend summaries
 - Weekly review and report preview/export
-- Customizable local-first AI companion preview with name, tone, visual style, dashboard focus, rule-based answers, daily check-ins, and data-used explanations
+- Rule-based companion chatbot mockup with message bubbles, quick replies, typing animation, session history, and action buttons
 - Portfolio/About and Case Study sections
 - JSON backup export and validated restore
 - Reset with confirmation
@@ -111,7 +112,7 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Edit actions use a reusable in-app modal, but the modal is still intentionally simple.
 - Upcoming payment warnings depend on due dates entered on expenses.
 - Financial calculations are simple cash-flow and progress calculations only.
-- The companion is rule-based and not connected to a real AI model.
+- The companion chatbot is rule-based, session-only, and not connected to a real AI model.
 - No encryption is implemented yet.
 - No App Store wrapper exists yet.
 
@@ -238,7 +239,6 @@ Manual Version 1 checks:
 - Copy last meal.
 - Add, edit, and delete a goal.
 - Add, edit, complete, and delete a weekly action.
-- Open Rewards and confirm XP, level progress, badges, and next unlock update from logged activity.
 - Save today's snapshot.
 - Switch between every tab.
 - Export JSON backup.
@@ -250,15 +250,14 @@ Manual Version 1 checks:
 - Test empty lists after deleting all rows.
 - Test invalid, blank, negative, and very large number inputs.
 - Test report preview and download for all report types.
-- Test the companion prompt buttons, manual question input, customization controls, daily check-in, and data-used panel.
+- Test the Companion tab quick replies, chat input, mission cards, and action buttons.
+- Test Dashboard home cards, mission progress, XP cards, streak card, and recent trend.
 - Test desktop width.
 - Test common mobile widths such as 390px, 430px, and 768px.
 
 ## Version History
 
-- `1.4.0` - Added customizable companion settings and redesigned the dashboard with a cleaner LifeOps value hero, trend bars, and focused cards.
-- `1.3.0` - Added local-first LifeOps Companion preview with richer prompts, daily check-in, reward-aware answers, and data-used explanations.
-- `1.2.0` - Added local LifeOps Rewards with XP, levels, streak signals, badges, next unlock guidance, and dashboard reward cards.
+- `1.5.0` - Added app-style dashboard home screen, daily missions, visual reward momentum, and chat-style LifeOps Companion interface.
 - `1.1.0` - Added in-app edit modal, bill due dates, upcoming payment warnings, and empty-data test mode.
 - `1.0.0` - Core local-first LifeOps dashboard with setup, money, food, fitness, wellness, goals, actions, history, reports, rule-based coach mockup, JSON export/restore, and dashboard summary.
 
