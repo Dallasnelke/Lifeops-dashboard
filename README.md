@@ -13,6 +13,15 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 ## Current Features
 
 - Home-style dashboard overview with LifeOps score, companion check-in, daily missions, reward momentum, and category score cards
+- Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
+- Built-in theme system with LifeOps Green, Midnight, Sunrise, Focus, and Ocean themes
+- Appearance settings for theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
+- Optional profile card with display name, initials, pronouns, avatar color, avatar icon, personal title, and current focus
+- Optional rewards toggle for XP, levels, streaks, and achievements
+- Full local Life Timeline section with manual milestones, categories, related goals, notes, and privacy metadata
+- Local Connections prototype with profiles, groups, shared lists, shared goals, challenges, shared calendar previews, and permission previews
+- Privacy Center explaining local storage, backup controls, data classifications, sharing defaults, and sensitive-data safeguards
+- Integrations Center showing planned/disconnected app connections with honest statuses and privacy notes
 - Daily summary: current priority, emergency fund progress, savings, income, expenses, cash flow, tasks, habits, workouts, steps, and recommended focus
 - Daily mission system with three focused actions, mission XP, and progress status
 - Visual rewards with XP, level progress, streak status, badges, and next unlock
@@ -127,6 +136,8 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Voice is off by default and does not speak unless enabled by the user.
 - Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
 - Some browsers block automatic startup sound or speech until the user presses a page button such as Start Voice Experience.
+- Theme and appearance settings are stored locally and included in future JSON backups.
+- Connections, timeline sharing, and integration concepts are local previews only until a secure backend/account system exists.
 - No encryption is implemented yet.
 - No App Store wrapper exists yet.
 
@@ -135,6 +146,9 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Version 1 keeps data local and does not transmit personal information externally.
 - Users should not store passwords, banking credentials, Social Security numbers, tax IDs, authentication codes, or sensitive medical details in this app.
 - Exported JSON files may contain personal financial and health-related information. Store backups carefully.
+- Current sharing, timeline, connection, and integration concepts are local previews only.
+- The Privacy Center summarizes what is local, what is not connected, and which data types should be treated as sensitive.
+- Future social features must default to Only me and avoid exposing sensitive information in voice briefings, social cards, exports, or notifications.
 - Future versions should evaluate optional encryption, passcode protection, and secure mobile storage before public release.
 
 ## Mobile And App Store Considerations
@@ -235,6 +249,38 @@ Example questions:
 - What job applications require follow up?
 - What documents do I need for taxes?
 
+## Theme System
+
+LifeOps uses CSS custom properties for its main visual tokens: page background, card background, elevated surface, primary colors, navigation background, text, borders, status colors, shadows, focus ring, and progress colors.
+
+Built-in themes are LifeOps Green, Midnight, Sunrise, Focus, and Ocean. Appearance settings are optional fields in local state, so older backups without these fields restore with safe defaults.
+
+## Home Experience
+
+The Home screen is organized around what the user needs quickly: today's focus, next best action, current Life Score, category status, daily missions, upcoming items, quick actions, recent win, and a Life Timeline preview.
+
+The recommendation system remains rule based and transparent. It does not claim to be real AI.
+
+## Gamification Rules
+
+Current rewards are simple progress feedback. XP can come from meaningful logged actions such as meals, workouts, habits, tasks, weekly actions, water, sleep, and emergency fund progress. LifeOps does not use random rewards, paid XP, loot boxes, gambling mechanics, trading mechanics, or missed-day penalties.
+
+Future work should add clearer daily XP limits and a complete gamification disable setting before public release.
+
+## Life Timeline
+
+LifeOps includes a local Life Timeline section for meaningful milestones rather than every data entry. Milestones support title, date, category, optional note, optional related goal, and privacy level.
+
+Timeline sharing states should remain local metadata only until secure accounts, permissions, and synchronization exist.
+
+## Connections And Integrations
+
+Connections are not active yet. The current Connections card is a local preview and does not send invitations, messages, or shared data.
+
+Third-party integrations remain planned only. LifeOps does not currently connect to banks, health apps, calendars, email, music, cloud storage, or social platforms. Future integrations will require a secure account system, OAuth or platform-approved authentication, permission screens, disconnect controls, privacy review, and App Store or platform permissions where required.
+
+Do not store credentials, tokens, bank logins, health credentials, passwords, or sensitive authentication information in localStorage.
+
 ## Testing Checklist
 
 Manual Version 1 checks:
@@ -273,11 +319,23 @@ Manual Version 1 checks:
 - Test voice Off, startup greeting only, morning briefing only, both voice modes, preview, play, pause, resume, stop, and repeated button presses.
 - Test startup sound Off and On, Preview LifeOps Pulse, preview startup experience, and Start Voice Experience.
 - Test missing or unavailable browser voice fallback.
+- Test all five themes.
+- Test light, dark, and system appearance behavior.
+- Test compact and comfortable density.
+- Test reduced visual effects.
+- Test redesigned Home greeting, focus, next action, score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview.
+- Test Profile Card settings.
+- Test gamification enabled and disabled.
+- Test adding and deleting Life Timeline milestones.
+- Test old backup compatibility for missing appearance, personalization, and timeline fields.
 - Test desktop width.
 - Test common mobile widths such as 390px, 430px, and 768px.
 
 ## Version History
 
+- `1.15.0` - Added the local Connections prototype, Privacy Center, Integrations Center, theme readability fixes for dark appearances, desktop overflow fixes, and modal focus trapping/Escape-to-close behavior.
+- `1.14.0` - Added profile/avatar personalization, optional gamification toggle, clearer achievements, full local Life Timeline, Appearance controls inside Settings, and backup compatibility tests for new optional fields.
+- `1.13.0` - Added Checkpoint 1 theme system, Appearance settings, CSS design tokens, redesigned Home hierarchy, category cards, quick actions, recent win, and timeline preview while preserving existing logic.
 - `1.12.0` - Set the default voice mode to startup greeting plus morning briefing and refined the LifeOps Pulse with a smoother futuristic two-chime Web Audio design.
 - `1.11.2` - Added a timeout around blocked browser audio startup so the app falls back without stalling.
 - `1.11.1` - Changed startup audio to attempt the LifeOps Pulse first, then show Start Voice Experience only if the browser blocks playback.
