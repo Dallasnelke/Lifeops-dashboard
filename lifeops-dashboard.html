@@ -142,6 +142,69 @@
       --shadow-strong: 0 26px 70px rgba(0, 0, 0, .44);
     }
 
+    body[data-theme="green"][data-appearance="dark"] {
+      --page-bg: #121a17;
+      --card-bg: #1b2722;
+      --surface: #24342d;
+      --elevated: #202e28;
+      --primary: #7fbe99;
+      --primary-hover: #9bd3b1;
+      --nav-bg: #0d1713;
+      --text: #edf5ef;
+      --text-secondary: #aec0b6;
+      --border: #34483e;
+      --progress-track: #2f443a;
+      --progress-fill: #7fbe99;
+    }
+
+    body[data-theme="sunrise"][data-appearance="dark"] {
+      --page-bg: #1d1713;
+      --card-bg: #2a211b;
+      --surface: #382a20;
+      --elevated: #31261d;
+      --primary: #e0a067;
+      --primary-hover: #f0b77f;
+      --nav-bg: #17110e;
+      --text: #fff4e8;
+      --text-secondary: #dbc0aa;
+      --border: #4a3729;
+      --warning: #efbd73;
+      --progress-track: #4b382a;
+      --progress-fill: #e0a067;
+    }
+
+    body[data-theme="focus"][data-appearance="dark"] {
+      --page-bg: #171918;
+      --card-bg: #222524;
+      --surface: #2c302e;
+      --elevated: #272b29;
+      --primary: #bfc7c2;
+      --primary-hover: #d5ddd8;
+      --nav-bg: #111312;
+      --text: #f0f2f1;
+      --text-secondary: #b8bfbc;
+      --border: #3b403d;
+      --progress-track: #373c39;
+      --progress-fill: #bfc7c2;
+      --shadow: 0 10px 22px rgba(0, 0, 0, .18);
+    }
+
+    body[data-theme="ocean"][data-appearance="dark"] {
+      --page-bg: #0d1d24;
+      --card-bg: #142a32;
+      --surface: #1b3a44;
+      --elevated: #18333c;
+      --primary: #6fc6d0;
+      --primary-hover: #8edbe3;
+      --nav-bg: #091820;
+      --text: #edf9fb;
+      --text-secondary: #abcbd1;
+      --border: #2b4b55;
+      --info: #8ec7f3;
+      --progress-track: #244750;
+      --progress-fill: #6fc6d0;
+    }
+
     body[data-density="compact"] {
       --density-gap: 10px;
       --density-pad: 14px;
@@ -168,7 +231,8 @@
         linear-gradient(180deg, color-mix(in srgb, var(--surface) 72%, var(--card-bg)) 0, var(--page-bg) 360px),
         var(--page-bg);
       color: var(--ink);
-      line-height: 1.4;
+      font-size: 15px;
+      line-height: 1.48;
     }
 
     button, input, select, textarea {
@@ -255,12 +319,14 @@
       border-radius: var(--radius);
       background: transparent;
       color: #dfe9e2;
-      min-height: 38px;
+      min-height: 44px;
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 8px 10px;
       text-align: left;
+      font-size: 15px;
+      font-weight: 650;
     }
 
     .nav button:hover,
@@ -323,7 +389,7 @@
 
     .topbar h2 {
       margin: 0;
-      font-size: 28px;
+      font-size: 30px;
       letter-spacing: 0;
     }
 
@@ -341,20 +407,22 @@
     }
 
     .secondary-nav button {
-      min-height: 36px;
+      min-height: 42px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 7px 12px;
-      background: var(--card-bg);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
+      padding: 9px 14px;
+      background: color-mix(in srgb, var(--card-bg) 92%, var(--surface));
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 750;
+      box-shadow: 0 1px 0 rgba(0,0,0,.04);
     }
 
     .secondary-nav button.active {
       background: var(--green);
       border-color: var(--green);
       color: #fff;
+      box-shadow: 0 0 0 3px var(--focus-ring);
     }
 
     .bottom-nav {
@@ -570,7 +638,7 @@
       border: 1px solid var(--line);
       background: var(--panel);
       color: var(--ink);
-      min-height: 40px;
+      min-height: 44px;
       border-radius: var(--radius);
       display: inline-flex;
       align-items: center;
@@ -578,6 +646,8 @@
       padding: 9px 12px;
       box-shadow: 0 1px 0 rgba(0,0,0,.03);
       white-space: nowrap;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .btn.primary {
@@ -635,12 +705,12 @@
 
     .panel h3 {
       margin: 0 0 14px;
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .metric {
       padding: var(--density-pad);
-      min-height: 112px;
+      min-height: auto;
       display: grid;
       align-content: space-between;
       gap: 10px;
@@ -651,7 +721,8 @@
       align-items: center;
       gap: 8px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .metric strong {
@@ -753,7 +824,7 @@
 
     .home-v2 {
       display: grid;
-      gap: var(--density-gap);
+      gap: 12px;
       margin-bottom: 16px;
     }
 
@@ -762,7 +833,7 @@
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
       gap: 16px;
-      padding: calc(var(--density-pad) + 4px);
+      padding: var(--density-pad);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background:
@@ -810,7 +881,7 @@
 
     .home-section-card h3 {
       margin: 0 0 12px;
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .home-main-grid {
@@ -826,7 +897,7 @@
     }
 
     .home-category-card {
-      min-height: 150px;
+      min-height: auto;
       min-width: 0;
       display: grid;
       align-content: space-between;
@@ -834,7 +905,7 @@
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: var(--density-pad);
+      padding: 16px;
       box-shadow: var(--shadow);
     }
 
@@ -852,6 +923,23 @@
 
     .home-category-card .progress {
       height: 9px;
+    }
+
+    #homeNextActionCard,
+    #homeScoreAreas,
+    #homeUpcomingList,
+    #homeRecentWin {
+      margin-top: 8px;
+    }
+
+    #dashboard > .home-hero,
+    #dashboard > .mission-strip,
+    #dashboard > .xp-visual-grid,
+    #dashboard > .daily-summary,
+    #scoreCategoryGrid,
+    #dashboard > .action-focus,
+    #dashboard > .grid.cols-3 {
+      display: none;
     }
 
     .home-quick-grid {
@@ -1534,7 +1622,7 @@
     }
 
     .summary-card {
-      min-height: 126px;
+      min-height: auto;
       padding: 14px;
       display: grid;
       align-content: space-between;
@@ -1577,6 +1665,26 @@
       grid-column: span 2;
       background: color-mix(in srgb, var(--info) 10%, var(--card-bg));
       border-color: color-mix(in srgb, var(--info) 28%, var(--border));
+    }
+
+    .section-summary {
+      margin: 0 0 16px;
+    }
+
+    .add-form-panel .form-grid,
+    .target-panel .form-grid {
+      display: none;
+    }
+
+    .modal-open-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 8px 0 12px;
+    }
+
+    .target-summary {
+      margin-top: 8px;
     }
 
     .reward-hero {
@@ -1679,7 +1787,8 @@
       display: grid;
       gap: 6px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 650;
       margin-bottom: 12px;
     }
 
@@ -1689,10 +1798,11 @@
       width: 100%;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      min-height: 40px;
+      min-height: 44px;
       padding: 9px 10px;
       background: var(--panel);
       color: var(--ink);
+      font-size: 15px;
     }
 
     textarea {
@@ -1729,6 +1839,7 @@
     .item-title {
       font-weight: 700;
       overflow-wrap: anywhere;
+      font-size: 15px;
     }
 
     .item-meta {
@@ -1936,7 +2047,7 @@
 
       .secondary-nav button {
         flex: 0 0 auto;
-        min-height: 40px;
+        min-height: 48px;
       }
 
       .bottom-nav {
@@ -1955,7 +2066,7 @@
       }
 
       .bottom-nav button {
-        min-height: 48px;
+        min-height: 58px;
         border: 0;
         border-radius: 12px;
         background: transparent;
@@ -2028,6 +2139,15 @@
       .actions .btn {
         flex: 1 1 140px;
         justify-content: center;
+        min-height: 48px;
+      }
+
+      .btn,
+      input,
+      select,
+      textarea,
+      .checkline {
+        min-height: 48px;
       }
 
       .form-grid {
@@ -2062,7 +2182,7 @@
 
       .companion-launcher {
         right: 14px;
-        bottom: 14px;
+        bottom: 86px;
       }
 
       .companion-launcher span {
@@ -2204,6 +2324,7 @@
       </section>
 
       <section id="more" class="tab">
+        <div class="summary-card-grid section-summary" id="moreSectionSummary"></div>
         <div class="grid cols-2">
           <article class="panel">
             <h3>Data And Backup</h3>
@@ -2650,8 +2771,12 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel add-form-panel">
             <h3>Add A Daily Task</h3>
+            <p class="about-lede">Keep the list visible and add new tasks from a focused modal.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openTaskModalBtn" type="button">Add Task</button>
+            </div>
             <div class="form-grid">
               <label class="wide">
                 Task
@@ -2678,9 +2803,15 @@
       </section>
 
       <section id="money" class="tab">
+        <div class="summary-card-grid section-summary" id="moneySectionSummary"></div>
         <div class="grid cols-2">
-          <article class="panel">
+          <article class="panel target-panel">
             <h3>Monthly Money Setup</h3>
+            <p class="about-lede">Review the current money targets, then edit them in one focused modal.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openMoneyTargetsModalBtn" type="button">Edit Money Targets</button>
+            </div>
+            <div class="list target-summary" id="moneyTargetSummary"></div>
             <div class="form-grid">
               <label>
                 Monthly income
@@ -2701,8 +2832,12 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel add-form-panel">
             <h3>Add Bill Or Expense</h3>
+            <p class="about-lede">Bills, variable expenses, and debt payments stay in the list below.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openExpenseModalBtn" type="button">Add Expense</button>
+            </div>
             <div class="form-grid">
               <label>
                 Name
@@ -2735,6 +2870,7 @@
       </section>
 
       <section id="fitness" class="tab">
+        <div class="summary-card-grid section-summary" id="healthSectionSummary"></div>
         <div class="grid cols-2">
           <article class="panel">
             <h3>Weekly Fitness Setup</h3>
@@ -2758,8 +2894,12 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel add-form-panel">
             <h3>Add Workout</h3>
+            <p class="about-lede">Log one workout at a time without keeping the full form open.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openWorkoutModalBtn" type="button">Add Workout</button>
+            </div>
             <div class="form-grid">
               <label>
                 Workout
@@ -2788,9 +2928,14 @@
       </section>
 
       <section id="food" class="tab">
+        <div class="summary-card-grid section-summary" id="nutritionSectionSummary"></div>
         <div class="grid cols-2">
-          <article class="panel">
+          <article class="panel target-panel">
             <h3>Macro And Food Budget Targets</h3>
+            <p class="about-lede">Review current nutrition targets and edit them from one modal.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openNutritionTargetsModalBtn" type="button">Edit Nutrition Targets</button>
+            </div>
             <div class="form-grid">
               <label>
                 Daily calories
@@ -2820,8 +2965,12 @@
             <div class="list" id="macroRemainingList"></div>
           </article>
 
-          <article class="panel">
+          <article class="panel add-form-panel">
             <h3>Add Meal</h3>
+            <p class="about-lede">Log meals from a focused modal, then review the list below.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openMealModalBtn" type="button">Add Meal</button>
+            </div>
             <div class="form-grid">
               <label>
                 Meal
@@ -2890,9 +3039,14 @@
       </section>
 
       <section id="goals" class="tab">
+        <div class="summary-card-grid section-summary" id="growthSectionSummary"></div>
         <div class="grid cols-2">
-          <article class="panel">
+          <article class="panel add-form-panel">
             <h3>Add Long-Term Goal</h3>
+            <p class="about-lede">Create one goal at a time from a focused modal.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openGoalModalBtn" type="button">Add Goal</button>
+            </div>
             <div class="form-grid">
               <label class="wide">
                 Goal
@@ -3046,8 +3200,12 @@
 
       <section id="plan" class="tab">
         <div class="grid cols-2">
-          <article class="panel">
+          <article class="panel add-form-panel">
             <h3>Add Weekly Action</h3>
+            <p class="about-lede">Add one weekly action from a focused modal.</p>
+            <div class="modal-open-row">
+              <button class="btn primary" id="openPlanActionModalBtn" type="button">Add Weekly Action</button>
+            </div>
             <div class="form-grid">
               <label class="wide">
                 Action
@@ -3456,11 +3614,11 @@
             <article class="home-section-card">
               <h3>Quick Actions</h3>
               <div class="home-quick-grid">
-                <button class="btn" type="button" data-open-tab="money">Add Expense</button>
-                <button class="btn" type="button" data-open-tab="food">Log Meal</button>
-                <button class="btn" type="button" data-open-tab="tasks">Add Task</button>
-                <button class="btn" type="button" data-open-tab="fitness">Log Workout</button>
-                <button class="btn" type="button" data-open-tab="goals">Add Goal</button>
+                <button class="btn" type="button" data-quick-action="expense">Add Expense</button>
+                <button class="btn" type="button" data-quick-action="meal">Log Meal</button>
+                <button class="btn" type="button" data-quick-action="task">Add Task</button>
+                <button class="btn" type="button" data-quick-action="workout">Log Workout</button>
+                <button class="btn" type="button" data-quick-action="goal">Add Goal</button>
                 <button class="btn" type="button" id="invitePersonPreviewBtn">Invite Person</button>
               </div>
             </article>
@@ -3664,7 +3822,7 @@
   </div>
 
   <script>
-    const appVersion = "1.15.0";
+    const appVersion = "1.16.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -5182,6 +5340,7 @@
       renderList("goalList", state.goals, goalTemplate);
       renderList("planActionList", state.planActions, planActionTemplate);
       renderCharts();
+      renderSectionSummaries();
       renderDailySummary();
       renderScoreCards();
       renderRewards();
@@ -5501,6 +5660,103 @@
       ], values => {
         if (!values.name) return;
         Object.assign(action, values);
+      });
+    }
+
+    function openAddTaskModal() {
+      openEditModal("Add Task", [
+        { name: "name", label: "Task", value: "", wide: true },
+        { name: "area", label: "Area", type: "select", value: "Money", options: ["Money", "Fitness", "Career", "Home", "Wellness"] }
+      ], values => {
+        if (!values.name) return;
+        state.tasks.push({ id: crypto.randomUUID(), name: values.name, area: values.area, done: false });
+      });
+    }
+
+    function openAddExpenseModal() {
+      openEditModal("Add Bill Or Expense", [
+        { name: "name", label: "Name", value: "", wide: true },
+        { name: "amount", label: "Amount", type: "number", value: "", min: 0, step: 5 },
+        { name: "type", label: "Type", type: "select", value: "Bill", options: ["Bill", "Variable", "Debt Payment"] },
+        { name: "dueDate", label: "Due date", type: "date", value: "" }
+      ], values => {
+        if (!values.name || values.amount <= 0) return;
+        state.expenses.push({ id: crypto.randomUUID(), name: values.name, amount: values.amount, type: values.type, dueDate: values.dueDate });
+      });
+    }
+
+    function openAddWorkoutModal() {
+      openEditModal("Add Workout", [
+        { name: "name", label: "Workout", value: "", wide: true },
+        { name: "minutes", label: "Minutes", type: "number", value: "", min: 0, step: 5 },
+        { name: "intensity", label: "Intensity", type: "select", value: "Moderate", options: ["Easy", "Moderate", "Hard"] }
+      ], values => {
+        if (!values.name || values.minutes <= 0) return;
+        state.workouts.push({ id: crypto.randomUUID(), name: values.name, minutes: values.minutes, intensity: values.intensity });
+      });
+    }
+
+    function openAddMealModal() {
+      openEditModal("Add Meal", [
+        { name: "name", label: "Meal", value: "", wide: true },
+        { name: "source", label: "Source", type: "select", value: "Home", options: ["Home", "Restaurant", "Snack"] },
+        { name: "calories", label: "Calories", type: "number", value: "", min: 0, step: 25 },
+        { name: "protein", label: "Protein", type: "number", value: "", min: 0, step: 1 },
+        { name: "carbs", label: "Carbs", type: "number", value: "", min: 0, step: 1 },
+        { name: "fat", label: "Fat", type: "number", value: "", min: 0, step: 1 },
+        { name: "cost", label: "Cost", type: "number", value: "", min: 0, step: 0.5 }
+      ], values => {
+        if (!values.name || values.calories <= 0) return;
+        state.meals.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddGoalModal() {
+      openEditModal("Add Long-Term Goal", [
+        { name: "name", label: "Goal", value: "", wide: true },
+        { name: "area", label: "Area", type: "select", value: "Health", options: ["Health", "Money", "Career", "Wellness", "Home"] },
+        { name: "targetDate", label: "Target date", type: "date", value: "" },
+        { name: "progress", label: "Progress %", type: "number", value: 0, min: 0, max: 100, step: 5 }
+      ], values => {
+        if (!values.name) return;
+        state.goals.push({ id: crypto.randomUUID(), name: values.name, area: values.area, targetDate: values.targetDate, progress: values.progress });
+      });
+    }
+
+    function openAddPlanActionModal() {
+      openEditModal("Add Weekly Action", [
+        { name: "name", label: "Action", value: "", wide: true },
+        { name: "area", label: "Area", type: "select", value: "Money", options: ["Money", "Nutrition", "Fitness", "Wellness", "Goals"] },
+        { name: "deadline", label: "Deadline", type: "date", value: "" },
+        { name: "goal", label: "Linked goal", value: "", wide: true },
+        { name: "impact", label: "Expected impact", type: "select", value: "High", options: ["High", "Medium", "Low"] }
+      ], values => {
+        if (!values.name) return;
+        state.planActions.push({ id: crypto.randomUUID(), name: values.name, area: values.area, deadline: values.deadline, goal: values.goal, impact: values.impact, done: false });
+      });
+    }
+
+    function openMoneyTargetsModal() {
+      openEditModal("Edit Money Targets", [
+        { name: "income", label: "Monthly income", type: "number", value: state.profile.income, min: 0, step: 50 },
+        { name: "savingsGoal", label: "Savings goal", type: "number", value: state.profile.savingsGoal, min: 0, step: 50 },
+        { name: "currentSavings", label: "Current savings", type: "number", value: state.profile.currentSavings, min: 0, step: 50 },
+        { name: "emergencyTarget", label: "Emergency fund target", type: "number", value: state.profile.emergencyTarget, min: 0, step: 50 }
+      ], values => {
+        Object.assign(state.profile, values);
+      });
+    }
+
+    function openNutritionTargetsModal() {
+      openEditModal("Edit Nutrition Targets", [
+        { name: "calorieGoal", label: "Daily calories", type: "number", value: state.profile.calorieGoal, min: 0, step: 50 },
+        { name: "proteinGoal", label: "Daily protein grams", type: "number", value: state.profile.proteinGoal, min: 0, step: 5 },
+        { name: "carbGoal", label: "Daily carbs grams", type: "number", value: state.profile.carbGoal, min: 0, step: 5 },
+        { name: "fatGoal", label: "Daily fat grams", type: "number", value: state.profile.fatGoal, min: 0, step: 5 },
+        { name: "foodBudget", label: "Weekly food budget", type: "number", value: state.profile.foodBudget, min: 0, step: 5 },
+        { name: "waterGoal", label: "Water goal cups", type: "number", value: state.profile.waterGoal, min: 0, step: 1 }
+      ], values => {
+        Object.assign(state.profile, values);
       });
     }
 
@@ -6841,7 +7097,11 @@
 
     function renderSummaryCards(id, cards) {
       const list = document.getElementById(id);
+      if (!list) return;
       list.className = "summary-card-grid";
+      if (!list.classList.contains("section-summary") && id.endsWith("SectionSummary")) {
+        list.classList.add("section-summary");
+      }
       list.innerHTML = "";
       cards.forEach(cardData => {
         const card = document.createElement("article");
@@ -6855,6 +7115,49 @@
         card.querySelector(".item-meta").textContent = cardData.meta;
         list.appendChild(card);
       });
+    }
+
+    function renderSectionSummaries() {
+      const meals = mealTotals();
+      const workoutMinutes = state.workouts.reduce((sum, workout) => sum + cleanNumber(workout.minutes), 0);
+      const completedActions = state.planActions.filter(action => action.done).length;
+      const recentMilestone = [...state.timeline].sort((a, b) => String(b.date).localeCompare(String(a.date)))[0];
+      renderSummaryCards("moneySectionSummary", [
+        { title: "Monthly income", value: money(cleanNumber(state.profile.income)), meta: "Current profile target" },
+        { title: "Monthly expenses", value: money(totalExpenses()), meta: "Bills, variable costs, and debt payments" },
+        { title: "Cash remaining", value: money(cashLeft()), meta: "After planned savings" },
+        { title: "Emergency fund", value: percent(savingsCompletion()), meta: `${money(cleanNumber(state.profile.currentSavings))} saved` }
+      ]);
+      renderSummaryCards("healthSectionSummary", [
+        { title: "Workout progress", value: percent(fitnessCompletion()), meta: `${state.profile.workoutsDone || 0} of ${state.profile.workoutGoal || 0} workouts` },
+        { title: "Steps", value: cleanNumber(state.profile.stepsToday).toLocaleString(), meta: `${percent(stepsCompletion())} of daily goal` },
+        { title: "Sleep", value: `${cleanNumber(state.profile.sleepHours)}h`, meta: `${cleanNumber(state.profile.sleepGoal || 8)}h goal` },
+        { title: "Nutrition status", value: percent(macroCompletion(meals.protein, cleanNumber(state.profile.proteinGoal))), meta: `${meals.protein}g protein logged` }
+      ]);
+      renderSummaryCards("nutritionSectionSummary", [
+        { title: "Calories", value: `${meals.calories}`, meta: `${state.profile.calorieGoal || 0} calorie target` },
+        { title: "Protein", value: `${meals.protein}g`, meta: `${state.profile.proteinGoal || 0}g target` },
+        { title: "Food cost", value: money(meals.cost), meta: `${money(cleanNumber(state.profile.foodBudget))} weekly budget` },
+        { title: "Home meals", value: state.meals.filter(meal => meal.source === "Home").length, meta: "Logged from home" }
+      ]);
+      renderSummaryCards("growthSectionSummary", [
+        { title: "Goals progress", value: percent(goalCompletion()), meta: `${state.goals.length} goal${state.goals.length === 1 ? "" : "s"} tracked` },
+        { title: "Weekly actions", value: `${completedActions}/${state.planActions.length}`, meta: "Completed this week" },
+        { title: "XP", value: todayRewardPoints(), meta: `Level ${rewardLevelInfo().level}` },
+        { title: "Recent milestone", value: recentMilestone?.category || "None yet", meta: recentMilestone?.title || "Add a timeline milestone" }
+      ]);
+      renderSummaryCards("moreSectionSummary", [
+        { title: "Data and Backup", value: "Local", meta: "Export, restore, empty test, and reset tools" },
+        { title: "Settings", value: "Appearance", meta: "Themes, density, voice, startup, and profile" },
+        { title: "Trust", value: "Privacy", meta: "Local storage, sharing preview, and integrations status" },
+        { title: "Tools", value: "Reports", meta: "History, reports, coach, and about pages" }
+      ]);
+      renderTextRows("moneyTargetSummary", [
+        ["Income", money(cleanNumber(state.profile.income))],
+        ["Savings goal", money(cleanNumber(state.profile.savingsGoal))],
+        ["Current savings", money(cleanNumber(state.profile.currentSavings))],
+        ["Emergency target", money(cleanNumber(state.profile.emergencyTarget))]
+      ]);
     }
 
     function areaGoalCompletion(area) {
@@ -6945,6 +7248,8 @@
         else item.removeAttribute("aria-current");
       });
       document.querySelectorAll(".tab").forEach(item => item.classList.toggle("active", item.id === tab));
+      const metricRow = document.querySelector(".metric-row");
+      if (metricRow) metricRow.hidden = tab !== "dashboard";
       document.getElementById("pageTitle").textContent = title[0];
       document.getElementById("pageSubtitle").textContent = title[1];
       renderSecondaryNav(primary, tab);
@@ -7010,6 +7315,29 @@
     ["profileDisplayNameInput", "profileInitialsInput", "profilePronounsInput", "profileAvatarColorInput", "profileAvatarIconInput", "profileTitleInput", "profileFocusInput"].forEach(id => {
       document.getElementById(id).addEventListener("input", savePersonalizationSettings);
       document.getElementById(id).addEventListener("change", savePersonalizationSettings);
+    });
+    [
+      ["openTaskModalBtn", openAddTaskModal],
+      ["openExpenseModalBtn", openAddExpenseModal],
+      ["openWorkoutModalBtn", openAddWorkoutModal],
+      ["openMealModalBtn", openAddMealModal],
+      ["openGoalModalBtn", openAddGoalModal],
+      ["openPlanActionModalBtn", openAddPlanActionModal],
+      ["openMoneyTargetsModalBtn", openMoneyTargetsModal],
+      ["openNutritionTargetsModalBtn", openNutritionTargetsModal]
+    ].forEach(([id, handler]) => {
+      const button = document.getElementById(id);
+      if (button) button.addEventListener("click", handler);
+    });
+    document.querySelectorAll("[data-quick-action]").forEach(button => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.quickAction;
+        if (action === "expense") openAddExpenseModal();
+        if (action === "meal") openAddMealModal();
+        if (action === "task") openAddTaskModal();
+        if (action === "workout") openAddWorkoutModal();
+        if (action === "goal") openAddGoalModal();
+      });
     });
     document.getElementById("completePriorityBtn").addEventListener("click", () => {
       const priority = String(state.profile.priority || "").trim();
