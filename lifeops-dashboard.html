@@ -631,6 +631,31 @@
       position: relative;
     }
 
+    .atlas-page-insight {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 4px;
+      padding: 12px 14px;
+      border: 1px solid color-mix(in srgb, var(--category-accent) 24%, var(--line));
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--category-accent) 8%, var(--card-bg));
+      color: var(--text);
+      position: relative;
+    }
+
+    .atlas-page-insight strong {
+      font-size: 13px;
+      color: var(--category-accent-strong);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .atlas-page-insight span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
     .secondary-nav {
       display: flex;
       gap: 8px;
@@ -1094,6 +1119,102 @@
     .home-companion-card p {
       margin: 0;
       color: var(--muted);
+    }
+
+    .atlas-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .atlas-status-row,
+    .atlas-impact-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .atlas-recommendation {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid color-mix(in srgb, var(--category-accent) 24%, var(--border));
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--category-accent) 7%, var(--surface));
+    }
+
+    .atlas-recommendation strong {
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .atlas-priority-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .atlas-priority-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .atlas-priority-rank {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--category-accent-strong);
+      background: color-mix(in srgb, var(--category-accent) 14%, var(--card-bg));
+      border: 1px solid color-mix(in srgb, var(--category-accent) 24%, var(--border));
+    }
+
+    .atlas-priority-item strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .atlas-priority-item span {
+      display: block;
+      margin-top: 2px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .atlas-micro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .atlas-micro {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      background: var(--surface);
+    }
+
+    .atlas-micro span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    .atlas-micro strong {
+      display: block;
+      color: var(--text);
+      font-size: 14px;
     }
 
     .home-v2 {
@@ -2495,6 +2616,10 @@
         justify-content: center;
       }
 
+      .atlas-micro-grid {
+        grid-template-columns: 1fr;
+      }
+
       .secondary-nav {
         overflow-x: auto;
         flex-wrap: nowrap;
@@ -2771,7 +2896,11 @@
         </div>
         <div class="topbar-actions">
           <span class="topbar-status" id="pageHeaderStatus">Local first</span>
-          <button class="btn primary" id="pageHeaderAction" type="button">Ask LifeOps</button>
+          <button class="btn primary" id="pageHeaderAction" type="button">Ask Atlas</button>
+        </div>
+        <div class="atlas-page-insight" aria-live="polite">
+          <strong>Atlas insight</strong>
+          <span id="pageAtlasInsight">Checking LifeOps signals and preparing the next best action.</span>
         </div>
       </div>
 
@@ -4218,6 +4347,57 @@
             <span class="home-date-pill" id="homeDateFull">Today</span>
           </article>
 
+          <article class="home-companion-card atlas-card" aria-labelledby="atlasCardTitle">
+            <div class="split">
+              <h3 id="atlasCardTitle">Atlas Intelligence</h3>
+              <span class="pill" id="homeLevelPill">Level 1</span>
+            </div>
+            <div class="companion-line">
+              <div class="companion-avatar" aria-hidden="true">LO</div>
+              <div class="companion-message">
+                <strong id="atlasRecommendedAction">Checking today's highest leverage action.</strong>
+                <p id="homeMissionPrompt">Complete three small actions that improve your day.</p>
+              </div>
+            </div>
+            <div class="atlas-recommendation">
+              <div class="atlas-status-row">
+                <span class="pill" id="atlasStatusPill">Rule-based</span>
+                <span class="pill" id="atlasEstimatedTime">10-20 minutes</span>
+              </div>
+              <p id="atlasReason">Atlas uses your local LifeOps data to explain why this action matters.</p>
+              <div class="atlas-impact-list" id="atlasImpactList"></div>
+              <div class="actions">
+                <button class="btn primary" id="atlasStartTaskBtn" type="button">Open Related Area</button>
+                <button class="btn" id="atlasExplainMoreBtn" type="button">Explain Why</button>
+              </div>
+            </div>
+            <div class="atlas-micro-grid" aria-label="Atlas signal summary">
+              <div class="atlas-micro"><span>Life Score</span><strong id="atlasLifeScoreDelta">No snapshot yet</strong></div>
+              <div class="atlas-micro"><span>Watch Area</span><strong id="atlasWeakSignal">Loading</strong></div>
+              <div class="atlas-micro"><span>Mode</span><strong>Private local rules</strong></div>
+            </div>
+            <div>
+              <div class="split" style="margin-bottom: 8px;">
+                <strong>Today&apos;s priorities</strong>
+                <span class="pill">Top 3</span>
+              </div>
+              <div class="atlas-priority-list" id="atlasPriorityList"></div>
+            </div>
+            <div>
+              <div class="split" style="margin-bottom: 8px;">
+                <strong>Mission progress</strong>
+                <span class="item-meta" id="homeMissionSummary"></span>
+              </div>
+              <div class="mission-progress"><div id="homeMissionProgress"></div></div>
+            </div>
+            <div class="home-voice-controls">
+              <button class="btn primary" id="playMorningBriefingBtn" type="button">Play Morning Briefing</button>
+              <button class="btn" id="startVoiceExperienceBtn" type="button" hidden>Start Voice Experience</button>
+              <span class="voice-status" id="homeVoiceStatus">Voice guidance is off.</span>
+            </div>
+            <div class="briefing-text" id="morningBriefingText">Morning briefing text will appear here when you play it.</div>
+          </article>
+
           <div class="home-main-grid">
             <article class="home-section-card accent">
               <div class="split">
@@ -4314,27 +4494,6 @@
             <div class="mini-trend" id="homeTrendLine" aria-label="Recent LifeOps score trend"></div>
           </article>
 
-          <article class="home-companion-card">
-            <div class="split">
-              <h3>Companion Check-In</h3>
-              <span class="pill" id="homeLevelPill">Level 1</span>
-            </div>
-            <div class="companion-line">
-              <div class="companion-avatar" aria-hidden="true">LO</div>
-              <div class="companion-message">
-                <strong>Today's mission</strong>
-                <p id="homeMissionPrompt">Complete three small actions that improve your day.</p>
-                <div class="mission-progress"><div id="homeMissionProgress"></div></div>
-                <div class="item-meta" id="homeMissionSummary"></div>
-                <div class="home-voice-controls">
-                  <button class="btn primary" id="playMorningBriefingBtn" type="button">Play Morning Briefing</button>
-                  <button class="btn" id="startVoiceExperienceBtn" type="button" hidden>Start Voice Experience</button>
-                  <span class="voice-status" id="homeVoiceStatus">Voice guidance is off.</span>
-                </div>
-                <div class="briefing-text" id="morningBriefingText">Morning briefing text will appear here when you play it.</div>
-              </div>
-            </div>
-          </article>
         </div>
 
         <div class="mission-strip" id="homeMissionCards"></div>
@@ -4425,9 +4584,9 @@
     </button>
   </nav>
 
-  <button class="companion-launcher" id="openGlobalCompanionBtn" type="button" aria-label="Open LifeOps Companion">
+  <button class="companion-launcher" id="openGlobalCompanionBtn" type="button" aria-label="Open Atlas details">
     <span class="companion-avatar" aria-hidden="true">LO</span>
-    <span><span id="companionLauncherLabel">Ask LifeOps</span><small>Companion ready</small></span>
+    <span><span id="companionLauncherLabel">Ask Atlas</span><small>Details ready</small></span>
   </button>
 
   <div class="companion-drawer-backdrop" id="companionDrawerBackdrop"></div>
@@ -4486,7 +4645,7 @@
   </div>
 
   <script>
-    const appVersion = "1.19.0";
+    const appVersion = "1.20.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -4534,7 +4693,7 @@
     };
 
     const headerMeta = {
-      dashboard: { icon: "LO", status: "Command center", action: "Ask LifeOps", handler: () => setCompanionDrawer(true) },
+      dashboard: { icon: "AT", status: "Atlas online", action: "Ask Atlas", handler: () => setCompanionDrawer(true) },
       finance: { icon: "$", status: "Emerald finance", action: "Add Expense", handler: () => openAddExpenseModal() },
       health: { icon: "HL", status: "Health signals", action: "Log Meal", handler: () => openAddMealModal() },
       education: { icon: "ED", status: "Learning path", action: "Add Assignment", handler: () => openAddEducationAssignmentModal("Assignment") },
@@ -5553,6 +5712,7 @@
         ["Companion setup", `${companionSettings().tone} ${companionSettings().style}; ${companionSettings().focus}.`],
         ["Data used", "LifeOps score, category scores, meals, habits, workouts, goals, rewards, and saved history."]
       ]);
+      renderAtlasDashboard();
       renderHomeV2();
     }
 
@@ -8103,6 +8263,314 @@
       return `${recommendedFallbackAction(area)} Weakest area is ${area} at ${Math.round(score)}.`;
     }
 
+    function atlasTimingText(days) {
+      if (days === 0) return "due today";
+      if (days === 1) return "due tomorrow";
+      return `due in ${days} days`;
+    }
+
+    function atlasPrioritySignals() {
+      const signals = [];
+      const [weakArea, weakScore] = lowestScoreArea();
+      const meals = mealTotals();
+      const remaining = remainingNutrition();
+      const cash = cashLeft();
+      const addSignal = signal => signals.push({
+        severity: 3,
+        category: "Goals",
+        tab: "goals",
+        estimate: "10-20 minutes",
+        impacts: ["Life Score", "Goal Progress"],
+        ...signal
+      });
+
+      if (cash < 0) {
+        addSignal({
+          severity: 10,
+          title: "Cash flow needs attention",
+          meta: "Monthly expenses and planned savings are above income.",
+          category: "Finance",
+          tab: "money",
+          action: "Review expenses before adding new spending.",
+          reason: "Finance is a high leverage area because negative cash flow can pressure savings, bills, and debt payoff.",
+          estimate: "10 minutes",
+          impacts: ["Finance", "Cash Flow", "Bills"]
+        });
+      }
+
+      const payment = upcomingPayments(7)[0];
+      if (payment) {
+        addSignal({
+          severity: payment.daysUntil <= 1 ? 9 : 7,
+          title: `${payment.name} is ${atlasTimingText(payment.daysUntil)}`,
+          meta: "Upcoming bill or debt payment from your local expense list.",
+          category: "Finance",
+          tab: "money",
+          action: "Confirm the payment plan and protect cash.",
+          reason: "Upcoming obligations should be visible before spending, saving, or goal decisions.",
+          estimate: "5 minutes",
+          impacts: ["Finance", "Upcoming", "Cash Flow"]
+        });
+      }
+
+      if (cleanNumber(state.profile.currentSavings) < cleanNumber(state.profile.emergencyTarget)) {
+        addSignal({
+          severity: 6,
+          title: "Emergency fund is below target",
+          meta: `${percent(savingsCompletion())} of target saved.`,
+          category: "Finance",
+          tab: "money",
+          action: "Choose one small cash protection move this week.",
+          reason: "Emergency savings supports stability across money, planning, and stress.",
+          estimate: "10 minutes",
+          impacts: ["Finance", "Wellness", "Goal Progress"]
+        });
+      }
+
+      if (cleanNumber(state.profile.proteinGoal) && remaining.protein > 0) {
+        addSignal({
+          severity: remaining.protein > 40 ? 7 : 5,
+          title: "Protein target still has room",
+          meta: `${Math.max(0, Math.round(remaining.protein))}g protein left today.`,
+          category: "Nutrition",
+          tab: "food",
+          action: "Log or plan one high-protein meal that fits the food budget.",
+          reason: "Nutrition is connected to fitness progress and food cost visibility.",
+          estimate: "5-15 minutes",
+          impacts: ["Nutrition", "Fitness", "Food Budget"]
+        });
+      }
+
+      if (cleanNumber(state.profile.foodBudget) && remaining.foodBudget < 0) {
+        addSignal({
+          severity: 8,
+          title: "Food budget is over plan",
+          meta: "Logged food cost is above the weekly target.",
+          category: "Nutrition",
+          tab: "food",
+          action: "Compare restaurant cost against home meal options.",
+          reason: "Food choices can affect both budget health and macro progress.",
+          estimate: "10 minutes",
+          impacts: ["Nutrition", "Finance", "Planning"]
+        });
+      }
+
+      if (fitnessCompletion() < 100) {
+        addSignal({
+          severity: state.workouts.length ? 4 : 6,
+          title: "Workout goal is not complete yet",
+          meta: `${state.profile.workoutsDone || 0} of ${state.profile.workoutGoal || 0} workouts logged.`,
+          category: "Fitness",
+          tab: "fitness",
+          action: "Schedule or log one practical workout.",
+          reason: "Workout consistency improves the health side of the Life Score.",
+          estimate: "20-30 minutes",
+          impacts: ["Fitness", "Wellness", "Life Score"]
+        });
+      }
+
+      if (cleanNumber(state.profile.sleepGoal) && cleanNumber(state.profile.sleepHours) < cleanNumber(state.profile.sleepGoal)) {
+        addSignal({
+          severity: 5,
+          title: "Sleep is below target",
+          meta: `${cleanNumber(state.profile.sleepHours)}h logged against a ${cleanNumber(state.profile.sleepGoal)}h goal.`,
+          category: "Wellness",
+          tab: "wellness",
+          action: "Protect tonight's sleep window and log energy tomorrow.",
+          reason: "Sleep can influence stress, energy, workouts, and daily follow-through.",
+          estimate: "5 minutes",
+          impacts: ["Wellness", "Fitness", "Focus"]
+        });
+      }
+
+      const openAction = state.planActions
+        .filter(action => !action.done)
+        .sort((a, b) => (a.impact === "High" ? -1 : 0) - (b.impact === "High" ? -1 : 0))[0];
+      if (openAction) {
+        addSignal({
+          severity: openAction.impact === "High" ? 7 : 4,
+          title: openAction.name,
+          meta: `${openAction.impact || "Normal"} impact weekly action${openAction.deadline ? `, due ${openAction.deadline}` : ""}.`,
+          category: openAction.area || "Goals",
+          tab: "goals",
+          action: "Open Goals and complete the next action step.",
+          reason: "Open weekly actions turn long-term goals into trackable progress.",
+          estimate: "15-25 minutes",
+          impacts: [openAction.area || "Goals", "Goal Progress", "Weekly Review"]
+        });
+      }
+
+      const educationItem = [...state.educationAssignments.map(item => ({ title: item.title, date: item.dueDate, kind: "assignment" })), ...state.educationExams.map(item => ({ title: item.title, date: item.date, kind: "exam" }))]
+        .filter(item => daysUntil(item.date) !== null && daysUntil(item.date) >= 0 && daysUntil(item.date) <= 7)
+        .sort((a, b) => daysUntil(a.date) - daysUntil(b.date))[0];
+      if (educationItem) {
+        addSignal({
+          severity: daysUntil(educationItem.date) <= 1 ? 8 : 6,
+          title: `${educationItem.title} is ${atlasTimingText(daysUntil(educationItem.date))}`,
+          meta: `Education ${educationItem.kind} from your local tracker.`,
+          category: "Education",
+          tab: "education",
+          action: "Open Education and prepare the next deliverable.",
+          reason: "Education deadlines are time-sensitive and should shape today's focus.",
+          estimate: "20 minutes",
+          impacts: ["Education", "Calendar", "Goals"]
+        });
+      }
+
+      const careerItem = [...state.careerInterviews.map(item => ({ title: `${item.company} interview`, date: item.date, kind: "interview" })), ...state.careerApplications.filter(item => item.followUpDate).map(item => ({ title: `${item.company} follow-up`, date: item.followUpDate, kind: "follow-up" }))]
+        .filter(item => daysUntil(item.date) !== null && daysUntil(item.date) >= 0 && daysUntil(item.date) <= 7)
+        .sort((a, b) => daysUntil(a.date) - daysUntil(b.date))[0];
+      if (careerItem) {
+        addSignal({
+          severity: daysUntil(careerItem.date) <= 1 ? 8 : 6,
+          title: `${careerItem.title} is ${atlasTimingText(daysUntil(careerItem.date))}`,
+          meta: `Career ${careerItem.kind} from your local tracker.`,
+          category: "Career",
+          tab: "career",
+          action: "Open Career and prepare the next follow-up.",
+          reason: "Career dates are high leverage because preparation compounds before the event.",
+          estimate: "15-30 minutes",
+          impacts: ["Career", "Calendar", "Growth"]
+        });
+      }
+
+      const calendarItem = state.calendarEvents
+        .filter(item => daysUntil(item.date) !== null && daysUntil(item.date) >= 0 && daysUntil(item.date) <= 3)
+        .sort((a, b) => daysUntil(a.date) - daysUntil(b.date))[0];
+      if (calendarItem) {
+        addSignal({
+          severity: daysUntil(calendarItem.date) <= 1 ? 6 : 4,
+          title: `${calendarItem.title} is ${atlasTimingText(daysUntil(calendarItem.date))}`,
+          meta: "Manual LifeOps calendar event.",
+          category: "Calendar",
+          tab: "calendar",
+          action: "Open Calendar and confirm what needs preparation.",
+          reason: "Near-term calendar items should shape today's plan.",
+          estimate: "5 minutes",
+          impacts: ["Calendar", "Planning", "Focus"]
+        });
+      }
+
+      addSignal({
+        severity: Math.round((100 - weakScore) / 15),
+        title: `${weakArea} is the lowest score area`,
+        meta: `${weakArea} is currently ${Math.round(weakScore)} out of 100.`,
+        category: weakArea,
+        tab: weakArea === "Money" ? "money" : weakArea === "Nutrition" ? "food" : weakArea === "Fitness" ? "fitness" : weakArea === "Wellness" ? "wellness" : "goals",
+        action: recommendedFallbackAction(weakArea),
+        reason: "Atlas prioritizes the lowest score area when no urgent deadline is stronger.",
+        estimate: "10-20 minutes",
+        impacts: [weakArea, "Life Score", "Daily Focus"]
+      });
+
+      if (state.documents.some(doc => doc.sensitivity === "Sensitive" && doc.privacy !== "Private")) {
+        addSignal({
+          severity: 8,
+          title: "Sensitive document privacy needs review",
+          meta: "One or more document references are marked sensitive but not private.",
+          category: "Documents",
+          tab: "documents",
+          action: "Open Documents and review privacy labels.",
+          reason: "Sensitive information should stay hidden from social, voice, and public export surfaces by default.",
+          estimate: "5 minutes",
+          impacts: ["Privacy", "Documents", "Trust"]
+        });
+      }
+
+      return signals.sort((a, b) => b.severity - a.severity).slice(0, 8);
+    }
+
+    function atlasRecommendation() {
+      const signals = atlasPrioritySignals();
+      const primary = signals[0];
+      const score = lifeScore();
+      const status = scoreStatus(score);
+      const scoreChange = scoreChangeFromHistory();
+      const [weakArea, weakScore] = lowestScoreArea();
+      return {
+        score,
+        status,
+        scoreChange,
+        weakArea,
+        weakScore,
+        priorities: signals.slice(0, 3),
+        action: primary?.action || nextBestActionText(),
+        category: primary?.category || weakArea,
+        tab: primary?.tab || "dashboard",
+        estimate: primary?.estimate || "10-20 minutes",
+        impacts: primary?.impacts || [weakArea, "Life Score", "Daily Focus"],
+        reason: primary?.reason || `${weakArea} is the lowest score area at ${Math.round(weakScore)}.`,
+        title: primary?.title || "Choose one practical action for today."
+      };
+    }
+
+    function renderAtlasDashboard() {
+      const atlas = atlasRecommendation();
+      const setText = (id, text) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = text;
+      };
+      setText("atlasRecommendedAction", atlas.action);
+      setText("atlasEstimatedTime", atlas.estimate);
+      setText("atlasReason", atlas.reason);
+      setText("atlasLifeScoreDelta", `${atlas.score}/100 - ${atlas.scoreChange.text}`);
+      setText("atlasWeakSignal", `${atlas.weakArea} ${Math.round(atlas.weakScore)}`);
+      const status = document.getElementById("atlasStatusPill");
+      if (status) {
+        status.textContent = `${atlas.category} focus`;
+        status.className = atlas.status.className;
+      }
+      const impactList = document.getElementById("atlasImpactList");
+      if (impactList) {
+        impactList.innerHTML = "";
+        atlas.impacts.slice(0, 4).forEach(impact => {
+          const pill = document.createElement("span");
+          pill.className = "pill";
+          pill.textContent = impact;
+          impactList.appendChild(pill);
+        });
+      }
+      const list = document.getElementById("atlasPriorityList");
+      if (list) {
+        list.innerHTML = "";
+        atlas.priorities.forEach((item, index) => {
+          const row = document.createElement("div");
+          row.className = "atlas-priority-item";
+          const rank = document.createElement("div");
+          rank.className = "atlas-priority-rank";
+          rank.textContent = index + 1;
+          const content = document.createElement("div");
+          const title = document.createElement("strong");
+          title.textContent = item.title;
+          const meta = document.createElement("span");
+          meta.textContent = `${item.category} - ${item.meta}`;
+          content.append(title, meta);
+          row.append(rank, content);
+          list.appendChild(row);
+        });
+      }
+      const startButton = document.getElementById("atlasStartTaskBtn");
+      if (startButton) startButton.dataset.openAtlasTab = atlas.tab;
+    }
+
+    function atlasPageInsight(primary, tab) {
+      const atlas = atlasRecommendation();
+      const insights = {
+        dashboard: `Highest leverage now: ${atlas.action} Reason: ${atlas.reason}`,
+        money: cashLeft() < 0 ? "Finance needs attention: expenses and planned savings are above income. Review bills, debt payments, and variable spending first." : `Finance is stable enough to review goals. Emergency fund progress is ${percent(savingsCompletion())}.`,
+        health: `Health signal: ${Math.round(mealTotals().protein)}g protein logged, ${percent(fitnessCompletion())} workout progress, and ${cleanNumber(state.profile.sleepHours)}h sleep logged.`,
+        education: state.educationAssignments.length ? "Education is tracking real deadlines. Check the soonest assignment or exam before adding new learning goals." : "Education is ready for a first course, certification, assignment, or learning goal.",
+        career: state.careerApplications.length ? "Career is tracking applications and follow-ups. Prepare the next dated interview or follow-up first." : "Career is ready for a first application, skill target, or portfolio milestone.",
+        goals: `Growth focus: ${state.planActions.filter(action => !action.done).length} weekly actions are still open. Complete the highest impact action first.`,
+        calendar: homeUpcomingItems().length ? "Calendar is showing near-term items from bills, goals, and LifeOps events. Use it to choose today's focus." : "Calendar has no urgent local items. Add dated goals, bills, or plans to improve planning.",
+        documents: "Documents stay local in this version. Review privacy and sensitivity labels before using reports or sharing previews.",
+        settings: "Settings control personalization, appearance, voice, startup, data, and privacy without changing your saved LifeOps data.",
+        modules: "Modules can be hidden from navigation without deleting saved data. Keep Version 1 focused on the areas you actually use.",
+        more: "More contains utilities, reports, privacy, integrations, and prototypes. Planned integrations are clearly marked until real authentication exists."
+      };
+      return insights[primary] || insights[tab] || insights.dashboard;
+    }
+
     function weeklyReviewReportText() {
       const scores = scoreBreakdown();
       const strongest = scores.reduce((top, item) => item[1] > top[1] ? item : top, scores[0]);
@@ -8807,6 +9275,8 @@
       document.getElementById("pageTitle").textContent = title[0];
       document.getElementById("pageSubtitle").textContent = title[1];
       document.getElementById("pageHeaderStatus").textContent = meta.status;
+      const atlasInsight = document.getElementById("pageAtlasInsight");
+      if (atlasInsight) atlasInsight.textContent = atlasPageInsight(primary, tab);
       const action = document.getElementById("pageHeaderAction");
       action.textContent = meta.action;
       action.hidden = !meta.action;
@@ -8887,6 +9357,15 @@
     document.getElementById("openGlobalCompanionBtn").addEventListener("click", () => setCompanionDrawer(true));
     document.getElementById("closeGlobalCompanionBtn").addEventListener("click", () => setCompanionDrawer(false));
     document.getElementById("companionDrawerBackdrop").addEventListener("click", () => setCompanionDrawer(false));
+    document.getElementById("atlasStartTaskBtn").addEventListener("click", event => {
+      const tab = event.currentTarget.dataset.openAtlasTab || "dashboard";
+      activateTab(tab, sectionPrimary[tab] || null);
+    });
+    document.getElementById("atlasExplainMoreBtn").addEventListener("click", () => {
+      const atlas = atlasRecommendation();
+      setCompanionDrawer(true);
+      addCompanionSystemMessage(`Atlas recommendation: ${atlas.action}\n\nWhy: ${atlas.reason}\n\nData used: Life Score ${atlas.score}/100, weakest area ${atlas.weakArea} at ${Math.round(atlas.weakScore)}, upcoming items, weekly actions, nutrition, fitness, wellness, education, career, calendar, and local privacy signals.`);
+    });
     document.getElementById("globalAskCoachBtn").addEventListener("click", sendGlobalCompanionMessage);
     document.getElementById("globalCoachQuestionInput").addEventListener("keydown", event => {
       if (event.key === "Enter") sendGlobalCompanionMessage();

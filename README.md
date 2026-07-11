@@ -12,7 +12,9 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 
 ## Current Features
 
-- Home-style dashboard overview with LifeOps score, companion check-in, daily missions, reward momentum, and category score cards
+- Home-style dashboard overview with LifeOps score, Atlas Intelligence, daily missions, reward momentum, and category score cards
+- Atlas OS first layer: permanent Home intelligence card, top three priorities, recommended action, estimated time, impact areas, and transparent "why" explanation
+- Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI
 - Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
 - Built-in theme system with LifeOps Green, Midnight, Sunrise, Focus, and Ocean themes
 - Appearance settings for theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
@@ -23,6 +25,7 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Privacy Center explaining local storage, backup controls, data classifications, sharing defaults, and sensitive-data safeguards
 - Integrations Center showing planned/disconnected app connections with honest statuses and privacy notes
 - Focused visual polish pass with larger readable text, stronger subtabs, clearer section summaries, modal-based add flows, and more distinct theme palettes
+- Premium Personal Operating System visual refinement with dynamic page headers, category accents, stronger card contrast, improved progress bars, polished buttons, richer empty states, and upgraded sidebar/mobile navigation styling
 - Ten-item desktop navigation with Dashboard, Finance, Health, Education, Career, Goals, Calendar, Documents, Settings, and Modules
 - Collapsible desktop sidebar with local preference storage
 - Five-item mobile bottom navigation with additional sections accessible through More
@@ -48,8 +51,8 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Wellness tracking for sleep, water, mood, stress, and energy
 - Daily history snapshots and trend summaries
 - Weekly review and report preview/export
-- Rule-based companion chatbot mockup with message bubbles, quick replies, typing animation, session history, and action buttons
-- Always-available Companion drawer for asking questions from any screen
+- Rule-based Atlas detail drawer with message bubbles, quick replies, typing animation, session history, and action buttons
+- Always-available Atlas drawer for asking questions from any screen as a secondary detail view
 - Companion customization for name, initials, avatar color, tone, coaching style, and preferred focus
 - Premium startup overlay with skip control, reduced-motion support, and dashboard entrance animation
 - Optional built-in browser voice guidance using SpeechSynthesis, clearly separate from real AI
@@ -143,7 +146,7 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Disabling a module hides navigation and dashboard surfaces but does not delete the saved data.
 - Upcoming payment warnings depend on due dates entered on expenses.
 - Financial calculations are simple cash-flow and progress calculations only.
-- The companion chatbot is rule-based, session-only, and not connected to a real AI model.
+- Atlas recommendations and the detail drawer are rule-based, session-only, and not connected to a real AI model.
 - Voice guidance uses the browser's built-in SpeechSynthesis feature and may vary by browser/device.
 - Voice is off by default and does not speak unless enabled by the user.
 - Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
@@ -347,6 +350,8 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.20.0` - Added the first Atlas OS intelligence layer with a permanent Home Atlas card, proactive local priority signals, estimated time, impact labels, transparent recommendation reasoning, page-level Atlas insight strips, and secondary Ask Atlas detail drawer while preserving existing app data and business logic.
+- `1.19.0` - Completed a focused premium visual refinement pass with dynamic section headers, category identity accents, stronger card contrast, richer empty states, improved button/progress/sidebar styling, dashboard five-card hierarchy, and responsive polish while preserving existing functionality and data compatibility.
 - `1.18.0` - Built Checkpoint 2 real local data models and modal forms for Education, Career, Calendar, and Documents; added Checkpoint 3 module enable/disable behavior, dashboard customization controls, and a visual polish pass for navigation, prototype cards, module cards, and mobile bottom navigation.
 - `1.17.0` - Started the navigation redesign with ten desktop primary destinations, a five-item mobile bottom nav, collapsible desktop sidebar, Settings hub panels, local prototype pages for Education, Career, Calendar, Documents, and Modules, and optional sidebar preference storage.
 - `1.16.0` - Completed a focused visual polish pass with larger body text, stronger touch targets, section-specific summaries, modal-based add forms, simplified Home hierarchy, dashboard-only global metrics, and distinct dark palettes for each theme.
