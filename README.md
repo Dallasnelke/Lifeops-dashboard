@@ -355,6 +355,7 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.22.1` - Fixed Atlas onboarding progression after the first question by preserving the active onboarding state object instead of recreating it during each state read. Verified the full 34-question onboarding flow, final summary, and Launch LifeOps exit behavior.
 - `1.22.0` - Rebuilt the assistant surface as Atlas Local Intelligence with structured local context, deterministic priority ranking, grounded response sections, evidence, confidence, data freshness, supported local question handling, unsupported-question fallback, Atlas status language, and future secure AI integration placeholders.
 - `1.20.0` - Added the first Atlas OS intelligence layer with a permanent Home Atlas card, proactive local priority signals, estimated time, impact labels, transparent recommendation reasoning, page-level Atlas insight strips, and secondary Ask Atlas detail drawer while preserving existing app data and business logic.
 - `1.19.0` - Completed a focused premium visual refinement pass with dynamic section headers, category identity accents, stronger card contrast, richer empty states, improved button/progress/sidebar styling, dashboard five-card hierarchy, and responsive polish while preserving existing functionality and data compatibility.

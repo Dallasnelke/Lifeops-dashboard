@@ -3180,7 +3180,7 @@
         </div>
         <div class="topbar-actions">
           <span class="topbar-status" id="pageHeaderStatus">Local first</span>
-          <button class="btn primary" id="pageHeaderAction" type="button">Ask Atlas</button>
+          <button class="btn primary" id="pageHeaderAction" type="button">Atlas Local</button>
         </div>
         <div class="atlas-page-insight" aria-live="polite">
           <strong>Atlas insight</strong>
@@ -4109,7 +4109,7 @@
           </article>
 
           <article class="panel">
-            <h3>AI Meal Suggestions</h3>
+            <h3>Rule-Based Meal Insight</h3>
             <div id="mealSuggestionList" class="list"></div>
           </article>
         </div>
@@ -4405,7 +4405,7 @@
           </article>
 
           <article class="panel">
-            <h3>AI Coach Preview</h3>
+            <h3>Future AI Roadmap Preview</h3>
             <div class="list" id="aiPreviewList"></div>
           </article>
         </div>
@@ -4446,7 +4446,7 @@
       <section id="coach" class="tab">
         <article class="panel home-companion-card" style="margin-bottom: 16px;">
           <div class="split">
-            <h3><span data-companion-name>LifeOps</span> Companion</h3>
+            <h3>Atlas Local Intelligence</h3>
             <span class="pill" id="companionLevelPill">Level 1</span>
           </div>
           <div class="companion-line">
@@ -4462,7 +4462,7 @@
 
         <div class="grid cols-2">
           <article class="panel chat-shell">
-            <h3>Ask <span data-companion-name>LifeOps</span> Companion</h3>
+            <h3>Atlas Local</h3>
             <div id="companionChatWindow" class="chat-window" aria-live="polite"></div>
             <div class="prompt-row">
               <button class="btn small" data-coach-prompt="Why is my score low?">Why is my score low?</button>
@@ -4494,7 +4494,7 @@
 
         <div class="grid cols-2" style="margin-top: 16px;">
           <article class="panel">
-            <h3>Companion Context</h3>
+            <h3>Atlas Status</h3>
             <div id="companionDataList" class="list"></div>
           </article>
 
@@ -4506,7 +4506,7 @@
 
         <article class="panel companion-customizer" style="margin-top: 16px;">
           <div class="split">
-            <h3>Customize Companion</h3>
+            <h3>Customize Atlas Display</h3>
             <span class="pill">Local settings</span>
           </div>
           <div class="companion-preview">
@@ -4870,15 +4870,15 @@
 
   <button class="companion-launcher" id="openGlobalCompanionBtn" type="button" aria-label="Open Atlas details">
     <span class="companion-avatar" aria-hidden="true">LO</span>
-    <span><span id="companionLauncherLabel">Ask Atlas</span><small>Details ready</small></span>
+    <span><span id="companionLauncherLabel">Atlas Local</span><small>Local intelligence</small></span>
   </button>
 
   <div class="companion-drawer-backdrop" id="companionDrawerBackdrop"></div>
-  <aside class="companion-drawer" id="companionDrawer" aria-label="LifeOps Companion drawer">
+  <aside class="companion-drawer" id="companionDrawer" aria-label="Atlas Local Intelligence drawer">
     <div class="companion-drawer-header">
       <div class="companion-avatar" aria-hidden="true">LO</div>
       <div>
-        <h3><span data-companion-name>LifeOps</span> Companion</h3>
+        <h3>Atlas Local</h3>
         <p id="globalCompanionStatus">Missions, score, and next action in one place.</p>
       </div>
       <button class="icon-btn" id="closeGlobalCompanionBtn" type="button" title="Close companion" aria-label="Close companion">
@@ -4897,7 +4897,7 @@
       <div class="drawer-compose">
         <label>
           Message
-          <input id="globalCoachQuestionInput" placeholder="Ask LifeOps anything about today">
+          <input id="globalCoachQuestionInput" placeholder="Ask a supported local question">
         </label>
         <button class="btn primary" id="globalAskCoachBtn" type="button">Send</button>
       </div>
@@ -4929,7 +4929,7 @@
   </div>
 
   <script>
-    const appVersion = "1.21.0";
+    const appVersion = "1.22.1";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -4962,7 +4962,7 @@
       history: ["History", "Save daily snapshots and watch the 7-day score trend."],
       review: ["Weekly Review", "Summarize wins, leaks, weak spots, and next week's focus."],
       reports: ["Reports", "Preview and export weekly, daily, and portfolio-ready summaries."],
-      coach: ["Companion", "Chat with a rule-based LifeOps companion for missions, weak areas, and practical next steps."],
+      coach: ["Atlas Local", "Use local rule-based intelligence for supported questions, priorities, evidence, and practical next steps."],
       about: ["About", "Position LifeOps as a career-ready portfolio project and future AI coach."],
       connections: ["Connections", "Prototype local profiles, groups, shared goals, shared lists, challenges, and privacy permissions."],
       privacy: ["Privacy Center", "See what is local, what could be shared later, and how LifeOps protects sensitive data by default."],
@@ -4977,7 +4977,7 @@
     };
 
     const headerMeta = {
-      dashboard: { icon: "AT", status: "Atlas online", action: "Ask Atlas", handler: () => setCompanionDrawer(true) },
+      dashboard: { icon: "AT", status: "Local Intelligence", action: "Atlas Local", handler: () => setCompanionDrawer(true) },
       finance: { icon: "$", status: "Emerald finance", action: "Add Expense", handler: () => openAddExpenseModal() },
       health: { icon: "HL", status: "Health signals", action: "Log Meal", handler: () => openAddMealModal() },
       education: { icon: "ED", status: "Learning path", action: "Add Assignment", handler: () => openAddEducationAssignmentModal("Assignment") },
@@ -5516,7 +5516,23 @@
     }
 
     function atlasOnboarding() {
-      state.onboarding = { ...defaultOnboardingSettings(), ...(state.onboarding || {}), answers: { ...(state.onboarding?.answers || {}) } };
+      const defaults = defaultOnboardingSettings();
+      if (!state.onboarding || typeof state.onboarding !== "object" || Array.isArray(state.onboarding)) {
+        state.onboarding = { ...defaults };
+      }
+      const onboarding = state.onboarding;
+      Object.entries(defaults).forEach(([key, value]) => {
+        if (!(key in onboarding)) {
+          onboarding[key] = Array.isArray(value) ? [...value] : value && typeof value === "object" ? { ...value } : value;
+        }
+      });
+      if (!onboarding.answers || typeof onboarding.answers !== "object" || Array.isArray(onboarding.answers)) {
+        onboarding.answers = {};
+      }
+      if (!Array.isArray(onboarding.recommendedModules)) {
+        onboarding.recommendedModules = [];
+      }
+      onboarding.currentStep = Math.max(0, Math.min(atlasOnboardingQuestions().length - 1, cleanNumber(onboarding.currentStep, 0, atlasOnboardingQuestions().length - 1)));
       return state.onboarding;
     }
 
@@ -6202,23 +6218,502 @@
       return `${area} is your weakest area at ${Math.round(score)}. Complete ${progress.total - progress.complete} more mission${progress.total - progress.complete === 1 ? "" : "s"} to build momentum today.`;
     }
 
+    function atlasFreshnessLabel() {
+      const latest = recentHistory(1)[0];
+      if (!latest?.date) return "Based on current browser data; no saved snapshot yet.";
+      const age = daysUntil(latest.date);
+      if (age === 0) return "Based on data updated today.";
+      if (age !== null && age < 0 && Math.abs(age) <= 7) return "Based on data updated this week.";
+      return "Based on older saved snapshot data plus current local entries.";
+    }
+
+    function atlasConfidence(context) {
+      let points = 0;
+      if (context.profile.hasMoneyTargets) points += 1;
+      if (context.finance.hasExpenses) points += 1;
+      if (context.nutrition.hasTargets || context.nutrition.mealsLogged > 0) points += 1;
+      if (context.fitness.hasWorkoutGoal || context.fitness.workoutsLogged > 0) points += 1;
+      if (context.goals.totalGoals || context.goals.openActions) points += 1;
+      if (points >= 4) return "High";
+      if (points >= 2) return "Medium";
+      return "Low";
+    }
+
+    function getAtlasContext() {
+      const meals = mealTotals();
+      const remaining = remainingNutrition();
+      const payments = state.expenses
+        .filter(expense => ["Bill", "Debt Payment"].includes(expense.type))
+        .map(expense => ({ ...expense, daysUntil: daysUntil(expense.dueDate) }))
+        .sort((a, b) => (a.daysUntil ?? 9999) - (b.daysUntil ?? 9999));
+      const assignments = [...state.educationAssignments.map(item => ({ title: item.title, date: item.dueDate, kind: "Assignment", course: item.course, privacy: item.privacy })), ...state.educationExams.map(item => ({ title: item.title, date: item.date, kind: "Exam", course: item.course, privacy: item.privacy }))]
+        .filter(item => item.date)
+        .map(item => ({ ...item, daysUntil: daysUntil(item.date) }))
+        .sort((a, b) => (a.daysUntil ?? 9999) - (b.daysUntil ?? 9999));
+      const careerItems = [...state.careerInterviews.map(item => ({ title: `${item.company} interview`, date: item.date, kind: "Interview", company: item.company, privacy: item.privacy })), ...state.careerApplications.filter(item => item.followUpDate).map(item => ({ title: `${item.company} follow-up`, date: item.followUpDate, kind: "Follow up", company: item.company, privacy: item.privacy }))]
+        .filter(item => item.date)
+        .map(item => ({ ...item, daysUntil: daysUntil(item.date) }))
+        .sort((a, b) => (a.daysUntil ?? 9999) - (b.daysUntil ?? 9999));
+      const calendarEvents = typeof calendarItems === "function" ? calendarItems().slice(0, 8) : state.calendarEvents.map(event => ({ ...event, daysUntil: daysUntil(event.date) }));
+      const scores = scoreBreakdown();
+      const weakest = lowestScoreArea();
+      const strongest = scores.reduce((top, item) => item[1] > top[1] ? item : top, scores[0]);
+      const sensitiveDocuments = state.documents.filter(doc => doc.sensitivity === "Sensitive").length;
+      const privateDocuments = state.documents.filter(doc => doc.privacy === "Private").length;
+      const completedTasks = state.tasks.filter(task => task.done).length;
+      const completedActions = state.planActions.filter(action => action.done).length;
+      const context = {
+        generatedAt: new Date().toLocaleString(),
+        today: todayKey(),
+        freshness: atlasFreshnessLabel(),
+        profile: {
+          displayName: displayName() || personalizationSettings().displayName || "",
+          priority: state.profile.priority || "",
+          notes: state.profile.notes || "",
+          hasMoneyTargets: cleanNumber(state.profile.income) > 0 || cleanNumber(state.profile.emergencyTarget) > 0,
+          hasNutritionTargets: cleanNumber(state.profile.calorieGoal) > 0 || cleanNumber(state.profile.proteinGoal) > 0,
+          hasWorkoutGoal: cleanNumber(state.profile.workoutGoal) > 0
+        },
+        finance: {
+          income: cleanNumber(state.profile.income),
+          expenses: totalExpenses(),
+          cashLeft: cashLeft(),
+          savingsGoal: cleanNumber(state.profile.savingsGoal),
+          currentSavings: cleanNumber(state.profile.currentSavings),
+          emergencyTarget: cleanNumber(state.profile.emergencyTarget),
+          emergencyProgress: savingsCompletion(),
+          hasExpenses: state.expenses.length > 0,
+          bills: payments,
+          overdueBills: payments.filter(item => item.daysUntil !== null && item.daysUntil < 0),
+          upcomingBills: payments.filter(item => item.daysUntil !== null && item.daysUntil >= 0 && item.daysUntil <= 7)
+        },
+        nutrition: {
+          mealsLogged: state.meals.length,
+          savedMeals: state.savedMeals.length,
+          calories: meals.calories,
+          protein: meals.protein,
+          cost: meals.cost,
+          restaurantCost: meals.restaurantCost,
+          homeCost: meals.homeCost,
+          foodBudget: cleanNumber(state.profile.foodBudget),
+          foodBudgetRemaining: remaining.foodBudget,
+          proteinRemaining: remaining.protein,
+          caloriesRemaining: remaining.calories,
+          hasTargets: cleanNumber(state.profile.proteinGoal) > 0 || cleanNumber(state.profile.foodBudget) > 0
+        },
+        fitness: {
+          workoutGoal: cleanNumber(state.profile.workoutGoal),
+          workoutsDone: cleanNumber(state.profile.workoutsDone),
+          completion: fitnessCompletion(),
+          workoutsLogged: state.workouts.length,
+          stepsToday: cleanNumber(state.profile.stepsToday),
+          stepGoal: cleanNumber(state.profile.stepGoal),
+          hasWorkoutGoal: cleanNumber(state.profile.workoutGoal) > 0
+        },
+        wellness: {
+          sleepHours: cleanNumber(state.profile.sleepHours),
+          sleepGoal: cleanNumber(state.profile.sleepGoal),
+          waterCups: cleanNumber(state.profile.waterCups),
+          waterGoal: cleanNumber(state.profile.waterGoal),
+          mood: cleanNumber(state.profile.mood),
+          stress: cleanNumber(state.profile.stress),
+          energy: cleanNumber(state.profile.energy)
+        },
+        education: {
+          courses: state.educationCourses.length,
+          deadlines: assignments,
+          nextDeadline: assignments.find(item => item.daysUntil !== null && item.daysUntil >= 0)
+        },
+        career: {
+          applications: state.careerApplications.length,
+          followUps: careerItems,
+          nextFollowUp: careerItems.find(item => item.daysUntil !== null && item.daysUntil >= 0)
+        },
+        goals: {
+          totalGoals: state.goals.length,
+          averageProgress: goalCompletion(),
+          openActions: state.planActions.filter(action => !action.done).length,
+          completedActions,
+          highImpactAction: state.planActions.find(action => !action.done && action.impact === "High") || state.planActions.find(action => !action.done)
+        },
+        calendar: {
+          events: calendarEvents,
+          upcoming: calendarEvents.filter(item => daysUntil(item.date) !== null && daysUntil(item.date) >= 0 && daysUntil(item.date) <= 7)
+        },
+        recentActions: {
+          completedTasks,
+          totalTasks: state.tasks.length,
+          completedPlanActions: completedActions,
+          snapshots: state.history.length,
+          recentWin: recentWinText()
+        },
+        lifeScore: {
+          score: lifeScore(),
+          categoryScores: Object.fromEntries(scores),
+          weakestArea: weakest[0],
+          weakestScore: Math.round(weakest[1]),
+          strongestArea: strongest[0],
+          strongestScore: Math.round(strongest[1])
+        },
+        privacy: {
+          dataSource: "This browser",
+          remoteAi: "Not connected",
+          memory: "Local only",
+          defaultSharing: "Private by default",
+          sensitiveDocuments,
+          privateDocuments
+        }
+      };
+      context.confidence = atlasConfidence(context);
+      return context;
+    }
+
+    function atlasAction(title, config) {
+      return {
+        title,
+        category: config.category || "Local Intelligence",
+        urgency: cleanNumber(config.urgency, 0, 10),
+        time: config.time || "5-15 minutes",
+        tab: config.tab || "dashboard",
+        found: config.found || title,
+        why: config.why || "This is the clearest action from current LifeOps data.",
+        action: config.action || title,
+        evidence: config.evidence || [],
+        impacts: config.impacts || ["Life Score"],
+        confidence: config.confidence || "Medium",
+        freshness: config.freshness || atlasFreshnessLabel(),
+        incomplete: config.incomplete || ""
+      };
+    }
+
+    function evaluateAtlasPriorities(context = getAtlasContext()) {
+      const actions = [];
+      const add = (title, config) => actions.push(atlasAction(title, { ...config, freshness: context.freshness, confidence: config.confidence || context.confidence }));
+      const overdue = context.finance.overdueBills[0];
+      if (overdue) {
+        add("Review overdue payment", {
+          category: "Finance",
+          urgency: 10,
+          tab: "money",
+          found: `${overdue.name} is overdue based on its due date.`,
+          why: "Overdue bills and debt payments are urgent because they can affect cash flow and planning.",
+          action: "Open Money and confirm the payment plan before adding new spending.",
+          evidence: [`${overdue.name}: ${money(cleanNumber(overdue.amount))}`, `Due date: ${overdue.dueDate}`],
+          impacts: ["Finance", "Cash flow", "Planning"],
+          time: "5-10 minutes"
+        });
+      }
+      const upcoming = context.finance.upcomingBills[0];
+      if (upcoming) {
+        add("Prepare for upcoming payment", {
+          category: "Finance",
+          urgency: upcoming.daysUntil <= 1 ? 9 : 7,
+          tab: "money",
+          found: `${upcoming.name} is ${upcoming.daysUntil === 0 ? "due today" : `due in ${upcoming.daysUntil} day${upcoming.daysUntil === 1 ? "" : "s"}`}.`,
+          why: "Upcoming obligations should be visible before spending, saving, or goal decisions.",
+          action: "Confirm the payment plan and protect cash.",
+          evidence: [`Payment: ${upcoming.name}`, `Amount: ${money(cleanNumber(upcoming.amount))}`, `Due date: ${upcoming.dueDate}`],
+          impacts: ["Finance", "Cash flow"],
+          time: "5 minutes"
+        });
+      }
+      if (context.finance.cashLeft < 0) {
+        add("Fix negative cash flow", {
+          category: "Finance",
+          urgency: 9,
+          tab: "money",
+          found: `Estimated cash left is ${money(context.finance.cashLeft)} after expenses and planned savings.`,
+          why: "Negative cash flow can pressure bills, savings, and debt payoff.",
+          action: "Review expenses or adjust planned savings before adding new commitments.",
+          evidence: [`Income: ${money(context.finance.income)}`, `Expenses: ${money(context.finance.expenses)}`, `Savings goal: ${money(context.finance.savingsGoal)}`],
+          impacts: ["Finance", "Goal progress"]
+        });
+      }
+      if (context.nutrition.foodBudget > 0 && context.nutrition.foodBudgetRemaining <= 0 && context.nutrition.proteinRemaining > 0) {
+        add("Use a saved home meal", {
+          category: "Nutrition",
+          urgency: 8,
+          tab: "food",
+          found: `Food budget is fully used and protein remaining is ${Math.max(0, Math.round(context.nutrition.proteinRemaining))}g.`,
+          why: "Eating out again would increase spending and may not close the protein gap efficiently.",
+          action: "Use a saved home meal or prepare one lower-cost high-protein meal.",
+          evidence: [`Food budget used: ${percent((context.nutrition.cost / Math.max(1, context.nutrition.foodBudget)) * 100)}`, `Protein remaining: ${Math.max(0, Math.round(context.nutrition.proteinRemaining))}g`, `Home meal cost logged: ${money(context.nutrition.homeCost)}`, `Restaurant cost logged: ${money(context.nutrition.restaurantCost)}`],
+          impacts: ["Finance improvement", "Nutrition improvement", "Goal progress"]
+        });
+      } else if (context.nutrition.hasTargets && context.nutrition.proteinRemaining > 25) {
+        add("Close protein gap", {
+          category: "Nutrition",
+          urgency: 6,
+          tab: "food",
+          found: `${Math.round(context.nutrition.proteinRemaining)}g protein remains against your target.`,
+          why: "Protein progress supports the nutrition and fitness parts of the LifeOps score.",
+          action: "Log or prepare one high-protein meal.",
+          evidence: [`Protein logged: ${Math.round(context.nutrition.protein)}g`, `Protein remaining: ${Math.round(context.nutrition.proteinRemaining)}g`],
+          impacts: ["Nutrition", "Fitness"]
+        });
+      }
+      if (context.fitness.hasWorkoutGoal && context.fitness.completion < 100) {
+        add("Complete one workout", {
+          category: "Fitness",
+          urgency: context.fitness.workoutsDone === 0 ? 7 : 5,
+          tab: "fitness",
+          found: `Workout progress is ${percent(context.fitness.completion)}.`,
+          why: "Workout consistency affects the fitness score and weekly momentum.",
+          action: "Schedule or log one realistic workout.",
+          evidence: [`Workouts: ${context.fitness.workoutsDone} of ${context.fitness.workoutGoal}`, `Logged workout records: ${context.fitness.workoutsLogged}`],
+          impacts: ["Fitness", "Wellness"]
+        });
+      }
+      if (context.wellness.sleepGoal > 0 && context.wellness.sleepHours < context.wellness.sleepGoal) {
+        add("Protect sleep target", {
+          category: "Wellness",
+          urgency: 5,
+          tab: "wellness",
+          found: `Sleep is ${context.wellness.sleepHours}h against a ${context.wellness.sleepGoal}h goal.`,
+          why: "Sleep can affect energy, stress, workouts, and planning consistency.",
+          action: "Set tonight's sleep window and log energy tomorrow.",
+          evidence: [`Sleep logged: ${context.wellness.sleepHours}h`, `Sleep goal: ${context.wellness.sleepGoal}h`, `Energy: ${context.wellness.energy}/5`],
+          impacts: ["Wellness", "Fitness", "Focus"]
+        });
+      }
+      if (context.education.nextDeadline) {
+        const item = context.education.nextDeadline;
+        add("Prepare next education deadline", {
+          category: "Education",
+          urgency: item.daysUntil <= 1 ? 8 : 5,
+          tab: "education",
+          found: `${item.title} is due in ${item.daysUntil} day${item.daysUntil === 1 ? "" : "s"}.`,
+          why: "Upcoming school or training deadlines should shape today's plan.",
+          action: "Open Education and define the next deliverable.",
+          evidence: [`${item.kind}: ${item.title}`, `Date: ${item.date}`, `Course: ${item.course || "Not set"}`],
+          impacts: ["Education", "Calendar", "Goals"]
+        });
+      }
+      if (context.career.nextFollowUp) {
+        const item = context.career.nextFollowUp;
+        add("Prepare career follow-up", {
+          category: "Career",
+          urgency: item.daysUntil <= 1 ? 8 : 5,
+          tab: "career",
+          found: `${item.title} is due in ${item.daysUntil} day${item.daysUntil === 1 ? "" : "s"}.`,
+          why: "Career follow-ups and interviews are time-sensitive and improve with preparation.",
+          action: "Open Career and prepare the next follow-up or interview note.",
+          evidence: [`Item: ${item.title}`, `Date: ${item.date}`, `Type: ${item.kind}`],
+          impacts: ["Career", "Calendar", "Growth"]
+        });
+      }
+      if (context.goals.highImpactAction) {
+        const action = context.goals.highImpactAction;
+        add("Complete high-impact weekly action", {
+          category: action.area || "Goals",
+          urgency: action.impact === "High" ? 6 : 4,
+          tab: "goals",
+          found: `${action.name} is still open.`,
+          why: "Open weekly actions convert long-term goals into visible progress.",
+          action: "Open Goals and move this action forward.",
+          evidence: [`Action: ${action.name}`, `Impact: ${action.impact || "Not set"}`, `Deadline: ${action.deadline || "No deadline set"}`],
+          impacts: [action.area || "Goals", "Goal progress"]
+        });
+      }
+      if (context.privacy.sensitiveDocuments > 0) {
+        add("Review sensitive document privacy", {
+          category: "Privacy",
+          urgency: 4,
+          tab: "documents",
+          found: `${context.privacy.sensitiveDocuments} document reference${context.privacy.sensitiveDocuments === 1 ? "" : "s"} marked sensitive.`,
+          why: "Sensitive records should stay out of social previews, voice briefings, and public exports by default.",
+          action: "Open Documents and verify privacy labels.",
+          evidence: [`Sensitive references: ${context.privacy.sensitiveDocuments}`, `Private references: ${context.privacy.privateDocuments}`],
+          impacts: ["Privacy", "Trust"]
+        });
+      }
+      if (!actions.length && context.lifeScore.weakestArea) {
+        add("Improve weakest Life Score area", {
+          category: context.lifeScore.weakestArea,
+          urgency: 3,
+          tab: context.lifeScore.weakestArea === "Money" ? "money" : context.lifeScore.weakestArea === "Nutrition" ? "food" : context.lifeScore.weakestArea === "Fitness" ? "fitness" : context.lifeScore.weakestArea === "Wellness" ? "wellness" : "goals",
+          found: `${context.lifeScore.weakestArea} is the lowest category at ${context.lifeScore.weakestScore}.`,
+          why: "When there is no urgent deadline, the weakest score area is the most explainable next focus.",
+          action: recommendedFallbackAction(context.lifeScore.weakestArea),
+          evidence: [`Weakest area: ${context.lifeScore.weakestArea}`, `Score: ${context.lifeScore.weakestScore}/100`],
+          impacts: [context.lifeScore.weakestArea, "Life Score"],
+          confidence: context.confidence
+        });
+      }
+      if (!actions.length) {
+        return [atlasAction("Add more LifeOps data", {
+          category: "Data",
+          urgency: 1,
+          tab: "setup",
+          found: "I do not have enough information yet. Add or update the relevant LifeOps data first.",
+          why: "Atlas Local needs saved values, due dates, goals, or activity logs before it can rank actions honestly.",
+          action: "Add one goal, one bill date, one meal, or one workout.",
+          evidence: ["No actionable local signals were found."],
+          impacts: ["Data quality"],
+          confidence: "Low",
+          freshness: context.freshness
+        })];
+      }
+      return actions.sort((a, b) => b.urgency - a.urgency).slice(0, 8);
+    }
+
+    function atlasSummaryRows(context = getAtlasContext(), priorities = evaluateAtlasPriorities(context)) {
+      const top = priorities[0];
+      return [
+        ["Mode", "Local Intelligence"],
+        ["Data source", context.privacy.dataSource],
+        ["Remote AI", context.privacy.remoteAi],
+        ["Conversation memory", context.privacy.memory],
+        ["Actions", "Require confirmation"],
+        ["Privacy", context.privacy.defaultSharing],
+        ["Confidence", top?.confidence || context.confidence],
+        ["Data freshness", top?.freshness || context.freshness]
+      ];
+    }
+
+    function atlasRowsFromAction(action, context = getAtlasContext()) {
+      return [
+        ["What I found", action.found],
+        ["Why it matters", action.why],
+        ["Recommended action", action.action],
+        ["Evidence from LifeOps", action.evidence.length ? action.evidence.join("; ") : "I do not have enough information yet. Add or update the relevant LifeOps data first."],
+        ["Expected impact", action.impacts.join("; ")],
+        ["Confidence", action.confidence],
+        ["Data freshness", action.freshness],
+        ["Optional next step", `Open ${action.category} details or update the related LifeOps data.`]
+      ];
+    }
+
+    function atlasUnsupportedRows() {
+      return [
+        ["What I found", "Atlas Local cannot answer that yet. Full conversational AI requires a secure backend connection."],
+        ["Why it matters", "This version only answers supported local questions with deterministic rules and visible evidence."],
+        ["Recommended action", "Ask one of the supported local questions or update the relevant LifeOps data first."],
+        ["Evidence from LifeOps", "No supported local intent matched the question."],
+        ["Confidence", "Low"],
+        ["Data freshness", atlasFreshnessLabel()]
+      ];
+    }
+
+    function atlasLocalRowsForQuestion(question, context = getAtlasContext()) {
+      const q = (question || "").toLowerCase();
+      const priorities = evaluateAtlasPriorities(context);
+      const top = priorities[0];
+      if (!q.trim() || q.includes("next") || q.includes("focus") || q.includes("do now")) return atlasRowsFromAction(top, context);
+      if (q.includes("due this week") || q.includes("coming up") || q.includes("due soon")) {
+        const items = [
+          ...context.finance.upcomingBills.map(item => `${item.name} bill/payment due ${item.dueDate}`),
+          ...context.education.deadlines.filter(item => item.daysUntil !== null && item.daysUntil >= 0 && item.daysUntil <= 7).map(item => `${item.title} ${item.kind.toLowerCase()} due ${item.date}`),
+          ...context.career.followUps.filter(item => item.daysUntil !== null && item.daysUntil >= 0 && item.daysUntil <= 7).map(item => `${item.title} due ${item.date}`)
+        ];
+        return [
+          ["What I found", items.length ? items.slice(0, 5).join("; ") : "I do not have enough dated items this week."],
+          ["Why it matters", "Dated bills, assignments, and follow-ups should shape the current week before lower urgency tasks."],
+          ["Recommended action", items.length ? "Handle the earliest dated item first." : "Add due dates to bills, assignments, goals, or follow-ups."],
+          ["Evidence from LifeOps", items.length ? `${items.length} dated item${items.length === 1 ? "" : "s"} found for this week.` : "No due-this-week local records found."],
+          ["Confidence", items.length ? context.confidence : "Low"],
+          ["Data freshness", context.freshness]
+        ];
+      }
+      if (q.includes("life score") || q.includes("score low") || q.includes("weakest")) {
+        return [
+          ["What I found", `${context.lifeScore.weakestArea} is weakest at ${context.lifeScore.weakestScore}/100. ${context.lifeScore.strongestArea} is strongest at ${context.lifeScore.strongestScore}/100.`],
+          ["Why it matters", "The Life Score is built from money, nutrition, fitness, wellness, and goal progress."],
+          ["Recommended action", top.action],
+          ["Evidence from LifeOps", Object.entries(context.lifeScore.categoryScores).map(([area, score]) => `${area}: ${Math.round(score)}`).join("; ")],
+          ["Confidence", context.confidence],
+          ["Data freshness", context.freshness]
+        ];
+      }
+      if (q.includes("money") || q.includes("cash") || q.includes("left")) {
+        return [
+          ["What I found", `Estimated cash left is ${money(context.finance.cashLeft)}.`],
+          ["Why it matters", "Cash left is calculated from income minus expenses and planned savings."],
+          ["Recommended action", context.finance.cashLeft < 0 ? "Review expenses or savings target before adding commitments." : "Review upcoming bills before deciding what to save or spend next."],
+          ["Evidence from LifeOps", `Income: ${money(context.finance.income)}; expenses: ${money(context.finance.expenses)}; planned savings: ${money(context.finance.savingsGoal)}.`],
+          ["Confidence", context.profile.hasMoneyTargets ? context.confidence : "Low"],
+          ["Data freshness", context.freshness]
+        ];
+      }
+      if (q.includes("assignment") || q.includes("school") || q.includes("education")) {
+        const item = context.education.nextDeadline;
+        return [
+          ["What I found", item ? `${item.title} is the next education deadline on ${item.date}.` : "I do not have enough education deadline information yet."],
+          ["Why it matters", "Education deadlines are only reliable when assignments or exams have dates."],
+          ["Recommended action", item ? "Open Education and prepare the next deliverable." : "Add an assignment, exam, or course deadline."],
+          ["Evidence from LifeOps", item ? `${item.kind}: ${item.title}; course: ${item.course || "Not set"}; days until: ${item.daysUntil}.` : "No dated education records found."],
+          ["Confidence", item ? context.confidence : "Low"],
+          ["Data freshness", context.freshness]
+        ];
+      }
+      if (q.includes("bill") || q.includes("payment")) {
+        const item = context.finance.upcomingBills[0] || context.finance.overdueBills[0];
+        return [
+          ["What I found", item ? `${item.name} is the most important bill/payment signal.` : "I do not have enough bill due date information yet."],
+          ["Why it matters", "Upcoming or overdue payments should be visible before other money decisions."],
+          ["Recommended action", item ? "Open Money and confirm the payment plan." : "Add due dates to bills or debt payments."],
+          ["Evidence from LifeOps", item ? `${item.name}: ${money(cleanNumber(item.amount))}; due date: ${item.dueDate}.` : "No dated bill or debt payment found."],
+          ["Confidence", item ? context.confidence : "Low"],
+          ["Data freshness", context.freshness]
+        ];
+      }
+      if (q.includes("eat") || q.includes("meal") || q.includes("protein") || q.includes("food")) {
+        const action = priorities.find(item => item.category === "Nutrition") || top;
+        return atlasRowsFromAction(action, context);
+      }
+      if (q.includes("career") || q.includes("follow")) {
+        const item = context.career.nextFollowUp;
+        return [
+          ["What I found", item ? `${item.title} is the next career item on ${item.date}.` : "I do not have enough career follow-up information yet."],
+          ["Why it matters", "Career reminders only work when applications, interviews, or follow-up dates are logged."],
+          ["Recommended action", item ? "Open Career and prepare the next follow-up." : "Add an application, interview, or follow-up date."],
+          ["Evidence from LifeOps", item ? `${item.kind}: ${item.title}; days until: ${item.daysUntil}.` : "No dated career records found."],
+          ["Confidence", item ? context.confidence : "Low"],
+          ["Data freshness", context.freshness]
+        ];
+      }
+      return atlasUnsupportedRows();
+    }
+
+    function formatAtlasRows(rows) {
+      return rows.map(([title, text]) => `${title}: ${text}`).join("\n\n");
+    }
+
+    // Future secure AI interface placeholder:
+    // Browser code must never contain private model API keys. A future server should handle
+    // authentication, model requests, rate limits, privacy filtering, and action confirmation.
+    function sendAtlasRequest(question, context = getAtlasContext()) {
+      return {
+        mode: "local",
+        rows: atlasLocalRowsForQuestion(question, context),
+        contextGeneratedAt: context.generatedAt
+      };
+    }
+
+    function applyConfirmedAtlasAction(action) {
+      if (!action?.tab) return false;
+      activateTab(action.tab, sectionPrimary[action.tab] || null);
+      return true;
+    }
+
     function ensureChatMessages() {
       if (chatMessages.length) return;
-      const companion = companionSettings();
+      const context = getAtlasContext();
+      const priorities = evaluateAtlasPriorities(context);
+      const top = priorities[0];
       chatMessages.push({
         role: "companion",
-        text: `I am ${companion.name}, your ${companion.style.toLowerCase()}. ${companionToneGuidance()}`
+        text: `Atlas Local: Mode: Local Intelligence\nData source: This browser\nRemote AI: Not connected\nConversation memory: Local only\nActions: Require confirmation\nPrivacy: Private by default`
       });
       chatMessages.push({
         role: "companion",
-        text: `Today's mission: ${companionLeadMessage()}\n\n${companionFocusHint()}`
+        text: `Current Atlas Summary\n\n${formatAtlasRows(atlasRowsFromAction(top, context))}`
       });
     }
 
     function coachTextForQuestion(question) {
-      const companion = companionSettings();
-      const answer = coachRowsForQuestion(question).map(([title, text]) => `${title}: ${text}`).join("\n\n");
-      return `${companion.name}: ${companionToneGuidance()}\n${companionFocusHint()}\n\n${answer}`;
+      const result = sendAtlasRequest(question);
+      return `Atlas Local\n\n${formatAtlasRows(result.rows)}`;
     }
 
     function addCompanionSystemMessage(text) {
@@ -6365,11 +6860,12 @@
       renderMissionStatus();
       renderRewardVisuals("homeRewardVisuals");
       renderRewardVisuals("companionRewardVisuals");
+      const atlasContext = getAtlasContext();
+      const atlasPriorities = evaluateAtlasPriorities(atlasContext);
       renderTextRows("companionDataList", [
-        ["Weakest area", `${lowestScoreArea()[0]} at ${Math.round(lowestScoreArea()[1])}`],
-        ["Next best action", nextBestActionText()],
-        ["Companion setup", `${companionSettings().tone} ${companionSettings().style}; ${companionSettings().focus}.`],
-        ["Data used", "LifeOps score, category scores, meals, habits, workouts, goals, rewards, and saved history."]
+        ...atlasSummaryRows(atlasContext, atlasPriorities),
+        ["Top priority", atlasPriorities[0]?.action || "I do not have enough information yet. Add or update the relevant LifeOps data first."],
+        ["Evidence", atlasPriorities[0]?.evidence?.join("; ") || "No actionable local evidence found."]
       ]);
       renderAtlasDashboard();
       renderHomeV2();
@@ -7226,7 +7722,7 @@
         element.textContent = companion.name;
       });
       const launcherLabel = document.getElementById("companionLauncherLabel");
-      if (launcherLabel) launcherLabel.textContent = `Ask ${companion.name}`;
+      if (launcherLabel) launcherLabel.textContent = "Atlas Local";
       const previewName = document.getElementById("companionPreviewName");
       if (previewName) previewName.textContent = companion.name;
       const previewMeta = document.getElementById("companionPreviewMeta");
@@ -9338,37 +9834,7 @@
     }
 
     function coachRowsForQuestion(question) {
-      const q = (question || "").toLowerCase();
-      const [weakArea, weakScore] = lowestScoreArea();
-      const meals = mealTotals();
-      const remaining = remainingNutrition();
-      const budget = Number(state.profile.foodBudget || 0);
-      if (q.includes("food") || q.includes("budget") || q.includes("protein")) {
-        return [
-          ["Coach answer", budget ? `You have ${money(Math.max(0, remaining.foodBudget))} left in the weekly food budget and ${Math.max(0, Math.round(remaining.protein))}g protein left today.` : `You have logged ${money(meals.cost)} in food cost. Add a weekly food budget in Setup to make this sharper.`],
-          ["Best move", "Use a saved home meal before adding another restaurant meal. That helps both cost control and protein consistency."],
-          ["Why it matters", "Food is one of the clearest links between money health and nutrition health."]
-        ];
-      }
-      if (q.includes("week") || q.includes("focus") || q.includes("next")) {
-        return [
-          ["Coach answer", `${weakArea} is the best focus area this week because it is the lowest score at ${Math.round(weakScore)}.`],
-          ["Best move", nextBestActionText()],
-          ["Keep it realistic", "Choose one money action, one health action, and one wellness action instead of trying to fix everything at once."]
-        ];
-      }
-      if (q.includes("health") || q.includes("money") || q.includes("habit")) {
-        return [
-          ["Coach answer", "Meal planning is the highest-leverage habit because it can reduce food cost while improving protein and calorie consistency."],
-          ["Second habit", "Sleep protection supports energy, workouts, and better food choices the next day."],
-          ["Track it", "Save a daily snapshot after logging meals, sleep, water, and completed actions."]
-        ];
-      }
-      return [
-        ["Coach answer", `${weakArea} is currently pulling the LifeOps score down the most at ${Math.round(weakScore)}.`],
-        ["Best move", nextBestActionText()],
-        ["What to watch", "Compare this week against your saved history so the coach can explain whether the score is improving, flat, or slipping."]
-      ];
+      return atlasLocalRowsForQuestion(question, getAtlasContext());
     }
 
     function renderCoachAnswer() {
@@ -10040,9 +10506,10 @@
       activateTab(tab, sectionPrimary[tab] || null);
     });
     document.getElementById("atlasExplainMoreBtn").addEventListener("click", () => {
-      const atlas = atlasRecommendation();
+      const context = getAtlasContext();
+      const priority = evaluateAtlasPriorities(context)[0];
       setCompanionDrawer(true);
-      addCompanionSystemMessage(`Atlas recommendation: ${atlas.action}\n\nWhy: ${atlas.reason}\n\nData used: Life Score ${atlas.score}/100, weakest area ${atlas.weakArea} at ${Math.round(atlas.weakScore)}, upcoming items, weekly actions, nutrition, fitness, wellness, education, career, calendar, and local privacy signals.`);
+      addCompanionSystemMessage(`Atlas Local explanation\n\n${formatAtlasRows(atlasRowsFromAction(priority, context))}`);
     });
     document.getElementById("globalAskCoachBtn").addEventListener("click", sendGlobalCompanionMessage);
     document.getElementById("globalCoachQuestionInput").addEventListener("keydown", event => {
