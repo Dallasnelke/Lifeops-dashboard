@@ -259,19 +259,47 @@
       min-height: 100vh;
       display: grid;
       grid-template-columns: 232px minmax(0, 1fr);
+      transition: grid-template-columns .2s ease;
+    }
+
+    body[data-sidebar="collapsed"] .app {
+      grid-template-columns: 84px minmax(0, 1fr);
     }
 
     .sidebar {
       background: linear-gradient(180deg, var(--nav-bg) 0%, color-mix(in srgb, var(--nav-bg) 82%, var(--primary)) 100%);
       color: #f6faf6;
-      padding: 24px 18px;
+      padding: 22px 14px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 14px;
       position: sticky;
       top: 0;
       height: 100vh;
       overflow: hidden;
+    }
+
+    .sidebar-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .sidebar-toggle {
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      background: rgba(255,255,255,.08);
+      color: #ffffff;
+      min-width: 42px;
+      min-height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .sidebar-toggle:hover {
+      background: rgba(255,255,255,.14);
     }
 
     .brand {
@@ -279,6 +307,7 @@
       align-items: center;
       gap: 12px;
       padding: 4px 4px 0;
+      min-width: 0;
     }
 
     .brand-mark {
@@ -304,6 +333,29 @@
       font-size: 13px;
     }
 
+    body[data-sidebar="collapsed"] .brand div:last-child,
+    body[data-sidebar="collapsed"] .nav span,
+    body[data-sidebar="collapsed"] .sidebar-footer .app-version,
+    body[data-sidebar="collapsed"] .sidebar-footer .sidebar-profile-name,
+    body[data-sidebar="collapsed"] .sidebar-footer .sidebar-profile-meta {
+      display: none;
+    }
+
+    body[data-sidebar="collapsed"] .sidebar {
+      padding-left: 12px;
+      padding-right: 12px;
+      align-items: stretch;
+    }
+
+    body[data-sidebar="collapsed"] .sidebar-shell,
+    body[data-sidebar="collapsed"] .brand {
+      justify-content: center;
+    }
+
+    body[data-sidebar="collapsed"] .sidebar-toggle {
+      display: none;
+    }
+
     .nav {
       display: grid;
       gap: 6px;
@@ -327,12 +379,42 @@
       text-align: left;
       font-size: 15px;
       font-weight: 650;
+      position: relative;
+    }
+
+    .nav button span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .nav button:hover,
     .nav button.active {
       background: color-mix(in srgb, var(--nav-bg) 72%, var(--primary));
       color: #ffffff;
+    }
+
+    .nav button[data-status]::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      margin-left: auto;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.1);
+    }
+
+    body[data-sidebar="collapsed"] .nav button {
+      justify-content: center;
+      padding: 8px;
+    }
+
+    body[data-sidebar="collapsed"] .nav button[data-status]::after {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      margin-left: 0;
     }
 
     .nav svg,
@@ -355,6 +437,25 @@
       border-radius: var(--radius);
       color: #d0ded5;
       font-size: 13px;
+    }
+
+    .sidebar-profile-name {
+      display: block;
+      color: #ffffff;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-profile-meta {
+      display: block;
+      color: #c8d8cf;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    body[data-sidebar="collapsed"] .sidebar-footer {
+      padding: 10px 8px;
+      text-align: center;
     }
 
     .app-version {
@@ -1094,10 +1195,24 @@
     .privacy-card {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: var(--elevated);
+      background: linear-gradient(180deg, var(--elevated) 0%, color-mix(in srgb, var(--surface) 50%, var(--elevated)) 100%);
       padding: 14px;
       display: grid;
       gap: 10px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .prototype-card strong,
+    .integration-card strong,
+    .privacy-card strong {
+      overflow-wrap: anywhere;
+    }
+
+    .prototype-card .about-lede,
+    .integration-card .about-lede,
+    .privacy-card .about-lede {
+      line-height: 1.4;
     }
 
     .permission-grid {
@@ -1110,7 +1225,8 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 10px;
-      background: var(--card-bg);
+      background: color-mix(in srgb, var(--card-bg) 86%, var(--surface));
+      min-width: 0;
     }
 
     .integration-category {
@@ -1128,6 +1244,45 @@
       font-weight: 700;
       color: var(--primary);
       background: var(--panel-soft);
+    }
+
+    .module-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--elevated), var(--panel));
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .module-card[aria-disabled="true"] {
+      opacity: .72;
+      background: color-mix(in srgb, var(--panel) 78%, var(--surface));
+    }
+
+    .module-card .actions {
+      justify-content: flex-start;
+    }
+
+    .settings-switch {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--card-bg) 88%, var(--surface));
+    }
+
+    .settings-switch span {
+      min-width: 0;
+      color: var(--ink);
+      font-weight: 650;
+      overflow-wrap: anywhere;
     }
 
     .privacy-matrix {
@@ -1629,7 +1784,8 @@
       gap: 8px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: var(--panel);
+      background: linear-gradient(180deg, var(--panel) 0%, color-mix(in srgb, var(--surface) 48%, var(--panel)) 100%);
+      box-shadow: var(--shadow);
     }
 
     .summary-card strong {
@@ -1648,6 +1804,8 @@
 
     .summary-card .item-meta {
       margin-top: 0;
+      color: var(--muted);
+      line-height: 1.35;
     }
 
     .summary-card.priority {
@@ -1999,6 +2157,46 @@
       font-size: 14px;
     }
 
+    .settings-hub {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+
+    .settings-hub button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      min-height: 44px;
+      padding: 8px 14px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-weight: 750;
+    }
+
+    .settings-hub button:hover,
+    .settings-hub button.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .settings-panel:not(.active) {
+      display: none;
+    }
+
+    .empty-state-card {
+      border-style: dashed;
+      background: color-mix(in srgb, var(--card-bg) 82%, var(--surface));
+    }
+
+    .quick-action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
     @media (max-width: 767px) {
       .app {
         grid-template-columns: 1fr;
@@ -2058,16 +2256,17 @@
         z-index: 38;
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 2px;
+        gap: 6px;
         padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
-        border-top: 1px solid var(--line);
-        background: rgba(255,255,255,.96);
-        box-shadow: 0 -8px 24px rgba(24, 45, 34, .08);
+        border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+        background: color-mix(in srgb, var(--card-bg) 94%, transparent);
+        box-shadow: 0 -10px 28px rgba(24, 45, 34, .12);
+        backdrop-filter: blur(14px);
       }
 
       .bottom-nav button {
         min-height: 58px;
-        border: 0;
+        border: 1px solid transparent;
         border-radius: 12px;
         background: transparent;
         color: var(--muted);
@@ -2079,8 +2278,10 @@
       }
 
       .bottom-nav button.active {
-        background: var(--panel-soft);
-        color: var(--green);
+        background: color-mix(in srgb, var(--primary) 13%, var(--card-bg));
+        border-color: color-mix(in srgb, var(--primary) 26%, var(--border));
+        color: var(--primary);
+        box-shadow: 0 8px 18px rgba(24, 45, 34, .10);
       }
 
       .bottom-nav svg {
@@ -2113,6 +2314,10 @@
       .home-category-grid,
       .home-quick-grid,
       .theme-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .quick-action-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -2226,44 +2431,71 @@
 
   <div class="app">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 13a8 8 0 0 1 16 0"></path>
-            <path d="M12 13l4-5"></path>
-            <path d="M7 17h10"></path>
-          </svg>
+      <div class="sidebar-shell">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 13a8 8 0 0 1 16 0"></path>
+              <path d="M12 13l4-5"></path>
+              <path d="M7 17h10"></path>
+            </svg>
+          </div>
+          <div>
+            <h1>LifeOps</h1>
+            <p>Personal Operating System</p>
+          </div>
         </div>
-        <div>
-          <h1>LifeOps</h1>
-          <p>Daily control center</p>
-        </div>
+        <button class="sidebar-toggle" id="sidebarToggleBtn" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+        </button>
       </div>
 
       <nav class="nav" aria-label="Primary sections">
-        <button class="active" data-primary="home" data-tab="dashboard" title="Home" aria-current="page">
+        <button class="active" data-primary="dashboard" data-tab="dashboard" title="Dashboard" aria-current="page" data-status="active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"></path><path d="M5 10v10h14V10"></path></svg>
-          <span>Home</span>
+          <span>Dashboard</span>
         </button>
-        <button data-primary="money" data-tab="money" title="Money">
+        <button data-primary="finance" data-tab="money" title="Finance">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg>
-          <span>Money</span>
+          <span>Finance</span>
         </button>
         <button data-primary="health" data-tab="food" title="Health">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11z"></path></svg>
           <span>Health</span>
         </button>
-        <button data-primary="growth" data-tab="goals" title="Growth">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-          <span>Growth</span>
+        <button data-primary="education" data-tab="education" title="Education">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>
+          <span>Education</span>
         </button>
-        <button data-primary="more" data-tab="more" title="More">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg>
-          <span>More</span>
+        <button data-primary="career" data-tab="career" title="Career">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M3 13h18"></path></svg>
+          <span>Career</span>
+        </button>
+        <button data-primary="goals" data-tab="goals" title="Goals">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          <span>Goals</span>
+        </button>
+        <button data-primary="calendar" data-tab="calendar" title="Calendar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></svg>
+          <span>Calendar</span>
+        </button>
+        <button data-primary="documents" data-tab="documents" title="Documents">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
+          <span>Documents</span>
+        </button>
+        <button data-primary="settings" data-tab="setup" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 15 1.7 1.7 0 0 0 3 14H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+          <span>Settings</span>
+        </button>
+        <button data-primary="modules" data-tab="modules" title="Modules" data-status="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+          <span>Modules</span>
         </button>
       </nav>
 
       <div class="sidebar-footer">
+        <span class="sidebar-profile-name" id="sidebarProfileName">LifeOps User</span>
+        <span class="sidebar-profile-meta" id="sidebarProfileMeta">Personal Operating System</span>
         <strong id="sidebarLifeScore">Life Score 0</strong>
         <span id="sidebarLifeStatus" class="app-version">Status loading</span>
         <span class="app-version" id="appVersionLabel">Version 1.0.0</span>
@@ -2353,6 +2585,12 @@
           <article class="panel">
             <h3>More Sections</h3>
             <div class="list">
+              <button class="btn" data-open-tab="education">Education</button>
+              <button class="btn" data-open-tab="career">Career</button>
+              <button class="btn" data-open-tab="calendar">Calendar</button>
+              <button class="btn" data-open-tab="documents">Documents</button>
+              <button class="btn" data-open-tab="setup">Settings</button>
+              <button class="btn" data-open-tab="modules">Modules</button>
               <button class="btn" data-open-tab="connections">Connections</button>
               <button class="btn" data-open-tab="privacy">Privacy Center</button>
               <button class="btn" data-open-tab="integrations">Integrations</button>
@@ -2606,11 +2844,22 @@
 
       <section id="setup" class="tab">
         <div class="setup-hero">
-          <h3>Set Up Your LifeOps Profile</h3>
-          <p class="about-lede">Start with the goals that drive the whole dashboard. These targets feed the score cards, coach suggestions, weekly review, and reports.</p>
+          <h3>Settings</h3>
+          <p class="about-lede">Manage profile, appearance, dashboard preferences, voice, privacy, data, accessibility, rewards, and developer tools from one focused settings area.</p>
+        </div>
+        <div class="settings-hub">
+          <button class="active" type="button" data-settings-panel="profile">Profile</button>
+          <button type="button" data-settings-panel="appearance">Appearance</button>
+          <button type="button" data-settings-panel="dashboard">Dashboard</button>
+          <button type="button" data-open-tab="more">Voice and Startup</button>
+          <button type="button" data-open-tab="privacy">Privacy</button>
+          <button type="button" data-open-tab="more">Data and Backup</button>
+          <button type="button" data-settings-panel="accessibility">Accessibility</button>
+          <button type="button" data-settings-panel="gamification">Gamification</button>
+          <button type="button" data-settings-panel="developer">Developer Tools</button>
         </div>
         <div class="grid cols-2">
-          <article class="panel">
+          <article class="panel settings-panel active" data-settings-panel-content="profile">
             <h3>Profile Card</h3>
             <div class="profile-card">
               <div class="profile-avatar" id="profileAvatarPreview">LO</div>
@@ -2663,7 +2912,7 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel settings-panel" data-settings-panel-content="appearance">
             <h3>Appearance</h3>
             <p class="about-lede">The same theme controls are available here so Settings feels complete.</p>
             <div class="form-grid" style="margin-top: 12px;">
@@ -2703,8 +2952,9 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel settings-panel" data-settings-panel-content="dashboard">
             <h3>Core Targets</h3>
+            <p class="about-lede">These targets drive the dashboard, score cards, coach suggestions, weekly review, and reports.</p>
             <div class="form-grid">
               <label>
                 Weekly food budget
@@ -2741,9 +2991,158 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel settings-panel" data-settings-panel-content="gamification">
             <h3>Setup Summary</h3>
             <div id="setupSummaryList" class="list"></div>
+          </article>
+
+          <article class="panel settings-panel" data-settings-panel-content="accessibility">
+            <h3>Accessibility</h3>
+            <p class="about-lede">LifeOps uses visible focus states, readable text, motion controls, and keyboard-friendly navigation. Reduced visual effects can be turned on from Appearance.</p>
+            <div class="list">
+              <div class="item"><div><div class="item-title">Keyboard support</div><div class="item-meta">Use Tab to move through navigation, buttons, forms, and modal controls.</div></div></div>
+              <div class="item"><div><div class="item-title">Motion control</div><div class="item-meta">Reduced visual effects respects your LifeOps preference and browser reduced-motion setting.</div></div></div>
+              <div class="item"><div><div class="item-title">Touch targets</div><div class="item-meta">Primary mobile navigation uses large touch targets and safe area spacing.</div></div></div>
+            </div>
+          </article>
+
+          <article class="panel settings-panel" data-settings-panel-content="developer">
+            <h3>Developer Tools</h3>
+            <p class="about-lede">Version, storage, privacy, and backup tools remain local-first for this release.</p>
+            <div class="list">
+              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 1.16.0</div></div></div>
+              <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
+              <div class="item"><div><div class="item-title">Architecture</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="education" class="tab">
+        <div class="summary-card-grid section-summary" id="educationSummaryCards"></div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <div class="split">
+              <h3>Education Overview</h3>
+              <span class="pill">Private by default</span>
+            </div>
+            <p class="about-lede">Track college, certifications, trade school, professional training, independent study, or language learning without assuming one path fits everyone.</p>
+            <div class="quick-action-grid">
+              <button class="btn primary" id="addEducationCourseBtn" type="button">Add Course</button>
+              <button class="btn" id="addEducationAssignmentBtn" type="button">Add Assignment</button>
+              <button class="btn" id="addEducationExamBtn" type="button">Add Exam</button>
+              <button class="btn" id="addEducationGoalBtn" type="button">Add Learning Goal</button>
+              <button class="btn" id="addEducationCostBtn" type="button">Add Education Cost</button>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Upcoming Education Work</h3>
+            <div id="educationUpcomingList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Courses</h3>
+            <div id="educationCourseList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Learning Goals And Costs</h3>
+            <div id="educationGoalCostList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="career" class="tab">
+        <div class="summary-card-grid section-summary" id="careerSummaryCards"></div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <div class="split">
+              <h3>Career Overview</h3>
+              <span class="pill">Local roadmap</span>
+            </div>
+            <p class="about-lede">Track applications, interviews, resume work, contacts, skills, achievements, and career goals without exposing employer information by default.</p>
+            <div class="quick-action-grid">
+              <button class="btn primary" id="addCareerApplicationBtn" type="button">Add Application</button>
+              <button class="btn" id="addCareerInterviewBtn" type="button">Add Interview</button>
+              <button class="btn" id="addCareerContactBtn" type="button">Add Contact</button>
+              <button class="btn" id="addCareerGoalBtn" type="button">Add Career Goal</button>
+              <button class="btn" id="addCareerSkillBtn" type="button">Add Skill</button>
+              <button class="btn" id="addCareerAchievementBtn" type="button">Add Achievement</button>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Pipeline</h3>
+            <div id="careerPipelineList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Interviews And Follow-Ups</h3>
+            <div id="careerUpcomingList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Development</h3>
+            <div id="careerDevelopmentList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="calendar" class="tab">
+        <div class="summary-card-grid section-summary" id="calendarSummaryCards"></div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <div class="split">
+              <h3>Unified Local Calendar</h3>
+              <button class="btn primary" id="addCalendarEventBtn" type="button">Add Event</button>
+            </div>
+            <p class="about-lede">LifeOps combines local tasks, assignments, exams, interviews, bills, appointments, goals, shared plans, and manual events. External calendars are still disconnected.</p>
+            <div class="quick-action-grid">
+              <button class="btn small primary" type="button" data-calendar-view="today">Today</button>
+              <button class="btn small" type="button" data-calendar-view="week">Week</button>
+              <button class="btn small" type="button" data-calendar-view="month">Month</button>
+              <button class="btn small" type="button" data-calendar-view="agenda">Agenda</button>
+            </div>
+          </article>
+          <article class="panel">
+            <h3 id="calendarViewTitle">Agenda</h3>
+            <div id="calendarAgendaList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="documents" class="tab">
+        <div class="summary-card-grid section-summary" id="documentSummaryCards"></div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <div class="split">
+              <h3>Documents Center</h3>
+              <button class="btn primary" id="addDocumentReferenceBtn" type="button">Add Document Reference</button>
+            </div>
+            <p class="about-lede">Organize document references and metadata without pretending sensitive files are securely uploaded. Current version stores only local notes and metadata.</p>
+            <div class="list">
+              <div class="item"><div><div class="item-title">Categories</div><div class="item-meta">Finance, Health, Education, Career, Taxes, Insurance, Identity, Legal, Receipts, and Other.</div></div></div>
+              <div class="item"><div><div class="item-title">Default privacy</div><div class="item-meta">New document references should default to Private and avoid sensitive details in public exports.</div></div></div>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Document References</h3>
+            <div id="documentReferenceList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="modules" class="tab">
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Modules</h3>
+            <p class="about-lede">Choose which parts of LifeOps match your life. Disabling a module should only hide it from navigation and never delete saved data.</p>
+            <div id="moduleCatalogList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Dashboard Customization</h3>
+            <p class="about-lede">Choose which dashboard cards and quick actions appear first. This changes layout only, not the underlying data.</p>
+            <div id="dashboardCustomizationList" class="list"></div>
+          </article>
+          <article class="panel">
+            <h3>Optional: Faith and Reflection</h3>
+            <p class="about-lede">An inclusive optional module for reflection, gratitude, intentions, reading plans, service goals, community events, personal beliefs, and values. It is private by default and can be renamed locally.</p>
+            <div id="reflectionModuleList" class="list"></div>
           </article>
         </div>
       </section>
@@ -3619,7 +4018,7 @@
                 <button class="btn" type="button" data-quick-action="task">Add Task</button>
                 <button class="btn" type="button" data-quick-action="workout">Log Workout</button>
                 <button class="btn" type="button" data-quick-action="goal">Add Goal</button>
-                <button class="btn" type="button" id="invitePersonPreviewBtn">Invite Person</button>
+                <button class="btn" type="button" id="invitePersonPreviewBtn" data-quick-action="invite">Invite Person</button>
               </div>
             </article>
           </div>
@@ -3739,21 +4138,21 @@
   </div>
 
   <nav class="bottom-nav" aria-label="Primary mobile sections">
-    <button class="active" data-primary="home" data-tab="dashboard" aria-current="page">
+    <button class="active" data-primary="dashboard" data-tab="dashboard" aria-current="page">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"></path><path d="M5 10v10h14V10"></path></svg>
       <span>Home</span>
     </button>
-    <button data-primary="money" data-tab="money">
+    <button data-primary="finance" data-tab="money">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>
-      <span>Money</span>
+      <span>Finance</span>
     </button>
     <button data-primary="health" data-tab="food">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11z"></path></svg>
       <span>Health</span>
     </button>
-    <button data-primary="growth" data-tab="goals">
+    <button data-primary="goals" data-tab="goals">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
-      <span>Growth</span>
+      <span>Goals</span>
     </button>
     <button data-primary="more" data-tab="more">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg>
@@ -3822,7 +4221,7 @@
   </div>
 
   <script>
-    const appVersion = "1.16.0";
+    const appVersion = "1.18.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -3860,21 +4259,26 @@
       connections: ["Connections", "Prototype local profiles, groups, shared goals, shared lists, challenges, and privacy permissions."],
       privacy: ["Privacy Center", "See what is local, what could be shared later, and how LifeOps protects sensitive data by default."],
       integrations: ["Integrations Center", "Plan future app connections honestly without requesting credentials or pretending services are connected."],
-      dashboard: ["Home", "What matters today, how you are doing, and what to do next."],
-      more: ["More", "Data, reports, coach, settings, backup, and project information."]
+      education: ["Education", "Track courses, assignments, exams, costs, learning goals, and progress for any learning path."],
+      career: ["Career", "Track applications, interviews, resume work, networking, skills, and career goals privately."],
+      calendar: ["Calendar", "See local LifeOps dates and planned external calendar connections without claiming any sync is active."],
+      documents: ["Documents", "Organize local document references and privacy metadata without uploading sensitive files."],
+      modules: ["Modules", "Choose which LifeOps areas appear in navigation while preserving saved data."],
+      dashboard: ["Dashboard", "What matters today, how you are doing, and what to do next."],
+      more: ["More", "Education, career, calendar, documents, settings, modules, reports, coach, privacy, and integrations."]
     };
 
     const primaryRoutes = {
-      home: {
-        label: "Home",
+      dashboard: {
+        label: "Dashboard",
         defaultTab: "dashboard",
         tabs: [
           ["dashboard", "Overview"],
           ["today", "Today"]
         ]
       },
-      money: {
-        label: "Money",
+      finance: {
+        label: "Finance",
         defaultTab: "money",
         tabs: [
           ["money", "Overview"],
@@ -3890,15 +4294,71 @@
           ["wellness", "Wellness"]
         ]
       },
-      growth: {
-        label: "Growth",
+      education: {
+        label: "Education",
+        defaultTab: "education",
+        tabs: [
+          ["education", "Overview"],
+          ["calendar", "Calendar"],
+          ["documents", "Resources"]
+        ]
+      },
+      career: {
+        label: "Career",
+        defaultTab: "career",
+        tabs: [
+          ["career", "Overview"],
+          ["calendar", "Interviews"],
+          ["documents", "Resume"]
+        ]
+      },
+      goals: {
+        label: "Goals",
         defaultTab: "goals",
         tabs: [
-          ["goals", "Goals"],
+          ["goals", "Overview"],
           ["plan", "This Week"],
           ["timeline", "Timeline"],
           ["review", "Reviews"],
           ["rewards", "Progress"]
+        ]
+      },
+      calendar: {
+        label: "Calendar",
+        defaultTab: "calendar",
+        tabs: [
+          ["calendar", "Overview"],
+          ["today", "Today"],
+          ["plan", "This Week"]
+        ]
+      },
+      documents: {
+        label: "Documents",
+        defaultTab: "documents",
+        tabs: [
+          ["documents", "Overview"],
+          ["privacy", "Privacy"],
+          ["reports", "Reports"]
+        ]
+      },
+      settings: {
+        label: "Settings",
+        defaultTab: "setup",
+        tabs: [
+          ["setup", "Settings"],
+          ["privacy", "Privacy"],
+          ["more", "Data & Backup"],
+          ["coach", "Voice & Coach"]
+        ]
+      },
+      modules: {
+        label: "Modules",
+        defaultTab: "modules",
+        tabs: [
+          ["modules", "Overview"],
+          ["connections", "Connections"],
+          ["integrations", "Integrations"],
+          ["about", "Roadmap"]
         ]
       },
       more: {
@@ -3906,13 +4366,18 @@
         defaultTab: "more",
         tabs: [
           ["more", "Data & Backup"],
+          ["education", "Education"],
+          ["career", "Career"],
+          ["calendar", "Calendar"],
+          ["documents", "Documents"],
+          ["setup", "Settings"],
+          ["modules", "Modules"],
           ["connections", "Connections"],
           ["privacy", "Privacy"],
           ["integrations", "Integrations"],
           ["history", "History"],
           ["reports", "Reports"],
           ["coach", "Coach"],
-          ["setup", "Settings"],
           ["about", "About"]
         ]
       }
@@ -3953,7 +4418,8 @@
         mode: "system",
         density: "comfortable",
         reducedEffects: false,
-        gamificationEnabled: true
+        gamificationEnabled: true,
+        sidebarCollapsed: false
       };
     }
 
@@ -3984,6 +4450,44 @@
         csvImportReady: true,
         oauthEnabled: false,
         secureAccountSystem: false
+      };
+    }
+
+    function defaultModulePreferences() {
+      return {
+        order: ["education", "career", "calendar", "documents", "connections", "integrations", "privacy", "reports", "history", "coach", "reflection"],
+        enabled: {
+          education: true,
+          career: true,
+          calendar: true,
+          documents: true,
+          connections: true,
+          integrations: true,
+          privacy: true,
+          reports: true,
+          history: true,
+          coach: true,
+          reflection: false,
+          travel: false,
+          home: false,
+          pets: false,
+          family: false,
+          reading: false,
+          projects: false
+        },
+        reflectionName: "Faith and Reflection"
+      };
+    }
+
+    function defaultDashboardSettings() {
+      return {
+        categoryOrder: ["Finance", "Health", "Education", "Career", "Goals", "Connections"],
+        visibleCategoryCards: ["Finance", "Health", "Goals", "Connections"],
+        quickActions: ["expense", "meal", "task", "workout", "goal", "invite"],
+        showMissions: true,
+        showRewards: true,
+        showStreaks: true,
+        layoutDensity: "comfortable"
       };
     }
 
@@ -4081,12 +4585,43 @@
         sharedPlans: [
           { id: crypto.randomUUID(), title: "Sunday planning check-in", date: "2026-07-12", category: "Personal", privacy: "Only me", note: "Local calendar preview only." }
         ],
+        educationCourses: [
+          { id: crypto.randomUUID(), name: "Business Analytics Portfolio", code: "SELF-101", instructor: "Independent study", credits: 0, term: "Summer 2026", startDate: "2026-07-01", endDate: "2026-09-30", method: "Independent study", grade: "", status: "In progress", privacy: "Private", notes: "Build career-ready dashboard projects." }
+        ],
+        educationAssignments: [
+          { id: crypto.randomUUID(), title: "Document LifeOps roadmap", course: "Business Analytics Portfolio", dueDate: "2026-07-18", priority: "High", status: "Not started", privacy: "Private", notes: "Keep roadmap clear and employer-ready." }
+        ],
+        educationExams: [],
+        educationGoals: [
+          { id: crypto.randomUUID(), title: "Complete portfolio case study", category: "Independent study", targetDate: "2026-08-15", progress: 25, privacy: "Private", notes: "Show product thinking and dashboard skills." }
+        ],
+        educationCosts: [],
+        careerApplications: [
+          { id: crypto.randomUUID(), company: "Portfolio Demo", position: "Business Analyst", location: "Remote", salaryRange: "", applicationDate: "2026-07-10", status: "Preparing", contact: "", nextStep: "Polish LifeOps demo", followUpDate: "2026-07-17", privacy: "Private", notes: "Use LifeOps as a portfolio project." }
+        ],
+        careerInterviews: [],
+        careerContacts: [],
+        careerGoals: [
+          { id: crypto.randomUUID(), title: "Build a portfolio-ready dashboard story", targetDate: "2026-08-31", progress: 30, privacy: "Private", notes: "Focus on clear business value and usability." }
+        ],
+        careerSkills: [
+          { id: crypto.randomUUID(), name: "Dashboard design", category: "Analytics", progress: 45, privacy: "Private", notes: "Keep improving layout, hierarchy, and testing." }
+        ],
+        careerAchievements: [],
+        calendarEvents: [
+          { id: crypto.randomUUID(), title: "LifeOps weekly review", date: "2026-07-12", category: "Goals", source: "Manual", privacy: "Private", notes: "Review wins, weak area, and next actions." }
+        ],
+        documents: [
+          { id: crypto.randomUUID(), title: "LifeOps portfolio notes", category: "Career", date: "2026-07-10", description: "Project summary and roadmap notes.", related: "LifeOps portfolio app", privacy: "Private", sensitivity: "Personal", localNote: "No file uploaded. Local metadata only." }
+        ],
         companion: defaultCompanionSettings(),
         voice: defaultVoiceSettings(),
         appearance: defaultAppearanceSettings(),
         personalization: defaultPersonalizationSettings(),
         privacySettings: defaultPrivacySettings(),
-        integrationPreferences: defaultIntegrationPreferences()
+        integrationPreferences: defaultIntegrationPreferences(),
+        modulePreferences: defaultModulePreferences(),
+        dashboardSettings: defaultDashboardSettings()
       };
     }
 
@@ -4128,6 +4663,19 @@
       blank.sharedGoals = [];
       blank.sharedChallenges = [];
       blank.sharedPlans = [];
+      blank.educationCourses = [];
+      blank.educationAssignments = [];
+      blank.educationExams = [];
+      blank.educationGoals = [];
+      blank.educationCosts = [];
+      blank.careerApplications = [];
+      blank.careerInterviews = [];
+      blank.careerContacts = [];
+      blank.careerGoals = [];
+      blank.careerSkills = [];
+      blank.careerAchievements = [];
+      blank.calendarEvents = [];
+      blank.documents = [];
       return blank;
     }
 
@@ -4161,12 +4709,27 @@
         sharedGoals: Array.isArray(saved.sharedGoals) ? saved.sharedGoals : base.sharedGoals,
         sharedChallenges: Array.isArray(saved.sharedChallenges) ? saved.sharedChallenges : base.sharedChallenges,
         sharedPlans: Array.isArray(saved.sharedPlans) ? saved.sharedPlans : base.sharedPlans,
+        educationCourses: Array.isArray(saved.educationCourses) ? saved.educationCourses : base.educationCourses,
+        educationAssignments: Array.isArray(saved.educationAssignments) ? saved.educationAssignments : base.educationAssignments,
+        educationExams: Array.isArray(saved.educationExams) ? saved.educationExams : base.educationExams,
+        educationGoals: Array.isArray(saved.educationGoals) ? saved.educationGoals : base.educationGoals,
+        educationCosts: Array.isArray(saved.educationCosts) ? saved.educationCosts : base.educationCosts,
+        careerApplications: Array.isArray(saved.careerApplications) ? saved.careerApplications : base.careerApplications,
+        careerInterviews: Array.isArray(saved.careerInterviews) ? saved.careerInterviews : base.careerInterviews,
+        careerContacts: Array.isArray(saved.careerContacts) ? saved.careerContacts : base.careerContacts,
+        careerGoals: Array.isArray(saved.careerGoals) ? saved.careerGoals : base.careerGoals,
+        careerSkills: Array.isArray(saved.careerSkills) ? saved.careerSkills : base.careerSkills,
+        careerAchievements: Array.isArray(saved.careerAchievements) ? saved.careerAchievements : base.careerAchievements,
+        calendarEvents: Array.isArray(saved.calendarEvents) ? saved.calendarEvents : base.calendarEvents,
+        documents: Array.isArray(saved.documents) ? saved.documents : base.documents,
         companion: { ...base.companion, ...(saved.companion || {}) },
         voice: { ...base.voice, ...(saved.voice || {}) },
         appearance: { ...base.appearance, ...(saved.appearance || {}) },
         personalization: { ...base.personalization, ...(saved.personalization || {}) },
         privacySettings: { ...base.privacySettings, ...(saved.privacySettings || {}) },
-        integrationPreferences: { ...base.integrationPreferences, ...(saved.integrationPreferences || {}) }
+        integrationPreferences: { ...base.integrationPreferences, ...(saved.integrationPreferences || {}) },
+        modulePreferences: { ...base.modulePreferences, ...(saved.modulePreferences || {}) },
+        dashboardSettings: { ...base.dashboardSettings, ...(saved.dashboardSettings || {}) }
       };
     }
 
@@ -4760,6 +5323,12 @@
       document.body.dataset.appearance = effectiveAppearanceMode();
       document.body.dataset.density = appearance.density;
       document.body.dataset.effects = appearance.reducedEffects ? "reduced" : "standard";
+      document.body.dataset.sidebar = appearance.sidebarCollapsed ? "collapsed" : "expanded";
+      const toggle = document.getElementById("sidebarToggleBtn");
+      if (toggle) {
+        toggle.setAttribute("aria-label", appearance.sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar");
+        toggle.title = appearance.sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar";
+      }
     }
 
     function themePreviewData() {
@@ -4855,11 +5424,11 @@
       const meals = mealTotals();
       return [
         {
-          name: "Money",
+          name: "Finance",
           status: scoreStatus(moneyHealthScore()).label,
           score: moneyHealthScore(),
           sentence: cashLeft() < 0 ? "Cash flow needs attention before new spending." : `${money(Math.max(0, cashLeft()))} estimated cash flow remains.`,
-          action: "View money",
+          action: "View finance",
           tab: "money"
         },
         {
@@ -4871,7 +5440,23 @@
           tab: "food"
         },
         {
-          name: "Growth",
+          name: "Education",
+          status: state.educationCourses.length ? "Tracking" : "Not set",
+          score: averageProgress(state.educationGoals),
+          sentence: state.educationCourses.length ? `${state.educationCourses.length} course or learning path item${state.educationCourses.length === 1 ? "" : "s"} tracked.` : "Add a course, certification, or learning goal.",
+          action: "View education",
+          tab: "education"
+        },
+        {
+          name: "Career",
+          status: state.careerApplications.length ? "Tracking" : "Not set",
+          score: averageProgress([...state.careerGoals, ...state.careerSkills]),
+          sentence: `${state.careerApplications.length} applications and ${state.careerSkills.length} skills tracked privately.`,
+          action: "View career",
+          tab: "career"
+        },
+        {
+          name: "Goals",
           status: scoreStatus(goalCompletion()).label,
           score: goalCompletion(),
           sentence: `${state.goals.length} goals and ${state.planActions.filter(action => !action.done).length} open weekly actions.`,
@@ -4947,6 +5532,9 @@
       ]);
       document.getElementById("homeActionCategory").textContent = weakArea;
       renderHomeCategoryCards();
+      const dashboardSettings = currentDashboardSettings();
+      const missionSection = document.getElementById("homeMissionCardsV2")?.closest("article");
+      if (missionSection) missionSection.hidden = dashboardSettings.showMissions === false;
       renderMissionCards("homeMissionCardsV2");
       const progress = missionProgress();
       document.getElementById("homeMissionPillV2").textContent = `${progress.complete}/${progress.total} complete`;
@@ -4956,13 +5544,22 @@
       }
       renderTextRows("homeRecentWin", [[recentWinText() ? "Recent win" : "Next win", recentWinText() || "Complete one mission or save today's snapshot to create a recent win."]]);
       renderTimelinePreview();
+      document.querySelectorAll("[data-quick-action]").forEach(button => {
+        button.hidden = !currentDashboardSettings().quickActions.includes(button.dataset.quickAction);
+      });
     }
 
     function renderHomeCategoryCards() {
       const grid = document.getElementById("homeCategoryCards");
       if (!grid) return;
       grid.innerHTML = "";
-      homeCategoryData().forEach(card => {
+      const settings = currentDashboardSettings();
+      const byName = Object.fromEntries(homeCategoryData().map(card => [card.name, card]));
+      settings.categoryOrder
+        .map(name => byName[name])
+        .filter(card => card && settings.visibleCategoryCards.includes(card.name))
+        .slice(0, 4)
+        .forEach(card => {
         const article = document.createElement("article");
         article.className = "home-category-card";
         article.innerHTML = `
@@ -4981,6 +5578,9 @@
         button.addEventListener("click", () => activateTab(card.tab));
         grid.appendChild(article);
       });
+      if (!grid.children.length) {
+        grid.innerHTML = `<div class="empty">Turn at least one dashboard category card back on in Modules.</div>`;
+      }
     }
 
     function renderTimelinePreview() {
@@ -5150,6 +5750,299 @@
           grid.appendChild(card);
         });
         list.appendChild(section);
+      });
+    }
+
+    function moduleCatalog() {
+      return [
+        { id: "dashboard", name: "Dashboard", type: "Core", status: "Always on", description: "Daily summary, score, missions, and next best action." },
+        { id: "finance", name: "Finance", type: "Core", status: "Always on", description: "Cash flow, bills, savings, emergency fund, debt, and goals." },
+        { id: "health", name: "Health", type: "Core", status: "Always on", description: "Nutrition, fitness, water, sleep, and wellness check-ins." },
+        { id: "goals", name: "Goals", type: "Core", status: "Always on", description: "Goals, weekly actions, roadmap, timeline, reviews, and rewards." },
+        { id: "settings", name: "Settings", type: "Core", status: "Always on", description: "Profile, appearance, privacy, data, voice, accessibility, and tools." },
+        { id: "education", name: "Education", type: "Optional", status: "Available", description: "Courses, assignments, exams, degree progress, costs, and learning goals." },
+        { id: "career", name: "Career", type: "Optional", status: "Available", description: "Applications, interviews, resume work, networking, skills, and achievements." },
+        { id: "calendar", name: "Calendar", type: "Optional", status: "Available", description: "Unified local agenda from LifeOps dates and future integrations." },
+        { id: "documents", name: "Documents", type: "Optional", status: "Available", description: "Private local references and metadata for important documents." },
+        { id: "connections", name: "Connections", type: "Optional", status: "Prototype", description: "Local preview for profiles, groups, shared goals, lists, and permissions." },
+        { id: "integrations", name: "Integrations", type: "Optional", status: "Prototype", description: "Planned external connections with honest status labels." },
+        { id: "privacy", name: "Privacy", type: "Optional", status: "Available", description: "Local storage, sharing defaults, and sensitive data controls." },
+        { id: "reports", name: "Reports", type: "Optional", status: "Available", description: "Weekly, daily, and portfolio report exports." },
+        { id: "history", name: "History", type: "Optional", status: "Available", description: "Daily snapshots and trend review." },
+        { id: "coach", name: "Coach", type: "Optional", status: "Prototype", description: "Rule-based companion chat and coaching previews." },
+        { id: "reflection", name: currentModulePreferences().reflectionName, type: "Optional", status: "Planned", description: "Private reflections, gratitude, intentions, reading plans, and values." },
+        { id: "travel", name: "Travel", type: "Optional", status: "Planned", description: "Trip plans, checklists, budgets, documents, and shared preparation." },
+        { id: "home", name: "Home", type: "Optional", status: "Planned", description: "Household tasks, maintenance, projects, and recurring routines." },
+        { id: "pets", name: "Pets", type: "Optional", status: "Planned", description: "Pet care routines, appointments, costs, and reminders." },
+        { id: "family", name: "Family", type: "Optional", status: "Planned", description: "Family plans, responsibilities, check-ins, and shared goals." },
+        { id: "reading", name: "Reading", type: "Optional", status: "Planned", description: "Books, notes, reading goals, and learning progress." },
+        { id: "projects", name: "Projects", type: "Optional", status: "Planned", description: "Personal project planning, milestones, tasks, and reviews." }
+      ];
+    }
+
+    function currentModulePreferences() {
+      return { ...defaultModulePreferences(), ...(state.modulePreferences || {}), enabled: { ...defaultModulePreferences().enabled, ...(state.modulePreferences?.enabled || {}) } };
+    }
+
+    function currentDashboardSettings() {
+      return { ...defaultDashboardSettings(), ...(state.dashboardSettings || {}) };
+    }
+
+    function renderModuleCatalog() {
+      const list = document.getElementById("moduleCatalogList");
+      if (!list) return;
+      list.innerHTML = "";
+      const prefs = currentModulePreferences();
+      const coreIds = ["dashboard", "finance", "health", "goals", "settings"];
+      const orderedIds = [...coreIds, ...prefs.order.filter(id => !coreIds.includes(id))];
+      const catalog = Object.fromEntries(moduleCatalog().map(item => [item.id, item]));
+      orderedIds.map(id => catalog[id]).filter(Boolean).forEach(module => {
+        const isCore = module.type === "Core";
+        const enabled = isCore || prefs.enabled[module.id] !== false;
+        const row = document.createElement("div");
+        row.className = "module-card";
+        row.setAttribute("aria-disabled", String(!enabled));
+        row.innerHTML = `
+          <div>
+            <div class="item-title"></div>
+            <div class="item-meta"></div>
+          </div>
+          <div class="item-actions">
+            <span class="pill"></span>
+            <span class="pill"></span>
+            <button class="btn small" type="button"></button>
+            <button class="btn small" type="button">Up</button>
+            <button class="btn small" type="button">Down</button>
+          </div>`;
+        row.querySelector(".item-title").textContent = module.name;
+        row.querySelector(".item-meta").textContent = module.description;
+        const pills = row.querySelectorAll(".pill");
+        pills[0].textContent = module.type;
+        pills[1].textContent = module.status;
+        const buttons = row.querySelectorAll("button");
+        buttons[0].textContent = isCore ? "Always on" : enabled ? "Disable" : "Enable";
+        buttons[0].disabled = isCore;
+        buttons[0].addEventListener("click", () => toggleModule(module.id));
+        buttons[1].disabled = isCore;
+        buttons[2].disabled = isCore;
+        buttons[1].addEventListener("click", () => moveModule(module.id, -1));
+        buttons[2].addEventListener("click", () => moveModule(module.id, 1));
+        list.appendChild(row);
+      });
+      renderReflectionModule();
+      renderDashboardCustomization();
+      applyModuleVisibility();
+    }
+
+    function toggleModule(id) {
+      const prefs = currentModulePreferences();
+      prefs.enabled[id] = prefs.enabled[id] === false;
+      state.modulePreferences = prefs;
+      save();
+    }
+
+    function moveModule(id, direction) {
+      const prefs = currentModulePreferences();
+      const order = [...prefs.order];
+      const index = order.indexOf(id);
+      if (index < 0) return;
+      const nextIndex = Math.max(0, Math.min(order.length - 1, index + direction));
+      order.splice(index, 1);
+      order.splice(nextIndex, 0, id);
+      prefs.order = order;
+      state.modulePreferences = prefs;
+      save();
+    }
+
+    function applyModuleVisibility() {
+      const prefs = currentModulePreferences();
+      const map = {
+        education: ["education"],
+        career: ["career"],
+        calendar: ["calendar"],
+        documents: ["documents"],
+        connections: ["connections"],
+        integrations: ["integrations"],
+        privacy: ["privacy"],
+        reports: ["reports"],
+        history: ["history"],
+        coach: ["coach"]
+      };
+      Object.entries(map).forEach(([moduleId, primaryIds]) => {
+        const visible = prefs.enabled[moduleId] !== false;
+        primaryIds.forEach(primary => {
+          document.querySelectorAll(`[data-primary="${primary}"]`).forEach(item => item.hidden = !visible);
+        });
+        document.querySelectorAll(`[data-open-tab="${moduleId}"]`).forEach(item => item.hidden = !visible);
+      });
+    }
+
+    function renderReflectionModule() {
+      renderTextRows("reflectionModuleList", [
+        ["Module name", `${currentModulePreferences().reflectionName} can be renamed in a later detail view.`],
+        ["Status", "Planned optional module. It is not a required primary tab."],
+        ["Privacy", "Entries default to Private and avoid assumptions about religion or belief systems."]
+      ]);
+    }
+
+    function renderDashboardCustomization() {
+      const list = document.getElementById("dashboardCustomizationList");
+      if (!list) return;
+      const settings = currentDashboardSettings();
+      const categoryChoices = ["Finance", "Health", "Education", "Career", "Goals", "Connections"];
+      const quickChoices = [
+        ["expense", "Add Expense"],
+        ["meal", "Log Meal"],
+        ["task", "Add Task"],
+        ["workout", "Log Workout"],
+        ["goal", "Add Goal"],
+        ["invite", "Invite Person"]
+      ];
+      list.innerHTML = "";
+      const addToggle = (title, text, checked, onChange) => {
+        const row = document.createElement("label");
+        row.className = "settings-switch";
+        row.innerHTML = `<div><span></span><div class="item-meta"></div></div><input type="checkbox">`;
+        row.querySelector("input").checked = checked;
+        row.querySelector("span").textContent = title;
+        row.querySelector(".item-meta").textContent = text;
+        row.querySelector("input").addEventListener("change", event => onChange(event.target.checked));
+        list.appendChild(row);
+      };
+      categoryChoices.forEach(category => addToggle(
+        `Show ${category} card`,
+        "Dashboard category overview",
+        settings.visibleCategoryCards.includes(category),
+        checked => {
+          const next = new Set(currentDashboardSettings().visibleCategoryCards);
+          checked ? next.add(category) : next.delete(category);
+          state.dashboardSettings = { ...currentDashboardSettings(), visibleCategoryCards: [...next] };
+          save();
+        }
+      ));
+      quickChoices.forEach(([id, label]) => addToggle(
+        label,
+        "Quick action button",
+        settings.quickActions.includes(id),
+        checked => {
+          const next = new Set(currentDashboardSettings().quickActions);
+          checked ? next.add(id) : next.delete(id);
+          state.dashboardSettings = { ...currentDashboardSettings(), quickActions: [...next] };
+          save();
+        }
+      ));
+      addToggle("Show missions", "Daily mission cards on Dashboard", settings.showMissions !== false, checked => {
+        state.dashboardSettings = { ...currentDashboardSettings(), showMissions: checked };
+        save();
+      });
+      addToggle("Show rewards", "XP and progress surfaces stay visible", settings.showRewards !== false, checked => {
+        state.dashboardSettings = { ...currentDashboardSettings(), showRewards: checked };
+        save();
+      });
+      const reset = document.createElement("button");
+      reset.className = "btn";
+      reset.type = "button";
+      reset.textContent = "Reset Dashboard Layout";
+      reset.addEventListener("click", () => {
+        state.dashboardSettings = defaultDashboardSettings();
+        save();
+      });
+      list.appendChild(reset);
+    }
+
+    function renderEducationCenter() {
+      const completedCredits = state.educationCourses.reduce((sum, course) => sum + (course.status === "Complete" ? cleanNumber(course.credits) : 0), 0);
+      const totalCredits = state.educationCourses.reduce((sum, course) => sum + cleanNumber(course.credits), 0);
+      const progress = totalCredits ? (completedCredits / totalCredits) * 100 : averageProgress(state.educationGoals);
+      const upcoming = [...state.educationAssignments.map(item => ({ ...item, kind: "Assignment", date: item.dueDate })), ...state.educationExams.map(item => ({ ...item, kind: "Exam" }))]
+        .filter(item => item.date && daysUntil(item.date) !== null && daysUntil(item.date) >= 0)
+        .sort((a, b) => daysUntil(a.date) - daysUntil(b.date));
+      renderSummaryCards("educationSummaryCards", [
+        { title: "Learning path", value: state.educationCourses[0]?.name || "Not set", meta: state.educationCourses[0]?.method || "Add your first course or learning goal" },
+        { title: "Current courses", value: state.educationCourses.length, meta: `${completedCredits}/${totalCredits || 0} credits completed` },
+        { title: "Upcoming work", value: upcoming[0]?.title || "None", meta: upcoming[0] ? `${upcoming[0].kind} due ${upcoming[0].date}` : "No dated assignments or exams" },
+        { title: "Progress", value: percent(progress), meta: "Based on credits or learning goal progress" }
+      ]);
+      renderTextRows("educationUpcomingList", upcoming.length ? upcoming.slice(0, 6).map(item => [item.title, `${item.kind} for ${item.course || "learning path"} due ${item.date}. ${item.priority || "Medium"} priority.`]) : [["No upcoming work", "Add an assignment or exam to create your education agenda."]]);
+      renderTextRows("educationCourseList", state.educationCourses.length ? state.educationCourses.map(course => [course.name, `${course.code || "No code"} • ${course.term || "No term"} • ${course.status} • ${course.privacy}`]) : [["No courses yet", "Add your first course, certification, training path, or independent study."]]);
+      renderTextRows("educationGoalCostList", [
+        ...(state.educationGoals.length ? state.educationGoals.map(goal => [goal.title, `${percent(goal.progress)} complete • target ${goal.targetDate || "not set"} • ${goal.privacy}`]) : [["No learning goals", "Add one learning goal to track progress."]]),
+        ...(state.educationCosts.length ? state.educationCosts.map(cost => [cost.title, `${money(cost.amount)} • ${cost.category} • ${cost.privacy}`]) : [["No education costs", "Add tuition, books, exam fees, or training costs when useful."]])
+      ]);
+    }
+
+    function averageProgress(items) {
+      if (!items.length) return 0;
+      return items.reduce((sum, item) => sum + cleanNumber(item.progress, 0, 100), 0) / items.length;
+    }
+
+    function renderCareerCenter() {
+      const upcoming = [...state.careerInterviews.map(item => ({ title: `${item.company} interview`, date: item.date, meta: `${item.position || "Role"} • ${item.type}` })), ...state.careerApplications.filter(item => item.followUpDate).map(item => ({ title: `${item.company} follow-up`, date: item.followUpDate, meta: `${item.position} • ${item.nextStep || "Follow up"}` }))]
+        .filter(item => item.date && daysUntil(item.date) !== null && daysUntil(item.date) >= 0)
+        .sort((a, b) => daysUntil(a.date) - daysUntil(b.date));
+      renderSummaryCards("careerSummaryCards", [
+        { title: "Current role", value: state.careerApplications[0]?.status || "Not set", meta: "Career details stay private by default" },
+        { title: "Target role", value: state.careerGoals[0]?.title || "Not set", meta: state.careerGoals[0] ? `${percent(state.careerGoals[0].progress)} complete` : "Add a career goal" },
+        { title: "Applications", value: state.careerApplications.length, meta: `${state.careerApplications.filter(app => ["Applied", "Interviewing", "Offer"].includes(app.status)).length} active` },
+        { title: "Development", value: state.careerSkills.length, meta: `${state.careerAchievements.length} achievements logged` }
+      ]);
+      renderTextRows("careerPipelineList", state.careerApplications.length ? state.careerApplications.map(app => [app.company, `${app.position} • ${app.status} • next: ${app.nextStep || "not set"} • ${app.privacy}`]) : [["No applications yet", "Add an application to start your career pipeline."]]);
+      renderTextRows("careerUpcomingList", upcoming.length ? upcoming.slice(0, 6).map(item => [item.title, `${item.date} • ${item.meta}`]) : [["No interviews or follow-ups", "Add an interview or follow-up date to create a reminder."]]);
+      renderTextRows("careerDevelopmentList", [
+        ...(state.careerSkills.length ? state.careerSkills.map(skill => [skill.name || skill.title, `${skill.category} • ${percent(skill.progress)} complete • ${skill.privacy}`]) : [["No skills yet", "Add a skill you are building."]]),
+        ...(state.careerAchievements.length ? state.careerAchievements.map(item => [item.title, `${item.date} • ${item.category} • ${item.privacy}`]) : [["No achievements yet", "Add achievements as portfolio evidence."]])
+      ]);
+    }
+
+    function allCalendarItems() {
+      const manual = state.calendarEvents.map(event => ({ title: event.title, date: event.date, category: event.category, source: event.source, privacy: event.privacy }));
+      const bills = upcomingPayments(365).map(expense => ({ title: expense.name, date: expense.dueDate, category: "Finance", source: expense.type, privacy: "Private" }));
+      const assignments = state.educationAssignments.map(item => ({ title: item.title, date: item.dueDate, category: "Education", source: "Assignment", privacy: item.privacy }));
+      const exams = state.educationExams.map(item => ({ title: item.title, date: item.date, category: "Education", source: "Exam", privacy: item.privacy }));
+      const interviews = state.careerInterviews.map(item => ({ title: `${item.company} interview`, date: item.date, category: "Career", source: item.type, privacy: item.privacy }));
+      const goals = state.goals.map(goal => ({ title: goal.name, date: goal.targetDate, category: "Goals", source: "Goal", privacy: "Private" }));
+      return [...manual, ...bills, ...assignments, ...exams, ...interviews, ...goals]
+        .filter(item => item.date)
+        .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    }
+
+    function renderCalendarCenter(view = "agenda") {
+      const items = allCalendarItems();
+      const today = todayKey();
+      const weekItems = items.filter(item => daysUntil(item.date) !== null && daysUntil(item.date) >= 0 && daysUntil(item.date) <= 7);
+      renderSummaryCards("calendarSummaryCards", [
+        { title: "Today", value: items.filter(item => item.date === today).length, meta: "Local LifeOps events due today" },
+        { title: "Next 7 days", value: weekItems.length, meta: "Bills, assignments, interviews, goals, and manual events" },
+        { title: "Manual events", value: state.calendarEvents.length, meta: "Created inside LifeOps" },
+        { title: "External calendars", value: "Disconnected", meta: "Google, Apple, and Outlook stay planned only" }
+      ]);
+      const title = document.getElementById("calendarViewTitle");
+      if (title) title.textContent = view[0].toUpperCase() + view.slice(1);
+      const filtered = view === "today" ? items.filter(item => item.date === today) : view === "week" ? weekItems : items;
+      renderTextRows("calendarAgendaList", filtered.length ? filtered.slice(0, 12).map(item => [item.title, `${item.date} • ${item.category} • ${item.source} • ${item.privacy}`]) : [["No events in this view", "Add an event or dated item in another LifeOps section."]]);
+    }
+
+    function renderDocumentsCenter() {
+      const sensitiveCount = state.documents.filter(doc => doc.sensitivity === "Sensitive").length;
+      renderSummaryCards("documentSummaryCards", [
+        { title: "References", value: state.documents.length, meta: "Metadata only. No files are uploaded." },
+        { title: "Private", value: state.documents.filter(doc => doc.privacy === "Private").length, meta: "Default privacy classification" },
+        { title: "Sensitive", value: sensitiveCount, meta: "Hidden from social, voice, and public exports by default" },
+        { title: "Categories", value: new Set(state.documents.map(doc => doc.category)).size || 0, meta: "Finance, health, education, career, tax, and more" }
+      ]);
+      renderTextRows("documentReferenceList", state.documents.length ? state.documents.map(doc => [doc.title, `${doc.category} • ${doc.date || "No date"} • ${doc.privacy}/${doc.sensitivity}. ${doc.localNote || "Local metadata only."}`]) : [["No document references", "Add a local reference note without uploading sensitive files."]]);
+    }
+
+    function setSettingsPanel(panel = "profile") {
+      const selected = panel || "profile";
+      document.querySelectorAll("[data-settings-panel]").forEach(button => {
+        const isActive = button.dataset.settingsPanel === selected;
+        button.classList.toggle("active", isActive);
+        if (isActive) button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+      });
+      document.querySelectorAll("[data-settings-panel-content]").forEach(card => {
+        card.classList.toggle("active", card.dataset.settingsPanelContent === selected);
       });
     }
 
@@ -5328,7 +6221,11 @@
       document.getElementById("lifeScore").textContent = score;
       document.getElementById("sidebarLifeScore").textContent = `Life Score ${score}`;
       document.getElementById("sidebarLifeStatus").textContent = scoreStatus(score).label;
+      document.getElementById("sidebarProfileName").textContent = personalizationSettings().displayName || state.voice.displayName || "LifeOps User";
+      document.getElementById("sidebarProfileMeta").textContent = personalizationSettings().personalTitle || "Personal Operating System";
       document.getElementById("moreVersionLabel").textContent = `Version ${appVersion}`;
+      const settingsVersion = document.getElementById("settingsVersionLabel");
+      if (settingsVersion) settingsVersion.textContent = `Version ${appVersion}`;
       document.getElementById("scoreRingValue").textContent = score;
       document.getElementById("scoreRing").style.setProperty("--score-deg", `${Math.max(0, Math.min(100, score)) * 3.6}deg`);
       document.getElementById("scoreProgress").style.width = percent(score);
@@ -5352,6 +6249,11 @@
       renderConnections();
       renderPrivacyCenter();
       renderIntegrationsCenter();
+      renderModuleCatalog();
+      renderEducationCenter();
+      renderCareerCenter();
+      renderCalendarCenter();
+      renderDocumentsCenter();
       renderSetupSummary();
       renderReportPreview();
       renderHomeScreen();
@@ -5757,6 +6659,187 @@
         { name: "waterGoal", label: "Water goal cups", type: "number", value: state.profile.waterGoal, min: 0, step: 1 }
       ], values => {
         Object.assign(state.profile, values);
+      });
+    }
+
+    function openAddEducationCourseModal() {
+      openEditModal("Add Course Or Learning Path", [
+        { name: "name", label: "Course or path name", value: "", wide: true },
+        { name: "code", label: "Course code", value: "" },
+        { name: "instructor", label: "Instructor or source", value: "" },
+        { name: "credits", label: "Credit hours", type: "number", value: 0, min: 0, step: 1 },
+        { name: "term", label: "Term", value: "" },
+        { name: "startDate", label: "Start date", type: "date", value: "" },
+        { name: "endDate", label: "End date", type: "date", value: "" },
+        { name: "method", label: "Delivery method", type: "select", value: "Independent study", options: ["College", "Certification", "Trade school", "Professional training", "Independent study", "Language learning", "Other"] },
+        { name: "status", label: "Status", type: "select", value: "In progress", options: ["Not started", "In progress", "Complete", "Paused"] },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.name) return;
+        state.educationCourses.push({ id: crypto.randomUUID(), grade: "", ...values });
+      });
+    }
+
+    function openAddEducationAssignmentModal(kind = "Assignment") {
+      openEditModal(`Add ${kind}`, [
+        { name: "title", label: `${kind} title`, value: "", wide: true },
+        { name: "course", label: "Course or path", value: state.educationCourses[0]?.name || "" },
+        { name: "date", label: kind === "Exam" ? "Exam date" : "Due date", type: "date", value: "" },
+        { name: "priority", label: "Priority", type: "select", value: "Medium", options: ["Low", "Medium", "High"] },
+        { name: "status", label: "Status", type: "select", value: "Not started", options: ["Not started", "In progress", "Complete", "Paused"] },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.title) return;
+        const record = { id: crypto.randomUUID(), title: values.title, course: values.course, priority: values.priority, status: values.status, privacy: values.privacy, notes: values.notes };
+        if (kind === "Exam") state.educationExams.push({ ...record, date: values.date });
+        else state.educationAssignments.push({ ...record, dueDate: values.date });
+      });
+    }
+
+    function openAddEducationGoalModal() {
+      openEditModal("Add Learning Goal", [
+        { name: "title", label: "Learning goal", value: "", wide: true },
+        { name: "category", label: "Category", value: "Learning" },
+        { name: "targetDate", label: "Target date", type: "date", value: "" },
+        { name: "progress", label: "Progress %", type: "number", value: 0, min: 0, max: 100, step: 5 },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.title) return;
+        state.educationGoals.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddEducationCostModal() {
+      openEditModal("Add Education Cost", [
+        { name: "title", label: "Cost name", value: "", wide: true },
+        { name: "category", label: "Category", type: "select", value: "Tuition", options: ["Tuition", "Books", "Fees", "Exam", "Training", "Equipment", "Other"] },
+        { name: "amount", label: "Amount", type: "number", value: 0, min: 0, step: 5 },
+        { name: "date", label: "Date", type: "date", value: "" },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.title) return;
+        state.educationCosts.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddCareerApplicationModal() {
+      openEditModal("Add Application", [
+        { name: "company", label: "Company", value: "", wide: true },
+        { name: "position", label: "Position", value: "", wide: true },
+        { name: "location", label: "Location", value: "" },
+        { name: "salaryRange", label: "Salary range", value: "" },
+        { name: "applicationDate", label: "Application date", type: "date", value: todayKey() },
+        { name: "status", label: "Status", type: "select", value: "Saved", options: ["Saved", "Preparing", "Applied", "Interviewing", "Offer", "Rejected", "Paused"] },
+        { name: "contact", label: "Contact", value: "" },
+        { name: "nextStep", label: "Next step", value: "", wide: true },
+        { name: "followUpDate", label: "Follow-up date", type: "date", value: "" },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.company || !values.position) return;
+        state.careerApplications.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddCareerInterviewModal() {
+      openEditModal("Add Interview", [
+        { name: "company", label: "Company", value: "", wide: true },
+        { name: "position", label: "Position", value: "" },
+        { name: "date", label: "Interview date", type: "date", value: "" },
+        { name: "type", label: "Type", type: "select", value: "Interview", options: ["Phone screen", "Interview", "Panel", "Final", "Offer discussion"] },
+        { name: "status", label: "Status", type: "select", value: "Not started", options: ["Not started", "In progress", "Complete", "Paused"] },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Preparation notes", value: "", wide: true }
+      ], values => {
+        if (!values.company) return;
+        state.careerInterviews.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddCareerContactModal() {
+      openEditModal("Add Contact", [
+        { name: "name", label: "Name", value: "", wide: true },
+        { name: "organization", label: "Organization", value: "" },
+        { name: "relationship", label: "Relationship", value: "" },
+        { name: "followUpDate", label: "Follow-up date", type: "date", value: "" },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.name) return;
+        state.careerContacts.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddCareerGoalModal() {
+      openEditModal("Add Career Goal", [
+        { name: "title", label: "Goal", value: "", wide: true },
+        { name: "targetDate", label: "Target date", type: "date", value: "" },
+        { name: "progress", label: "Progress %", type: "number", value: 0, min: 0, max: 100, step: 5 },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.title) return;
+        state.careerGoals.push({ id: crypto.randomUUID(), category: "Career", ...values });
+      });
+    }
+
+    function openAddCareerSkillModal() {
+      openEditModal("Add Skill", [
+        { name: "name", label: "Skill", value: "", wide: true },
+        { name: "category", label: "Category", value: "Professional development" },
+        { name: "progress", label: "Progress %", type: "number", value: 0, min: 0, max: 100, step: 5 },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.name) return;
+        state.careerSkills.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddCareerAchievementModal() {
+      openEditModal("Add Achievement", [
+        { name: "title", label: "Achievement", value: "", wide: true },
+        { name: "date", label: "Date", type: "date", value: todayKey() },
+        { name: "category", label: "Category", value: "Career" },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.title) return;
+        state.careerAchievements.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddCalendarEventModal() {
+      openEditModal("Add Calendar Event", [
+        { name: "title", label: "Event title", value: "", wide: true },
+        { name: "date", label: "Date", type: "date", value: todayKey() },
+        { name: "category", label: "Category", type: "select", value: "Personal", options: ["Finance", "Health", "Education", "Career", "Goals", "Connections", "Personal"] },
+        { name: "source", label: "Source", value: "Manual" },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "notes", label: "Notes", value: "", wide: true }
+      ], values => {
+        if (!values.title) return;
+        state.calendarEvents.push({ id: crypto.randomUUID(), ...values });
+      });
+    }
+
+    function openAddDocumentReferenceModal() {
+      openEditModal("Add Document Reference", [
+        { name: "title", label: "Document title", value: "", wide: true },
+        { name: "category", label: "Category", type: "select", value: "Other", options: ["Finance", "Health", "Education", "Career", "Taxes", "Insurance", "Identity", "Legal", "Receipts", "Other"] },
+        { name: "date", label: "Date", type: "date", value: todayKey() },
+        { name: "description", label: "Description", value: "", wide: true },
+        { name: "related", label: "Related goal or event", value: "" },
+        { name: "privacy", label: "Privacy", type: "select", value: "Private", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "sensitivity", label: "Sensitivity", type: "select", value: "Personal", options: ["Private", "Personal", "Shared", "Sensitive"] },
+        { name: "localNote", label: "Local reference note", value: "No file uploaded. Local metadata only.", wide: true }
+      ], values => {
+        if (!values.title) return;
+        state.documents.push({ id: crypto.randomUUID(), ...values });
       });
     }
 
@@ -6870,7 +7953,7 @@
       if (!data || typeof data !== "object" || Array.isArray(data)) {
         return { ok: false, message: "The selected file is not a valid LifeOps backup object." };
       }
-      const allowedArrays = ["tasks", "expenses", "workouts", "meals", "savedMeals", "goals", "planActions", "history", "timeline", "connections", "connectionGroups", "sharedLists", "sharedGoals", "sharedChallenges", "sharedPlans"];
+      const allowedArrays = ["tasks", "expenses", "workouts", "meals", "savedMeals", "goals", "planActions", "history", "timeline", "connections", "connectionGroups", "sharedLists", "sharedGoals", "sharedChallenges", "sharedPlans", "educationCourses", "educationAssignments", "educationExams", "educationGoals", "educationCosts", "careerApplications", "careerInterviews", "careerContacts", "careerGoals", "careerSkills", "careerAchievements", "calendarEvents", "documents"];
       const invalidArray = allowedArrays.find(key => key in data && !Array.isArray(data[key]));
       if (invalidArray) {
         return { ok: false, message: `The backup field "${invalidArray}" must be a list.` };
@@ -6895,6 +7978,12 @@
       }
       if ("integrationPreferences" in data && (!data.integrationPreferences || typeof data.integrationPreferences !== "object" || Array.isArray(data.integrationPreferences))) {
         return { ok: false, message: "The backup integration settings must be an object." };
+      }
+      if ("modulePreferences" in data && (!data.modulePreferences || typeof data.modulePreferences !== "object" || Array.isArray(data.modulePreferences))) {
+        return { ok: false, message: "The backup module settings must be an object." };
+      }
+      if ("dashboardSettings" in data && (!data.dashboardSettings || typeof data.dashboardSettings !== "object" || Array.isArray(data.dashboardSettings))) {
+        return { ok: false, message: "The backup dashboard settings must be an object." };
       }
       return { ok: true, data: sanitizeState(mergeState(defaultState(), data)) };
     }
@@ -6988,6 +8077,133 @@
         plan.privacy = sharingChoices.includes(plan.privacy) ? plan.privacy : "Only me";
         plan.note = String(plan.note || "").trim().slice(0, 160);
       });
+      const privacyClasses = ["Private", "Personal", "Shared", "Sensitive"];
+      const educationStatuses = ["Not started", "In progress", "Complete", "Paused"];
+      nextState.educationCourses.forEach(course => {
+        course.id = course.id || crypto.randomUUID();
+        course.name = String(course.name || "Course").trim().slice(0, 80) || "Course";
+        course.code = String(course.code || "").trim().slice(0, 24);
+        course.instructor = String(course.instructor || "").trim().slice(0, 60);
+        course.credits = cleanNumber(course.credits, 0, 24);
+        course.term = String(course.term || "").trim().slice(0, 40);
+        course.startDate = String(course.startDate || "").slice(0, 10);
+        course.endDate = String(course.endDate || "").slice(0, 10);
+        course.method = String(course.method || "Independent study").trim().slice(0, 40);
+        course.grade = String(course.grade || "").trim().slice(0, 12);
+        course.status = educationStatuses.includes(course.status) ? course.status : "In progress";
+        course.privacy = privacyClasses.includes(course.privacy) ? course.privacy : "Private";
+        course.notes = String(course.notes || "").trim().slice(0, 180);
+      });
+      nextState.educationAssignments.forEach(item => {
+        item.id = item.id || crypto.randomUUID();
+        item.title = String(item.title || "Assignment").trim().slice(0, 80) || "Assignment";
+        item.course = String(item.course || "").trim().slice(0, 80);
+        item.dueDate = String(item.dueDate || "").slice(0, 10);
+        item.priority = ["Low", "Medium", "High"].includes(item.priority) ? item.priority : "Medium";
+        item.status = educationStatuses.includes(item.status) ? item.status : "Not started";
+        item.privacy = privacyClasses.includes(item.privacy) ? item.privacy : "Private";
+        item.notes = String(item.notes || "").trim().slice(0, 180);
+      });
+      nextState.educationExams.forEach(item => {
+        item.id = item.id || crypto.randomUUID();
+        item.title = String(item.title || "Exam").trim().slice(0, 80) || "Exam";
+        item.course = String(item.course || "").trim().slice(0, 80);
+        item.date = String(item.date || "").slice(0, 10);
+        item.priority = ["Low", "Medium", "High"].includes(item.priority) ? item.priority : "Medium";
+        item.status = educationStatuses.includes(item.status) ? item.status : "Not started";
+        item.privacy = privacyClasses.includes(item.privacy) ? item.privacy : "Private";
+        item.notes = String(item.notes || "").trim().slice(0, 180);
+      });
+      nextState.educationGoals.forEach(goal => {
+        goal.id = goal.id || crypto.randomUUID();
+        goal.title = String(goal.title || "Learning goal").trim().slice(0, 80) || "Learning goal";
+        goal.category = String(goal.category || "Learning").trim().slice(0, 40);
+        goal.targetDate = String(goal.targetDate || "").slice(0, 10);
+        goal.progress = cleanNumber(goal.progress, 0, 100);
+        goal.privacy = privacyClasses.includes(goal.privacy) ? goal.privacy : "Private";
+        goal.notes = String(goal.notes || "").trim().slice(0, 180);
+      });
+      nextState.educationCosts.forEach(cost => {
+        cost.id = cost.id || crypto.randomUUID();
+        cost.title = String(cost.title || "Education cost").trim().slice(0, 80) || "Education cost";
+        cost.category = String(cost.category || "Tuition").trim().slice(0, 40);
+        cost.amount = cleanNumber(cost.amount);
+        cost.date = String(cost.date || "").slice(0, 10);
+        cost.privacy = privacyClasses.includes(cost.privacy) ? cost.privacy : "Private";
+        cost.notes = String(cost.notes || "").trim().slice(0, 180);
+      });
+      const appStatuses = ["Saved", "Applied", "Interviewing", "Offer", "Rejected", "Paused", "Preparing"];
+      nextState.careerApplications.forEach(app => {
+        app.id = app.id || crypto.randomUUID();
+        app.company = String(app.company || "Company").trim().slice(0, 80) || "Company";
+        app.position = String(app.position || "Position").trim().slice(0, 80) || "Position";
+        app.location = String(app.location || "").trim().slice(0, 60);
+        app.salaryRange = String(app.salaryRange || "").trim().slice(0, 40);
+        app.applicationDate = String(app.applicationDate || "").slice(0, 10);
+        app.status = appStatuses.includes(app.status) ? app.status : "Saved";
+        app.contact = String(app.contact || "").trim().slice(0, 80);
+        app.nextStep = String(app.nextStep || "").trim().slice(0, 100);
+        app.followUpDate = String(app.followUpDate || "").slice(0, 10);
+        app.privacy = privacyClasses.includes(app.privacy) ? app.privacy : "Private";
+        app.notes = String(app.notes || "").trim().slice(0, 180);
+      });
+      nextState.careerInterviews.forEach(item => {
+        item.id = item.id || crypto.randomUUID();
+        item.company = String(item.company || "Company").trim().slice(0, 80) || "Company";
+        item.position = String(item.position || "").trim().slice(0, 80);
+        item.date = String(item.date || "").slice(0, 10);
+        item.type = String(item.type || "Interview").trim().slice(0, 40);
+        item.status = educationStatuses.includes(item.status) ? item.status : "Not started";
+        item.privacy = privacyClasses.includes(item.privacy) ? item.privacy : "Private";
+        item.notes = String(item.notes || "").trim().slice(0, 180);
+      });
+      nextState.careerContacts.forEach(contact => {
+        contact.id = contact.id || crypto.randomUUID();
+        contact.name = String(contact.name || "Contact").trim().slice(0, 80) || "Contact";
+        contact.organization = String(contact.organization || "").trim().slice(0, 80);
+        contact.relationship = String(contact.relationship || "").trim().slice(0, 60);
+        contact.followUpDate = String(contact.followUpDate || "").slice(0, 10);
+        contact.privacy = privacyClasses.includes(contact.privacy) ? contact.privacy : "Private";
+        contact.notes = String(contact.notes || "").trim().slice(0, 180);
+      });
+      [...nextState.careerGoals, ...nextState.careerSkills].forEach(item => {
+        item.id = item.id || crypto.randomUUID();
+        item.title = String(item.title || item.name || "Career item").trim().slice(0, 80) || "Career item";
+        item.name = String(item.name || item.title).trim().slice(0, 80);
+        item.category = String(item.category || "Career").trim().slice(0, 40);
+        item.targetDate = String(item.targetDate || "").slice(0, 10);
+        item.progress = cleanNumber(item.progress, 0, 100);
+        item.privacy = privacyClasses.includes(item.privacy) ? item.privacy : "Private";
+        item.notes = String(item.notes || "").trim().slice(0, 180);
+      });
+      nextState.careerAchievements.forEach(item => {
+        item.id = item.id || crypto.randomUUID();
+        item.title = String(item.title || "Achievement").trim().slice(0, 80) || "Achievement";
+        item.date = String(item.date || todayKey()).slice(0, 10);
+        item.category = String(item.category || "Career").trim().slice(0, 40);
+        item.privacy = privacyClasses.includes(item.privacy) ? item.privacy : "Private";
+        item.notes = String(item.notes || "").trim().slice(0, 180);
+      });
+      nextState.calendarEvents.forEach(event => {
+        event.id = event.id || crypto.randomUUID();
+        event.title = String(event.title || "Event").trim().slice(0, 80) || "Event";
+        event.date = String(event.date || todayKey()).slice(0, 10);
+        event.category = String(event.category || "Personal").trim().slice(0, 40);
+        event.source = String(event.source || "Manual").trim().slice(0, 40);
+        event.privacy = privacyClasses.includes(event.privacy) ? event.privacy : "Private";
+        event.notes = String(event.notes || "").trim().slice(0, 180);
+      });
+      nextState.documents.forEach(doc => {
+        doc.id = doc.id || crypto.randomUUID();
+        doc.title = String(doc.title || "Document reference").trim().slice(0, 80) || "Document reference";
+        doc.category = String(doc.category || "Other").trim().slice(0, 40);
+        doc.date = String(doc.date || "").slice(0, 10);
+        doc.description = String(doc.description || "").trim().slice(0, 180);
+        doc.related = String(doc.related || "").trim().slice(0, 80);
+        doc.privacy = privacyClasses.includes(doc.privacy) ? doc.privacy : "Private";
+        doc.sensitivity = privacyClasses.includes(doc.sensitivity) ? doc.sensitivity : "Personal";
+        doc.localNote = String(doc.localNote || "").trim().slice(0, 180);
+      });
       nextState.workouts.forEach(workout => {
         workout.minutes = cleanNumber(workout.minutes);
       });
@@ -7039,7 +8255,8 @@
         mode: allowedModes.includes(nextState.appearance?.mode) ? nextState.appearance.mode : appearanceDefaults.mode,
         density: allowedDensity.includes(nextState.appearance?.density) ? nextState.appearance.density : appearanceDefaults.density,
         reducedEffects: nextState.appearance?.reducedEffects === true,
-        gamificationEnabled: nextState.appearance?.gamificationEnabled !== false
+        gamificationEnabled: nextState.appearance?.gamificationEnabled !== false,
+        sidebarCollapsed: nextState.appearance?.sidebarCollapsed === true
       };
       const personalizationDefaults = defaultPersonalizationSettings();
       const allowedAvatarColors = ["sage", "sky", "gold", "slate"];
@@ -7072,6 +8289,39 @@
         csvImportReady: nextState.integrationPreferences?.csvImportReady !== false,
         oauthEnabled: false,
         secureAccountSystem: false
+      };
+      const moduleDefaults = defaultModulePreferences();
+      const moduleIds = Object.keys(moduleDefaults.enabled);
+      const savedEnabled = nextState.modulePreferences?.enabled || {};
+      nextState.modulePreferences = {
+        ...moduleDefaults,
+        ...(nextState.modulePreferences || {}),
+        order: Array.isArray(nextState.modulePreferences?.order)
+          ? [...new Set(nextState.modulePreferences.order.filter(id => moduleIds.includes(id))), ...moduleDefaults.order.filter(id => !nextState.modulePreferences.order.includes(id))]
+          : moduleDefaults.order,
+        enabled: Object.fromEntries(moduleIds.map(id => [id, savedEnabled[id] === undefined ? moduleDefaults.enabled[id] : savedEnabled[id] === true])),
+        reflectionName: String(nextState.modulePreferences?.reflectionName || moduleDefaults.reflectionName).trim().slice(0, 40) || moduleDefaults.reflectionName
+      };
+      const dashboardDefaults = defaultDashboardSettings();
+      const categoryChoices = ["Finance", "Health", "Education", "Career", "Goals", "Connections"];
+      const quickActionChoices = ["expense", "meal", "task", "workout", "goal", "invite"];
+      const savedDashboard = nextState.dashboardSettings || {};
+      nextState.dashboardSettings = {
+        ...dashboardDefaults,
+        ...savedDashboard,
+        categoryOrder: Array.isArray(savedDashboard.categoryOrder)
+          ? [...new Set(savedDashboard.categoryOrder.filter(item => categoryChoices.includes(item))), ...categoryChoices.filter(item => !savedDashboard.categoryOrder.includes(item))]
+          : dashboardDefaults.categoryOrder,
+        visibleCategoryCards: Array.isArray(savedDashboard.visibleCategoryCards)
+          ? savedDashboard.visibleCategoryCards.filter(item => categoryChoices.includes(item)).slice(0, 6)
+          : dashboardDefaults.visibleCategoryCards,
+        quickActions: Array.isArray(savedDashboard.quickActions)
+          ? savedDashboard.quickActions.filter(item => quickActionChoices.includes(item)).slice(0, 6)
+          : dashboardDefaults.quickActions,
+        showMissions: savedDashboard.showMissions !== false,
+        showRewards: savedDashboard.showRewards !== false,
+        showStreaks: savedDashboard.showStreaks !== false,
+        layoutDensity: savedDashboard.layoutDensity === "compact" ? "compact" : "comfortable"
       };
       return nextState;
     }
@@ -7223,7 +8473,7 @@
     function renderSecondaryNav(primary, activeTab) {
       const nav = document.getElementById("secondaryNav");
       if (!nav) return;
-      const route = primaryRoutes[primary] || primaryRoutes.home;
+      const route = primaryRoutes[primary] || primaryRoutes.dashboard;
       nav.innerHTML = "";
       route.tabs.forEach(([tab, label]) => {
         const button = document.createElement("button");
@@ -7239,7 +8489,7 @@
     }
 
     function activateTab(tab, forcedPrimary = null) {
-      const primary = forcedPrimary || sectionPrimary[tab] || "home";
+      const primary = forcedPrimary || sectionPrimary[tab] || "dashboard";
       const title = titles[tab] || titles.dashboard;
       document.querySelectorAll(".nav button, .bottom-nav button").forEach(item => {
         const isActive = item.dataset.primary === primary;
@@ -7288,10 +8538,21 @@
 
     document.querySelectorAll(".nav button, .bottom-nav button").forEach(button => {
       button.addEventListener("click", () => {
-        const primary = button.dataset.primary || sectionPrimary[button.dataset.tab] || "home";
-        const tab = button.dataset.tab || primaryRoutes[primary].defaultTab;
+        const primary = button.dataset.primary || sectionPrimary[button.dataset.tab] || "dashboard";
+        const route = primaryRoutes[primary] || primaryRoutes.dashboard;
+        const tab = button.dataset.tab || route.defaultTab;
         activateTab(tab, primary);
       });
+    });
+    document.getElementById("sidebarToggleBtn").addEventListener("click", () => {
+      state.appearance = {
+        ...currentAppearance(),
+        sidebarCollapsed: !currentAppearance().sidebarCollapsed
+      };
+      save();
+    });
+    document.querySelectorAll("[data-settings-panel]").forEach(button => {
+      button.addEventListener("click", () => setSettingsPanel(button.dataset.settingsPanel));
     });
 
     document.querySelectorAll("[data-open-tab]").forEach(button => {
@@ -7324,10 +8585,31 @@
       ["openGoalModalBtn", openAddGoalModal],
       ["openPlanActionModalBtn", openAddPlanActionModal],
       ["openMoneyTargetsModalBtn", openMoneyTargetsModal],
-      ["openNutritionTargetsModalBtn", openNutritionTargetsModal]
+      ["openNutritionTargetsModalBtn", openNutritionTargetsModal],
+      ["addEducationCourseBtn", openAddEducationCourseModal],
+      ["addEducationAssignmentBtn", () => openAddEducationAssignmentModal("Assignment")],
+      ["addEducationExamBtn", () => openAddEducationAssignmentModal("Exam")],
+      ["addEducationGoalBtn", openAddEducationGoalModal],
+      ["addEducationCostBtn", openAddEducationCostModal],
+      ["addCareerApplicationBtn", openAddCareerApplicationModal],
+      ["addCareerInterviewBtn", openAddCareerInterviewModal],
+      ["addCareerContactBtn", openAddCareerContactModal],
+      ["addCareerGoalBtn", openAddCareerGoalModal],
+      ["addCareerSkillBtn", openAddCareerSkillModal],
+      ["addCareerAchievementBtn", openAddCareerAchievementModal],
+      ["addCalendarEventBtn", openAddCalendarEventModal],
+      ["addDocumentReferenceBtn", openAddDocumentReferenceModal]
     ].forEach(([id, handler]) => {
       const button = document.getElementById(id);
       if (button) button.addEventListener("click", handler);
+    });
+    document.querySelectorAll("[data-calendar-view]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-calendar-view]").forEach(item => {
+          item.classList.toggle("primary", item === button);
+        });
+        renderCalendarCenter(button.dataset.calendarView || "agenda");
+      });
     });
     document.querySelectorAll("[data-quick-action]").forEach(button => {
       button.addEventListener("click", () => {
@@ -7337,6 +8619,7 @@
         if (action === "task") openAddTaskModal();
         if (action === "workout") openAddWorkoutModal();
         if (action === "goal") openAddGoalModal();
+        if (action === "invite") activateTab("connections", "more");
       });
     });
     document.getElementById("completePriorityBtn").addEventListener("click", () => {
