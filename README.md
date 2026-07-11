@@ -12,10 +12,9 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 
 ## Current Features
 
-- Home-style dashboard overview with LifeOps score, Atlas Intelligence, daily missions, reward momentum, and category score cards
-- Atlas OS first layer: permanent Home intelligence card, top three priorities, recommended action, estimated time, impact areas, and transparent "why" explanation
-- Atlas onboarding interview that replaces long first-run forms with a one-question-at-a-time setup experience, optional voice/text/forms mode, local profile updates, module recommendations, privacy explanation, and final operating system summary
-- Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI
+- Home-style dashboard overview with LifeOps score, Atlas Local Intelligence, daily missions, reward momentum, and category score cards
+- Atlas Local Intelligence layer: structured local context, top priorities, recommended action, urgency, impact areas, evidence, confidence, and transparent "why" explanation
+- Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI or remote connectivity
 - Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
 - Built-in theme system with LifeOps Green, Midnight, Sunrise, Focus, and Ocean themes
 - Appearance settings for theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
@@ -52,8 +51,8 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Wellness tracking for sleep, water, mood, stress, and energy
 - Daily history snapshots and trend summaries
 - Weekly review and report preview/export
-- Rule-based Atlas detail drawer with message bubbles, quick replies, typing animation, session history, and action buttons
-- Always-available Atlas drawer for asking questions from any screen as a secondary detail view
+- Atlas Local detail drawer with message bubbles, quick replies, typing animation, session history, action buttons, supported local questions, and unsupported-question fallback
+- Always-available Atlas Local drawer for grounded local questions from any screen as a secondary detail view
 - Companion customization for name, initials, avatar color, tone, coaching style, and preferred focus
 - Premium startup overlay with skip control, reduced-motion support, and dashboard entrance animation
 - Optional built-in browser voice guidance using SpeechSynthesis, clearly separate from real AI
@@ -147,7 +146,9 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Disabling a module hides navigation and dashboard surfaces but does not delete the saved data.
 - Upcoming payment warnings depend on due dates entered on expenses.
 - Financial calculations are simple cash-flow and progress calculations only.
-- Atlas recommendations and the detail drawer are rule-based, session-only, and not connected to a real AI model.
+- Atlas Local recommendations and drawer answers are deterministic, rule-based, session-only, and not connected to a real AI model.
+- Atlas Local can answer supported structured questions from local LifeOps data. Unsupported open-ended chat returns a clear "cannot answer that yet" response.
+- Full conversational AI requires a secure backend, authentication, privacy filtering, rate limits, and server-side model API handling. Private model API keys must never be stored in browser code.
 - Voice guidance uses the browser's built-in SpeechSynthesis feature and may vary by browser/device.
 - Voice is off by default and does not speak unless enabled by the user.
 - Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
@@ -248,14 +249,15 @@ Planned organization modules only:
 
 These modules must not provide tax, legal, or medical conclusions.
 
-### Version 5: LifeOps Assistant
+### Version 5: Atlas Local And Future Assistant
 
-Optional assistant concept:
+Current local intelligence layer:
 
-- Answer questions using user-owned LifeOps data
-- Explain which data and rules were used
-- Avoid hidden or unexplained recommendations
-- Start with local rule-based explanations before adding AI integration
+- Builds a structured local context from profile, finance, bills, savings, nutrition, fitness, wellness, education, career, goals, calendar, recent actions, scores, and privacy settings
+- Ranks priorities with visible rule-based factors such as urgency, due dates, impact, time needed, overdue status, and current weak areas
+- Answers supported local questions with What I found, Why it matters, Recommended action, Evidence, Confidence, and Data freshness
+- Refuses unsupported open-ended chat with a clear note that full conversational AI requires a secure backend connection
+- Keeps future AI extension points separate from the current browser-only implementation
 
 Example questions:
 
@@ -328,7 +330,9 @@ Manual Version 1 checks:
 - Test empty lists after deleting all rows.
 - Test invalid, blank, negative, and very large number inputs.
 - Test report preview and download for all report types.
-- Test the Companion tab quick replies, chat input, mission cards, and action buttons.
+- Test the Atlas Local tab quick replies, chat input, mission cards, action buttons, and unsupported-question fallback.
+- Test supported Atlas Local questions such as "What should I do next?", "What is due this week?", "How is my money?", and "What should I eat based on my logged data?"
+- Confirm Atlas Local answers cite local evidence, confidence, and data freshness instead of generic canned advice.
 - Test Dashboard home cards, mission progress, XP cards, streak card, and recent trend.
 - Test the five primary navigation destinations: Home, Money, Health, Growth, and More.
 - Test secondary tabs inside each primary destination.
@@ -351,7 +355,7 @@ Manual Version 1 checks:
 
 ## Version History
 
-- `1.21.0` - Added the Atlas onboarding interview experience with cinematic welcome copy, one-question setup flow, optional voice/text/forms mode, local profile and module personalization, privacy confirmation, final operating system summary, and old-backup-compatible onboarding state.
+- `1.22.0` - Rebuilt the assistant surface as Atlas Local Intelligence with structured local context, deterministic priority ranking, grounded response sections, evidence, confidence, data freshness, supported local question handling, unsupported-question fallback, Atlas status language, and future secure AI integration placeholders.
 - `1.20.0` - Added the first Atlas OS intelligence layer with a permanent Home Atlas card, proactive local priority signals, estimated time, impact labels, transparent recommendation reasoning, page-level Atlas insight strips, and secondary Ask Atlas detail drawer while preserving existing app data and business logic.
 - `1.19.0` - Completed a focused premium visual refinement pass with dynamic section headers, category identity accents, stronger card contrast, richer empty states, improved button/progress/sidebar styling, dashboard five-card hierarchy, and responsive polish while preserving existing functionality and data compatibility.
 - `1.18.0` - Built Checkpoint 2 real local data models and modal forms for Education, Career, Calendar, and Documents; added Checkpoint 3 module enable/disable behavior, dashboard customization controls, and a visual polish pass for navigation, prototype cards, module cards, and mobile bottom navigation.
