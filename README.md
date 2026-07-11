@@ -14,6 +14,7 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 
 - Home-style dashboard overview with LifeOps score, Atlas Intelligence, daily missions, reward momentum, and category score cards
 - Atlas OS first layer: permanent Home intelligence card, top three priorities, recommended action, estimated time, impact areas, and transparent "why" explanation
+- Atlas onboarding interview that replaces long first-run forms with a one-question-at-a-time setup experience, optional voice/text/forms mode, local profile updates, module recommendations, privacy explanation, and final operating system summary
 - Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI
 - Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
 - Built-in theme system with LifeOps Green, Midnight, Sunrise, Focus, and Ocean themes
@@ -350,6 +351,7 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.21.0` - Added the Atlas onboarding interview experience with cinematic welcome copy, one-question setup flow, optional voice/text/forms mode, local profile and module personalization, privacy confirmation, final operating system summary, and old-backup-compatible onboarding state.
 - `1.20.0` - Added the first Atlas OS intelligence layer with a permanent Home Atlas card, proactive local priority signals, estimated time, impact labels, transparent recommendation reasoning, page-level Atlas insight strips, and secondary Ask Atlas detail drawer while preserving existing app data and business logic.
 - `1.19.0` - Completed a focused premium visual refinement pass with dynamic section headers, category identity accents, stronger card contrast, richer empty states, improved button/progress/sidebar styling, dashboard five-card hierarchy, and responsive polish while preserving existing functionality and data compatibility.
 - `1.18.0` - Built Checkpoint 2 real local data models and modal forms for Education, Career, Calendar, and Documents; added Checkpoint 3 module enable/disable behavior, dashboard customization controls, and a visual polish pass for navigation, prototype cards, module cards, and mobile bottom navigation.
