@@ -24,6 +24,9 @@
       --focus-ring: rgba(45, 106, 79, .34);
       --progress-track: #e3e9e4;
       --progress-fill: #2d6a4f;
+      --category-accent: #2d6a4f;
+      --category-accent-strong: #23543f;
+      --category-accent-soft: rgba(45, 106, 79, .12);
       --shadow: 0 14px 34px rgba(31, 45, 37, .10);
       --shadow-strong: 0 26px 70px rgba(24, 35, 30, .22);
       --density-gap: 16px;
@@ -210,6 +213,62 @@
       --density-pad: 14px;
     }
 
+    body[data-active-primary="dashboard"] {
+      --category-accent: var(--primary);
+      --category-accent-strong: var(--primary-hover);
+      --category-accent-soft: color-mix(in srgb, var(--primary) 13%, transparent);
+    }
+
+    body[data-active-primary="finance"] {
+      --category-accent: #2f855a;
+      --category-accent-strong: #276749;
+      --category-accent-soft: rgba(47, 133, 90, .14);
+    }
+
+    body[data-active-primary="health"] {
+      --category-accent: #2477a8;
+      --category-accent-strong: #1f5f86;
+      --category-accent-soft: rgba(36, 119, 168, .14);
+    }
+
+    body[data-active-primary="education"] {
+      --category-accent: #6654c5;
+      --category-accent-strong: #5140a3;
+      --category-accent-soft: rgba(102, 84, 197, .14);
+    }
+
+    body[data-active-primary="career"] {
+      --category-accent: #b86b22;
+      --category-accent-strong: #8f5018;
+      --category-accent-soft: rgba(184, 107, 34, .15);
+    }
+
+    body[data-active-primary="goals"] {
+      --category-accent: #9d7a16;
+      --category-accent-strong: #74590f;
+      --category-accent-soft: rgba(157, 122, 22, .16);
+    }
+
+    body[data-active-primary="calendar"] {
+      --category-accent: #14837c;
+      --category-accent-strong: #106963;
+      --category-accent-soft: rgba(20, 131, 124, .14);
+    }
+
+    body[data-active-primary="documents"] {
+      --category-accent: #64748b;
+      --category-accent-strong: #475569;
+      --category-accent-soft: rgba(100, 116, 139, .15);
+    }
+
+    body[data-active-primary="settings"],
+    body[data-active-primary="modules"],
+    body[data-active-primary="more"] {
+      --category-accent: #64706a;
+      --category-accent-strong: #47524c;
+      --category-accent-soft: rgba(100, 112, 106, .14);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -391,8 +450,17 @@
 
     .nav button:hover,
     .nav button.active {
-      background: color-mix(in srgb, var(--nav-bg) 72%, var(--primary));
+      background: linear-gradient(90deg, color-mix(in srgb, var(--nav-bg) 64%, var(--category-accent)), color-mix(in srgb, var(--nav-bg) 84%, var(--category-accent)));
       color: #ffffff;
+    }
+
+    .nav button.active::before {
+      content: "";
+      width: 3px;
+      align-self: stretch;
+      border-radius: 999px;
+      background: var(--category-accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--category-accent) 16%, transparent);
     }
 
     .nav button[data-status]::after {
@@ -433,10 +501,12 @@
     .sidebar-footer {
       margin-top: auto;
       padding: 14px;
-      border: 1px solid rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.16);
       border-radius: var(--radius);
       color: #d0ded5;
       font-size: 13px;
+      background: rgba(255,255,255,.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
     }
 
     .sidebar-profile-name {
@@ -474,30 +544,91 @@
     }
 
     .topbar {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 18px;
+      align-items: center;
+      gap: 16px;
       margin-bottom: 22px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--card-bg) 88%, transparent);
-      box-shadow: 0 10px 28px rgba(31, 45, 37, .08);
+      padding: 20px;
+      border: 1px solid color-mix(in srgb, var(--category-accent) 24%, var(--line));
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 92% 12%, var(--category-accent-soft), transparent 28%),
+        linear-gradient(135deg, color-mix(in srgb, var(--elevated) 92%, transparent), color-mix(in srgb, var(--card-bg) 86%, var(--surface)));
+      box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
       color: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topbar::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--category-accent), color-mix(in srgb, var(--category-accent) 36%, transparent));
+    }
+
+    .topbar-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+      position: relative;
+    }
+
+    .topbar-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--category-accent-strong);
+      background: color-mix(in srgb, var(--category-accent) 15%, var(--card-bg));
+      border: 1px solid color-mix(in srgb, var(--category-accent) 28%, var(--line));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+      font-weight: 850;
+      letter-spacing: 0;
     }
 
     .topbar h2 {
       margin: 0;
-      font-size: 30px;
+      font-size: clamp(30px, 3.2vw, 34px);
+      line-height: 1;
       letter-spacing: 0;
     }
 
     .topbar p {
-      margin: 5px 0 0;
+      margin: 7px 0 0;
       color: var(--muted);
       max-width: 640px;
+      font-size: 15px;
+    }
+
+    .topbar-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid color-mix(in srgb, var(--category-accent) 24%, var(--line));
+      border-radius: 999px;
+      color: var(--category-accent-strong);
+      background: color-mix(in srgb, var(--category-accent) 10%, var(--card-bg));
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
     }
 
     .secondary-nav {
@@ -508,10 +639,10 @@
     }
 
     .secondary-nav button {
-      min-height: 42px;
-      border: 1px solid var(--line);
+      min-height: 46px;
+      border: 1px solid color-mix(in srgb, var(--line) 82%, var(--category-accent));
       border-radius: 999px;
-      padding: 9px 14px;
+      padding: 10px 16px;
       background: color-mix(in srgb, var(--card-bg) 92%, var(--surface));
       color: var(--ink);
       font-size: 14px;
@@ -520,8 +651,8 @@
     }
 
     .secondary-nav button.active {
-      background: var(--green);
-      border-color: var(--green);
+      background: var(--category-accent);
+      border-color: var(--category-accent);
       color: #fff;
       box-shadow: 0 0 0 3px var(--focus-ring);
     }
@@ -617,7 +748,7 @@
 
     .startup-tagline {
       margin: 0 auto 18px;
-      color: var(--muted);
+      color: color-mix(in srgb, var(--category-accent) 70%, var(--muted));
       max-width: 420px;
     }
 
@@ -736,29 +867,58 @@
     }
 
     .btn {
-      border: 1px solid var(--line);
-      background: var(--panel);
+      border: 1px solid color-mix(in srgb, var(--line) 86%, var(--category-accent));
+      background: linear-gradient(180deg, var(--panel), color-mix(in srgb, var(--surface) 38%, var(--panel)));
       color: var(--ink);
-      min-height: 44px;
+      min-height: 46px;
       border-radius: var(--radius);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 12px;
-      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+      padding: 10px 14px;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03), inset 0 1px 0 rgba(255,255,255,.16);
       white-space: nowrap;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 780;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--category-accent) 38%, var(--line));
+      box-shadow: 0 10px 24px rgba(31, 45, 37, .10);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(31, 45, 37, .08);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: .58;
+      transform: none;
+      box-shadow: none;
     }
 
     .btn.primary {
-      background: var(--green);
-      border-color: var(--green);
+      background: linear-gradient(135deg, var(--category-accent), var(--category-accent-strong));
+      border-color: color-mix(in srgb, var(--category-accent) 72%, #ffffff);
       color: #fff;
+      box-shadow: 0 12px 26px color-mix(in srgb, var(--category-accent) 24%, transparent);
+    }
+
+    .btn.quiet {
+      background: transparent;
+      border-color: transparent;
+      color: var(--muted);
+      box-shadow: none;
     }
 
     .btn.danger {
       color: var(--red);
+      border-color: color-mix(in srgb, var(--danger) 26%, var(--line));
+      background: color-mix(in srgb, var(--danger) 8%, var(--panel));
     }
 
     .btn.small {
@@ -794,19 +954,30 @@
     .panel,
     .metric,
     .item {
-      background: var(--panel);
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--panel), color-mix(in srgb, var(--surface) 28%, var(--panel)));
+      border: 1px solid color-mix(in srgb, var(--line) 84%, var(--category-accent));
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
     .panel {
       padding: var(--density-pad);
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .panel:hover,
+    .metric:hover,
+    .summary-card:hover,
+    .home-section-card:hover,
+    .home-category-card:hover {
+      border-color: color-mix(in srgb, var(--category-accent) 30%, var(--line));
+      box-shadow: 0 18px 40px rgba(24, 45, 37, .12);
     }
 
     .panel h3 {
       margin: 0 0 14px;
-      font-size: 18px;
+      font-size: 20px;
+      line-height: 1.15;
     }
 
     .metric {
@@ -821,13 +992,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--muted);
+      color: color-mix(in srgb, var(--category-accent) 74%, var(--muted));
       font-size: 14px;
       font-weight: 700;
     }
 
     .metric strong {
-      font-size: 28px;
+      font-size: clamp(28px, 3vw, 34px);
       font-weight: 750;
       letter-spacing: 0;
       overflow-wrap: anywhere;
@@ -858,8 +1029,8 @@
       border-radius: 999px;
       font-size: 12px;
       font-weight: 700;
-      background: var(--surface);
-      color: var(--primary);
+      background: color-mix(in srgb, var(--category-accent) 12%, var(--surface));
+      color: var(--category-accent-strong);
     }
 
     .status.watch {
@@ -874,8 +1045,10 @@
 
     .action-focus {
       margin-top: 16px;
-      border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
-      background: var(--elevated);
+      border-color: color-mix(in srgb, var(--category-accent) 38%, var(--border));
+      background:
+        radial-gradient(circle at 92% 12%, var(--category-accent-soft), transparent 28%),
+        var(--elevated);
     }
 
     .action-focus .item {
@@ -892,7 +1065,7 @@
 
     .home-score-card,
     .home-companion-card {
-      border: 1px solid var(--border);
+      border: 1px solid color-mix(in srgb, var(--category-accent) 26%, var(--border));
       border-radius: var(--radius);
       background: linear-gradient(180deg, var(--elevated) 0%, color-mix(in srgb, var(--surface) 72%, var(--card-bg)) 100%);
       padding: var(--density-pad);
@@ -969,15 +1142,17 @@
 
     .home-section-card {
       background: var(--panel);
-      border: 1px solid var(--line);
+      border: 1px solid color-mix(in srgb, var(--line) 84%, var(--category-accent));
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: var(--density-pad);
     }
 
     .home-section-card.accent {
-      border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
-      background: linear-gradient(180deg, var(--elevated), var(--card-bg));
+      border-color: color-mix(in srgb, var(--category-accent) 38%, var(--border));
+      background:
+        radial-gradient(circle at 92% 10%, var(--category-accent-soft), transparent 30%),
+        linear-gradient(180deg, var(--elevated), var(--card-bg));
     }
 
     .home-section-card h3 {
@@ -1003,11 +1178,34 @@
       display: grid;
       align-content: space-between;
       gap: 10px;
-      background: var(--panel);
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--panel), color-mix(in srgb, var(--surface) 32%, var(--panel)));
+      border: 1px solid color-mix(in srgb, var(--line) 82%, var(--category-accent));
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow);
+    }
+
+    .home-category-card[data-card-accent="finance"] { --card-accent: #2f855a; }
+    .home-category-card[data-card-accent="health"] { --card-accent: #2477a8; }
+    .home-category-card[data-card-accent="education"] { --card-accent: #6654c5; }
+    .home-category-card[data-card-accent="career"] { --card-accent: #b86b22; }
+    .home-category-card[data-card-accent="goals"] { --card-accent: #9d7a16; }
+    .home-category-card[data-card-accent="connections"] { --card-accent: #64748b; }
+
+    .home-category-card[data-card-accent] {
+      border-color: color-mix(in srgb, var(--card-accent) 28%, var(--line));
+      background:
+        radial-gradient(circle at 96% 8%, color-mix(in srgb, var(--card-accent) 13%, transparent), transparent 30%),
+        linear-gradient(180deg, var(--panel), color-mix(in srgb, var(--surface) 28%, var(--panel)));
+    }
+
+    .home-category-card[data-card-accent] .pill {
+      color: color-mix(in srgb, var(--card-accent) 78%, var(--ink));
+      background: color-mix(in srgb, var(--card-accent) 12%, var(--card-bg));
+    }
+
+    .home-category-card[data-card-accent] .progress div {
+      background: linear-gradient(90deg, var(--card-accent), color-mix(in srgb, var(--card-accent) 60%, #ffffff));
     }
 
     .home-category-card strong {
@@ -1567,9 +1765,16 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: #17251f;
+      background: linear-gradient(135deg, var(--nav-bg), color-mix(in srgb, var(--nav-bg) 74%, var(--category-accent)));
       color: #fff;
       box-shadow: var(--shadow-strong);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    .companion-launcher:hover,
+    .companion-launcher:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 58px rgba(15, 30, 24, .30);
     }
 
     .companion-launcher .companion-avatar {
@@ -1810,8 +2015,8 @@
 
     .summary-card.priority {
       grid-column: span 2;
-      background: color-mix(in srgb, var(--success) 9%, var(--card-bg));
-      border-color: color-mix(in srgb, var(--success) 30%, var(--border));
+      background: color-mix(in srgb, var(--category-accent) 10%, var(--card-bg));
+      border-color: color-mix(in srgb, var(--category-accent) 34%, var(--border));
     }
 
     .summary-card.warning {
@@ -1821,8 +2026,8 @@
 
     .summary-card.focus {
       grid-column: span 2;
-      background: color-mix(in srgb, var(--info) 10%, var(--card-bg));
-      border-color: color-mix(in srgb, var(--info) 28%, var(--border));
+      background: color-mix(in srgb, var(--category-accent) 10%, var(--card-bg));
+      border-color: color-mix(in srgb, var(--category-accent) 30%, var(--border));
     }
 
     .section-summary {
@@ -2047,16 +2252,18 @@
 
     .progress {
       height: 12px;
-      background: var(--progress-track);
+      background: color-mix(in srgb, var(--progress-track) 86%, var(--card-bg));
       border-radius: 999px;
       overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1px solid color-mix(in srgb, var(--border) 82%, var(--category-accent));
+      box-shadow: inset 0 1px 2px rgba(0,0,0,.06);
     }
 
     .progress div {
       height: 100%;
-      background: var(--progress-fill);
+      background: linear-gradient(90deg, var(--category-accent), color-mix(in srgb, var(--category-accent) 64%, #ffffff));
       width: 0%;
+      transition: width .35s ease;
     }
 
     .chart {
@@ -2121,12 +2328,41 @@
     }
 
     .empty {
-      border: 1px dashed var(--border);
+      border: 1px dashed color-mix(in srgb, var(--category-accent) 34%, var(--border));
       color: var(--muted);
       border-radius: var(--radius);
-      padding: 14px;
-      background: var(--elevated);
+      padding: 16px;
+      background:
+        radial-gradient(circle at 96% 8%, var(--category-accent-soft), transparent 30%),
+        var(--elevated);
       font-size: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .empty-state-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .empty-state-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: var(--category-accent-strong);
+      background: color-mix(in srgb, var(--category-accent) 13%, var(--card-bg));
+      border: 1px solid color-mix(in srgb, var(--category-accent) 24%, var(--border));
+      font-weight: 850;
+    }
+
+    .empty p {
+      margin: 0;
+      color: var(--muted);
     }
 
     .pill {
@@ -2235,6 +2471,28 @@
 
       .topbar {
         padding: 16px;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .topbar-title-row {
+        align-items: flex-start;
+      }
+
+      .topbar-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+      }
+
+      .topbar-actions {
+        justify-content: space-between;
+        align-items: stretch;
+      }
+
+      .topbar-actions .btn {
+        flex: 1 1 auto;
+        justify-content: center;
       }
 
       .secondary-nav {
@@ -2503,10 +2761,17 @@
     </aside>
 
     <main>
-      <div class="topbar">
-        <div>
-          <h2 id="pageTitle">Home</h2>
-          <p id="pageSubtitle">What matters today, how you are doing, and what to do next.</p>
+      <div class="topbar" id="pageHeader">
+        <div class="topbar-title-row">
+          <div class="topbar-icon" id="pageHeaderIcon" aria-hidden="true">LO</div>
+          <div>
+            <h2 id="pageTitle">Home</h2>
+            <p id="pageSubtitle">What matters today, how you are doing, and what to do next.</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <span class="topbar-status" id="pageHeaderStatus">Local first</span>
+          <button class="btn primary" id="pageHeaderAction" type="button">Ask LifeOps</button>
         </div>
       </div>
 
@@ -4221,7 +4486,7 @@
   </div>
 
   <script>
-    const appVersion = "1.18.0";
+    const appVersion = "1.19.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -4266,6 +4531,20 @@
       modules: ["Modules", "Choose which LifeOps areas appear in navigation while preserving saved data."],
       dashboard: ["Dashboard", "What matters today, how you are doing, and what to do next."],
       more: ["More", "Education, career, calendar, documents, settings, modules, reports, coach, privacy, and integrations."]
+    };
+
+    const headerMeta = {
+      dashboard: { icon: "LO", status: "Command center", action: "Ask LifeOps", handler: () => setCompanionDrawer(true) },
+      finance: { icon: "$", status: "Emerald finance", action: "Add Expense", handler: () => openAddExpenseModal() },
+      health: { icon: "HL", status: "Health signals", action: "Log Meal", handler: () => openAddMealModal() },
+      education: { icon: "ED", status: "Learning path", action: "Add Assignment", handler: () => openAddEducationAssignmentModal("Assignment") },
+      career: { icon: "CA", status: "Career pipeline", action: "Add Application", handler: () => openAddCareerApplicationModal() },
+      goals: { icon: "GO", status: "Progress system", action: "Add Goal", handler: () => openAddGoalModal() },
+      calendar: { icon: "CL", status: "Local agenda", action: "Add Event", handler: () => openAddCalendarEventModal() },
+      documents: { icon: "DO", status: "Private records", action: "Add Document", handler: () => openAddDocumentReferenceModal() },
+      settings: { icon: "SE", status: "Personal controls", action: "Edit Profile", handler: () => activateTab("setup", "settings") },
+      modules: { icon: "MO", status: "Optional areas", action: "Customize Home", handler: () => activateTab("modules", "modules") },
+      more: { icon: "MR", status: "Utilities", action: "Export Backup", handler: () => document.getElementById("exportBtn")?.click() }
     };
 
     const primaryRoutes = {
@@ -4482,7 +4761,7 @@
     function defaultDashboardSettings() {
       return {
         categoryOrder: ["Finance", "Health", "Education", "Career", "Goals", "Connections"],
-        visibleCategoryCards: ["Finance", "Health", "Goals", "Connections"],
+        visibleCategoryCards: ["Finance", "Health", "Education", "Career", "Goals"],
         quickActions: ["expense", "meal", "task", "workout", "goal", "invite"],
         showMissions: true,
         showRewards: true,
@@ -5558,10 +5837,11 @@
       settings.categoryOrder
         .map(name => byName[name])
         .filter(card => card && settings.visibleCategoryCards.includes(card.name))
-        .slice(0, 4)
+        .slice(0, 5)
         .forEach(card => {
         const article = document.createElement("article");
         article.className = "home-category-card";
+        article.dataset.cardAccent = card.name.toLowerCase();
         article.innerHTML = `
           <div class="split"><h3></h3><span class="pill"></span></div>
           <strong></strong>
@@ -5785,7 +6065,12 @@
     }
 
     function currentDashboardSettings() {
-      return { ...defaultDashboardSettings(), ...(state.dashboardSettings || {}) };
+      const settings = { ...defaultDashboardSettings(), ...(state.dashboardSettings || {}) };
+      const oldDefault = ["Finance", "Health", "Goals", "Connections"];
+      if (Array.isArray(settings.visibleCategoryCards) && settings.visibleCategoryCards.join("|") === oldDefault.join("|")) {
+        settings.visibleCategoryCards = defaultDashboardSettings().visibleCategoryCards;
+      }
+      return settings;
     }
 
     function renderModuleCatalog() {
@@ -6262,7 +6547,9 @@
       renderAppearanceSettings();
       renderVoiceSettings();
       const activeTab = document.querySelector(".tab.active")?.id || "dashboard";
-      renderSecondaryNav(sectionPrimary[activeTab] || "home", activeTab);
+      const activePrimary = sectionPrimary[activeTab] || "dashboard";
+      renderPageHeader(activePrimary, activeTab);
+      renderSecondaryNav(activePrimary, activeTab);
     }
 
     function setNumberInput(id, value) {
@@ -6270,22 +6557,46 @@
       if (document.activeElement !== input) input.value = value ?? "";
     }
 
+    function emptyStateConfig(id) {
+      return {
+        taskList: { icon: "TS", title: "No tasks yet", text: "Create one task tied to the life area that needs attention today.", action: "Add Task", handler: () => openAddTaskModal() },
+        expenseList: { icon: "$", title: "No bills or expenses yet", text: "Add a bill, expense, or debt payment so cash flow stays visible.", action: "Add Expense", handler: () => openAddExpenseModal() },
+        workoutList: { icon: "FT", title: "No workouts logged yet", text: "Log your first workout or active walk to begin tracking weekly movement.", action: "Log Workout", handler: () => openAddWorkoutModal() },
+        mealList: { icon: "NU", title: "No meals logged yet", text: "Log your first meal to begin tracking nutrition, macros, and food cost today.", action: "Log Meal", handler: () => openAddMealModal() },
+        goalList: { icon: "GO", title: "No goals yet", text: "Add one long-term goal and turn it into visible progress.", action: "Add Goal", handler: () => openAddGoalModal() },
+        planActionList: { icon: "WK", title: "No weekly actions yet", text: "Create one practical action that moves your weakest area forward this week.", action: "Add Action", handler: () => openAddPlanActionModal() }
+      }[id] || { icon: "LO", title: "Nothing here yet", text: "Add your first item when this area becomes useful.", action: "", handler: null };
+    }
+
+    function createEmptyState(id) {
+      const config = emptyStateConfig(id);
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.innerHTML = `
+        <div class="empty-state-head"><span class="empty-state-icon"></span><strong></strong></div>
+        <p></p>
+        <div class="actions" style="justify-content: flex-start;"></div>`;
+      empty.querySelector(".empty-state-icon").textContent = config.icon;
+      empty.querySelector("strong").textContent = config.title;
+      empty.querySelector("p").textContent = config.text;
+      if (config.action && config.handler) {
+        const button = document.createElement("button");
+        button.className = "btn small";
+        button.type = "button";
+        button.textContent = config.action;
+        button.addEventListener("click", config.handler);
+        empty.querySelector(".actions").appendChild(button);
+      } else {
+        empty.querySelector(".actions").remove();
+      }
+      return empty;
+    }
+
     function renderList(id, items, template) {
       const list = document.getElementById(id);
       list.innerHTML = "";
       if (!items.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty";
-        const messages = {
-          taskList: "Add your first task.",
-          expenseList: "Add your first bill or expense.",
-          workoutList: "Add your first workout.",
-          mealList: "Add your first meal.",
-          goalList: "Add your first long-term goal.",
-          planActionList: "Create one weekly action."
-        };
-        empty.textContent = messages[id] || "Nothing added yet.";
-        list.appendChild(empty);
+        list.appendChild(createEmptyState(id));
         return;
       }
       items.forEach(item => list.appendChild(template(item)));
@@ -8488,9 +8799,22 @@
       });
     }
 
+    function renderPageHeader(primary, tab) {
+      const meta = headerMeta[primary] || headerMeta.dashboard;
+      const title = titles[tab] || titles.dashboard;
+      document.body.dataset.activePrimary = primary;
+      document.getElementById("pageHeaderIcon").textContent = meta.icon;
+      document.getElementById("pageTitle").textContent = title[0];
+      document.getElementById("pageSubtitle").textContent = title[1];
+      document.getElementById("pageHeaderStatus").textContent = meta.status;
+      const action = document.getElementById("pageHeaderAction");
+      action.textContent = meta.action;
+      action.hidden = !meta.action;
+      action.onclick = () => meta.handler?.();
+    }
+
     function activateTab(tab, forcedPrimary = null) {
       const primary = forcedPrimary || sectionPrimary[tab] || "dashboard";
-      const title = titles[tab] || titles.dashboard;
       document.querySelectorAll(".nav button, .bottom-nav button").forEach(item => {
         const isActive = item.dataset.primary === primary;
         item.classList.toggle("active", isActive);
@@ -8500,8 +8824,7 @@
       document.querySelectorAll(".tab").forEach(item => item.classList.toggle("active", item.id === tab));
       const metricRow = document.querySelector(".metric-row");
       if (metricRow) metricRow.hidden = tab !== "dashboard";
-      document.getElementById("pageTitle").textContent = title[0];
-      document.getElementById("pageSubtitle").textContent = title[1];
+      renderPageHeader(primary, tab);
       renderSecondaryNav(primary, tab);
     }
 
