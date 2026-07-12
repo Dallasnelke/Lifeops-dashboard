@@ -78,6 +78,19 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 .
 |-- .gitignore
 |-- README.md
+|-- assets/
+|   `-- brand/
+|       |-- lifeops-logo.svg
+|       |-- lifeops-logo-dark.svg
+|       |-- lifeops-icon.svg
+|       |-- atlas-logo.svg
+|       |-- atlas-logo-dark.svg
+|       |-- atlas-avatar.svg
+|       |-- favicon.svg
+|       |-- app-icon-192.png
+|       |-- app-icon-512.png
+|       |-- atlas-avatar-128.png
+|       `-- atlas-avatar-256.png
 |-- outputs/
 |   `-- lifeops-dashboard.html
 `-- work/
@@ -94,6 +107,17 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - CSS
 - Vanilla JavaScript
 - Browser `localStorage`
+
+## Branding System
+
+LifeOps now uses local production brand assets stored in `assets/brand`.
+
+- LifeOps uses a compact rounded-square operating-core mark for the favicon, sidebar, startup animation, mobile header, and app icons.
+- Atlas uses a related circular companion mark for onboarding, the companion launcher, assistant panels, chat avatars, and voice/listening states.
+- SVG files are the source assets for scalable UI use. PNG files are included for app-icon and avatar export needs.
+- Assets use transparent backgrounds, no embedded fonts, no external image URLs, and no remote services.
+- If a logo image fails to load, the app falls back to safe initials such as `LO` or `AT`.
+- Motion is intentionally subtle: LifeOps uses the existing calm startup entrance, while Atlas supports idle pulse, listening ring, thinking orbit, and success glow states while respecting reduced-motion preferences.
 - No external runtime dependencies
 - No paid services, external APIs, accounts, tracking scripts, or cloud storage
 
@@ -361,6 +385,7 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.24.0` - Added the LifeOps and Atlas local branding system with production SVG/PNG assets, favicon/app icons, branded startup/sidebar/header/onboarding/companion surfaces, Atlas visual states, image fallbacks, and README asset documentation.
 - `1.23.0` - Refactored Atlas onboarding into a faster 12-question Essential Setup, optional Smart Follow Up cards, and a Complete My Blueprint deep personalization path while preserving the original detailed onboarding fields.
 - `1.22.1` - Fixed Atlas onboarding progression after the first question by preserving the active onboarding state object instead of recreating it during each state read. Verified the full 34-question onboarding flow, final summary, and Launch LifeOps exit behavior.
 - `1.22.0` - Rebuilt the assistant surface as Atlas Local Intelligence with structured local context, deterministic priority ranking, grounded response sections, evidence, confidence, data freshness, supported local question handling, unsupported-question fallback, Atlas status language, and future secure AI integration placeholders.
