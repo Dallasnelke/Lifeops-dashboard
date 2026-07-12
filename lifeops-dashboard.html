@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LifeOps Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
   <style>
     :root {
       color-scheme: light;
@@ -375,9 +376,32 @@
       border-radius: 8px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--surface) 72%, var(--card-bg)), color-mix(in srgb, var(--warning) 22%, var(--card-bg)));
+      background: transparent;
       color: var(--nav-bg);
       flex: 0 0 auto;
+    }
+
+    .brand-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-fallback {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--surface) 72%, var(--card-bg)), color-mix(in srgb, var(--warning) 22%, var(--card-bg)));
+      color: var(--nav-bg);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand-fallback[hidden] {
+      display: none;
     }
 
     .brand h1 {
@@ -753,7 +777,7 @@
       border-radius: 18px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--surface) 72%, var(--card-bg)), color-mix(in srgb, var(--warning) 20%, var(--card-bg)));
+      background: transparent;
       color: var(--nav-bg);
       box-shadow: 0 14px 34px rgba(45, 106, 79, .16);
       animation: startupLogo .9s ease both;
@@ -841,7 +865,8 @@
     }
 
     .onboarding-card {
-      width: min(860px, 100%);
+      width: min(860px, calc(100vw - 48px));
+      box-sizing: border-box;
       max-height: min(880px, calc(100vh - 48px));
       overflow: auto;
       border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
@@ -862,9 +887,7 @@
       color: #fff;
       font-weight: 900;
       letter-spacing: .08em;
-      background:
-        radial-gradient(circle at 34% 24%, rgba(255, 255, 255, .34), transparent 28%),
-        linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--info) 55%, var(--primary)));
+      background: transparent;
       box-shadow: 0 16px 38px color-mix(in srgb, var(--primary) 24%, transparent);
     }
 
@@ -1856,6 +1879,38 @@
       flex: 0 0 auto;
     }
 
+    .companion-avatar.atlas-brand-avatar {
+      position: relative;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      overflow: visible;
+      animation: atlasIdlePulse 2.8s ease-in-out infinite;
+    }
+
+    .companion-avatar.atlas-brand-avatar::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
+      opacity: .58;
+      pointer-events: none;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-listening::after {
+      animation: atlasWaveRing 1.35s ease-out infinite;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-thinking .brand-img {
+      animation: atlasThinkingOrbit 2.8s linear infinite;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-success::after {
+      border-color: color-mix(in srgb, var(--success) 70%, transparent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 14%, transparent);
+    }
+
     .companion-avatar.sage {
       background: #20332a;
     }
@@ -2013,6 +2068,12 @@
       color: #fff;
       font-size: 13px;
       font-weight: 800;
+    }
+
+    .chat-avatar.atlas-brand-avatar {
+      background: transparent;
+      color: #fff;
+      overflow: visible;
     }
 
     .chat-avatar.sage {
@@ -2224,6 +2285,22 @@
     @keyframes startupLogo {
       0% { opacity: 0; transform: scale(.94); }
       100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes atlasIdlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.035); }
+    }
+
+    @keyframes atlasWaveRing {
+      0% { transform: scale(.92); opacity: .72; }
+      100% { transform: scale(1.22); opacity: 0; }
+    }
+
+    @keyframes atlasThinkingOrbit {
+      0% { filter: brightness(1); transform: rotate(0deg); }
+      50% { filter: brightness(1.08); }
+      100% { filter: brightness(1); transform: rotate(360deg); }
     }
 
     @keyframes homeEntrance {
@@ -2820,6 +2897,7 @@
       }
 
       .onboarding-card {
+        width: calc(100vw - 24px);
         max-height: calc(100vh - 24px);
         border-radius: 20px;
       }
@@ -3003,11 +3081,8 @@
       <div class="startup-logo-wrap" aria-hidden="true">
         <div class="startup-ring"></div>
         <div class="startup-logo">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 13a8 8 0 0 1 16 0"></path>
-            <path d="M12 13l4-5"></path>
-            <path d="M7 17h10"></path>
-          </svg>
+          <span class="brand-fallback" hidden>LO</span>
+          <img class="brand-img" src="assets/brand/lifeops-icon.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
         </div>
       </div>
       <h2>LifeOps</h2>
@@ -3022,7 +3097,10 @@
   <div class="onboarding-overlay hidden" id="atlasOnboardingOverlay" role="dialog" aria-modal="true" aria-labelledby="atlasOnboardingTitle" aria-describedby="atlasOnboardingDescription">
     <div class="onboarding-card">
       <div class="split">
-        <div class="atlas-orb" aria-hidden="true">AT</div>
+        <div class="atlas-orb companion-avatar atlas-brand-avatar is-thinking" id="atlasOnboardingOrb" aria-hidden="true">
+          <span class="brand-fallback" hidden>AT</span>
+          <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+        </div>
         <div class="atlas-wave" id="atlasVoiceWave" aria-hidden="true" hidden><span></span><span></span><span></span><span></span></div>
       </div>
 
@@ -3105,11 +3183,8 @@
       <div class="sidebar-shell">
         <div class="brand">
           <div class="brand-mark" aria-hidden="true">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 13a8 8 0 0 1 16 0"></path>
-              <path d="M12 13l4-5"></path>
-              <path d="M7 17h10"></path>
-            </svg>
+            <span class="brand-fallback" hidden>LO</span>
+            <img class="brand-img" src="assets/brand/lifeops-icon.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
           </div>
           <div>
             <h1>LifeOps</h1>
@@ -3176,7 +3251,10 @@
     <main>
       <div class="topbar" id="pageHeader">
         <div class="topbar-title-row">
-          <div class="topbar-icon" id="pageHeaderIcon" aria-hidden="true">LO</div>
+          <div class="topbar-icon" id="pageHeaderIcon" aria-hidden="true">
+            <span class="brand-fallback" hidden>LO</span>
+            <img class="brand-img" src="assets/brand/lifeops-icon.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+          </div>
           <div>
             <h2 id="pageTitle">Home</h2>
             <p id="pageSubtitle">What matters today, how you are doing, and what to do next.</p>
@@ -4454,7 +4532,10 @@
             <span class="pill" id="companionLevelPill">Level 1</span>
           </div>
           <div class="companion-line">
-            <div class="companion-avatar" aria-hidden="true">LO</div>
+            <div class="companion-avatar atlas-brand-avatar" aria-hidden="true">
+              <span class="brand-fallback" hidden>AT</span>
+              <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+            </div>
             <div class="companion-message">
               <strong>Today's mission</strong>
               <p id="companionMissionPrompt">Complete three small actions that improve your day.</p>
@@ -4641,7 +4722,10 @@
               <span class="pill" id="homeLevelPill">Level 1</span>
             </div>
             <div class="companion-line">
-              <div class="companion-avatar" aria-hidden="true">LO</div>
+              <div class="companion-avatar atlas-brand-avatar is-thinking" aria-hidden="true">
+                <span class="brand-fallback" hidden>AT</span>
+                <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+              </div>
               <div class="companion-message">
                 <strong id="atlasRecommendedAction">Checking today's highest leverage action.</strong>
                 <p id="homeMissionPrompt">Complete three small actions that improve your day.</p>
@@ -4873,14 +4957,20 @@
   </nav>
 
   <button class="companion-launcher" id="openGlobalCompanionBtn" type="button" aria-label="Open Atlas details">
-    <span class="companion-avatar" aria-hidden="true">LO</span>
+    <span class="companion-avatar atlas-brand-avatar" aria-hidden="true">
+      <span class="brand-fallback" hidden>AT</span>
+      <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+    </span>
     <span><span id="companionLauncherLabel">Atlas Local</span><small>Local intelligence</small></span>
   </button>
 
   <div class="companion-drawer-backdrop" id="companionDrawerBackdrop"></div>
   <aside class="companion-drawer" id="companionDrawer" aria-label="Atlas Local Intelligence drawer">
     <div class="companion-drawer-header">
-      <div class="companion-avatar" aria-hidden="true">LO</div>
+      <div class="companion-avatar atlas-brand-avatar" aria-hidden="true">
+        <span class="brand-fallback" hidden>AT</span>
+        <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+      </div>
       <div>
         <h3>Atlas Local</h3>
         <p id="globalCompanionStatus">Missions, score, and next action in one place.</p>
@@ -4933,7 +5023,7 @@
   </div>
 
   <script>
-    const appVersion = "1.23.0";
+    const appVersion = "1.24.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -5694,6 +5784,8 @@
       }
       const wave = document.getElementById("atlasVoiceWave");
       if (wave) wave.hidden = true;
+      document.getElementById("atlasOnboardingOrb")?.classList.remove("is-listening");
+      document.getElementById("atlasOnboardingOrb")?.classList.add("is-thinking");
     }
 
     function startAtlasRecognition() {
@@ -5729,9 +5821,13 @@
       atlasRecognition.onend = () => {
         const wave = document.getElementById("atlasVoiceWave");
         if (wave && atlasOnboarding().mode !== "voice") wave.hidden = true;
+        document.getElementById("atlasOnboardingOrb")?.classList.remove("is-listening");
+        document.getElementById("atlasOnboardingOrb")?.classList.add("is-thinking");
       };
       onboarding.mode = "voice";
       document.getElementById("atlasVoiceWave").hidden = false;
+      document.getElementById("atlasOnboardingOrb")?.classList.add("is-listening");
+      document.getElementById("atlasOnboardingOrb")?.classList.remove("is-thinking");
       atlasRecognition.start();
     }
 
@@ -6231,6 +6327,13 @@
     function cleanInitials(value, fallback = "LO") {
       const cleaned = String(value || "").replace(/[^a-z0-9]/gi, "").slice(0, 3).toUpperCase();
       return cleaned || fallback;
+    }
+
+    function brandAssetMarkup(kind, fallback, altText = "") {
+      const source = kind === "atlas" ? "assets/brand/atlas-avatar.svg" : "assets/brand/lifeops-icon.svg";
+      const safeFallback = fallback === "AT" ? "AT" : "LO";
+      const safeAlt = altText.replace(/"/g, "&quot;");
+      return `<span class="brand-fallback" hidden>${safeFallback}</span><img class="brand-img" src="${source}" alt="${safeAlt}" onerror="this.hidden=true; this.previousElementSibling.hidden=false">`;
     }
 
     function companionFocusHint() {
@@ -7831,7 +7934,7 @@
       const companion = companionSettings();
       const initials = cleanInitials(companion.initials);
       const styleClass = ["sage", "sky", "gold", "slate"].includes(companion.avatarStyle) ? companion.avatarStyle : "sage";
-      document.querySelectorAll(".companion-avatar").forEach(avatar => {
+      document.querySelectorAll(".companion-avatar:not(.atlas-brand-avatar)").forEach(avatar => {
         avatar.textContent = initials;
         avatar.classList.remove("sage", "sky", "gold", "slate");
         avatar.classList.add(styleClass);
@@ -7869,12 +7972,12 @@
         const row = document.createElement("div");
         row.className = `chat-message ${message.role === "user" ? "user" : ""}`;
         if (message.role === "typing") {
-          row.innerHTML = `<div class="chat-avatar ${styleClass}">${initials}</div><div class="chat-bubble"><span class="typing-dots"><span></span><span></span><span></span></span></div>`;
+          row.innerHTML = `<div class="chat-avatar atlas-brand-avatar">${brandAssetMarkup("atlas", "AT", "Atlas companion")}</div><div class="chat-bubble"><span class="typing-dots"><span></span><span></span><span></span></span></div>`;
         } else if (message.role === "user") {
           row.innerHTML = `<div class="chat-bubble"></div>`;
           row.querySelector(".chat-bubble").textContent = message.text;
         } else {
-          row.innerHTML = `<div class="chat-avatar ${styleClass}">${initials}</div><div class="chat-bubble"></div>`;
+          row.innerHTML = `<div class="chat-avatar atlas-brand-avatar">${brandAssetMarkup("atlas", "AT", "Atlas companion")}</div><div class="chat-bubble"></div>`;
           row.querySelector(".chat-bubble").textContent = message.text;
         }
         windowEl.appendChild(row);
@@ -10537,7 +10640,9 @@
       const meta = headerMeta[primary] || headerMeta.dashboard;
       const title = titles[tab] || titles.dashboard;
       document.body.dataset.activePrimary = primary;
-      document.getElementById("pageHeaderIcon").textContent = meta.icon;
+      const headerIcon = document.getElementById("pageHeaderIcon");
+      if (primary === "dashboard") headerIcon.innerHTML = brandAssetMarkup("lifeops", "LO", "LifeOps logo");
+      else headerIcon.textContent = meta.icon;
       document.getElementById("pageTitle").textContent = title[0];
       document.getElementById("pageSubtitle").textContent = title[1];
       document.getElementById("pageHeaderStatus").textContent = meta.status;
