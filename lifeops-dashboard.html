@@ -3031,7 +3031,7 @@
         <h1 class="onboarding-title" id="atlasOnboardingTitle">Welcome to LifeOps.</h1>
         <p class="onboarding-copy" id="atlasOnboardingDescription">Your Personal Operating System.</p>
         <p class="onboarding-copy">My name is Atlas. Before we begin, I&apos;d like to learn how your life works.</p>
-        <p class="onboarding-copy">This takes about five minutes. By the end, I&apos;ll build a personalized operating system designed specifically for you.</p>
+        <p class="onboarding-copy">This takes about two minutes. By the end, I&apos;ll build your first LifeOps blueprint and you can add deeper details later.</p>
         <div class="actions" style="justify-content: flex-start; margin-top: 20px;">
           <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Begin</button>
           <button class="btn" id="learnMoreAtlasOnboardingBtn" type="button">Learn More</button>
@@ -3069,6 +3069,9 @@
           <button class="btn" id="atlasBackBtn" type="button">Back</button>
           <div class="actions">
             <button class="btn" id="atlasSkipQuestionBtn" type="button">Skip</button>
+            <button class="btn" id="atlasAskLaterBtn" type="button">Ask me later</button>
+            <button class="btn" id="atlasFinishSetupBtn" type="button">Finish setup now</button>
+            <button class="btn" id="atlasUseKnownBtn" type="button">Use what you know</button>
             <button class="btn primary" id="atlasNextBtn" type="button">Next</button>
           </div>
         </div>
@@ -3088,6 +3091,7 @@
         </article>
         <div class="actions" style="justify-content: flex-start;">
           <button class="btn primary" id="launchLifeOpsBtn" type="button">Launch LifeOps</button>
+          <button class="btn" id="completeAtlasBlueprintBtn" type="button">Complete My Blueprint</button>
           <button class="btn" id="reviewAtlasProfileBtn" type="button">Review Profile</button>
         </div>
       </section>
@@ -4929,7 +4933,7 @@
   </div>
 
   <script>
-    const appVersion = "1.22.1";
+    const appVersion = "1.23.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -5150,11 +5154,13 @@
         completed: false,
         skipped: false,
         mode: "text",
+        path: "essential",
         currentStep: 0,
         muted: false,
         transcript: "",
         answers: {},
         recommendedModules: [],
+        deepCompleted: false,
         completedAt: ""
       };
     }
@@ -5476,7 +5482,7 @@
       render();
     }
 
-    function atlasOnboardingQuestions() {
+    function allAtlasOnboardingQuestions() {
       return [
         { key: "mode", section: "Voice option", question: "How would you like to talk with Atlas?", type: "single", options: ["Voice Conversation", "Text Conversation", "Traditional Forms"] },
         { key: "name", section: "Identity", question: "What name should LifeOps use for you?", type: "text", placeholder: "Example: Dallas" },
@@ -5515,6 +5521,32 @@
       ];
     }
 
+    function atlasEssentialQuestions() {
+      return [
+        { key: "mode", section: "Core Setup", question: "How would you like to use Atlas during setup?", type: "single", options: ["Text Conversation", "Voice Conversation", "Traditional Forms"] },
+        { key: "name", section: "Core Setup", question: "What name should LifeOps use for you?", type: "text", placeholder: "Example: Dallas" },
+        { key: "priorities", section: "Core Setup", question: "What should LifeOps help you improve first? Choose up to three.", type: "multi", options: ["Money", "Health", "Career", "Education", "Productivity", "Relationships", "Mental Wellness", "Fitness", "Organization", "Other"] },
+        { key: "currentRole", section: "Core Setup", question: "What best describes your current role or life situation?", type: "text", placeholder: "Example: retail leader, student, job seeker, builder" },
+        { key: "studentStatus", section: "Core Setup", question: "Are you currently a student or in training?", type: "single", options: ["Yes", "No", "Part-time", "Planning to study"] },
+        { key: "dailyStruggle", section: "Core Setup", question: "What is the biggest challenge you want LifeOps to help with right now?", type: "textarea", placeholder: "Example: staying consistent, money stress, sleep, planning" },
+        { key: "financialGoal", section: "Finance", question: "What is your primary money goal right now?", type: "single", options: ["Build emergency savings", "Lower monthly spending", "Pay down debt", "Track bills", "Plan cash flow", "Not sure yet"] },
+        { key: "nutritionGoals", section: "Health", question: "What is your primary health goal right now?", type: "single", options: ["Hit protein", "Improve sleep", "Work out consistently", "Drink more water", "Eat on budget", "Improve consistency"] },
+        { key: "learningGoals", section: "Education", question: "What education or learning goal matters most right now?", type: "text", placeholder: "Optional" },
+        { key: "targetRole", section: "Career", question: "What career direction or role are you aiming for?", type: "text", placeholder: "Optional" },
+        { key: "atlasInvolvement", section: "Atlas Style", question: "How involved should Atlas be?", type: "single", options: ["Light guidance", "Daily coaching", "Weekly review", "Only when I ask"] },
+        { key: "privacy", section: "Final Review", question: "Confirm your privacy preference before LifeOps builds your first dashboard.", type: "single", options: ["Keep everything local and private", "Show sharing previews only", "Review privacy settings first"] }
+      ];
+    }
+
+    function atlasDeepPersonalizationQuestions() {
+      const essentialKeys = new Set(atlasEssentialQuestions().map(question => question.key));
+      return allAtlasOnboardingQuestions().filter(question => !essentialKeys.has(question.key));
+    }
+
+    function atlasOnboardingQuestions() {
+      return state.onboarding?.path === "deep" ? atlasDeepPersonalizationQuestions() : atlasEssentialQuestions();
+    }
+
     function atlasOnboarding() {
       const defaults = defaultOnboardingSettings();
       if (!state.onboarding || typeof state.onboarding !== "object" || Array.isArray(state.onboarding)) {
@@ -5531,6 +5563,9 @@
       }
       if (!Array.isArray(onboarding.recommendedModules)) {
         onboarding.recommendedModules = [];
+      }
+      if (!["essential", "deep"].includes(onboarding.path)) {
+        onboarding.path = "essential";
       }
       onboarding.currentStep = Math.max(0, Math.min(atlasOnboardingQuestions().length - 1, cleanNumber(onboarding.currentStep, 0, atlasOnboardingQuestions().length - 1)));
       return state.onboarding;
@@ -5582,8 +5617,9 @@
       if (!answerArea || !question) return;
       document.getElementById("atlasOnboardingSection").textContent = question.section;
       document.getElementById("atlasQuestionText").textContent = question.question;
-      document.getElementById("atlasProgressText").textContent = `Step ${onboarding.currentStep + 1} of ${questions.length}`;
-      document.getElementById("atlasTimeRemaining").textContent = `About ${Math.max(1, Math.ceil((questions.length - onboarding.currentStep) / 7))} min`;
+      const pathLabel = onboarding.path === "deep" ? "Deep Personalization" : "Essential Setup";
+      document.getElementById("atlasProgressText").textContent = `${question.section} • ${onboarding.currentStep + 1} of ${questions.length}`;
+      document.getElementById("atlasTimeRemaining").textContent = onboarding.path === "deep" ? `Optional • ${Math.max(1, questions.length - onboarding.currentStep)} left` : pathLabel;
       document.getElementById("atlasProgressBar").style.width = percent(((onboarding.currentStep + 1) / questions.length) * 100);
       document.getElementById("atlasTranscript").textContent = onboarding.transcript || "Transcript will appear here.";
       document.getElementById("atlasBackBtn").disabled = onboarding.currentStep === 0;
@@ -5591,6 +5627,7 @@
       document.getElementById("atlasVoiceToggleBtn").disabled = !onboardingSpeechRecognitionSupported();
       document.getElementById("atlasMuteBtn").textContent = onboarding.muted ? "Unmute" : "Mute";
       document.getElementById("atlasVoiceWave").hidden = onboarding.mode !== "voice";
+      document.getElementById("atlasNextBtn").textContent = onboarding.currentStep >= questions.length - 1 ? "Build Blueprint" : "Next";
       answerArea.innerHTML = "";
       answerArea.className = `onboarding-answer-grid ${question.type === "multi" || question.type === "single" ? "cols" : ""}`;
       const currentValue = onboarding.answers[question.key] || "";
@@ -5633,6 +5670,7 @@
 
     function beginAtlasInterview() {
       const onboarding = atlasOnboarding();
+      onboarding.path = "essential";
       onboarding.currentStep = onboarding.currentStep || 0;
       onboarding.skipped = false;
       showAtlasOnboardingScreen("atlasOnboardingInterview");
@@ -5675,6 +5713,11 @@
       atlasRecognition.onresult = event => {
         const transcript = Array.from(event.results).map(result => result[0].transcript).join(" ").trim();
         onboarding.transcript = transcript;
+        if (handleAtlasVoiceCommand(transcript)) {
+          const transcriptEl = document.getElementById("atlasTranscript");
+          if (transcriptEl) transcriptEl.textContent = transcript;
+          return;
+        }
         const question = currentAtlasQuestion();
         if (question && transcript) {
           onboarding.answers[question.key] = transcript.slice(0, 500);
@@ -5690,6 +5733,46 @@
       onboarding.mode = "voice";
       document.getElementById("atlasVoiceWave").hidden = false;
       atlasRecognition.start();
+    }
+
+    function handleAtlasVoiceCommand(transcript) {
+      const command = String(transcript || "").toLowerCase();
+      if (!command) return false;
+      if (command.includes("skip this") || command === "skip") {
+        atlasOnboardingNext(true);
+        return true;
+      }
+      if (command.includes("ask me later")) {
+        atlasOnboardingAskLater();
+        return true;
+      }
+      if (command.includes("finish setup")) {
+        completeAtlasOnboarding(false);
+        return true;
+      }
+      if (command.includes("use what you know")) {
+        completeAtlasOnboarding(false);
+        return true;
+      }
+      if (command.includes("repeat")) {
+        speakAtlasQuestion(currentAtlasQuestion()?.question || "Atlas onboarding is ready.");
+        return true;
+      }
+      if (command.includes("go back") || command === "back") {
+        atlasOnboardingBack();
+        return true;
+      }
+      if (command.includes("switch to text")) {
+        atlasOnboarding().mode = "text";
+        stopAtlasRecognition();
+        renderAtlasOnboardingQuestion();
+        return true;
+      }
+      if (command.includes("switch to voice")) {
+        startAtlasRecognition();
+        return true;
+      }
+      return false;
     }
 
     function applyAtlasOnboardingAnswer(question) {
@@ -5718,6 +5801,15 @@
       if (question.key === "nutritionGoals") {
         state.profile.priority = `Improve nutrition: ${value}`;
         if (value === "Hit protein" && !state.profile.proteinGoal) state.profile.proteinGoal = 140;
+        if (value === "Improve sleep" && !state.profile.sleepGoal) state.profile.sleepGoal = 8;
+      }
+      if (question.key === "financialGoal" && String(value || "").trim()) {
+        if (value === "Build emergency savings" && !cleanNumber(state.profile.emergencyTarget)) state.profile.emergencyTarget = 1000;
+        state.profile.notes = `Primary money goal: ${value}`;
+      }
+      if (question.key === "atlasInvolvement" && String(value || "").trim()) {
+        state.companion = { ...defaultCompanionSettings(), ...(state.companion || {}) };
+        state.companion.coachingStyle = value === "Only when I ask" ? "Direct" : value;
       }
       if (question.key === "sleepGoal") state.profile.sleepGoal = cleanNumber(value, 0, 16);
       if (question.key === "learningGoals" && String(value || "").trim()) {
@@ -5781,6 +5873,16 @@
       renderAtlasOnboardingQuestion();
     }
 
+    function atlasOnboardingAskLater() {
+      const onboarding = atlasOnboarding();
+      const question = currentAtlasQuestion();
+      if (question) {
+        onboarding.answers[`${question.key}AskLater`] = true;
+        onboarding.transcript = "Atlas will ask this later.";
+      }
+      atlasOnboardingNext(true);
+    }
+
     function atlasOnboardingBack() {
       const onboarding = atlasOnboarding();
       onboarding.currentStep = Math.max(0, onboarding.currentStep - 1);
@@ -5792,6 +5894,7 @@
       onboarding.completed = !skipped;
       onboarding.skipped = skipped;
       onboarding.completedAt = skipped ? "" : new Date().toISOString();
+      if (!skipped && onboarding.path === "deep") onboarding.deepCompleted = true;
       if (!skipped) {
         applyAtlasFinalProfile();
         renderAtlasFinalSummary();
@@ -5807,6 +5910,10 @@
       const answers = atlasOnboarding().answers;
       const priorities = Array.isArray(answers.priorities) ? answers.priorities : [];
       recommendAtlasModules(priorities);
+      const firstMission = atlasFirstMission(answers);
+      if (firstMission && !state.planActions.some(action => action.name === firstMission)) {
+        state.planActions.push({ id: crypto.randomUUID(), name: firstMission, area: priorities[0] || "Goals", deadline: "", goal: "Atlas onboarding", impact: "High", done: false });
+      }
       if (answers.dailyStruggle && !state.planActions.some(action => action.name === "Build one routine around your biggest daily struggle")) {
         state.planActions.push({ id: crypto.randomUUID(), name: "Build one routine around your biggest daily struggle", area: "Goals", deadline: "", goal: "Atlas onboarding", impact: "High", done: false });
       }
@@ -5815,25 +5922,34 @@
       }
     }
 
-    function renderAtlasFinalSummary() {
-      const answers = atlasOnboarding().answers;
+    function atlasFirstMission(answers = atlasOnboarding().answers) {
       const priorities = Array.isArray(answers.priorities) ? answers.priorities : [];
-      const strengths = [
-        answers.learningGoals || answers.school ? "Consistent learner" : "Self-aware planner",
-        answers.targetRole || answers.professionalGoals ? "Career focused" : "Long-term planner",
-        priorities.length ? `Focused on ${priorities.slice(0, 2).join(" and ")}` : "Ready to build routines"
-      ];
-      const opportunities = [
-        cleanNumber(state.profile.currentSavings) < cleanNumber(state.profile.emergencyTarget) ? "Increase emergency savings" : "Keep protecting cash flow",
-        cleanNumber(state.profile.sleepGoal) ? "Improve sleep consistency" : "Define a sleep target",
-        "Build stronger daily routines"
-      ];
-      const prepared = ["Personalized Dashboard", "Financial Dashboard", "Health Dashboard", "Education Dashboard", "Career Dashboard", "Goals", "Weekly Review", "Atlas Recommendations"];
+      if (priorities.includes("Money") || answers.financialGoal) return "Complete one money check today";
+      if (priorities.includes("Health") || priorities.includes("Fitness") || answers.nutritionGoals) return "Complete one health check today";
+      if (priorities.includes("Career") || answers.targetRole) return "Write one career next step";
+      if (priorities.includes("Education") || answers.learningGoals) return "Define one learning milestone";
+      return "Complete one LifeOps mission today";
+    }
+
+    function renderAtlasFinalSummary() {
+      const onboarding = atlasOnboarding();
+      const answers = onboarding.answers;
+      const priorities = Array.isArray(answers.priorities) ? answers.priorities : [];
+      const scoreEntries = scoreBreakdown().sort((a, b) => b[1] - a[1]);
+      const strongest = scoreEntries[0] ? `${scoreEntries[0][0]} (${Math.round(scoreEntries[0][1])})` : "Baseline planning";
+      const weakest = scoreEntries[scoreEntries.length - 1] ? `${scoreEntries[scoreEntries.length - 1][0]} (${Math.round(scoreEntries[scoreEntries.length - 1][1])})` : "More data needed";
+      const mission = answers.dailyStruggle ? `Build a calmer system for ${String(answers.dailyStruggle).slice(0, 80)}` : priorities.length ? `Improve ${priorities.slice(0, 3).join(", ")}` : "Build a useful daily operating system";
+      const modules = (onboarding.recommendedModules || []).join(", ") || "Dashboard, Goals, History, Atlas";
+      const coachingStyle = answers.atlasInvolvement || state.companion?.coachingStyle || "Light guidance";
       const rows = [
-        ["Strengths", strengths.join("; ")],
-        ["Biggest opportunities", opportunities.join("; ")],
-        ["Prepared", prepared.join("; ")],
-        ["Recommended modules", (atlasOnboarding().recommendedModules || []).join(", ") || "Dashboard, Goals, History, Atlas"]
+        ["Primary mission", mission],
+        ["Top three priorities", priorities.slice(0, 3).join(", ") || "Money, Health, Goals"],
+        ["Strongest area", strongest],
+        ["Biggest opportunity", weakest],
+        ["Recommended modules", modules],
+        ["Atlas coaching style", coachingStyle],
+        ["First mission", atlasFirstMission(answers)],
+        ["Blueprint status", onboarding.path === "deep" || onboarding.deepCompleted ? "Deep personalization complete." : `LifeOps is ready. Complete ${atlasDeepPersonalizationQuestions().length} more optional questions to improve Atlas recommendations.`]
       ];
       const grid = document.getElementById("atlasFinalSummary");
       if (grid) {
@@ -7561,7 +7677,8 @@
         { title: "Learning path", value: state.educationCourses[0]?.name || "Not set", meta: state.educationCourses[0]?.method || "Add your first course or learning goal" },
         { title: "Current courses", value: state.educationCourses.length, meta: `${completedCredits}/${totalCredits || 0} credits completed` },
         { title: "Upcoming work", value: upcoming[0]?.title || "None", meta: upcoming[0] ? `${upcoming[0].kind} due ${upcoming[0].date}` : "No dated assignments or exams" },
-        { title: "Progress", value: percent(progress), meta: "Based on credits or learning goal progress" }
+        { title: "Progress", value: percent(progress), meta: "Based on credits or learning goal progress" },
+        { title: "Atlas Follow Up", value: "Optional", meta: "Add courses, credits, deadlines, and learning goals when ready." }
       ]);
       renderTextRows("educationUpcomingList", upcoming.length ? upcoming.slice(0, 6).map(item => [item.title, `${item.kind} for ${item.course || "learning path"} due ${item.date}. ${item.priority || "Medium"} priority.`]) : [["No upcoming work", "Add an assignment or exam to create your education agenda."]]);
       renderTextRows("educationCourseList", state.educationCourses.length ? state.educationCourses.map(course => [course.name, `${course.code || "No code"} • ${course.term || "No term"} • ${course.status} • ${course.privacy}`]) : [["No courses yet", "Add your first course, certification, training path, or independent study."]]);
@@ -7584,7 +7701,8 @@
         { title: "Current role", value: state.careerApplications[0]?.status || "Not set", meta: "Career details stay private by default" },
         { title: "Target role", value: state.careerGoals[0]?.title || "Not set", meta: state.careerGoals[0] ? `${percent(state.careerGoals[0].progress)} complete` : "Add a career goal" },
         { title: "Applications", value: state.careerApplications.length, meta: `${state.careerApplications.filter(app => ["Applied", "Interviewing", "Offer"].includes(app.status)).length} active` },
-        { title: "Development", value: state.careerSkills.length, meta: `${state.careerAchievements.length} achievements logged` }
+        { title: "Development", value: state.careerSkills.length, meta: `${state.careerAchievements.length} achievements logged` },
+        { title: "Atlas Follow Up", value: "Optional", meta: "Add role targets, applications, resume status, and salary goals later." }
       ]);
       renderTextRows("careerPipelineList", state.careerApplications.length ? state.careerApplications.map(app => [app.company, `${app.position} • ${app.status} • next: ${app.nextStep || "not set"} • ${app.privacy}`]) : [["No applications yet", "Add an application to start your career pipeline."]]);
       renderTextRows("careerUpcomingList", upcoming.length ? upcoming.slice(0, 6).map(item => [item.title, `${item.date} • ${item.meta}`]) : [["No interviews or follow-ups", "Add an interview or follow-up date to create a reminder."]]);
@@ -10239,11 +10357,13 @@
         completed: savedOnboarding.completed === true,
         skipped: savedOnboarding.skipped === true,
         mode: ["voice", "text", "forms"].includes(savedOnboarding.mode) ? savedOnboarding.mode : onboardingDefaults.mode,
+        path: ["essential", "deep"].includes(savedOnboarding.path) ? savedOnboarding.path : onboardingDefaults.path,
         currentStep: cleanNumber(savedOnboarding.currentStep, 0, 100),
         muted: savedOnboarding.muted === true,
         transcript: String(savedOnboarding.transcript || "").slice(0, 1200),
         answers: savedOnboarding.answers && typeof savedOnboarding.answers === "object" && !Array.isArray(savedOnboarding.answers) ? savedOnboarding.answers : {},
         recommendedModules: Array.isArray(savedOnboarding.recommendedModules) ? savedOnboarding.recommendedModules.slice(0, 12) : [],
+        deepCompleted: savedOnboarding.deepCompleted === true,
         completedAt: String(savedOnboarding.completedAt || "").slice(0, 40)
       };
       return nextState;
@@ -10299,13 +10419,15 @@
         { title: "Monthly income", value: money(cleanNumber(state.profile.income)), meta: "Current profile target" },
         { title: "Monthly expenses", value: money(totalExpenses()), meta: "Bills, variable costs, and debt payments" },
         { title: "Cash remaining", value: money(cashLeft()), meta: "After planned savings" },
-        { title: "Emergency fund", value: percent(savingsCompletion()), meta: `${money(cleanNumber(state.profile.currentSavings))} saved` }
+        { title: "Emergency fund", value: percent(savingsCompletion()), meta: `${money(cleanNumber(state.profile.currentSavings))} saved` },
+        { title: "Atlas Follow Up", value: "Optional", meta: "Add income, expenses, savings, emergency target, debt, and budget style later." }
       ]);
       renderSummaryCards("healthSectionSummary", [
         { title: "Workout progress", value: percent(fitnessCompletion()), meta: `${state.profile.workoutsDone || 0} of ${state.profile.workoutGoal || 0} workouts` },
         { title: "Steps", value: cleanNumber(state.profile.stepsToday).toLocaleString(), meta: `${percent(stepsCompletion())} of daily goal` },
         { title: "Sleep", value: `${cleanNumber(state.profile.sleepHours)}h`, meta: `${cleanNumber(state.profile.sleepGoal || 8)}h goal` },
-        { title: "Nutrition status", value: percent(macroCompletion(meals.protein, cleanNumber(state.profile.proteinGoal))), meta: `${meals.protein}g protein logged` }
+        { title: "Nutrition status", value: percent(macroCompletion(meals.protein, cleanNumber(state.profile.proteinGoal))), meta: `${meals.protein}g protein logged` },
+        { title: "Atlas Follow Up", value: "Optional", meta: "Add nutrition, sleep, workout frequency, height, and weight later." }
       ]);
       renderSummaryCards("nutritionSectionSummary", [
         { title: "Calories", value: `${meals.calories}`, meta: `${state.profile.calorieGoal || 0} calorie target` },
@@ -10696,6 +10818,9 @@
       atlasOnboardingNext(false);
     });
     document.getElementById("atlasSkipQuestionBtn").addEventListener("click", () => atlasOnboardingNext(true));
+    document.getElementById("atlasAskLaterBtn").addEventListener("click", atlasOnboardingAskLater);
+    document.getElementById("atlasFinishSetupBtn").addEventListener("click", () => completeAtlasOnboarding(false));
+    document.getElementById("atlasUseKnownBtn").addEventListener("click", () => completeAtlasOnboarding(false));
     document.getElementById("atlasBackBtn").addEventListener("click", atlasOnboardingBack);
     document.getElementById("atlasVoiceToggleBtn").addEventListener("click", () => {
       if (atlasOnboarding().mode === "voice") {
@@ -10720,6 +10845,15 @@
       activateTab("setup", "settings");
     });
     document.getElementById("launchLifeOpsBtn").addEventListener("click", closeAtlasOnboarding);
+    document.getElementById("completeAtlasBlueprintBtn").addEventListener("click", () => {
+      const onboarding = atlasOnboarding();
+      onboarding.path = "deep";
+      onboarding.currentStep = 0;
+      onboarding.skipped = false;
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      showAtlasOnboardingScreen("atlasOnboardingInterview");
+      renderAtlasOnboardingQuestion();
+    });
     document.getElementById("reviewAtlasProfileBtn").addEventListener("click", () => {
       closeAtlasOnboarding();
       activateTab("setup", "settings");

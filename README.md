@@ -15,6 +15,9 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Home-style dashboard overview with LifeOps score, Atlas Local Intelligence, daily missions, reward momentum, and category score cards
 - Atlas Local Intelligence layer: structured local context, top priorities, recommended action, urgency, impact areas, evidence, confidence, and transparent "why" explanation
 - Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI or remote connectivity
+- Faster Atlas first-launch interview with 12 essential setup questions, optional skip/ask-later/finish controls, section-based progress, and an Operating System Blueprint
+- Optional Complete My Blueprint path with the remaining deep personalization questions from the original interview
+- Smart Follow Up cards in Finance, Health, Education, and Career so detailed setup happens contextually instead of blocking first launch
 - Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
 - Built-in theme system with LifeOps Green, Midnight, Sunrise, Focus, and Ocean themes
 - Appearance settings for theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
@@ -338,6 +341,9 @@ Manual Version 1 checks:
 - Test secondary tabs inside each primary destination.
 - Test More screen backup, restore, reset, report, settings, coach, about, and developer shortcuts.
 - Test startup animation, Skip Animation, reduced-motion behavior, and Home entrance animation.
+- Test Atlas essential onboarding, including Text Conversation, Skip, Ask me later, Finish setup now, Use what you know, Back, and Blueprint output.
+- Test Complete My Blueprint and confirm the optional deep personalization questions remain available.
+- Test Smart Follow Up cards in Finance, Health, Education, and Career.
 - Test voice Off, startup greeting only, morning briefing only, both voice modes, preview, play, pause, resume, stop, and repeated button presses.
 - Test startup sound Off and On, Preview LifeOps Pulse, preview startup experience, and Start Voice Experience.
 - Test missing or unavailable browser voice fallback.
@@ -355,6 +361,7 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.23.0` - Refactored Atlas onboarding into a faster 12-question Essential Setup, optional Smart Follow Up cards, and a Complete My Blueprint deep personalization path while preserving the original detailed onboarding fields.
 - `1.22.1` - Fixed Atlas onboarding progression after the first question by preserving the active onboarding state object instead of recreating it during each state read. Verified the full 34-question onboarding flow, final summary, and Launch LifeOps exit behavior.
 - `1.22.0` - Rebuilt the assistant surface as Atlas Local Intelligence with structured local context, deterministic priority ranking, grounded response sections, evidence, confidence, data freshness, supported local question handling, unsupported-question fallback, Atlas status language, and future secure AI integration placeholders.
 - `1.20.0` - Added the first Atlas OS intelligence layer with a permanent Home Atlas card, proactive local priority signals, estimated time, impact labels, transparent recommendation reasoning, page-level Atlas insight strips, and secondary Ask Atlas detail drawer while preserving existing app data and business logic.
