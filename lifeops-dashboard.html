@@ -1300,6 +1300,151 @@
       line-height: 1.15;
     }
 
+    .today-command {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      gap: var(--density-gap);
+      align-items: stretch;
+    }
+
+    .today-hero-panel {
+      background:
+        radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 18%, transparent), transparent 34%),
+        linear-gradient(135deg, color-mix(in srgb, var(--card-bg) 96%, var(--primary) 4%), var(--card-bg));
+    }
+
+    .today-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .today-greeting {
+      margin: 0 0 6px;
+      font-size: clamp(1.75rem, 3vw, 3rem);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .today-date-line {
+      color: var(--text-secondary);
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .score-orb {
+      width: 148px;
+      min-height: 148px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        conic-gradient(var(--primary) var(--score-deg, 0deg), var(--progress-track) 0),
+        var(--surface);
+      box-shadow: inset 0 0 0 11px var(--card-bg), var(--shadow);
+      color: var(--text);
+    }
+
+    .score-orb strong {
+      display: block;
+      font-size: 2.75rem;
+      line-height: 1;
+    }
+
+    .score-orb span {
+      display: block;
+      color: var(--text-secondary);
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .priority-stack,
+    .atlas-evidence-list,
+    .score-breakdown-list,
+    .quick-action-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .priority-stack {
+      margin-top: 18px;
+    }
+
+    .priority-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--elevated);
+    }
+
+    .priority-rank {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--category-accent-soft);
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .atlas-briefing-card {
+      border-color: color-mix(in srgb, var(--primary) 38%, var(--border));
+    }
+
+    .atlas-evidence-list .item,
+    .score-breakdown-list .item {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .today-signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--density-gap);
+    }
+
+    .signal-card {
+      min-height: 132px;
+    }
+
+    .signal-card strong {
+      display: block;
+      margin: 8px 0;
+      font-size: 1.45rem;
+    }
+
+    .quick-action-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .quick-action-grid .btn {
+      min-height: 48px;
+      justify-content: center;
+    }
+
+    .nutrition-tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--density-gap);
+    }
+
+    .tool-card {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
     .metric {
       padding: var(--density-pad);
       min-height: auto;
@@ -3007,6 +3152,35 @@
     }
 
     @media (max-width: 767px) {
+      .today-command,
+      .today-hero-grid,
+      .today-signal-grid,
+      .nutrition-tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .score-orb {
+        width: 118px;
+        min-height: 118px;
+      }
+
+      .score-orb strong {
+        font-size: 2.2rem;
+      }
+
+      .priority-card {
+        grid-template-columns: auto minmax(0, 1fr);
+      }
+
+      .priority-card .status {
+        grid-column: 1 / -1;
+        justify-self: start;
+      }
+
+      .quick-action-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .app {
         grid-template-columns: 1fr;
       }
@@ -3173,6 +3347,27 @@
 
       .home-greeting-card {
         grid-template-columns: 1fr;
+      }
+
+      .companion-launcher {
+        right: 16px;
+        bottom: calc(96px + env(safe-area-inset-bottom));
+        width: 58px;
+        height: 58px;
+        min-height: 58px;
+        padding: 9px;
+        justify-content: center;
+        gap: 0;
+      }
+
+      .companion-launcher .companion-avatar {
+        display: grid;
+        width: 42px;
+        height: 42px;
+      }
+
+      .companion-launcher > span:not(.companion-avatar) {
+        display: none;
       }
     }
 
@@ -3390,9 +3585,9 @@
       </div>
 
       <nav class="nav" aria-label="Primary sections">
-        <button class="active" data-primary="dashboard" data-tab="dashboard" title="Dashboard" aria-current="page" data-status="active">
+        <button class="active" data-primary="dashboard" data-tab="today" title="Today" aria-current="page" data-status="active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"></path><path d="M5 10v10h14V10"></path></svg>
-          <span>Dashboard</span>
+          <span>Today</span>
         </button>
         <button data-primary="finance" data-tab="money" title="Finance">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg>
@@ -4100,12 +4295,70 @@
         </div>
       </section>
 
-      <section id="today" class="tab">
+      <section id="today" class="tab active">
+        <div class="today-command">
+          <article class="panel today-hero-panel">
+            <div class="today-hero-grid">
+              <div>
+                <p class="today-date-line" id="todayDate"></p>
+                <h3 class="today-greeting" id="todayGreeting">Good morning.</h3>
+                <p class="about-lede" id="todayLead">Atlas is preparing today's command view from local LifeOps data.</p>
+              </div>
+              <div class="score-orb" id="todayScoreOrb" aria-label="Daily Life Score">
+                <div>
+                  <span>Life Score</span>
+                  <strong id="todayLifeScore">0</strong>
+                  <span id="todayScoreDelta">No snapshot</span>
+                </div>
+              </div>
+            </div>
+            <div class="priority-stack" id="todayPriorityList"></div>
+          </article>
+
+          <article class="panel atlas-briefing-card">
+            <div class="split">
+              <h3>Atlas Briefing</h3>
+              <span class="pill">Local Intelligence</span>
+            </div>
+            <div id="todayAtlasBriefing" class="list atlas-evidence-list"></div>
+            <div class="prompt-row">
+              <button class="btn primary" id="todayStartActionBtn" type="button">Start Next Action</button>
+              <button class="btn" id="todayOpenAtlasBtn" type="button">Ask Atlas</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="today-signal-grid" id="todaySignalGrid"></div>
+
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Score Breakdown</h3>
+            <p class="about-lede">This is a progress indicator, not a judgment of health, worth, intelligence, or success.</p>
+            <div id="todayScoreBreakdown" class="score-breakdown-list"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Quick Actions</h3>
+            <div class="quick-action-grid">
+              <button class="btn primary" data-quick-action="expense" type="button">Add Expense</button>
+              <button class="btn primary" data-quick-action="meal" type="button">Log Meal</button>
+              <button class="btn" id="scanBarcodeBtn" type="button">Scan Barcode</button>
+              <button class="btn" data-quick-action="task" type="button">Add Task</button>
+              <button class="btn" data-quick-action="workout" type="button">Log Workout</button>
+              <button class="btn" id="addWaterQuickBtn" type="button">Add Water</button>
+              <button class="btn" id="addSleepQuickBtn" type="button">Add Sleep</button>
+              <button class="btn" data-quick-action="goal" type="button">Add Goal</button>
+              <button class="btn" id="saveSnapshotQuickBtn" type="button">Save Snapshot</button>
+              <button class="btn" id="startDailyReviewQuickBtn" type="button">Start Review</button>
+            </div>
+          </article>
+        </div>
+
         <div class="grid cols-2">
           <article class="panel">
             <div class="split">
               <h3>Today’s Plan</h3>
-              <span class="pill" id="todayDate"></span>
+              <span class="pill" id="todayPlanDate"></span>
             </div>
             <label>
               Top priority
@@ -4381,6 +4634,29 @@
               </button>
             </div>
             <div class="chart" id="foodCostCompareChart"></div>
+          </article>
+
+          <article class="panel">
+            <h3>Premium Nutrition Tools</h3>
+            <p class="about-lede">These tools prepare the local architecture without pretending a food database is connected.</p>
+            <div class="nutrition-tool-grid">
+              <div class="tool-card">
+                <div class="item-title">Barcode</div>
+                <div class="item-meta">Manual code capture is available. Lookup is planned and not connected.</div>
+                <button class="btn small" id="nutritionBarcodeBtn" type="button">Enter Barcode</button>
+              </div>
+              <div class="tool-card">
+                <div class="item-title">Recipes</div>
+                <div class="item-meta">Build estimated nutrition and cost per serving from user-entered ingredients.</div>
+                <button class="btn small" id="recipeBuilderBtn" type="button">Recipe Builder</button>
+              </div>
+              <div class="tool-card">
+                <div class="item-title">Meal Prep</div>
+                <div class="item-meta">Plan servings, days covered, and protein per serving from saved recipes later.</div>
+                <button class="btn small" id="mealPrepBtn" type="button">Meal Prep View</button>
+              </div>
+            </div>
+            <div id="nutritionToolStatus" class="insight">Barcode lookup, photo logging, voice logging, and database search are planned integrations. No camera or external database is active in this version.</div>
           </article>
 
           <article class="panel">
@@ -4899,7 +5175,7 @@
         </div>
       </section>
 
-      <section id="dashboard" class="tab active">
+      <section id="dashboard" class="tab">
         <div class="home-v2" aria-label="LifeOps home summary">
           <article class="home-greeting-card">
             <div>
@@ -5128,9 +5404,9 @@
   </div>
 
   <nav class="bottom-nav" aria-label="Primary mobile sections">
-    <button class="active" data-primary="dashboard" data-tab="dashboard" aria-current="page">
+    <button class="active" data-primary="dashboard" data-tab="today" aria-current="page">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"></path><path d="M5 10v10h14V10"></path></svg>
-      <span>Home</span>
+      <span>Today</span>
     </button>
     <button data-primary="finance" data-tab="money">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>
@@ -5217,7 +5493,7 @@
   </div>
 
   <script>
-    const appVersion = "1.24.3";
+    const appVersion = "1.25.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -5238,7 +5514,7 @@
 
     const titles = {
       setup: ["Set Up Your LifeOps Profile", "Set the targets that power the dashboard, coach, weekly review, and reports."],
-      today: ["Today", "Plan the day, check core habits, and keep your money and fitness choices visible."],
+      today: ["Today", "What matters now, what to do next, and why Atlas recommends it."],
       money: ["Money", "Track income, bills, spending, debt payments, savings, and emergency fund progress."],
       fitness: ["Fitness", "Log workouts, weekly consistency, steps, and the small actions that support health."],
       food: ["Nutrition", "Log meals, macros, and food cost so nutrition and spending connect in one place."],
@@ -5260,7 +5536,7 @@
       calendar: ["Calendar", "See local LifeOps dates and planned external calendar connections without claiming any sync is active."],
       documents: ["Documents", "Organize local document references and privacy metadata without uploading sensitive files."],
       modules: ["Modules", "Choose which LifeOps areas appear in navigation while preserving saved data."],
-      dashboard: ["Dashboard", "What matters today, how you are doing, and what to do next."],
+      dashboard: ["Overview", "The full dashboard view with broader metrics, charts, and module summaries."],
       more: ["More", "Education, career, calendar, documents, settings, modules, reports, coach, privacy, and integrations."]
     };
 
@@ -5280,11 +5556,11 @@
 
     const primaryRoutes = {
       dashboard: {
-        label: "Dashboard",
-        defaultTab: "dashboard",
+        label: "Today",
+        defaultTab: "today",
         tabs: [
-          ["dashboard", "Overview"],
-          ["today", "Today"]
+          ["today", "Today"],
+          ["dashboard", "Overview"]
         ]
       },
       finance: {
@@ -5510,6 +5786,7 @@
         categoryOrder: ["Finance", "Health", "Education", "Career", "Goals", "Connections"],
         visibleCategoryCards: ["Finance", "Health", "Education", "Career", "Goals"],
         quickActions: ["expense", "meal", "task", "workout", "goal", "invite"],
+        showLifeScore: true,
         showMissions: true,
         showRewards: true,
         showStreaks: true,
@@ -5571,6 +5848,8 @@
           { id: crypto.randomUUID(), name: "Turkey wrap", source: "Home", calories: 430, protein: 35, carbs: 42, fat: 12, cost: 4.25 },
           { id: crypto.randomUUID(), name: "Greek yogurt bowl", source: "Home", calories: 360, protein: 30, carbs: 44, fat: 8, cost: 3.75 }
         ],
+        recipes: [],
+        barcodeCaptures: [],
         goals: [
           { id: crypto.randomUUID(), name: "Build a career-ready LifeOps portfolio app", area: "Career", targetDate: "2026-09-30", progress: 20 },
           { id: crypto.randomUUID(), name: "Reach emergency fund milestone", area: "Money", targetDate: "2026-12-31", progress: 40 },
@@ -5680,6 +5959,8 @@
       blank.expenses = [];
       blank.workouts = [];
       blank.meals = [];
+      blank.recipes = [];
+      blank.barcodeCaptures = [];
       blank.goals = [];
       blank.planActions = [];
       blank.history = [];
@@ -5726,6 +6007,8 @@
         workouts: Array.isArray(saved.workouts) ? saved.workouts : base.workouts,
         meals: Array.isArray(saved.meals) ? saved.meals : base.meals,
         savedMeals: Array.isArray(saved.savedMeals) ? saved.savedMeals : base.savedMeals,
+        recipes: Array.isArray(saved.recipes) ? saved.recipes : base.recipes,
+        barcodeCaptures: Array.isArray(saved.barcodeCaptures) ? saved.barcodeCaptures : base.barcodeCaptures,
         goals: Array.isArray(saved.goals) ? saved.goals : base.goals,
         planActions: Array.isArray(saved.planActions) ? saved.planActions : base.planActions,
         history: Array.isArray(saved.history) ? saved.history : base.history,
@@ -6715,6 +6998,8 @@
         nutrition: {
           mealsLogged: state.meals.length,
           savedMeals: state.savedMeals.length,
+          recipes: Array.isArray(state.recipes) ? state.recipes.length : 0,
+          barcodeCaptures: Array.isArray(state.barcodeCaptures) ? state.barcodeCaptures.length : 0,
           calories: meals.calories,
           protein: meals.protein,
           cost: meals.cost,
@@ -7261,6 +7546,174 @@
       renderMissionList("companionMissionList");
     }
 
+    function scoreDeltaFromHistory() {
+      const history = sortedHistory();
+      const previous = [...history].reverse().find(item => item.date !== todayKey() && cleanNumber(item.lifeScore) > 0);
+      if (!previous) return { value: 0, label: "No saved snapshot" };
+      const delta = lifeScore() - cleanNumber(previous.lifeScore);
+      return {
+        value: delta,
+        label: `${delta >= 0 ? "+" : ""}${delta} from ${previous.date.slice(5)}`
+      };
+    }
+
+    function missingScoreData(context = getAtlasContext()) {
+      const missing = [];
+      if (!context.profile.hasMoneyTargets) missing.push("money targets");
+      if (!context.nutrition.hasTargets && context.nutrition.mealsLogged === 0) missing.push("nutrition targets or meals");
+      if (!context.fitness.hasWorkoutGoal && context.fitness.workoutsLogged === 0) missing.push("workout goal or workout log");
+      if (!context.wellness.sleepGoal && !context.wellness.waterGoal) missing.push("wellness targets");
+      if (!context.goals.totalGoals && !context.goals.openActions) missing.push("goals or weekly actions");
+      if (!context.education.deadlines.length) missing.push("education deadlines");
+      if (!context.career.followUps.length) missing.push("career follow-ups");
+      return missing;
+    }
+
+    function todaySignalCards(context = getAtlasContext()) {
+      const meals = mealTotals();
+      const nextEducation = context.education.nextDeadline;
+      const nextCareer = context.career.nextFollowUp;
+      return [
+        {
+          title: "Financial status",
+          value: context.finance.cashLeft < 0 ? "Needs attention" : money(context.finance.cashLeft),
+          meta: context.finance.upcomingBills[0] ? `${context.finance.upcomingBills[0].name} due ${context.finance.upcomingBills[0].dueDate}` : "No bill due in the next 7 days",
+          tab: "money"
+        },
+        {
+          title: "Nutrition progress",
+          value: `${Math.round(meals.protein)}g protein`,
+          meta: `${Math.max(0, Math.round(context.nutrition.proteinRemaining))}g remaining, ${money(meals.cost)} food cost`,
+          tab: "food"
+        },
+        {
+          title: "Education",
+          value: nextEducation ? nextEducation.kind : "No deadline",
+          meta: nextEducation ? `${nextEducation.title} due ${nextEducation.date}` : "Add assignments or exams for deadline tracking",
+          tab: "education"
+        },
+        {
+          title: "Career",
+          value: nextCareer ? nextCareer.kind : "No follow-up",
+          meta: nextCareer ? `${nextCareer.title} on ${nextCareer.date}` : "Add applications or interviews for follow-up tracking",
+          tab: "career"
+        },
+        {
+          title: "Goal progress",
+          value: percent(context.goals.averageProgress),
+          meta: context.goals.highImpactAction ? `Next: ${context.goals.highImpactAction.name}` : "Add one weekly action",
+          tab: "goals"
+        },
+        {
+          title: "Recent win",
+          value: "Progress",
+          meta: context.recentActions.recentWin,
+          tab: "timeline"
+        },
+        {
+          title: "Streak",
+          value: `${savedDayStreak()} day${savedDayStreak() === 1 ? "" : "s"}`,
+          meta: "No penalties for missed days. Use snapshots to track consistency.",
+          tab: "history"
+        },
+        {
+          title: "Privacy",
+          value: "Local",
+          meta: "Atlas mode: Local Intelligence. Remote AI is not connected.",
+          tab: "privacy"
+        }
+      ];
+    }
+
+    function renderTodayCommand() {
+      const context = getAtlasContext();
+      const priorities = evaluateAtlasPriorities(context);
+      const top = priorities[0];
+      const score = context.lifeScore.score;
+      const delta = scoreDeltaFromHistory();
+      const showScore = currentDashboardSettings().showLifeScore !== false;
+      const greeting = timeGreeting();
+      const name = context.profile.displayName || "there";
+      const dateText = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+      const scoreOrb = document.getElementById("todayScoreOrb");
+      if (scoreOrb) {
+        scoreOrb.hidden = !showScore;
+        scoreOrb.style.setProperty("--score-deg", `${Math.max(0, Math.min(100, score)) * 3.6}deg`);
+      }
+      const greetingEl = document.getElementById("todayGreeting");
+      if (greetingEl) greetingEl.textContent = `${greeting}, ${name}.`;
+      const dateEl = document.getElementById("todayDate");
+      if (dateEl) dateEl.textContent = dateText;
+      const planDateEl = document.getElementById("todayPlanDate");
+      if (planDateEl) planDateEl.textContent = dateText;
+      const leadEl = document.getElementById("todayLead");
+      if (leadEl) leadEl.textContent = top ? `Atlas recommends: ${top.action}` : "Add more LifeOps data so Atlas can rank today's next action.";
+      const scoreEl = document.getElementById("todayLifeScore");
+      if (scoreEl) scoreEl.textContent = score;
+      const deltaEl = document.getElementById("todayScoreDelta");
+      if (deltaEl) deltaEl.textContent = delta.label;
+
+      const priorityList = document.getElementById("todayPriorityList");
+      if (priorityList) {
+        priorityList.innerHTML = "";
+        priorities.slice(0, 3).forEach((priority, index) => {
+          const card = document.createElement("article");
+          card.className = "priority-card";
+          card.innerHTML = `<span class="priority-rank"></span><div><div class="item-title"></div><div class="item-meta"></div></div><span class="status watch"></span>`;
+          card.querySelector(".priority-rank").textContent = index + 1;
+          card.querySelector(".item-title").textContent = priority.title;
+          card.querySelector(".item-meta").textContent = priority.why;
+          card.querySelector(".status").textContent = `${priority.category} • ${priority.time}`;
+          priorityList.appendChild(card);
+        });
+      }
+
+      renderTextRows("todayAtlasBriefing", top ? [
+        ["What Atlas found", top.found],
+        ["Why it matters", top.why],
+        ["Recommended action", top.action],
+        ["Evidence", top.evidence.length ? top.evidence.join("; ") : "No detailed local evidence yet."],
+        ["Expected impact", top.impacts.join("; ")],
+        ["Confidence", `${top.confidence} • ${top.freshness}`]
+      ] : [["Atlas", "Add one goal, due date, meal, workout, or bill so Atlas can make a grounded recommendation."]]);
+
+      const signalGrid = document.getElementById("todaySignalGrid");
+      if (signalGrid) {
+        signalGrid.innerHTML = "";
+        todaySignalCards(context).forEach(cardData => {
+          const card = document.createElement("article");
+          card.className = "panel signal-card";
+          card.innerHTML = `<div class="item-title"></div><strong></strong><div class="item-meta"></div><button class="btn small" type="button">View</button>`;
+          card.querySelector(".item-title").textContent = cardData.title;
+          card.querySelector("strong").textContent = cardData.value;
+          card.querySelector(".item-meta").textContent = cardData.meta;
+          card.querySelector("button").addEventListener("click", () => activateTab(cardData.tab, sectionPrimary[cardData.tab] || null));
+          signalGrid.appendChild(card);
+        });
+      }
+
+      if (showScore) {
+        const breakdownRows = scoreBreakdown().map(([name, value]) => [
+          name,
+          `${Math.round(value)}/100 - contribution to today's progress indicator`
+        ]);
+        renderTextRows("todayScoreBreakdown", [
+          ["Current score", `${score}/100. This is a transparent progress indicator.`],
+          ["Change", delta.label],
+          ["Strongest area", `${context.lifeScore.strongestArea}: ${context.lifeScore.strongestScore}/100`],
+          ["Weakest area", `${context.lifeScore.weakestArea}: ${context.lifeScore.weakestScore}/100`],
+          ["Missing data", missingScoreData(context).join("; ") || "Core score inputs are present."],
+          ["Data freshness", context.freshness],
+          ...breakdownRows
+        ]);
+      } else {
+        renderTextRows("todayScoreBreakdown", [
+          ["Life Score hidden", "The score is turned off in Modules > Dashboard Customization."],
+          ["Atlas still works", "Recommendations continue to use transparent local evidence without displaying a score."]
+        ]);
+      }
+    }
+
     function renderHomeScreen() {
       const score = lifeScore();
       const status = scoreStatus(score);
@@ -7293,6 +7746,7 @@
         ["Evidence", atlasPriorities[0]?.evidence?.join("; ") || "No actionable local evidence found."]
       ]);
       renderAtlasDashboard();
+      renderTodayCommand();
       renderHomeV2();
     }
 
@@ -7617,13 +8071,128 @@
       });
     }
 
+    function generatedTimelineItems() {
+      const today = todayKey();
+      const context = getAtlasContext();
+      const top = evaluateAtlasPriorities(context)[0];
+      const generated = [
+        ...state.expenses.filter(item => item.dueDate).map(item => ({
+          id: `expense-${item.id}`,
+          title: `${item.type}: ${item.name}`,
+          date: item.dueDate,
+          category: item.type === "Debt Payment" ? "Money" : "Finance",
+          note: `${money(cleanNumber(item.amount))} planned obligation.`,
+          privacy: "Private",
+          generated: true
+        })),
+        ...state.meals.map(item => ({
+          id: `meal-${item.id}`,
+          title: `Meal logged: ${item.name}`,
+          date: today,
+          category: "Health",
+          note: `${cleanNumber(item.protein)}g protein, ${money(cleanNumber(item.cost))} cost.`,
+          privacy: "Private",
+          generated: true
+        })),
+        ...state.workouts.map(item => ({
+          id: `workout-${item.id}`,
+          title: `Workout: ${item.name}`,
+          date: today,
+          category: "Health",
+          note: `${cleanNumber(item.minutes)} minutes, ${item.intensity || "No intensity set"}.`,
+          privacy: "Private",
+          generated: true
+        })),
+        ...state.educationAssignments.filter(item => item.dueDate).map(item => ({
+          id: `assignment-${item.id}`,
+          title: `Assignment due: ${item.title}`,
+          date: item.dueDate,
+          category: "Education",
+          note: item.course || "Education deadline.",
+          privacy: item.privacy || "Private",
+          generated: true
+        })),
+        ...state.educationExams.filter(item => item.date).map(item => ({
+          id: `exam-${item.id}`,
+          title: `Exam: ${item.title}`,
+          date: item.date,
+          category: "Education",
+          note: item.course || "Education event.",
+          privacy: item.privacy || "Private",
+          generated: true
+        })),
+        ...state.careerApplications.filter(item => item.followUpDate).map(item => ({
+          id: `career-${item.id}`,
+          title: `Career follow-up: ${item.company}`,
+          date: item.followUpDate,
+          category: "Career",
+          note: item.position || "Career pipeline item.",
+          privacy: item.privacy || "Private",
+          generated: true
+        })),
+        ...state.calendarEvents.filter(item => item.date).map(item => ({
+          id: `calendar-${item.id}`,
+          title: item.title,
+          date: item.date,
+          category: item.category || "Calendar",
+          note: item.notes || item.source || "Calendar preview.",
+          privacy: item.privacy || "Private",
+          generated: true
+        })),
+        ...state.goals.filter(item => cleanNumber(item.progress) >= 100).map(item => ({
+          id: `goal-${item.id}`,
+          title: `Goal completed: ${item.name}`,
+          date: item.targetDate || today,
+          category: "Goals",
+          note: `${item.area || "Goal"} reached 100%.`,
+          privacy: "Private",
+          generated: true
+        }))
+      ];
+      if (top) {
+        generated.push({
+          id: `atlas-${today}`,
+          title: `Atlas recommendation: ${top.title}`,
+          date: today,
+          category: "Atlas",
+          note: top.why,
+          privacy: "Private",
+          generated: true
+        });
+      }
+      const latest = recentHistory(1)[0];
+      if (latest) {
+        generated.push({
+          id: `score-${latest.date}`,
+          title: `Life Score snapshot: ${latest.lifeScore}`,
+          date: latest.date,
+          category: "Personal",
+          note: `Money ${latest.money}, nutrition ${latest.nutrition}, fitness ${latest.fitness}, wellness ${latest.wellness}.`,
+          privacy: "Private",
+          generated: true
+        });
+      }
+      return generated;
+    }
+
+    function combinedTimelineItems() {
+      const manual = state.timeline.map(item => ({ ...item, generated: false }));
+      const byKey = new Map();
+      [...manual, ...generatedTimelineItems()].forEach(item => {
+        const key = `${item.id || item.title}-${item.date}`;
+        if (!byKey.has(key)) byKey.set(key, item);
+      });
+      return [...byKey.values()].sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    }
+
     function renderTimeline() {
       const list = document.getElementById("timelineList");
       if (!list) return;
-      const items = [...state.timeline].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      const items = combinedTimelineItems();
       renderTextRows("timelineSummaryList", [
-        ["Milestones", `${items.length} meaningful milestone${items.length === 1 ? "" : "s"} saved locally.`],
-        ["Privacy default", "New milestones default to Private."],
+        ["Timeline items", `${items.length} local milestone and generated event${items.length === 1 ? "" : "s"} available.`],
+        ["Privacy default", "New milestones and generated events default to Private."],
+        ["Filters", "Today, week, month, finance, health, education, career, goals, and private filters are planned next."],
         ["Sharing status", "Shared labels are local metadata only. Nothing is synchronized or sent."]
       ]);
       list.innerHTML = "";
@@ -7645,18 +8214,23 @@
               <span class="pill"></span>
             </div>
           </div>
-          <button class="btn small danger" type="button">Delete</button>`;
+          <button class="btn small danger" type="button"></button>`;
         row.querySelector(".item-title").textContent = item.title;
         row.querySelector(".item-meta").textContent = item.note || "No note added.";
         const pills = row.querySelectorAll(".pill");
         pills[0].textContent = item.category;
         pills[1].textContent = item.date;
         pills[2].textContent = item.privacy;
-        row.querySelector("button").addEventListener("click", () => {
-          if (!confirm(`Delete milestone "${item.title}"?`)) return;
-          state.timeline = state.timeline.filter(entry => entry.id !== item.id);
-          save();
-        });
+        const button = row.querySelector("button");
+        button.textContent = item.generated ? "Generated" : "Delete";
+        button.disabled = Boolean(item.generated);
+        if (!item.generated) {
+          button.addEventListener("click", () => {
+            if (!confirm(`Delete milestone "${item.title}"?`)) return;
+            state.timeline = state.timeline.filter(entry => entry.id !== item.id);
+            save();
+          });
+        }
         list.appendChild(row);
       });
     }
@@ -7958,6 +8532,10 @@
       ));
       addToggle("Show missions", "Daily mission cards on Dashboard", settings.showMissions !== false, checked => {
         state.dashboardSettings = { ...currentDashboardSettings(), showMissions: checked };
+        save();
+      });
+      addToggle("Show Life Score", "Display the score on Today and dashboard cards", settings.showLifeScore !== false, checked => {
+        state.dashboardSettings = { ...currentDashboardSettings(), showLifeScore: checked };
         save();
       });
       addToggle("Show rewards", "XP and progress surfaces stay visible", settings.showRewards !== false, checked => {
@@ -8615,6 +9193,115 @@
       ], values => {
         if (!values.name) return;
         Object.assign(action, values);
+      });
+    }
+
+    function scanBarcode() {
+      openEditModal("Manual Barcode Capture", [
+        { name: "code", label: "Barcode number", value: "", wide: true },
+        { name: "note", label: "Food note", value: "", wide: true }
+      ], values => {
+        if (!values.code) return;
+        state.barcodeCaptures.push({
+          id: crypto.randomUUID(),
+          code: values.code.slice(0, 80),
+          note: values.note.slice(0, 120),
+          capturedAt: new Date().toISOString(),
+          lookupStatus: "Unavailable - no barcode database connected"
+        });
+        addCompanionSystemMessage(`Barcode saved locally. Lookup is unavailable until a secure nutrition database integration is added.\n\nCode: ${values.code}`);
+      });
+    }
+
+    function lookupBarcode(code) {
+      return { ok: false, code, status: "Not connected", message: "Barcode lookup requires a future nutrition database integration." };
+    }
+
+    function searchFoodDatabase(query) {
+      return { ok: false, query, status: "Not connected", message: "Food search requires a future authenticated food database integration." };
+    }
+
+    function calculateRecipeNutrition(values) {
+      const servings = Math.max(1, cleanNumber(values.servings, 1));
+      return {
+        servings,
+        caloriesPerServing: Math.round(cleanNumber(values.calories) / servings),
+        proteinPerServing: Math.round(cleanNumber(values.protein) / servings),
+        carbsPerServing: Math.round(cleanNumber(values.carbs) / servings),
+        fatPerServing: Math.round(cleanNumber(values.fat) / servings),
+        costPerServing: Number((cleanNumber(values.cost) / servings).toFixed(2))
+      };
+    }
+
+    function saveCustomFood(values) {
+      const nutrition = calculateRecipeNutrition(values);
+      const recipe = {
+        id: crypto.randomUUID(),
+        name: values.name.slice(0, 80),
+        servings: nutrition.servings,
+        calories: nutrition.caloriesPerServing,
+        protein: nutrition.proteinPerServing,
+        carbs: nutrition.carbsPerServing,
+        fat: nutrition.fatPerServing,
+        cost: nutrition.costPerServing,
+        ingredients: values.ingredients.slice(0, 500),
+        prepNotes: values.prepNotes.slice(0, 500),
+        cookingTime: cleanNumber(values.cookingTime),
+        tags: values.tags.slice(0, 120),
+        mealPrep: values.mealPrep === "Yes",
+        createdAt: todayKey()
+      };
+      state.recipes.push(recipe);
+      state.savedMeals.push({
+        id: crypto.randomUUID(),
+        name: recipe.name,
+        source: "Home",
+        calories: recipe.calories,
+        protein: recipe.protein,
+        carbs: recipe.carbs,
+        fat: recipe.fat,
+        cost: recipe.cost
+      });
+      return recipe;
+    }
+
+    function openRecipeBuilder() {
+      openEditModal("Recipe Builder", [
+        { name: "name", label: "Recipe name", value: "", wide: true },
+        { name: "ingredients", label: "Ingredients and amounts", value: "", wide: true },
+        { name: "servings", label: "Serving count", type: "number", value: 1, min: 1, step: 1 },
+        { name: "calories", label: "Total calories", type: "number", value: 0, min: 0, step: 25 },
+        { name: "protein", label: "Total protein", type: "number", value: 0, min: 0, step: 1 },
+        { name: "carbs", label: "Total carbs", type: "number", value: 0, min: 0, step: 1 },
+        { name: "fat", label: "Total fat", type: "number", value: 0, min: 0, step: 1 },
+        { name: "cost", label: "Total estimated cost", type: "number", value: 0, min: 0, step: .25 },
+        { name: "cookingTime", label: "Cooking time minutes", type: "number", value: 0, min: 0, step: 5 },
+        { name: "mealPrep", label: "Meal prep recipe", type: "select", value: "No", options: ["No", "Yes"] },
+        { name: "tags", label: "Tags", value: "", wide: true },
+        { name: "prepNotes", label: "Preparation notes", value: "", wide: true }
+      ], values => {
+        if (!values.name) return;
+        const recipe = saveCustomFood(values);
+        addCompanionSystemMessage(`Recipe saved locally and added to saved meals.\n\n${recipe.name}: ${recipe.protein}g protein, ${recipe.calories} calories, ${money(recipe.cost)} per serving.`);
+      });
+    }
+
+    function openMealPrepView() {
+      const recipes = state.recipes || [];
+      setCompanionDrawer(true);
+      addCompanionSystemMessage(recipes.length ? `Meal prep local summary\n\n${recipes.slice(-5).map(recipe => `${recipe.name}: ${recipe.servings} servings, ${recipe.protein}g protein, ${money(recipe.cost)} per serving`).join("\n")}` : "No recipes saved yet. Open Recipe Builder to create one from user-entered ingredients.");
+    }
+
+    function addWaterQuick() {
+      state.profile.waterCups = cleanNumber(state.profile.waterCups) + 1;
+      save();
+    }
+
+    function addSleepQuick() {
+      openEditModal("Update Sleep", [
+        { name: "sleepHours", label: "Sleep hours", type: "number", value: state.profile.sleepHours || 0, min: 0, max: 24, step: .25 }
+      ], values => {
+        state.profile.sleepHours = values.sleepHours;
       });
     }
 
@@ -10285,7 +10972,7 @@
       if (!data || typeof data !== "object" || Array.isArray(data)) {
         return { ok: false, message: "The selected file is not a valid LifeOps backup object." };
       }
-      const allowedArrays = ["tasks", "expenses", "workouts", "meals", "savedMeals", "goals", "planActions", "history", "timeline", "connections", "connectionGroups", "sharedLists", "sharedGoals", "sharedChallenges", "sharedPlans", "educationCourses", "educationAssignments", "educationExams", "educationGoals", "educationCosts", "careerApplications", "careerInterviews", "careerContacts", "careerGoals", "careerSkills", "careerAchievements", "calendarEvents", "documents"];
+      const allowedArrays = ["tasks", "expenses", "workouts", "meals", "savedMeals", "recipes", "barcodeCaptures", "goals", "planActions", "history", "timeline", "connections", "connectionGroups", "sharedLists", "sharedGoals", "sharedChallenges", "sharedPlans", "educationCourses", "educationAssignments", "educationExams", "educationGoals", "educationCosts", "careerApplications", "careerInterviews", "careerContacts", "careerGoals", "careerSkills", "careerAchievements", "calendarEvents", "documents"];
       const invalidArray = allowedArrays.find(key => key in data && !Array.isArray(data[key]));
       if (invalidArray) {
         return { ok: false, message: `The backup field "${invalidArray}" must be a list.` };
@@ -11003,6 +11690,19 @@
         if (action === "invite") activateTab("connections", "more");
       });
     });
+    document.getElementById("todayOpenAtlasBtn")?.addEventListener("click", () => setCompanionDrawer(true));
+    document.getElementById("todayStartActionBtn")?.addEventListener("click", () => {
+      const priority = evaluateAtlasPriorities(getAtlasContext())[0];
+      if (priority?.tab) activateTab(priority.tab, sectionPrimary[priority.tab] || null);
+    });
+    document.getElementById("scanBarcodeBtn")?.addEventListener("click", scanBarcode);
+    document.getElementById("nutritionBarcodeBtn")?.addEventListener("click", scanBarcode);
+    document.getElementById("recipeBuilderBtn")?.addEventListener("click", openRecipeBuilder);
+    document.getElementById("mealPrepBtn")?.addEventListener("click", openMealPrepView);
+    document.getElementById("addWaterQuickBtn")?.addEventListener("click", addWaterQuick);
+    document.getElementById("addSleepQuickBtn")?.addEventListener("click", addSleepQuick);
+    document.getElementById("saveSnapshotQuickBtn")?.addEventListener("click", saveTodaySnapshot);
+    document.getElementById("startDailyReviewQuickBtn")?.addEventListener("click", () => activateTab("review", "goals"));
     document.getElementById("completePriorityBtn").addEventListener("click", () => {
       const priority = String(state.profile.priority || "").trim();
       if (!priority) {

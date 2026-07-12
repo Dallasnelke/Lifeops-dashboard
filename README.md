@@ -13,7 +13,11 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 ## Current Features
 
 - Home-style dashboard overview with LifeOps score, Atlas Local Intelligence, daily missions, reward momentum, and category score cards
+- Mobile-first Today command screen that is now the default landing experience after onboarding
+- Today screen with personalized greeting, current date, Life Score change, top three priorities, Atlas briefing, signal cards, quick actions, recent win context, and score breakdown
+- Transparent Life Score breakdown with strongest area, weakest area, missing-data explanation, data freshness, and optional score hiding through dashboard customization
 - Atlas Local Intelligence layer: structured local context, top priorities, recommended action, urgency, impact areas, evidence, confidence, and transparent "why" explanation
+- Deterministic Atlas priority engine that ranks actions using local due dates, urgency, impact, effort, privacy, and available LifeOps data
 - Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI or remote connectivity
 - Faster Atlas first-launch interview with 12 essential setup questions, optional skip/ask-later/finish controls, section-based progress, and an Operating System Blueprint
 - Optional Complete My Blueprint path with the remaining deep personalization questions from the original interview
@@ -23,7 +27,7 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Appearance settings for theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
 - Optional profile card with display name, initials, pronouns, avatar color, avatar icon, personal title, and current focus
 - Optional rewards toggle for XP, levels, streaks, and achievements
-- Full local Life Timeline section with manual milestones, categories, related goals, notes, and privacy metadata
+- Full local Life Timeline section with manual milestones, generated local events, categories, related goals, notes, and privacy metadata
 - Local Connections prototype with profiles, groups, shared lists, shared goals, challenges, shared calendar previews, and permission previews
 - Privacy Center explaining local storage, backup controls, data classifications, sharing defaults, and sensitive-data safeguards
 - Integrations Center showing planned/disconnected app connections with honest statuses and privacy notes
@@ -50,6 +54,8 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Daily habit checks
 - Workout tracking and step goal tracking
 - Food and macro logging with food cost tracking
+- Premium nutrition tool placeholders for manual barcode capture, future barcode lookup, future food database search, recipe building, and meal-prep summary
+- Local recipe builder that calculates estimated nutrition and cost per serving from user-entered values and can save a recipe as a saved meal
 - Goal tracking and weekly action planning
 - Wellness tracking for sleep, water, mood, stress, and energy
 - Daily history snapshots and trend summaries
@@ -181,6 +187,9 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
 - Some browsers block automatic startup sound or speech until the user presses a page button such as Start Voice Experience.
 - Theme and appearance settings are stored locally and included in future JSON backups.
+- The Today screen is a stronger first-pass command center, but deeper trend charts, full Life Replay, camera barcode scanning, and true database-backed food lookup remain future work.
+- Barcode capture is manual only. No camera scanning or external barcode database is connected yet.
+- Recipe nutrition depends entirely on user-entered ingredients and totals.
 - Connections, timeline sharing, and integration concepts are local previews only until a secure backend/account system exists.
 - No encryption is implemented yet.
 - No App Store wrapper exists yet.
@@ -316,7 +325,7 @@ Future work should add clearer daily XP limits and a complete gamification disab
 
 ## Life Timeline
 
-LifeOps includes a local Life Timeline section for meaningful milestones rather than every data entry. Milestones support title, date, category, optional note, optional related goal, and privacy level.
+LifeOps includes a local Life Timeline section for meaningful milestones rather than every data entry. Milestones support title, date, category, optional note, optional related goal, and privacy level. Version 1.25 also adds generated local timeline items from existing LifeOps modules so the timeline can show bills, meals, workouts, deadlines, career follow-ups, calendar events, completed goals, Atlas recommendations, and score snapshots without creating another storage system.
 
 Timeline sharing states should remain local metadata only until secure accounts, permissions, and synchronization exist.
 
@@ -385,6 +394,7 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.25.0` - Added the mobile-first Today command experience, transparent score breakdown, score hiding preference, richer Atlas evidence briefing, generated module-based Life Timeline events, manual barcode capture, local recipe builder, meal-prep summary, nutrition integration placeholders, and default Today landing behavior.
 - `1.24.4` - Fixed the tablet-width app layout by applying the compact Atlas orb launcher at the same 767px breakpoint as the mobile bottom navigation, preventing overlap with More in embedded app views.
 - `1.24.3` - Improved mobile navigation ergonomics by converting the Atlas launcher into a compact orb above the bottom navigation on smaller screens and replacing the Dashboard `LO` marker with a richer LifeOps core badge.
 - `1.24.2` - Smoothed Atlas motion by removing animated drop-shadow filters, moving glow breathing to a lightweight pseudo-element, adding transform-only rotation, GPU-friendly hints, and slightly faster idle/thinking orbit timing.
