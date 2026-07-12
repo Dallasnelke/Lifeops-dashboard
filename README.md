@@ -385,6 +385,7 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.24.4` - Fixed the tablet-width app layout by applying the compact Atlas orb launcher at the same 767px breakpoint as the mobile bottom navigation, preventing overlap with More in embedded app views.
 - `1.24.3` - Improved mobile navigation ergonomics by converting the Atlas launcher into a compact orb above the bottom navigation on smaller screens and replacing the Dashboard `LO` marker with a richer LifeOps core badge.
 - `1.24.2` - Smoothed Atlas motion by removing animated drop-shadow filters, moving glow breathing to a lightweight pseudo-element, adding transform-only rotation, GPU-friendly hints, and slightly faster idle/thinking orbit timing.
 - `1.24.1` - Refined Atlas motion with slow idle rotation, soft teal glow breathing, faster thinking state, counter-rotating ring, inward particles, listening waveform state, speaking ripple, success pulse, amber attention pulse, and a more cinematic onboarding entrance.
