@@ -618,6 +618,43 @@
       letter-spacing: 0;
     }
 
+    .topbar-icon.lifeops-core-badge {
+      position: relative;
+      overflow: visible;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--info) 18%, transparent), transparent 60%),
+        linear-gradient(135deg, color-mix(in srgb, var(--primary) 18%, var(--card-bg)), color-mix(in srgb, var(--warning) 10%, var(--card-bg)));
+      border-color: color-mix(in srgb, var(--primary) 36%, var(--line));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.42),
+        0 12px 30px color-mix(in srgb, var(--primary) 16%, transparent);
+    }
+
+    .topbar-icon.lifeops-core-badge::before,
+    .topbar-icon.lifeops-core-badge::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 14px;
+      pointer-events: none;
+      border: 1px solid color-mix(in srgb, var(--primary) 26%, transparent);
+    }
+
+    .topbar-icon.lifeops-core-badge::after {
+      inset: 12px;
+      border-color: color-mix(in srgb, var(--info) 34%, transparent);
+      transform: rotate(45deg);
+    }
+
+    .topbar-icon.lifeops-core-badge .brand-img {
+      width: 34px;
+      height: 34px;
+      position: relative;
+      z-index: 1;
+      animation: lifeopsCoreFloat 8s ease-in-out infinite;
+    }
+
     .topbar h2 {
       margin: 0;
       font-size: clamp(30px, 3.2vw, 34px);
@@ -878,17 +915,44 @@
       gap: 22px;
     }
 
+    .onboarding-overlay:not(.hidden) .onboarding-card {
+      animation: atlasWelcomeCardIn .7s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
     .atlas-orb {
       width: 76px;
       height: 76px;
-      border-radius: 24px;
+      border-radius: 50%;
       display: grid;
       place-items: center;
       color: #fff;
       font-weight: 900;
       letter-spacing: .08em;
       background: transparent;
-      box-shadow: 0 16px 38px color-mix(in srgb, var(--primary) 24%, transparent);
+      box-shadow: 0 16px 44px color-mix(in srgb, var(--info) 20%, transparent);
+    }
+
+    .atlas-particles {
+      position: absolute;
+      inset: -8px;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .atlas-particles span {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--info) 62%, #ffffff);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--info) 50%, transparent);
+    }
+
+    .atlas-particles span:nth-child(1) { left: 10%; top: 44%; --particle-x: 22px; --particle-y: 2px; }
+    .atlas-particles span:nth-child(2) { left: 74%; top: 14%; --particle-x: -18px; --particle-y: 20px; animation-delay: .25s; }
+    .atlas-particles span:nth-child(3) { left: 78%; top: 74%; --particle-x: -22px; --particle-y: -18px; animation-delay: .5s; }
+    .atlas-particles span:nth-child(4) { left: 24%; top: 80%; --particle-x: 12px; --particle-y: -22px; animation-delay: .75s; }
     }
 
     .atlas-wave {
@@ -930,6 +994,19 @@
       line-height: .95;
       letter-spacing: 0;
     }
+
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-kicker,
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-title,
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-copy,
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .actions {
+      animation: atlasWelcomeContentIn .72s ease both;
+    }
+
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-title { animation-delay: .1s; }
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-copy:nth-of-type(1) { animation-delay: .18s; }
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-copy:nth-of-type(2) { animation-delay: .26s; }
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .onboarding-copy:nth-of-type(3) { animation-delay: .34s; }
+    .onboarding-overlay:not(.hidden) #atlasOnboardingWelcome .actions { animation-delay: .44s; }
 
     .onboarding-copy {
       margin: 0;
@@ -1885,9 +1962,26 @@
       border: 0;
       color: #fff;
       overflow: visible;
-      animation: atlasIdlePulse 2.8s ease-in-out infinite;
+      transform: translateZ(0);
+      will-change: transform;
     }
 
+    .companion-avatar.atlas-brand-avatar .brand-img {
+      position: relative;
+      z-index: 2;
+      animation: atlasIdleOrbit 16s linear infinite;
+      transform: translateZ(0);
+      transform-origin: 50% 50%;
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+
+    .companion-avatar.atlas-brand-avatar .brand-img,
+    .companion-avatar.atlas-brand-avatar .atlas-particles {
+      pointer-events: none;
+    }
+
+    .companion-avatar.atlas-brand-avatar::before,
     .companion-avatar.atlas-brand-avatar::after {
       content: "";
       position: absolute;
@@ -1896,19 +1990,58 @@
       border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
       opacity: .58;
       pointer-events: none;
+      transform: translateZ(0);
+      will-change: transform, opacity;
+    }
+
+    .companion-avatar.atlas-brand-avatar::before {
+      inset: -10px;
+      border: 0;
+      background: radial-gradient(circle, color-mix(in srgb, var(--info) 24%, transparent) 0%, color-mix(in srgb, var(--info) 12%, transparent) 42%, transparent 72%);
+      opacity: .48;
+      animation: atlasGlowBreath 6.5s ease-in-out infinite;
     }
 
     .companion-avatar.atlas-brand-avatar.is-listening::after {
-      animation: atlasWaveRing 1.35s ease-out infinite;
+      animation: atlasVoiceWave 1.15s ease-in-out infinite;
+      border-radius: 42% 58% 46% 54% / 50% 44% 56% 50%;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-listening .brand-img {
+      animation-play-state: paused;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-thinking::before {
+      border: 1px solid color-mix(in srgb, var(--info) 24%, transparent);
+      background: transparent;
+      opacity: .62;
+      animation: atlasCounterRing 7s linear infinite reverse;
     }
 
     .companion-avatar.atlas-brand-avatar.is-thinking .brand-img {
-      animation: atlasThinkingOrbit 2.8s linear infinite;
+      animation: atlasThinkingOrbit 9s linear infinite;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-thinking .atlas-particles {
+      opacity: .85;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-thinking .atlas-particles span {
+      animation: atlasParticleIn 2.4s ease-in-out infinite;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-speaking::after {
+      animation: atlasSpeechRipple 1.65s ease-out infinite;
     }
 
     .companion-avatar.atlas-brand-avatar.is-success::after {
       border-color: color-mix(in srgb, var(--success) 70%, transparent);
-      box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 14%, transparent);
+      animation: atlasSuccessPulse 1.1s ease-out 1;
+    }
+
+    .companion-avatar.atlas-brand-avatar.is-attention::after {
+      border-color: color-mix(in srgb, var(--warning) 74%, transparent);
+      animation: atlasAttentionPulse 3.8s ease-in-out infinite;
     }
 
     .companion-avatar.sage {
@@ -2160,7 +2293,7 @@
       border-width: 1px;
     }
 
-    .companion-launcher span {
+    .companion-launcher > span:not(.companion-avatar) {
       display: grid;
       text-align: left;
       line-height: 1.15;
@@ -2287,20 +2420,67 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes atlasIdlePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.035); }
+    @keyframes lifeopsCoreFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-1px) scale(1.025); }
     }
 
-    @keyframes atlasWaveRing {
-      0% { transform: scale(.92); opacity: .72; }
-      100% { transform: scale(1.22); opacity: 0; }
+    @keyframes atlasWelcomeCardIn {
+      0% { opacity: 0; transform: translateY(10px) scale(.985); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes atlasWelcomeContentIn {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes atlasGlowBreath {
+      0%, 100% { opacity: .34; transform: scale(.96) translateZ(0); }
+      50% { opacity: .68; transform: scale(1.08) translateZ(0); }
+    }
+
+    @keyframes atlasIdleOrbit {
+      from { transform: rotate(0deg) translateZ(0); }
+      to { transform: rotate(360deg) translateZ(0); }
     }
 
     @keyframes atlasThinkingOrbit {
-      0% { filter: brightness(1); transform: rotate(0deg); }
-      50% { filter: brightness(1.08); }
-      100% { filter: brightness(1); transform: rotate(360deg); }
+      from { transform: rotate(0deg) translateZ(0); }
+      to { transform: rotate(360deg) translateZ(0); }
+    }
+
+    @keyframes atlasCounterRing {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes atlasParticleIn {
+      0%, 100% { opacity: 0; transform: translate(0, 0) scale(.6); }
+      45% { opacity: .9; }
+      72% { opacity: .4; transform: translate(var(--particle-x, 18px), var(--particle-y, 12px)) scale(.85); }
+    }
+
+    @keyframes atlasVoiceWave {
+      0%, 100% { transform: scale(1); opacity: .58; box-shadow: 0 0 0 0 color-mix(in srgb, var(--info) 18%, transparent); }
+      35% { transform: scale(1.06, .92); opacity: .9; }
+      65% { transform: scale(.96, 1.08); opacity: .72; }
+    }
+
+    @keyframes atlasSpeechRipple {
+      0% { transform: scale(.94); opacity: .56; box-shadow: 0 0 0 0 color-mix(in srgb, var(--info) 18%, transparent); }
+      70% { transform: scale(1.22); opacity: 0; box-shadow: 0 0 0 8px color-mix(in srgb, var(--info) 0%, transparent); }
+      100% { transform: scale(1.22); opacity: 0; }
+    }
+
+    @keyframes atlasSuccessPulse {
+      0% { transform: scale(.94); opacity: .85; box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 22%, transparent); }
+      70% { transform: scale(1.18); opacity: 0; box-shadow: 0 0 0 8px color-mix(in srgb, var(--success) 0%, transparent); }
+      100% { transform: scale(1); opacity: .5; }
+    }
+
+    @keyframes atlasAttentionPulse {
+      0%, 72%, 100% { transform: scale(1); opacity: .52; box-shadow: 0 0 0 0 color-mix(in srgb, var(--warning) 0%, transparent); }
+      82% { transform: scale(1.08); opacity: .9; box-shadow: 0 0 0 7px color-mix(in srgb, var(--warning) 12%, transparent); }
     }
 
     @keyframes homeEntrance {
@@ -3056,11 +3236,23 @@
       }
 
       .companion-launcher {
-        right: 14px;
-        bottom: 86px;
+        right: 16px;
+        bottom: calc(96px + env(safe-area-inset-bottom));
+        width: 58px;
+        height: 58px;
+        min-height: 58px;
+        padding: 9px;
+        justify-content: center;
+        gap: 0;
       }
 
-      .companion-launcher span {
+      .companion-launcher .companion-avatar {
+        display: grid;
+        width: 42px;
+        height: 42px;
+      }
+
+      .companion-launcher > span:not(.companion-avatar) {
         display: none;
       }
 
@@ -3100,6 +3292,7 @@
         <div class="atlas-orb companion-avatar atlas-brand-avatar is-thinking" id="atlasOnboardingOrb" aria-hidden="true">
           <span class="brand-fallback" hidden>AT</span>
           <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+          <div class="atlas-particles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
         </div>
         <div class="atlas-wave" id="atlasVoiceWave" aria-hidden="true" hidden><span></span><span></span><span></span><span></span></div>
       </div>
@@ -3108,7 +3301,7 @@
         <div class="onboarding-kicker">Atlas onboarding</div>
         <h1 class="onboarding-title" id="atlasOnboardingTitle">Welcome to LifeOps.</h1>
         <p class="onboarding-copy" id="atlasOnboardingDescription">Your Personal Operating System.</p>
-        <p class="onboarding-copy">My name is Atlas. Before we begin, I&apos;d like to learn how your life works.</p>
+        <p class="onboarding-copy">I&apos;m Atlas. Let&apos;s build your personal operating system.</p>
         <p class="onboarding-copy">This takes about two minutes. By the end, I&apos;ll build your first LifeOps blueprint and you can add deeper details later.</p>
         <div class="actions" style="justify-content: flex-start; margin-top: 20px;">
           <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Begin</button>
@@ -4725,6 +4918,7 @@
               <div class="companion-avatar atlas-brand-avatar is-thinking" aria-hidden="true">
                 <span class="brand-fallback" hidden>AT</span>
                 <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+                <div class="atlas-particles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
               </div>
               <div class="companion-message">
                 <strong id="atlasRecommendedAction">Checking today's highest leverage action.</strong>
@@ -5023,7 +5217,7 @@
   </div>
 
   <script>
-    const appVersion = "1.24.0";
+    const appVersion = "1.24.3";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -5676,6 +5870,16 @@
         const element = document.getElementById(id);
         if (element) element.hidden = id !== screen;
       });
+      if (screen === "atlasOnboardingWelcome") setAtlasOnboardingVisualState("idle");
+      if (screen === "atlasOnboardingInterview") setAtlasOnboardingVisualState("thinking");
+      if (screen === "atlasOnboardingFinal") setAtlasOnboardingVisualState("success");
+    }
+
+    function setAtlasOnboardingVisualState(stateName = "idle") {
+      const orb = document.getElementById("atlasOnboardingOrb");
+      if (!orb) return;
+      orb.classList.remove("is-listening", "is-thinking", "is-speaking", "is-success", "is-attention");
+      if (stateName !== "idle") orb.classList.add(`is-${stateName}`);
     }
 
     function openAtlasOnboarding(force = false) {
@@ -5774,6 +5978,9 @@
       utterance.rate = cleanNumber(state.voice.rate || 0.95, 0.8, 1.2);
       const voice = availableVoices.find(item => item.name === state.voice.selectedVoiceName) || availableVoices.find(item => /english|en-/i.test(`${item.lang} ${item.name}`));
       if (voice) utterance.voice = voice;
+      utterance.onstart = () => setAtlasOnboardingVisualState("speaking");
+      utterance.onend = () => setAtlasOnboardingVisualState("thinking");
+      utterance.onerror = () => setAtlasOnboardingVisualState("attention");
       window.speechSynthesis.speak(utterance);
     }
 
@@ -5784,8 +5991,7 @@
       }
       const wave = document.getElementById("atlasVoiceWave");
       if (wave) wave.hidden = true;
-      document.getElementById("atlasOnboardingOrb")?.classList.remove("is-listening");
-      document.getElementById("atlasOnboardingOrb")?.classList.add("is-thinking");
+      setAtlasOnboardingVisualState("thinking");
     }
 
     function startAtlasRecognition() {
@@ -5793,6 +5999,7 @@
       if (!onboardingSpeechRecognitionSupported()) {
         onboarding.transcript = "Voice conversation is not supported in this browser. Text conversation is available.";
         onboarding.mode = "text";
+        setAtlasOnboardingVisualState("attention");
         renderAtlasOnboardingQuestion();
         return;
       }
@@ -5821,13 +6028,11 @@
       atlasRecognition.onend = () => {
         const wave = document.getElementById("atlasVoiceWave");
         if (wave && atlasOnboarding().mode !== "voice") wave.hidden = true;
-        document.getElementById("atlasOnboardingOrb")?.classList.remove("is-listening");
-        document.getElementById("atlasOnboardingOrb")?.classList.add("is-thinking");
+        setAtlasOnboardingVisualState("thinking");
       };
       onboarding.mode = "voice";
       document.getElementById("atlasVoiceWave").hidden = false;
-      document.getElementById("atlasOnboardingOrb")?.classList.add("is-listening");
-      document.getElementById("atlasOnboardingOrb")?.classList.remove("is-thinking");
+      setAtlasOnboardingVisualState("listening");
       atlasRecognition.start();
     }
 
@@ -6333,7 +6538,8 @@
       const source = kind === "atlas" ? "assets/brand/atlas-avatar.svg" : "assets/brand/lifeops-icon.svg";
       const safeFallback = fallback === "AT" ? "AT" : "LO";
       const safeAlt = altText.replace(/"/g, "&quot;");
-      return `<span class="brand-fallback" hidden>${safeFallback}</span><img class="brand-img" src="${source}" alt="${safeAlt}" onerror="this.hidden=true; this.previousElementSibling.hidden=false">`;
+      const particles = kind === "atlas" ? `<div class="atlas-particles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>` : "";
+      return `<span class="brand-fallback" hidden>${safeFallback}</span><img class="brand-img" src="${source}" alt="${safeAlt}" onerror="this.hidden=true; this.previousElementSibling.hidden=false">${particles}`;
     }
 
     function companionFocusHint() {
@@ -10641,6 +10847,7 @@
       const title = titles[tab] || titles.dashboard;
       document.body.dataset.activePrimary = primary;
       const headerIcon = document.getElementById("pageHeaderIcon");
+      headerIcon.classList.toggle("lifeops-core-badge", primary === "dashboard");
       if (primary === "dashboard") headerIcon.innerHTML = brandAssetMarkup("lifeops", "LO", "LifeOps logo");
       else headerIcon.textContent = meta.icon;
       document.getElementById("pageTitle").textContent = title[0];

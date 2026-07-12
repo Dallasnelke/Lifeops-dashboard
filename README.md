@@ -385,6 +385,9 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.24.3` - Improved mobile navigation ergonomics by converting the Atlas launcher into a compact orb above the bottom navigation on smaller screens and replacing the Dashboard `LO` marker with a richer LifeOps core badge.
+- `1.24.2` - Smoothed Atlas motion by removing animated drop-shadow filters, moving glow breathing to a lightweight pseudo-element, adding transform-only rotation, GPU-friendly hints, and slightly faster idle/thinking orbit timing.
+- `1.24.1` - Refined Atlas motion with slow idle rotation, soft teal glow breathing, faster thinking state, counter-rotating ring, inward particles, listening waveform state, speaking ripple, success pulse, amber attention pulse, and a more cinematic onboarding entrance.
 - `1.24.0` - Added the LifeOps and Atlas local branding system with production SVG/PNG assets, favicon/app icons, branded startup/sidebar/header/onboarding/companion surfaces, Atlas visual states, image fallbacks, and README asset documentation.
 - `1.23.0` - Refactored Atlas onboarding into a faster 12-question Essential Setup, optional Smart Follow Up cards, and a Complete My Blueprint deep personalization path while preserving the original detailed onboarding fields.
 - `1.22.1` - Fixed Atlas onboarding progression after the first question by preserving the active onboarding state object instead of recreating it during each state read. Verified the full 34-question onboarding flow, final summary, and Launch LifeOps exit behavior.
