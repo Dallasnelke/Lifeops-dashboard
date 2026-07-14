@@ -1,4 +1,4 @@
-# LifeOps Dashboard
+﻿# LifeOps Dashboard
 
 ## Product Summary
 
@@ -399,6 +399,10 @@ Manual Version 1 checks:
 
 ## Version History
 
+- `1.28.3` - Applied a senior UI polish pass to the premium dashboard: softer borders, calmer shadows, refined sidebar/subtab states, elevated Atlas Insight and Briefing typography, emphasized Monthly Cash Left, and added subtle motion without changing functionality.
+- `1.28.2` - Unified all tab and category accents to the LifeOps Premium champagne palette, removed remaining green/teal visual accents, and improved light mode readability with stronger text, borders, and surfaces.
+- `1.28.1` - Polished the premium dashboard color system, improved light mode, strengthened the Today command-center visual hierarchy, and unified charts/cards around the champagne and obsidian palette.
+- `1.28.0` - Redesigned the Today dashboard into a premium command-center layout with an Atlas Insight banner, compact view switcher, signal cards, Life Score trend panel, and Atlas Briefing panel while preserving existing local logic.
 - `1.27.9` - Simplified Appearance into one LifeOps Premium brand theme with light, dark, and system modes, while mapping retired theme values back to Premium for old backup compatibility.
 - `1.27.8` - Updated the LifeOps emblem, favicon, LifeOps wordmark, Atlas avatar, and Atlas wordmark SVG assets to match the premium obsidian and champagne-gold brand direction.
 - `1.27.7` - Refined the premium visual system into an obsidian and champagne-gold interface with cleaner dark surfaces, unified gold accents, improved card depth, and more polished Life Score charts.
