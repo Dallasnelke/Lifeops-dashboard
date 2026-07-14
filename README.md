@@ -399,7 +399,7 @@ Manual Version 1 checks:
 
 ## Version History
 
-- `1.28.4` - Refined the dashboard shell toward the premium mockup with a top utility row, search/upcoming/profile controls, Dashboard/Finances navigation labels, visible Today metric cards, reduced duplicate signal clutter, and stronger light-mode contrast.
+- `1.30.2` - Refined the dashboard shell toward the premium mockup with a top utility row, search/upcoming/profile controls, Dashboard/Finances navigation labels, visible Today metric cards, reduced duplicate signal clutter, and stronger light-mode contrast.
 - `1.28.3` - Applied a senior UI polish pass to the premium dashboard: softer borders, calmer shadows, refined sidebar/subtab states, elevated Atlas Insight and Briefing typography, emphasized Monthly Cash Left, and added subtle motion without changing functionality.
 - `1.28.2` - Unified all tab and category accents to the LifeOps Premium champagne palette, removed remaining green/teal visual accents, and improved light mode readability with stronger text, borders, and surfaces.
 - `1.28.1` - Polished the premium dashboard color system, improved light mode, strengthened the Today command-center visual hierarchy, and unified charts/cards around the champagne and obsidian palette.
@@ -467,3 +467,13 @@ Avoid monetization tied to trading, gambling, speculative investing, or selling 
 - Do not add paid services, external APIs, or account systems without a clear reason.
 - Keep Version 1 stable before building later roadmap modules.
 - Test after every meaningful development phase.
+
+
+## Version 1.30.2 Notes
+
+- Premium tree dashboard scroll polish.
+- Removed the hard fixed-height cap from the tree dashboard.
+- Mobile tree dashboard hides the legacy bottom nav to prevent overlap.
+- Tree nodes and dashboard accents use a more consistent black and gold style.
+- Visible tree-dashboard encoding issues were cleaned up.
+
