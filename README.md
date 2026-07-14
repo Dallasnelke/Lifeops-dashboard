@@ -1,4 +1,4 @@
-﻿# LifeOps Dashboard
+# LifeOps Dashboard
 
 ## Product Summary
 
@@ -23,8 +23,8 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Optional Complete My Blueprint path with the remaining deep personalization questions from the original interview
 - Smart Follow Up cards in Finance, Health, Education, and Career so detailed setup happens contextually instead of blocking first launch
 - Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
-- Built-in theme system with LifeOps Green, Midnight, Sunrise, Focus, and Ocean themes
-- Appearance settings for theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
+- LifeOps Premium theme system with polished dark, light, and system appearance modes
+- Appearance settings for brand theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
 - Optional profile card with display name, initials, pronouns, avatar color, avatar icon, personal title, and current focus
 - Optional rewards toggle for XP, levels, streaks, and achievements
 - Full local Life Timeline section with manual milestones, generated local events, categories, related goals, notes, and privacy metadata
@@ -54,12 +54,13 @@ The app does not provide financial, tax, legal, medical, investing, or nutrition
 - Daily habit checks
 - Workout tracking and step goal tracking
 - Food and macro logging with food cost tracking
-- Premium nutrition tool placeholders for manual barcode capture, future barcode lookup, future food database search, recipe building, and meal-prep summary
+- Premium nutrition tools for local camera barcode capture when supported, manual barcode fallback, future barcode lookup, future food database search, recipe building, and meal-prep summary
 - Local recipe builder that calculates estimated nutrition and cost per serving from user-entered values and can save a recipe as a saved meal
 - Goal tracking and weekly action planning
 - Wellness tracking for sleep, water, mood, stress, and energy
-- Daily history snapshots and trend summaries
+- Daily history snapshots, multi-metric trend charts, score movement summaries, nutrition trends, money trends, and wellness/activity trends
 - Weekly review and report preview/export
+- Daily Review, Weekly Review, Monthly Review, and animated local Life Replay story mode generated from existing LifeOps data
 - Atlas Local detail drawer with message bubbles, quick replies, typing animation, session history, action buttons, supported local questions, and unsupported-question fallback
 - Always-available Atlas Local drawer for grounded local questions from any screen as a secondary detail view
 - Companion customization for name, initials, avatar color, tone, coaching style, and preferred focus
@@ -187,8 +188,9 @@ Use the `Reset` button to clear local LifeOps data and reload the starter sample
 - Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
 - Some browsers block automatic startup sound or speech until the user presses a page button such as Start Voice Experience.
 - Theme and appearance settings are stored locally and included in future JSON backups.
-- The Today screen is a stronger first-pass command center, but deeper trend charts, full Life Replay, camera barcode scanning, and true database-backed food lookup remain future work.
-- Barcode capture is manual only. No camera scanning or external barcode database is connected yet.
+- The Today screen is a stronger first-pass command center, but full video Life Replay export, true database-backed food lookup, real AI, real integrations, and cloud accounts remain future work.
+- Camera barcode scanning uses the browser `BarcodeDetector` and device camera only when supported and only after the user clicks a scan button. Browsers without support fall back to manual barcode entry.
+- Barcode capture stores the code locally only. No external barcode database, nutrition lookup, or remote product search is connected yet.
 - Recipe nutrition depends entirely on user-entered ingredients and totals.
 - Connections, timeline sharing, and integration concepts are local previews only until a secure backend/account system exists.
 - No encryption is implemented yet.
@@ -309,7 +311,7 @@ Example questions:
 
 LifeOps uses CSS custom properties for its main visual tokens: page background, card background, elevated surface, primary colors, navigation background, text, borders, status colors, shadows, focus ring, and progress colors.
 
-Built-in themes are LifeOps Green, Midnight, Sunrise, Focus, and Ocean. Appearance settings are optional fields in local state, so older backups without these fields restore with safe defaults.
+The active brand system is LifeOps Premium, with a premium obsidian/champagne dark mode and a warm ivory/champagne light mode. The app keeps the existing optional appearance fields in local state, so older backups without these fields, or older backups that reference retired themes, restore with safe Premium defaults.
 
 ## Home Experience
 
@@ -389,11 +391,25 @@ Manual Version 1 checks:
 - Test gamification enabled and disabled.
 - Test adding and deleting Life Timeline milestones.
 - Test old backup compatibility for missing appearance, personalization, and timeline fields.
+- Test camera barcode scanning in a browser that supports `BarcodeDetector`, then test denied camera permission and manual fallback.
+- Test History trend ranges for 7 days, 30 days, 90 days, and all saved snapshots.
+- Test Life Replay Play, Pause, Back, Next, and Restart controls.
 - Test desktop width.
 - Test common mobile widths such as 390px, 430px, and 768px.
 
 ## Version History
 
+- `1.27.9` - Simplified Appearance into one LifeOps Premium brand theme with light, dark, and system modes, while mapping retired theme values back to Premium for old backup compatibility.
+- `1.27.8` - Updated the LifeOps emblem, favicon, LifeOps wordmark, Atlas avatar, and Atlas wordmark SVG assets to match the premium obsidian and champagne-gold brand direction.
+- `1.27.7` - Refined the premium visual system into an obsidian and champagne-gold interface with cleaner dark surfaces, unified gold accents, improved card depth, and more polished Life Score charts.
+- `1.27.6` - Removed the large Life Score circle from the Today trend graph module and shifted the default LifeOps theme toward a premium black/gold visual direction.
+- `1.27.5` - Replaced the bottom-left LifeOps User sidebar box with an Atlas Local Intelligence card using the animated Atlas avatar, and moved the desktop Atlas launcher into that sidebar location.
+- `1.27.4` - Converted the top Life Score metric card into a compact trend chart card so the stock-style score visual appears immediately in the first dashboard row.
+- `1.27.3` - Polished the Today Life Score trend chart layout so the greeting, score orb, and chart read as one clean command card instead of a cramped side-by-side block.
+- `1.27.2` - Moved the stock-style Life Score chart into the active Today screen so it is visible on first load, while keeping the Dashboard chart version available.
+- `1.27.1` - Changed the Home Life Score card into a stock-style local trend chart with high/low context and recent score movement while keeping the LifeOps score calculation unchanged.
+- `1.27.0` - Added local camera barcode scanning with manual fallback, expanded the History tab into a multi-metric trend chart system, and upgraded Life Replay into an animated in-app story mode while keeping real AI, cloud accounts, and third-party integrations documented as backend-required future work.
+- `1.26.0` - Added the Review Hub layer with Daily Review, Monthly Review, Life Replay preview cards, replay navigation controls, and README documentation while preserving the existing weekly review and local-only privacy model.
 - `1.25.0` - Added the mobile-first Today command experience, transparent score breakdown, score hiding preference, richer Atlas evidence briefing, generated module-based Life Timeline events, manual barcode capture, local recipe builder, meal-prep summary, nutrition integration placeholders, and default Today landing behavior.
 - `1.24.4` - Fixed the tablet-width app layout by applying the compact Atlas orb launcher at the same 767px breakpoint as the mobile bottom navigation, preventing overlap with More in embedded app views.
 - `1.24.3` - Improved mobile navigation ergonomics by converting the Atlas launcher into a compact orb above the bottom navigation on smaller screens and replacing the Dashboard `LO` marker with a richer LifeOps core badge.
