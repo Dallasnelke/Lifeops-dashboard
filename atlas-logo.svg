@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 64" role="img" aria-labelledby="title desc">
-  <title id="title">Atlas logo dark</title>
-  <desc id="desc">Atlas premium wordmark with circular champagne-gold companion mark for dark surfaces.</desc>
+  <title id="title">Atlas logo</title>
+  <desc id="desc">Atlas premium wordmark with circular champagne-gold companion mark.</desc>
   <defs>
     <radialGradient id="core" cx="38%" cy="30%" r="70%">
       <stop stop-color="#2b2f33"/>

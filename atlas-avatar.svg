@@ -1,10 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
   <title id="title">Atlas avatar</title>
-  <desc id="desc">Circular Atlas companion mark with guidance ring and stylized A core.</desc>
-  <circle cx="32" cy="32" r="28" fill="#173528"/>
-  <circle cx="32" cy="32" r="27" fill="none" stroke="#7ed7a0" stroke-width="2.5"/>
-  <ellipse cx="32" cy="33" rx="23" ry="8.5" fill="none" stroke="#74c0d0" stroke-width="3" transform="rotate(-17 32 33)"/>
-  <path d="M20 45 30.3 18.5c.7-1.8 2.8-1.8 3.5 0L44 45" fill="none" stroke="#f6fbf7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M26.5 36h11" stroke="#7ed7a0" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="47" cy="24" r="3.2" fill="#f2bd60"/>
+  <desc id="desc">Premium circular Atlas companion mark with champagne-gold guidance ring and stylized A core.</desc>
+  <defs>
+    <radialGradient id="core" cx="38%" cy="30%" r="70%">
+      <stop stop-color="#2b2f33"/>
+      <stop offset=".55" stop-color="#111315"/>
+      <stop offset="1" stop-color="#070809"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="16" y1="12" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff0b1"/>
+      <stop offset=".46" stop-color="#d7b56d"/>
+      <stop offset="1" stop-color="#8f6d2f"/>
+    </linearGradient>
+    <linearGradient id="softGold" x1="8" y1="20" x2="58" y2="42" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#80622d"/>
+      <stop offset=".48" stop-color="#f1d28a"/>
+      <stop offset="1" stop-color="#b48a3d"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="28" fill="url(#core)"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="url(#gold)" stroke-width="2.4"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="#f1d28a" stroke-opacity=".11" stroke-width="8"/>
+  <ellipse cx="32" cy="33" rx="23" ry="8.5" fill="none" stroke="url(#softGold)" stroke-width="3" transform="rotate(-17 32 33)"/>
+  <path d="M20 45 30.2 18.6c.7-1.8 2.9-1.8 3.6 0L44 45" fill="none" stroke="#fff4d4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26.6 36h10.8" stroke="url(#gold)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="47" cy="24" r="3.2" fill="#fff1b8"/>
+  <circle cx="47" cy="24" r="6.4" fill="#f1d28a" opacity=".12"/>
 </svg>

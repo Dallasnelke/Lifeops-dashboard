@@ -1,479 +1,52 @@
-﻿# LifeOps Dashboard
+# LifeOps
 
-## Product Summary
+LifeOps is a local-first personal operating system prototype for tracking money, goals, habits, health, education, career, relationships, documents, and daily planning from one premium dashboard.
 
-LifeOps is a personal life operating dashboard for managing money, health, habits, goals, tasks, wellness signals, and long-term planning from one local-first interface. The current project is a polished Version 1 static web app built as a single HTML file.
+Current version: v1.31.1
 
-## Mission And User Problem
+## What is included
 
-LifeOps is designed to help users see the connections between daily choices and longer-term stability. Many people track budgeting, fitness, food, tasks, and goals in separate places. LifeOps brings the most important daily signals into one clean dashboard so users can decide what to focus on today.
+- Premium black and gold LifeOps dashboard
+- Interactive life tree with category nodes
+- Atlas local companion orb and panel
+- Life Score market-style trend card
+- Goals, finances, health, education, career, calendar, notes, integrations, privacy, and sharing prototype sections
+- Local-only storage using browser localStorage
+- JSON export/import support inside the app
+- Local brand assets in `assets/brand`
 
-The app does not provide financial, tax, legal, medical, investing, or nutrition advice. Current recommendations are simple rule-based prompts based on the user's own logged data.
+## How to run locally
 
-## Current Features
+Open `index.html` or `lifeops-dashboard.html` in a browser.
 
-- Home-style dashboard overview with LifeOps score, Atlas Local Intelligence, daily missions, reward momentum, and category score cards
-- Mobile-first Today command screen that is now the default landing experience after onboarding
-- Today screen with personalized greeting, current date, Life Score change, top three priorities, Atlas briefing, signal cards, quick actions, recent win context, and score breakdown
-- Transparent Life Score breakdown with strongest area, weakest area, missing-data explanation, data freshness, and optional score hiding through dashboard customization
-- Atlas Local Intelligence layer: structured local context, top priorities, recommended action, urgency, impact areas, evidence, confidence, and transparent "why" explanation
-- Deterministic Atlas priority engine that ranks actions using local due dates, urgency, impact, effort, privacy, and available LifeOps data
-- Page-level Atlas insight strip that explains what matters inside each major section without claiming real AI or remote connectivity
-- Faster Atlas first-launch interview with 12 essential setup questions, optional skip/ask-later/finish controls, section-based progress, and an Operating System Blueprint
-- Optional Complete My Blueprint path with the remaining deep personalization questions from the original interview
-- Smart Follow Up cards in Finance, Health, Education, and Career so detailed setup happens contextually instead of blocking first launch
-- Checkpoint 1 Home hierarchy with greeting, today's focus, next best action, Life Score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview
-- LifeOps Premium theme system with polished dark, light, and system appearance modes
-- Appearance settings for brand theme, light/dark/system mode, compact/comfortable density, and reduced visual effects
-- Optional profile card with display name, initials, pronouns, avatar color, avatar icon, personal title, and current focus
-- Optional rewards toggle for XP, levels, streaks, and achievements
-- Full local Life Timeline section with manual milestones, generated local events, categories, related goals, notes, and privacy metadata
-- Local Connections prototype with profiles, groups, shared lists, shared goals, challenges, shared calendar previews, and permission previews
-- Privacy Center explaining local storage, backup controls, data classifications, sharing defaults, and sensitive-data safeguards
-- Integrations Center showing planned/disconnected app connections with honest statuses and privacy notes
-- Focused visual polish pass with larger readable text, stronger subtabs, clearer section summaries, modal-based add flows, and more distinct theme palettes
-- Premium Personal Operating System visual refinement with dynamic page headers, category accents, stronger card contrast, improved progress bars, polished buttons, richer empty states, and upgraded sidebar/mobile navigation styling
-- Ten-item desktop navigation with Dashboard, Finance, Health, Education, Career, Goals, Calendar, Documents, Settings, and Modules
-- Collapsible desktop sidebar with local preference storage
-- Five-item mobile bottom navigation with additional sections accessible through More
-- Real local data models and modal forms for Education courses, assignments, exams, learning goals, and education costs
-- Real local data models and modal forms for Career applications, interviews, contacts, career goals, skills, and achievements
-- Unified local Calendar section that combines LifeOps dates with manual calendar events
-- Documents Center for local document references, privacy metadata, sensitivity labels, and related notes
-- Modules screen with enable/disable controls for optional areas and dashboard customization toggles
-- Settings hub with focused panels for profile, appearance, dashboard targets, accessibility, gamification, and developer details
-- Daily summary: current priority, emergency fund progress, savings, income, expenses, cash flow, tasks, habits, workouts, steps, and recommended focus
-- Daily mission system with three focused actions, mission XP, and progress status
-- Visual rewards with XP, level progress, streak status, badges, and next unlock
-- Profile setup for food budget, macro targets, savings goal, workout goal, and sleep goal
-- Monthly income, current savings, savings goal, and emergency fund target
-- Expense, bill, and debt payment tracking
-- Due dates for bills and debt payments
-- Upcoming payment warning in the daily dashboard summary
-- Daily tasks organized by life area
-- Daily habit checks
-- Workout tracking and step goal tracking
-- Food and macro logging with food cost tracking
-- Premium nutrition tools for local camera barcode capture when supported, manual barcode fallback, future barcode lookup, future food database search, recipe building, and meal-prep summary
-- Local recipe builder that calculates estimated nutrition and cost per serving from user-entered values and can save a recipe as a saved meal
-- Goal tracking and weekly action planning
-- Wellness tracking for sleep, water, mood, stress, and energy
-- Daily history snapshots, multi-metric trend charts, score movement summaries, nutrition trends, money trends, and wellness/activity trends
-- Weekly review and report preview/export
-- Daily Review, Weekly Review, Monthly Review, and animated local Life Replay story mode generated from existing LifeOps data
-- Atlas Local detail drawer with message bubbles, quick replies, typing animation, session history, action buttons, supported local questions, and unsupported-question fallback
-- Always-available Atlas Local drawer for grounded local questions from any screen as a secondary detail view
-- Companion customization for name, initials, avatar color, tone, coaching style, and preferred focus
-- Premium startup overlay with skip control, reduced-motion support, and dashboard entrance animation
-- Optional built-in browser voice guidance using SpeechSynthesis, clearly separate from real AI
-- Optional locally generated LifeOps Pulse startup sound using the Web Audio API
-- Morning briefing button with visible briefing text, voice status, pause/resume/stop, voice selection, and speaking rate controls
-- Five-destination app navigation with Home as the default screen
-- Secondary tabs that keep detailed sections accessible without crowding the primary navigation
-- Mobile bottom navigation for Home, Money, Health, Growth, and More
-- More screen for data backup, reports, companion tools, settings, about, and developer details
-- Portfolio/About and Case Study sections
-- JSON backup export and validated restore
-- Reset with confirmation
-- Empty-data test mode
-- Responsive sidebar/mobile navigation
-- Empty states for key lists
+For a local preview server, run:
 
-## Current Project Structure
-
-```text
-.
-|-- .gitignore
-|-- README.md
-|-- assets/
-|   `-- brand/
-|       |-- lifeops-logo.svg
-|       |-- lifeops-logo-dark.svg
-|       |-- lifeops-icon.svg
-|       |-- atlas-logo.svg
-|       |-- atlas-logo-dark.svg
-|       |-- atlas-avatar.svg
-|       |-- favicon.svg
-|       |-- app-icon-192.png
-|       |-- app-icon-512.png
-|       |-- atlas-avatar-128.png
-|       `-- atlas-avatar-256.png
-|-- outputs/
-|   `-- lifeops-dashboard.html
-`-- work/
-    |-- backups/
-    |   `-- lifeops-dashboard-*.html
-    `-- lifeops-script-check.js
+```bash
+node lifeops-preview-server.js 4198
 ```
 
-`outputs/lifeops-dashboard.html` is the user-facing application. The `work` folder contains temporary validation files and timestamped backups made during development and should stay out of GitHub.
-
-## Technology Used
-
-- HTML
-- CSS
-- Vanilla JavaScript
-- Browser `localStorage`
-
-## Branding System
-
-LifeOps now uses local production brand assets stored in `assets/brand`.
-
-- LifeOps uses a compact rounded-square operating-core mark for the favicon, sidebar, startup animation, mobile header, and app icons.
-- Atlas uses a related circular companion mark for onboarding, the companion launcher, assistant panels, chat avatars, and voice/listening states.
-- SVG files are the source assets for scalable UI use. PNG files are included for app-icon and avatar export needs.
-- Assets use transparent backgrounds, no embedded fonts, no external image URLs, and no remote services.
-- If a logo image fails to load, the app falls back to safe initials such as `LO` or `AT`.
-- Motion is intentionally subtle: LifeOps uses the existing calm startup entrance, while Atlas supports idle pulse, listening ring, thinking orbit, and success glow states while respecting reduced-motion preferences.
-- No external runtime dependencies
-- No paid services, external APIs, accounts, tracking scripts, or cloud storage
-
-## How To Run Locally
-
-Open the app directly in a browser:
+Then open:
 
 ```text
-outputs/lifeops-dashboard.html
+http://127.0.0.1:4198/lifeops-dashboard.html
 ```
 
-If a local server is already running, use:
+## Data and privacy
 
-```text
-http://127.0.0.1:4173/lifeops-dashboard.html
-```
+This version stores data locally in the browser. It does not connect to real banks, health apps, calendars, email, AI APIs, or cloud services.
 
-Because this is a static app, no build step is required.
+Do not store passwords, Social Security numbers, banking credentials, access tokens, or highly sensitive documents in this prototype.
 
-## How Data Is Stored
+## GitHub upload note
 
-LifeOps Version 1 stores data in the user's browser using:
+Upload only the files in this folder. Do not upload local backups, private JSON exports, screenshots, test folders, or old package folders.
 
-```text
-localStorage key: lifeops-dashboard-v1
-```
+## Future roadmap
 
-Data stays on the same browser and device unless the user exports it. Clearing browser storage, using another browser, or opening the file in a different browser profile may show starter data instead of the user's saved data.
-
-## Backup And Restore
-
-### Export
-
-Use the `Export` button to download a JSON backup of the current LifeOps data.
-
-Do not commit exported backup files to GitHub if they contain real personal data. Use safe demo data only for portfolio or public demo versions.
-
-### Restore
-
-Use the `Restore` button to select a LifeOps JSON backup. The app validates that the file is a JSON object and that list fields are arrays before replacing current local data. The restore action asks for confirmation before overwriting existing browser data.
-
-### Reset
-
-Use the `Reset` button to clear local LifeOps data and reload the starter sample. Reset requires confirmation.
-
-## Known Limitations
-
-- Data is stored locally in one browser profile.
-- No cloud sync or account login exists yet.
-- Import validation checks structure, but it is not a full database migration system.
-- Edit actions use a reusable in-app modal, but the modal is still intentionally simple.
-- Education, Career, Calendar, and Documents data is local only and does not sync to outside school, employer, calendar, or cloud systems.
-- Disabling a module hides navigation and dashboard surfaces but does not delete the saved data.
-- Upcoming payment warnings depend on due dates entered on expenses.
-- Financial calculations are simple cash-flow and progress calculations only.
-- Atlas Local recommendations and drawer answers are deterministic, rule-based, session-only, and not connected to a real AI model.
-- Atlas Local can answer supported structured questions from local LifeOps data. Unsupported open-ended chat returns a clear "cannot answer that yet" response.
-- Full conversational AI requires a secure backend, authentication, privacy filtering, rate limits, and server-side model API handling. Private model API keys must never be stored in browser code.
-- Voice guidance uses the browser's built-in SpeechSynthesis feature and may vary by browser/device.
-- Voice is off by default and does not speak unless enabled by the user.
-- Startup sound is generated locally with the browser Web Audio API as the LifeOps Pulse.
-- Some browsers block automatic startup sound or speech until the user presses a page button such as Start Voice Experience.
-- Theme and appearance settings are stored locally and included in future JSON backups.
-- The Today screen is a stronger first-pass command center, but full video Life Replay export, true database-backed food lookup, real AI, real integrations, and cloud accounts remain future work.
-- Camera barcode scanning uses the browser `BarcodeDetector` and device camera only when supported and only after the user clicks a scan button. Browsers without support fall back to manual barcode entry.
-- Barcode capture stores the code locally only. No external barcode database, nutrition lookup, or remote product search is connected yet.
-- Recipe nutrition depends entirely on user-entered ingredients and totals.
-- Connections, timeline sharing, and integration concepts are local previews only until a secure backend/account system exists.
-- No encryption is implemented yet.
-- No App Store wrapper exists yet.
-
-## Privacy And Security Considerations
-
-- Version 1 keeps data local and does not transmit personal information externally.
-- Users should not store passwords, banking credentials, Social Security numbers, tax IDs, authentication codes, or sensitive medical details in this app.
-- Exported JSON files may contain personal financial and health-related information. Store backups carefully.
-- Current sharing, timeline, connection, and integration concepts are local previews only.
-- The Privacy Center summarizes what is local, what is not connected, and which data types should be treated as sensitive.
-- Future social features must default to Only me and avoid exposing sensitive information in voice briefings, social cards, exports, or notifications.
-- Future versions should evaluate optional encryption, passcode protection, and secure mobile storage before public release.
-
-## Mobile And App Store Considerations
-
-LifeOps is currently a responsive static web app. To prepare for public mobile distribution, future work should consider:
-
-- Five primary mobile destinations with secondary tabs for deeper sections
-- Offline-first storage strategy
-- Secure local storage or encrypted storage
-- Clear onboarding and privacy disclosures
-- App Store review requirements
-- Accessibility testing
-- Data export and account deletion expectations if accounts are added later
-
-## Development Roadmap
-
-### Version 1: Core Life Dashboard
-
-Focus on a stable local-first dashboard:
-
-- Dashboard overview
-- User profile settings
-- Monthly income
-- Current savings
-- Savings goal
-- Emergency fund target and progress
-- Expense, bill, and debt payment tracking
-- Tasks by life area
-- Daily habit checks
-- Workout and step goal tracking
-- Current priority
-- JSON backup and restore
-- Clear empty states
-- Input validation
-- Mobile responsive layout
-- Accessible labels and controls
-- Reliable local persistence
-
-### Version 2: Financial Command Center
-
-Plan only until Version 1 is stable:
-
-- Net worth tracking
-- Assets and liabilities
-- Debt accounts, interest rates, and minimum payments
-- Debt payoff progress
-- Savings accounts and goals
-- Monthly budget categories
-- Recurring bills and subscriptions
-- Cash-flow forecasting
-- Upcoming payment calendar
-- Emergency fund safety warnings
-- Purchase affordability check
-- Transparent financial charts
-
-### Version 3: Career And Education
-
-Current local modules now include basic data models and add forms for:
-
-- Job application tracker
-- Status, salary range, interview dates, prep notes, contacts, and follow-up reminders
-- School course tracker
-- Credits completed and credits remaining
-- Education costs
-- Assignment and semester planning
-
-Later versions may add GPA planning, financial aid, refund estimates, stronger reminders, and authenticated calendar/task integrations.
-
-### Version 4: Taxes, Health, And Documents
-
-Planned organization modules only:
-
-- Capital loss carryforward tracking
-- Tax document checklist
-- W-2, 1099, and 1098-T tracking
-- Education credit records
-- Medical appointment tracking
-- Health expenses
-- Medication or treatment notes
-- Important document inventory
-
-These modules must not provide tax, legal, or medical conclusions.
-
-### Version 5: Atlas Local And Future Assistant
-
-Current local intelligence layer:
-
-- Builds a structured local context from profile, finance, bills, savings, nutrition, fitness, wellness, education, career, goals, calendar, recent actions, scores, and privacy settings
-- Ranks priorities with visible rule-based factors such as urgency, due dates, impact, time needed, overdue status, and current weak areas
-- Answers supported local questions with What I found, Why it matters, Recommended action, Evidence, Confidence, and Data freshness
-- Refuses unsupported open-ended chat with a clear note that full conversational AI requires a secure backend connection
-- Keeps future AI extension points separate from the current browser-only implementation
-
-Example questions:
-
-- Can I afford this purchase?
-- How close am I to my emergency fund goal?
-- What bills are due soon?
-- What should I focus on today?
-- How much debt remains?
-- What job applications require follow up?
-- What documents do I need for taxes?
-
-## Theme System
-
-LifeOps uses CSS custom properties for its main visual tokens: page background, card background, elevated surface, primary colors, navigation background, text, borders, status colors, shadows, focus ring, and progress colors.
-
-The active brand system is LifeOps Premium, with a premium obsidian/champagne dark mode and a warm ivory/champagne light mode. The app keeps the existing optional appearance fields in local state, so older backups without these fields, or older backups that reference retired themes, restore with safe Premium defaults.
-
-## Home Experience
-
-The Home screen is organized around what the user needs quickly: today's focus, next best action, current Life Score, category status, daily missions, upcoming items, quick actions, recent win, and a Life Timeline preview.
-
-The recommendation system remains rule based and transparent. It does not claim to be real AI.
-
-## Gamification Rules
-
-Current rewards are simple progress feedback. XP can come from meaningful logged actions such as meals, workouts, habits, tasks, weekly actions, water, sleep, and emergency fund progress. LifeOps does not use random rewards, paid XP, loot boxes, gambling mechanics, trading mechanics, or missed-day penalties.
-
-Future work should add clearer daily XP limits and a complete gamification disable setting before public release.
-
-## Life Timeline
-
-LifeOps includes a local Life Timeline section for meaningful milestones rather than every data entry. Milestones support title, date, category, optional note, optional related goal, and privacy level. Version 1.25 also adds generated local timeline items from existing LifeOps modules so the timeline can show bills, meals, workouts, deadlines, career follow-ups, calendar events, completed goals, Atlas recommendations, and score snapshots without creating another storage system.
-
-Timeline sharing states should remain local metadata only until secure accounts, permissions, and synchronization exist.
-
-## Connections And Integrations
-
-Connections are not active yet. The current Connections card is a local preview and does not send invitations, messages, or shared data.
-
-Third-party integrations remain planned only. LifeOps does not currently connect to banks, health apps, calendars, email, music, cloud storage, or social platforms. Future integrations will require a secure account system, OAuth or platform-approved authentication, permission screens, disconnect controls, privacy review, and App Store or platform permissions where required.
-
-Do not store credentials, tokens, bank logins, health credentials, passwords, or sensitive authentication information in localStorage.
-
-## Testing Checklist
-
-Manual Version 1 checks:
-
-- Open the app locally.
-- Refresh the page and confirm data persists.
-- Edit profile targets in Setup.
-- Add, edit, complete, and delete a task.
-- Toggle each daily habit checkbox.
-- Add, edit, and delete an expense.
-- Add a bill due within 7 days and confirm it appears in the dashboard summary.
-- Add, edit, and delete a workout.
-- Update workout goal and steps.
-- Add, edit, and delete a meal.
-- Use Quick Add saved meal.
-- Copy last meal.
-- Add, edit, and delete a goal.
-- Add, edit, complete, and delete a weekly action.
-- Save today's snapshot.
-- Switch between every tab.
-- Export JSON backup.
-- Restore a valid JSON backup.
-- Try restoring corrupted JSON and confirm it is rejected.
-- Try restoring JSON with missing fields and confirm defaults fill in.
-- Reset app data and confirm the starter sample reloads.
-- Use Empty Test mode and confirm blank lists, empty states, and zeroed calculations work.
-- Test empty lists after deleting all rows.
-- Test invalid, blank, negative, and very large number inputs.
-- Test report preview and download for all report types.
-- Test the Atlas Local tab quick replies, chat input, mission cards, action buttons, and unsupported-question fallback.
-- Test supported Atlas Local questions such as "What should I do next?", "What is due this week?", "How is my money?", and "What should I eat based on my logged data?"
-- Confirm Atlas Local answers cite local evidence, confidence, and data freshness instead of generic canned advice.
-- Test Dashboard home cards, mission progress, XP cards, streak card, and recent trend.
-- Test the five primary navigation destinations: Home, Money, Health, Growth, and More.
-- Test secondary tabs inside each primary destination.
-- Test More screen backup, restore, reset, report, settings, coach, about, and developer shortcuts.
-- Test startup animation, Skip Animation, reduced-motion behavior, and Home entrance animation.
-- Test Atlas essential onboarding, including Text Conversation, Skip, Ask me later, Finish setup now, Use what you know, Back, and Blueprint output.
-- Test Complete My Blueprint and confirm the optional deep personalization questions remain available.
-- Test Smart Follow Up cards in Finance, Health, Education, and Career.
-- Test voice Off, startup greeting only, morning briefing only, both voice modes, preview, play, pause, resume, stop, and repeated button presses.
-- Test startup sound Off and On, Preview LifeOps Pulse, preview startup experience, and Start Voice Experience.
-- Test missing or unavailable browser voice fallback.
-- Test all five themes.
-- Test light, dark, and system appearance behavior.
-- Test compact and comfortable density.
-- Test reduced visual effects.
-- Test redesigned Home greeting, focus, next action, score, category cards, missions, upcoming items, quick actions, recent win, and timeline preview.
-- Test Profile Card settings.
-- Test gamification enabled and disabled.
-- Test adding and deleting Life Timeline milestones.
-- Test old backup compatibility for missing appearance, personalization, and timeline fields.
-- Test camera barcode scanning in a browser that supports `BarcodeDetector`, then test denied camera permission and manual fallback.
-- Test History trend ranges for 7 days, 30 days, 90 days, and all saved snapshots.
-- Test Life Replay Play, Pause, Back, Next, and Restart controls.
-- Test desktop width.
-- Test common mobile widths such as 390px, 430px, and 768px.
-
-## Version History
-
-- `1.30.2` - Refined the dashboard shell toward the premium mockup with a top utility row, search/upcoming/profile controls, Dashboard/Finances navigation labels, visible Today metric cards, reduced duplicate signal clutter, and stronger light-mode contrast.
-- `1.28.3` - Applied a senior UI polish pass to the premium dashboard: softer borders, calmer shadows, refined sidebar/subtab states, elevated Atlas Insight and Briefing typography, emphasized Monthly Cash Left, and added subtle motion without changing functionality.
-- `1.28.2` - Unified all tab and category accents to the LifeOps Premium champagne palette, removed remaining green/teal visual accents, and improved light mode readability with stronger text, borders, and surfaces.
-- `1.28.1` - Polished the premium dashboard color system, improved light mode, strengthened the Today command-center visual hierarchy, and unified charts/cards around the champagne and obsidian palette.
-- `1.28.0` - Redesigned the Today dashboard into a premium command-center layout with an Atlas Insight banner, compact view switcher, signal cards, Life Score trend panel, and Atlas Briefing panel while preserving existing local logic.
-- `1.27.9` - Simplified Appearance into one LifeOps Premium brand theme with light, dark, and system modes, while mapping retired theme values back to Premium for old backup compatibility.
-- `1.27.8` - Updated the LifeOps emblem, favicon, LifeOps wordmark, Atlas avatar, and Atlas wordmark SVG assets to match the premium obsidian and champagne-gold brand direction.
-- `1.27.7` - Refined the premium visual system into an obsidian and champagne-gold interface with cleaner dark surfaces, unified gold accents, improved card depth, and more polished Life Score charts.
-- `1.27.6` - Removed the large Life Score circle from the Today trend graph module and shifted the default LifeOps theme toward a premium black/gold visual direction.
-- `1.27.5` - Replaced the bottom-left LifeOps User sidebar box with an Atlas Local Intelligence card using the animated Atlas avatar, and moved the desktop Atlas launcher into that sidebar location.
-- `1.27.4` - Converted the top Life Score metric card into a compact trend chart card so the stock-style score visual appears immediately in the first dashboard row.
-- `1.27.3` - Polished the Today Life Score trend chart layout so the greeting, score orb, and chart read as one clean command card instead of a cramped side-by-side block.
-- `1.27.2` - Moved the stock-style Life Score chart into the active Today screen so it is visible on first load, while keeping the Dashboard chart version available.
-- `1.27.1` - Changed the Home Life Score card into a stock-style local trend chart with high/low context and recent score movement while keeping the LifeOps score calculation unchanged.
-- `1.27.0` - Added local camera barcode scanning with manual fallback, expanded the History tab into a multi-metric trend chart system, and upgraded Life Replay into an animated in-app story mode while keeping real AI, cloud accounts, and third-party integrations documented as backend-required future work.
-- `1.26.0` - Added the Review Hub layer with Daily Review, Monthly Review, Life Replay preview cards, replay navigation controls, and README documentation while preserving the existing weekly review and local-only privacy model.
-- `1.25.0` - Added the mobile-first Today command experience, transparent score breakdown, score hiding preference, richer Atlas evidence briefing, generated module-based Life Timeline events, manual barcode capture, local recipe builder, meal-prep summary, nutrition integration placeholders, and default Today landing behavior.
-- `1.24.4` - Fixed the tablet-width app layout by applying the compact Atlas orb launcher at the same 767px breakpoint as the mobile bottom navigation, preventing overlap with More in embedded app views.
-- `1.24.3` - Improved mobile navigation ergonomics by converting the Atlas launcher into a compact orb above the bottom navigation on smaller screens and replacing the Dashboard `LO` marker with a richer LifeOps core badge.
-- `1.24.2` - Smoothed Atlas motion by removing animated drop-shadow filters, moving glow breathing to a lightweight pseudo-element, adding transform-only rotation, GPU-friendly hints, and slightly faster idle/thinking orbit timing.
-- `1.24.1` - Refined Atlas motion with slow idle rotation, soft teal glow breathing, faster thinking state, counter-rotating ring, inward particles, listening waveform state, speaking ripple, success pulse, amber attention pulse, and a more cinematic onboarding entrance.
-- `1.24.0` - Added the LifeOps and Atlas local branding system with production SVG/PNG assets, favicon/app icons, branded startup/sidebar/header/onboarding/companion surfaces, Atlas visual states, image fallbacks, and README asset documentation.
-- `1.23.0` - Refactored Atlas onboarding into a faster 12-question Essential Setup, optional Smart Follow Up cards, and a Complete My Blueprint deep personalization path while preserving the original detailed onboarding fields.
-- `1.22.1` - Fixed Atlas onboarding progression after the first question by preserving the active onboarding state object instead of recreating it during each state read. Verified the full 34-question onboarding flow, final summary, and Launch LifeOps exit behavior.
-- `1.22.0` - Rebuilt the assistant surface as Atlas Local Intelligence with structured local context, deterministic priority ranking, grounded response sections, evidence, confidence, data freshness, supported local question handling, unsupported-question fallback, Atlas status language, and future secure AI integration placeholders.
-- `1.20.0` - Added the first Atlas OS intelligence layer with a permanent Home Atlas card, proactive local priority signals, estimated time, impact labels, transparent recommendation reasoning, page-level Atlas insight strips, and secondary Ask Atlas detail drawer while preserving existing app data and business logic.
-- `1.19.0` - Completed a focused premium visual refinement pass with dynamic section headers, category identity accents, stronger card contrast, richer empty states, improved button/progress/sidebar styling, dashboard five-card hierarchy, and responsive polish while preserving existing functionality and data compatibility.
-- `1.18.0` - Built Checkpoint 2 real local data models and modal forms for Education, Career, Calendar, and Documents; added Checkpoint 3 module enable/disable behavior, dashboard customization controls, and a visual polish pass for navigation, prototype cards, module cards, and mobile bottom navigation.
-- `1.17.0` - Started the navigation redesign with ten desktop primary destinations, a five-item mobile bottom nav, collapsible desktop sidebar, Settings hub panels, local prototype pages for Education, Career, Calendar, Documents, and Modules, and optional sidebar preference storage.
-- `1.16.0` - Completed a focused visual polish pass with larger body text, stronger touch targets, section-specific summaries, modal-based add forms, simplified Home hierarchy, dashboard-only global metrics, and distinct dark palettes for each theme.
-- `1.15.0` - Added the local Connections prototype, Privacy Center, Integrations Center, theme readability fixes for dark appearances, desktop overflow fixes, and modal focus trapping/Escape-to-close behavior.
-- `1.14.0` - Added profile/avatar personalization, optional gamification toggle, clearer achievements, full local Life Timeline, Appearance controls inside Settings, and backup compatibility tests for new optional fields.
-- `1.13.0` - Added Checkpoint 1 theme system, Appearance settings, CSS design tokens, redesigned Home hierarchy, category cards, quick actions, recent win, and timeline preview while preserving existing logic.
-- `1.12.0` - Set the default voice mode to startup greeting plus morning briefing and refined the LifeOps Pulse with a smoother futuristic two-chime Web Audio design.
-- `1.11.2` - Added a timeout around blocked browser audio startup so the app falls back without stalling.
-- `1.11.1` - Changed startup audio to attempt the LifeOps Pulse first, then show Start Voice Experience only if the browser blocks playback.
-- `1.11.0` - Replaced the generic startup tone with the branded LifeOps Pulse and added best-effort UK English male voice preference for startup speech.
-- `1.10.0` - Added optional local Web Audio startup sound, startup volume, preview startup sound, preview startup experience, and Start Voice Experience fallback for browser autoplay restrictions.
-- `1.9.0` - Added premium startup animation, Home entrance motion, optional built-in browser voice guidance, and Morning Briefing controls.
-- `1.8.0` - Added Phase 1 navigation shell with five primary destinations, secondary tabs, mobile bottom navigation, and More utilities.
-- `1.7.0` - Added Companion customization with saved name, initials, avatar style, tone, coaching style, and preferred focus.
-- `1.6.0` - Added persistent Companion drawer, grouped navigation, refreshed app shell styling, and Dashboard-first landing behavior.
-- `1.5.0` - Added app-style dashboard home screen, daily missions, visual reward momentum, and chat-style LifeOps Companion interface.
-- `1.1.0` - Added in-app edit modal, bill due dates, upcoming payment warnings, and empty-data test mode.
-- `1.0.0` - Core local-first LifeOps dashboard with setup, money, food, fitness, wellness, goals, actions, history, reports, rule-based coach mockup, JSON export/restore, and dashboard summary.
-
-## Future Monetization Possibilities
-
-Potential monetization should not compromise privacy or user trust. Possible future paths:
-
-- Free local-first version
-- Paid mobile app
-- Optional premium encrypted sync
-- Optional advanced reporting
-- Optional AI assistant tier
-- Employer-ready portfolio or productivity templates
-
-Avoid monetization tied to trading, gambling, speculative investing, or selling sensitive personal data.
-
-## Contribution And Development Notes
-
-- Preserve existing local data compatibility whenever possible.
-- Make a backup before significant edits.
-- Keep calculations transparent and easy to audit.
-- Prefer small, focused changes over rewrites.
-- Do not add paid services, external APIs, or account systems without a clear reason.
-- Keep Version 1 stable before building later roadmap modules.
-- Test after every meaningful development phase.
-
-
-## Version 1.30.2 Notes
-
-- Premium tree dashboard scroll polish.
-- Removed the hard fixed-height cap from the tree dashboard.
-- Mobile tree dashboard hides the legacy bottom nav to prevent overlap.
-- Tree nodes and dashboard accents use a more consistent black and gold style.
-- Visible tree-dashboard encoding issues were cleaned up.
-
+- Real account system
+- Secure database and cloud backup
+- Real AI backend with privacy controls
+- Real calendar and task integrations
+- Health and fitness integrations
+- Mobile app packaging
+- Production security review
