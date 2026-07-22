@@ -1,6 +1,6 @@
 # LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v1.32.2`.
+Use this package as the clean GitHub base for LifeOps `v1.34.0`.
 
 ## Upload These
 
@@ -31,12 +31,12 @@ Do not upload:
 
 ## Recommended GitHub Cleanup
 
-If old zip files are already in the GitHub repository, delete the old `lifeops-dashboard-github-ready-*.zip` files from the repo root. Keep the source files instead.
+Delete old `lifeops-dashboard-github-ready-*.zip` files from the GitHub repo root. Keep the source files instead.
 
 For GitHub Pages, keep `index.html` in the repo root. It is a copy of the current app so the site can open from the repository root.
 
 ## Current Version
 
-Current packaged version: `v1.32.2`
+Current packaged version: `v1.34.0`
 
-Package date: `2026-07-21`
+Package date: `2026-07-22`

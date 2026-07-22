@@ -1471,6 +1471,162 @@
       line-height: 1.45;
     }
 
+    #atlasOnboardingFinal {
+      text-align: center;
+      place-items: center;
+      gap: 18px;
+      padding: clamp(10px, 2vw, 18px) 0 0;
+    }
+
+    #atlasOnboardingFinal .onboarding-kicker,
+    #atlasOnboardingFinal .onboarding-copy {
+      display: none;
+    }
+
+    .atlas-ready-orb {
+      position: relative;
+      width: clamp(112px, 18vw, 156px);
+      height: clamp(112px, 18vw, 156px);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 4px;
+      border: 1px solid color-mix(in srgb, var(--primary) 42%, transparent);
+      background:
+        radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--primary) 20%, transparent), transparent 54%),
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,.52), rgba(0,0,0,.88));
+      box-shadow:
+        0 0 48px color-mix(in srgb, var(--primary) 24%, transparent),
+        0 0 120px color-mix(in srgb, var(--primary) 12%, transparent),
+        inset 0 1px 0 rgba(255,255,255,.12);
+      animation: atlasReadyBreathe 4.8s ease-in-out infinite;
+    }
+
+    .atlas-ready-orb::before,
+    .atlas-ready-orb::after {
+      content: "";
+      position: absolute;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .atlas-ready-orb::before {
+      inset: -16px;
+      border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+      border-top-color: color-mix(in srgb, var(--primary) 58%, transparent);
+      animation: atlasReadyOrbit 18s linear infinite;
+    }
+
+    .atlas-ready-orb::after {
+      inset: -34px;
+      background:
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--primary) 55%, transparent) 0 2px, transparent 3px),
+        radial-gradient(circle at 90% 62%, color-mix(in srgb, var(--primary) 42%, transparent) 0 2px, transparent 3px),
+        radial-gradient(circle at 16% 70%, color-mix(in srgb, var(--success) 30%, transparent) 0 2px, transparent 3px);
+      opacity: .52;
+      animation: atlasReadyOrbit 28s linear infinite reverse;
+    }
+
+    .atlas-ready-orb img {
+      width: 66%;
+      height: 66%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--primary) 42%, transparent));
+      z-index: 1;
+    }
+
+    @keyframes atlasReadyBreathe {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.025); }
+    }
+
+    @keyframes atlasReadyOrbit {
+      to { transform: rotate(360deg); }
+    }
+
+    .atlas-ready-title {
+      margin: 0;
+      color: var(--text);
+      font-size: clamp(32px, 6vw, 58px);
+      line-height: 1;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .atlas-ready-line {
+      margin: -4px 0 2px;
+      color: var(--muted);
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.45;
+      max-width: 620px;
+    }
+
+    .atlas-ready-mission {
+      width: min(640px, 100%);
+      border: 1px solid color-mix(in srgb, var(--primary) 26%, var(--border));
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 38%),
+        color-mix(in srgb, var(--surface) 82%, #000);
+      padding: clamp(16px, 2.6vw, 22px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 22px 60px rgba(0,0,0,.26);
+    }
+
+    .atlas-ready-mission span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .atlas-ready-mission strong {
+      display: block;
+      color: var(--text);
+      font-size: clamp(18px, 2.4vw, 24px);
+      line-height: 1.2;
+    }
+
+    .atlas-ready-chips {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: min(760px, 100%);
+    }
+
+    .atlas-ready-chip {
+      display: grid;
+      gap: 4px;
+      min-width: min(210px, 100%);
+      padding: 12px 14px;
+      border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--card-bg) 84%, #000);
+      text-align: left;
+    }
+
+    .atlas-ready-chip span {
+      color: color-mix(in srgb, var(--muted) 78%, transparent);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .atlas-ready-chip strong {
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .atlas-ready-actions {
+      justify-content: center !important;
+      margin-top: 2px;
+    }
+
     #atlasOnboardingInterview .split:first-child {
       align-items: flex-start;
       gap: 18px;
@@ -1888,7 +2044,7 @@
       grid-template-columns: 1fr;
       gap: 12px;
       align-items: center;
-      padding: 16px;
+      padding: 14px 16px;
       border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
       border-radius: 14px;
       background:
@@ -2088,7 +2244,7 @@
       --tree-card-bg: rgba(7, 8, 8, .82);
       min-height: calc(100svh - 32px);
       display: grid;
-      grid-template-columns: 96px minmax(680px, 1fr) minmax(260px, 300px);
+      grid-template-columns: 96px minmax(0, 1fr) 300px;
       gap: 20px;
       color: #f8f1df;
       background:
@@ -2097,7 +2253,7 @@
         linear-gradient(180deg, #030405 0%, #050607 56%, #090907 100%);
       border: 1px solid rgba(244, 198, 86, .12);
       border-radius: 26px;
-      padding: 20px;
+      padding: 20px 28px;
       overflow: visible;
       box-shadow: 0 34px 90px rgba(0, 0, 0, .42);
       position: relative;
@@ -2127,6 +2283,16 @@
       display: grid;
       grid-template-rows: auto 1fr;
       gap: 20px;
+      align-content: start;
+      position: sticky;
+      top: 18px;
+      align-self: start;
+    }
+
+    .tree-side-panels {
+      min-width: 280px;
+      display: grid;
+      gap: 16px;
       align-content: start;
       position: sticky;
       top: 18px;
@@ -2250,6 +2416,7 @@
 
     .tree-nav-btn span {
       font-size: 12px;
+      white-space: nowrap;
     }
 
     .tree-nav-btn:hover,
@@ -2267,6 +2434,7 @@
       display: grid;
       grid-template-rows: auto auto auto auto;
       gap: 16px;
+      padding: 0 4px;
     }
 
     .tree-topbar {
@@ -2544,6 +2712,10 @@
       .atlas-chat-row {
         grid-template-columns: 1fr;
       }
+
+      .tree-detail-summary .summary-metrics {
+        grid-template-columns: 1fr;
+      }
     }
 
     @keyframes lifeOpsLogoFloat {
@@ -2614,7 +2786,8 @@
 
     .life-tree-visual {
       position: relative;
-      min-height: clamp(620px, 68vh, 760px);
+      min-height: 430px;
+      height: clamp(430px, 44vh, 620px);
       display: grid;
       place-items: center;
       isolation: isolate;
@@ -2623,9 +2796,9 @@
 
     .life-tree-canopy {
       position: absolute;
-      width: min(840px, 94%);
+      width: min(720px, 94%);
       aspect-ratio: 1.16 / 1;
-      top: 8px;
+      top: 0;
       border-radius: 46% 54% 44% 56%;
       background:
         radial-gradient(ellipse at 50% 58%, rgba(128, 109, 41, .42), transparent 42%),
@@ -2662,9 +2835,9 @@
 
     .tree-trunk {
       position: absolute;
-      bottom: 78px;
-      width: 230px;
-      height: 430px;
+      bottom: 42px;
+      width: clamp(150px, 13vw, 210px);
+      height: clamp(250px, 34vh, 360px);
       border-radius: 48% 52% 26% 28%;
       background:
         radial-gradient(ellipse at 48% 12%, rgba(255, 239, 173, .92), transparent 20%),
@@ -2697,8 +2870,8 @@
     .tree-branch {
       position: absolute;
       left: 50%;
-      bottom: var(--branch-bottom, 360px);
-      width: var(--branch-width, 300px);
+      bottom: var(--branch-bottom, 52%);
+      width: var(--branch-width, clamp(150px, 22vw, 250px));
       height: var(--branch-height, 8px);
       transform: rotate(var(--branch-angle, 0deg));
       transform-origin: 0 50%;
@@ -2723,18 +2896,18 @@
       opacity: .7;
     }
 
-    .tree-branch.b1 { --branch-angle: 210deg; --branch-bottom: 410px; --branch-width: 265px; --twig-angle: -22deg; }
-    .tree-branch.b2 { --branch-angle: 246deg; --branch-bottom: 335px; --branch-width: 230px; --twig-angle: 26deg; }
-    .tree-branch.b3 { --branch-angle: 302deg; --branch-bottom: 270px; --branch-width: 218px; --twig-angle: -18deg; }
-    .tree-branch.b4 { --branch-angle: -30deg; --branch-bottom: 410px; --branch-width: 270px; --twig-angle: 24deg; }
-    .tree-branch.b5 { --branch-angle: 24deg; --branch-bottom: 330px; --branch-width: 238px; --twig-angle: -24deg; }
-    .tree-branch.b6 { --branch-angle: 58deg; --branch-bottom: 270px; --branch-width: 220px; --twig-angle: 18deg; }
+    .tree-branch.b1 { --branch-angle: 210deg; --branch-bottom: 62%; --branch-width: clamp(160px, 21vw, 255px); --twig-angle: -22deg; }
+    .tree-branch.b2 { --branch-angle: 246deg; --branch-bottom: 51%; --branch-width: clamp(140px, 18vw, 225px); --twig-angle: 26deg; }
+    .tree-branch.b3 { --branch-angle: 302deg; --branch-bottom: 40%; --branch-width: clamp(130px, 17vw, 210px); --twig-angle: -18deg; }
+    .tree-branch.b4 { --branch-angle: -30deg; --branch-bottom: 62%; --branch-width: clamp(160px, 21vw, 255px); --twig-angle: 24deg; }
+    .tree-branch.b5 { --branch-angle: 24deg; --branch-bottom: 51%; --branch-width: clamp(140px, 18vw, 225px); --twig-angle: -24deg; }
+    .tree-branch.b6 { --branch-angle: 58deg; --branch-bottom: 40%; --branch-width: clamp(130px, 17vw, 210px); --twig-angle: 18deg; }
 
     .tree-roots {
       position: absolute;
       bottom: 4px;
-      width: min(700px, 92%);
-      height: 205px;
+      width: min(620px, 92%);
+      height: clamp(120px, 16vh, 170px);
       background:
         radial-gradient(ellipse at 50% 5%, rgba(255, 222, 117, .55), transparent 20%),
         conic-gradient(from 205deg at 50% 8%, transparent 0 16deg, rgba(255, 220, 108, .62) 18deg 20deg, transparent 22deg 53deg, rgba(255, 220, 108, .55) 55deg 57deg, transparent 59deg 100deg, rgba(255, 220, 108, .48) 102deg 104deg, transparent 106deg 142deg, rgba(255, 220, 108, .42) 144deg 146deg, transparent 148deg);
@@ -2744,9 +2917,10 @@
     }
 
     .life-node {
+      --node-shift-x: 0;
       position: absolute;
-      width: 118px;
-      min-height: 118px;
+      width: clamp(88px, 6.1vw, 108px);
+      min-height: clamp(88px, 6.1vw, 108px);
       border-radius: 50%;
       border: 1px solid color-mix(in srgb, var(--node-color, #f6c85f) 46%, rgba(255,255,255,.12));
       display: grid;
@@ -2763,12 +2937,13 @@
       cursor: pointer;
       text-align: center;
       backdrop-filter: blur(10px);
+      transform: translateX(var(--node-shift-x));
       transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
     }
 
     .life-node:hover,
     .life-node:focus-visible {
-      transform: translateY(-4px) scale(1.03);
+      transform: translateX(var(--node-shift-x)) translateY(-4px) scale(1.03);
       box-shadow:
         0 0 48px color-mix(in srgb, var(--node-color, #f6c85f) 38%, transparent),
         inset 0 1px 0 rgba(255,255,255,.12);
@@ -2776,29 +2951,29 @@
     }
 
     .life-node svg {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
     }
 
     .life-node strong {
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.05;
     }
 
     .life-node span {
       color: rgba(248, 241, 223, .78);
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 780;
     }
 
-    .node-mind { --node-color: #ffe8a4; top: 54px; left: calc(50% - 59px); }
-    .node-career { --node-color: #d8a94d; top: 170px; left: 15%; }
-    .node-finance { --node-color: #f4c65a; top: 170px; right: 15%; }
-    .node-health { --node-color: #c99342; top: 320px; left: 10%; }
-    .node-education { --node-color: #d9b25f; top: 320px; right: 10%; }
-    .node-relationships { --node-color: #b9833d; top: 462px; left: 18%; }
-    .node-growth { --node-color: #ffe08a; top: 462px; right: 17%; }
-    .node-foundation { --node-color: #f6c85f; bottom: 44px; left: calc(50% - 59px); }
+    .node-mind { --node-color: #ffe8a4; --node-shift-x: -50%; top: 4%; left: 50%; }
+    .node-career { --node-color: #d8a94d; top: 21%; left: 15%; }
+    .node-finance { --node-color: #f4c65a; top: 21%; right: 15%; }
+    .node-health { --node-color: #c99342; top: 43%; left: 10%; }
+    .node-education { --node-color: #d9b25f; top: 43%; right: 10%; }
+    .node-relationships { --node-color: #b9833d; top: 66%; left: 18%; }
+    .node-growth { --node-color: #ffe08a; top: 66%; right: 17%; }
+    .node-foundation { --node-color: #f6c85f; --node-shift-x: -50%; bottom: 3%; left: 50%; }
 
     .tree-card {
       border: 1px solid rgba(255, 255, 255, .11);
@@ -2807,7 +2982,7 @@
         radial-gradient(circle at 18% 0%, rgba(244, 198, 86, .08), transparent 34%),
         var(--tree-card-bg);
       box-shadow: 0 22px 55px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .06);
-      padding: 16px;
+      padding: 18px;
       backdrop-filter: blur(16px);
     }
 
@@ -2943,7 +3118,7 @@
     }
 
     .tree-score-card .score-market-chart {
-      min-height: 150px;
+      min-height: 128px;
       margin: 8px 0 10px;
       border-radius: 18px;
       border-color: rgba(246, 200, 95, .2);
@@ -2991,6 +3166,471 @@
       animation: scoreDotGlow 2.8s ease-in-out infinite;
     }
 
+    .atlas-command-card {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 8px;
+      padding: clamp(22px, 3vw, 32px);
+      border-color: rgba(246, 200, 95, .28);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(246, 200, 95, .2), transparent 30%),
+        radial-gradient(circle at 86% 8%, rgba(255, 214, 107, .08), transparent 24%),
+        linear-gradient(135deg, rgba(246, 200, 95, .1), rgba(6, 7, 7, .9) 44%),
+        rgba(6, 7, 7, .9);
+      box-shadow: 0 34px 90px rgba(0, 0, 0, .42), 0 0 46px rgba(246, 200, 95, .08), inset 0 1px 0 rgba(255, 255, 255, .08);
+    }
+
+    .atlas-command-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(100deg, transparent 0 38%, rgba(255, 219, 126, .08) 46%, transparent 56%);
+      transform: translateX(-100%);
+      animation: marketSweep 6.4s ease-in-out infinite;
+    }
+
+    .atlas-command-head,
+    .atlas-command-grid,
+    .atlas-impact-strip,
+    .atlas-status-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .atlas-command-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .atlas-command-head h2 {
+      margin: 6px 0 0;
+      font-size: clamp(20px, 2.4vw, 28px);
+      line-height: 1;
+      letter-spacing: -.03em;
+      color: #f8f1df;
+    }
+
+    .atlas-command-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: rgba(248, 241, 223, .58);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .atlas-command-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f6c85f;
+      box-shadow: 0 0 16px rgba(246, 200, 95, .55);
+    }
+
+    .atlas-command-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .atlas-command-action {
+      margin: 8px 0 12px;
+      font-size: clamp(28px, 3.5vw, 48px);
+      line-height: 1.1;
+      font-weight: 950;
+      color: #ffd66b;
+      text-shadow: 0 0 34px rgba(246, 200, 95, .26);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .atlas-command-card p {
+      margin: 0 0 10px;
+      color: rgba(248, 241, 223, .72);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .atlas-attention-line {
+      margin: 0 0 16px;
+      color: rgba(248, 241, 223, .84);
+      font-size: clamp(16px, 1.6vw, 20px);
+      line-height: 1.5;
+      max-width: 760px;
+    }
+
+    .atlas-command-brief {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0 16px;
+    }
+
+    .atlas-command-brief-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      align-items: start;
+      padding: 12px 14px;
+      border: 1px solid rgba(246, 200, 95, .1);
+      border-radius: 14px;
+      background: rgba(0,0,0,.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .atlas-command-brief-row span {
+      color: rgba(248, 241, 223, .48);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .atlas-command-brief-row strong {
+      color: rgba(248, 241, 223, .84);
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 750;
+    }
+
+    .atlas-command-signals {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 16px;
+    }
+
+    .atlas-signal-card {
+      display: grid;
+      gap: 6px;
+      min-height: 92px;
+      padding: 13px;
+      border: 1px solid rgba(246, 200, 95, .12);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(246, 200, 95, .1), transparent 38%),
+        rgba(0,0,0,.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .atlas-signal-card span {
+      color: rgba(248, 241, 223, .5);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .atlas-signal-card strong {
+      color: rgba(248, 241, 223, .9);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .atlas-command-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .atlas-thinking-panel {
+      border: 1px solid rgba(246, 200, 95, .14);
+      border-radius: 18px;
+      padding: 16px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(246, 200, 95, .1), transparent 34%),
+        rgba(0, 0, 0, .22);
+      box-shadow: 0 14px 36px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .atlas-thinking-panel h3 {
+      margin: 0 0 8px;
+      color: #f2d58c;
+      font-size: 15px;
+    }
+
+    .atlas-thinking-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .atlas-thinking-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 8px 10px;
+      border: 1px solid rgba(246, 200, 95, .1);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, .18);
+    }
+
+    .atlas-thinking-row:last-child {
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .atlas-thinking-row span,
+    .tree-score-explain-row span,
+    .atlas-impact-strip span {
+      color: rgba(248, 241, 223, .48);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .atlas-thinking-row strong {
+      color: rgba(248, 241, 223, .82);
+      font-size: 12px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .atlas-thinking-row.primary {
+      grid-column: 1 / -1;
+      border-color: rgba(246, 200, 95, .24);
+      background: linear-gradient(135deg, rgba(246, 200, 95, .1), rgba(0,0,0,.18));
+    }
+
+    .atlas-thinking-row.primary strong {
+      color: #ffd66b;
+      font-size: 13px;
+    }
+
+    .atlas-impact-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #f8f1df;
+    }
+
+    .atlas-decision-metric {
+      display: grid;
+      gap: 4px;
+      padding: 6px 9px;
+      border: 1px solid rgba(246, 200, 95, .13);
+      border-radius: 14px;
+      background: rgba(0, 0, 0, .16);
+    }
+
+    .atlas-impact-strip strong {
+      color: #f6c85f;
+      font-size: 12px;
+      line-height: 1.25;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .atlas-status-card {
+      border-color: rgba(246, 200, 95, .18);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(246, 200, 95, .12), transparent 36%),
+        rgba(7, 8, 8, .84);
+    }
+
+    .atlas-status-orb {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #ffd66b;
+      border: 1px solid rgba(246, 200, 95, .24);
+      background: radial-gradient(circle, rgba(246, 200, 95, .22), rgba(246, 200, 95, .04) 62%, transparent 64%);
+      box-shadow: 0 0 24px rgba(246, 200, 95, .2);
+      animation: atlasStatusBreath 4.2s ease-in-out infinite;
+    }
+
+    @keyframes atlasStatusBreath {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(246, 200, 95, .16); }
+      50% { transform: scale(1.04); box-shadow: 0 0 34px rgba(246, 200, 95, .28); }
+    }
+
+    .tree-score-explain {
+      position: relative;
+      z-index: 1;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .tree-score-explain h3 {
+      margin: 0 0 10px;
+      color: #f2d58c;
+      font-size: 15px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .tree-score-explain summary {
+      cursor: pointer;
+      color: #f2d58c;
+      font-size: 15px;
+      font-weight: 900;
+      list-style-position: outside;
+    }
+
+    .tree-score-explain-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tree-score-explain-row {
+      display: grid;
+      gap: 3px;
+      padding: 8px 10px;
+      border: 1px solid rgba(246, 200, 95, .11);
+      border-radius: 12px;
+      background: rgba(0,0,0,.16);
+    }
+
+    .tree-score-explain-row strong {
+      color: rgba(248, 241, 223, .82);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .score-factor-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+      gap: 7px;
+    }
+
+    .score-factor-row > div:first-child {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .score-factor-row strong {
+      color: #f8f1df;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .score-factor-row em {
+      color: #f6c85f;
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.25;
+      white-space: normal;
+    }
+
+    .score-factor-bar {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+    }
+
+    .score-factor-bar i {
+      display: block;
+      height: 100%;
+      width: var(--score-width, 0%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(246, 200, 95, .64), #ffd66b);
+      box-shadow: 0 0 18px rgba(246, 200, 95, .18);
+    }
+
+    .tree-detail-summary {
+      display: grid;
+      gap: 10px;
+      border-color: rgba(246, 200, 95, .18);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(246, 200, 95, .12), transparent 30%),
+        rgba(255,255,255,.028);
+    }
+
+    .tree-detail-summary p {
+      margin: 0;
+      color: rgba(248, 241, 223, .76);
+      line-height: 1.5;
+    }
+
+    .tree-detail-summary .summary-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .tree-detail-summary .summary-metrics div {
+      border: 1px solid rgba(246, 200, 95, .1);
+      border-radius: 12px;
+      background: rgba(0,0,0,.18);
+      padding: 9px 10px;
+    }
+
+    .tree-detail-summary .summary-metrics span {
+      display: block;
+      color: rgba(248, 241, 223, .48);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .tree-detail-summary .summary-metrics strong {
+      display: block;
+      margin-top: 4px;
+      color: #ffd66b;
+      font-size: 14px;
+    }
+
+    .tree-brief-list .tree-list-row {
+      grid-template-columns: 20px minmax(0, 1fr);
+      align-items: start;
+      gap: 12px;
+      min-height: auto;
+      padding: 10px 0;
+    }
+
+    .tree-brief-list .tree-list-row strong,
+    .tree-card-list .tree-list-row strong {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1.25;
+    }
+
+    .tree-brief-list .tree-list-row small,
+    .tree-card-list .tree-list-row small {
+      display: block;
+      line-height: 1.45;
+    }
+
+    .tree-brief-list .tree-list-row small {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
     @keyframes chartTraceIn {
       to { stroke-dashoffset: 0; }
     }
@@ -3035,33 +3675,70 @@
       font-size: 12px;
     }
 
+    .tree-quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
     .tree-quick-row {
-      min-height: 38px;
-      border: 0;
-      background: transparent;
+      min-height: 78px;
+      border: 1px solid rgba(246, 200, 95, .12);
+      background: rgba(0, 0, 0, .16);
       color: rgba(248, 241, 223, .78);
       display: grid;
-      grid-template-columns: 26px 1fr auto;
+      grid-template-columns: 1fr;
+      justify-items: start;
       align-items: center;
-      gap: 9px;
+      gap: 6px;
       text-align: left;
       cursor: pointer;
+      border-radius: 16px;
+      padding: 12px;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease, color .22s ease;
+    }
+
+    .tree-quick-row span:first-child {
+      width: 32px;
+      height: 32px;
       border-radius: 12px;
-      padding: 6px 4px;
+      display: grid;
+      place-items: center;
+      color: #f6c85f;
+      background: rgba(246, 200, 95, .1);
+      border: 1px solid rgba(246, 200, 95, .14);
+      font-weight: 950;
+    }
+
+    .tree-quick-row strong {
+      color: rgba(248, 241, 223, .9);
+      font-size: 13px;
+    }
+
+    .tree-quick-row span:last-child {
+      color: rgba(248, 241, 223, .48);
+      font-size: 11px;
+      font-weight: 800;
     }
 
     .tree-quick-row:hover,
     .tree-quick-row:focus-visible {
       color: #f6c85f;
+      border-color: rgba(246, 200, 95, .25);
       background: rgba(244, 198, 86, .08);
+      transform: translateY(-2px);
       outline: none;
     }
 
     .tree-bottom-panels {
       display: grid;
-      grid-template-columns: 1fr 1.1fr 1.5fr;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
       align-items: stretch;
+    }
+
+    .tree-bottom-panels > .tree-card {
+      min-height: 188px;
     }
 
     .tree-bottom-nav {
@@ -5514,7 +6191,13 @@
       text-shadow: 0 0 24px rgba(242, 201, 107, .16);
     }
 
-    @media (max-width: 1180px) {
+    @media (max-width: 1500px) {
+      .tree-bottom-panels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1200px) {
       .today-signal-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -5524,12 +6207,42 @@
       }
 
       .life-tree-shell {
-        grid-template-columns: 1fr;
+        grid-template-columns: 96px minmax(0, 1fr);
         min-height: auto;
       }
 
       .tree-app-rail {
-        grid-template-columns: auto 1fr;
+        position: sticky;
+        top: 18px;
+      }
+
+      .tree-side-nav {
+        width: 96px;
+      }
+
+      .tree-side-panels {
+        grid-column: 1 / -1;
+        min-width: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding-top: 0;
+        position: relative;
+        top: auto;
+      }
+
+      .tree-bottom-panels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 850px) {
+      .life-tree-shell {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+
+      .tree-app-rail {
+        grid-template-columns: 1fr;
         align-items: center;
         position: relative;
         top: auto;
@@ -5537,15 +6250,12 @@
 
       .tree-side-nav {
         width: auto;
-        grid-template-columns: repeat(6, minmax(74px, 1fr));
+        grid-template-columns: repeat(5, minmax(70px, 1fr));
         overflow-x: auto;
       }
 
       .tree-side-panels {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        padding-top: 0;
-        position: relative;
-        top: auto;
+        grid-template-columns: 1fr;
       }
     }
 
@@ -5646,6 +6356,33 @@
 
       .tree-greeting p {
         font-size: 14px;
+      }
+
+      .atlas-command-card {
+        padding: 15px;
+      }
+
+      .atlas-command-head,
+      .atlas-impact-strip {
+        display: grid;
+      }
+
+      .atlas-command-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .atlas-command-signals,
+      .atlas-impact-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .atlas-thinking-list {
+        grid-template-columns: 1fr;
+      }
+
+      .atlas-thinking-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
       }
 
       .life-tree-visual {
@@ -6094,11 +6831,9 @@
       </div>
 
       <section id="atlasOnboardingWelcome">
-        <div class="onboarding-kicker">Atlas onboarding</div>
-        <h1 class="onboarding-title" id="atlasOnboardingTitle">Welcome to LifeOps.</h1>
-        <p class="onboarding-copy" id="atlasOnboardingDescription">Atlas helps LifeOps understand what matters today.</p>
-        <p class="onboarding-copy">I&apos;m Atlas. Nothing is whole, and nothing is broken. Let&apos;s see what needs your attention.</p>
-        <p class="onboarding-copy">This takes about two minutes. By the end, I&apos;ll build your first LifeOps blueprint and you can add deeper details later.</p>
+        <div class="onboarding-kicker">Atlas</div>
+        <h1 class="onboarding-title" id="atlasOnboardingTitle">Let&apos;s find what matters next.</h1>
+        <p class="onboarding-copy" id="atlasOnboardingDescription">A short local setup helps Atlas shape your first command view.</p>
         <div class="actions" style="justify-content: flex-start; margin-top: 20px;">
           <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Begin</button>
           <button class="btn" id="learnMoreAtlasOnboardingBtn" type="button">Learn More</button>
@@ -6145,18 +6880,18 @@
       </section>
 
       <section id="atlasOnboardingFinal" hidden>
-        <div class="onboarding-kicker">Operating system ready</div>
-        <h2 class="onboarding-title" style="font-size: clamp(30px, 5vw, 52px);">I&apos;ve finished building your operating system.</h2>
-        <p class="onboarding-copy">Here&apos;s what I learned and prepared for your local LifeOps dashboard.</p>
-        <div class="onboarding-summary-grid" id="atlasFinalSummary"></div>
-        <article class="onboarding-question-card">
-          <div class="split">
-            <h3>Estimated Life Score</h3>
-            <strong id="atlasFinalLifeScore" style="font-size: 52px;">68</strong>
-          </div>
-          <p class="onboarding-copy">This score isn&apos;t permanent. We&apos;ll improve it together.</p>
+        <div class="atlas-ready-orb" aria-hidden="true">
+          <span class="brand-fallback" hidden>AT</span>
+          <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
+        </div>
+        <h2 class="atlas-ready-title">Atlas is ready.</h2>
+        <p class="atlas-ready-line">Your local system is prepared. Start with one focused move.</p>
+        <article class="atlas-ready-mission" aria-labelledby="atlasReadyMissionLabel">
+          <span id="atlasReadyMissionLabel">First mission</span>
+          <strong id="atlasFinalFirstMission">Open LifeOps and choose one next action.</strong>
         </article>
-        <div class="actions" style="justify-content: flex-start;">
+        <div class="atlas-ready-chips" id="atlasFinalSummary"></div>
+        <div class="actions atlas-ready-actions">
           <button class="btn primary" id="launchLifeOpsBtn" type="button">Launch LifeOps</button>
           <button class="btn" id="completeAtlasBlueprintBtn" type="button">Complete My Blueprint</button>
           <button class="btn" id="reviewAtlasProfileBtn" type="button">Review Profile</button>
@@ -6918,7 +7653,7 @@
                 <button class="tree-atlas-pill" type="button" data-open-tab="coach" aria-label="Open Atlas">Atlas</button>
               </div>
               <nav class="tree-side-nav" aria-label="Tree sections">
-                <div class="tree-nav-section-label">Primary</div>
+                <div class="tree-nav-section-label">Core</div>
                 <button class="tree-nav-btn active" type="button" data-open-tab="today" aria-label="Dashboard" title="Dashboard">
                   <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 3v18"></path><path d="M6 8c4 0 6 2 6 6"></path><path d="M18 8c-4 0-6 2-6 6"></path><path d="M5 20h14"></path></svg><span>Dashboard</span>
                 </button>
@@ -6931,6 +7666,7 @@
                 <button class="tree-nav-btn" type="button" data-open-tab="calendar" aria-label="Calendar" title="Calendar">
                   <svg viewBox="0 0 24 24" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M8 3v4M16 3v4M4 10h16"></path></svg><span>Calendar</span>
                 </button>
+                <div class="tree-nav-section-label">Life</div>
                 <button class="tree-nav-btn" type="button" data-open-tab="money" aria-label="Finances" title="Finances">
                   <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v10M9 10c0-1.4 1.2-2 3-2s3 .7 3 2-1.2 2-3 2-3 .6-3 2 1.2 2 3 2 3-.7 3-2"></path></svg><span>Finances</span>
                 </button>
@@ -6943,6 +7679,7 @@
                 <button class="tree-nav-btn" type="button" data-open-tab="education" aria-label="Education" title="Education">
                   <svg viewBox="0 0 24 24" stroke-width="2"><path d="m4 10 8-4 8 4-8 4-8-4z"></path><path d="M6 12v4c3 2 9 2 12 0v-4"></path></svg><span>Education</span>
                 </button>
+                <div class="tree-nav-section-label">Personal</div>
                 <button class="tree-nav-btn" type="button" data-open-tab="connections" aria-label="Relationships" title="Relationships">
                   <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="9" cy="8" r="3"></circle><circle cx="16" cy="9" r="2.5"></circle><path d="M3 20c1-4 4-6 6-6s5 2 6 6"></path><path d="M14 15c2 0 4 1.5 5 5"></path></svg><span>Relations</span>
                 </button>
@@ -6952,7 +7689,7 @@
                 <button class="tree-nav-btn" type="button" data-open-tab="documents" aria-label="Notes" title="Notes">
                   <svg viewBox="0 0 24 24" stroke-width="2"><rect x="6" y="4" width="12" height="16" rx="2"></rect><path d="M9 9h6M9 13h6M9 17h3"></path></svg><span>Notes</span>
                 </button>
-                <div class="tree-nav-section-label">More</div>
+                <div class="tree-nav-section-label">System</div>
                 <button class="tree-nav-btn" type="button" data-open-tab="history" aria-label="Progress" title="Progress">
                   <svg viewBox="0 0 24 24" stroke-width="2"><path d="M5 20V10"></path><path d="M12 20V4"></path><path d="M19 20v-7"></path></svg><span>Progress</span>
                 </button>
@@ -6986,6 +7723,61 @@
                   </button>
                 </div>
               </div>
+
+              <article class="tree-card atlas-command-card" aria-labelledby="atlasCommandTitle">
+                <div class="atlas-command-head">
+                  <div>
+                    <span class="tree-live-label">Atlas Command</span>
+                    <h2 id="atlasCommandTitle">Next highest impact action</h2>
+                  </div>
+                  <span class="pill" id="atlasCommandConfidence">Local confidence</span>
+                </div>
+                <div class="atlas-command-grid">
+                  <section aria-label="Atlas recommended action">
+                    <div class="atlas-command-kicker">This deserves attention now</div>
+                    <div class="atlas-command-action" id="atlasCommandAction">Atlas is reading local LifeOps signals.</div>
+                    <p class="atlas-attention-line" id="atlasCommandReason">Add or update LifeOps data so Atlas can rank the next action with local evidence.</p>
+                    <div class="atlas-command-signals" aria-label="Atlas attention signals">
+                      <div class="atlas-signal-card"><span>Why now</span><strong id="atlasCommandWhyNow">Atlas prioritizes urgent dated items first.</strong></div>
+                      <div class="atlas-signal-card"><span>Evidence</span><strong id="atlasCommandEvidence">Local-only data.</strong></div>
+                      <div class="atlas-signal-card"><span>Expected result</span><strong id="atlasCommandOutcome">More clarity and momentum today.</strong></div>
+                    </div>
+                    <div class="atlas-command-actions">
+                      <button class="btn primary" id="atlasCommandStartBtn" type="button">Do this now</button>
+                      <button class="btn" id="atlasCommandAskBtn" type="button">Ask Atlas</button>
+                    </div>
+                  </section>
+                  <section class="atlas-thinking-panel" aria-label="Atlas thinking">
+                    <h3>Decision Trace</h3>
+                    <div class="atlas-thinking-list">
+                      <div class="atlas-thinking-row primary"><span>Priority area</span><strong id="atlasThinkingPriority">Waiting for local signals.</strong></div>
+                      <div class="atlas-thinking-row"><span>Chosen over</span><strong id="atlasCommandChosenOver">No stronger competing signal found.</strong></div>
+                      <div class="atlas-thinking-row"><span>Dependency</span><strong id="atlasCommandDependency">No blocker detected.</strong></div>
+                      <div class="atlas-thinking-row"><span>Freshness</span><strong id="atlasThinkingFreshness">Current session.</strong></div>
+                      <div class="atlas-thinking-row"><span>Risk if ignored</span><strong id="atlasThinkingRisk">Medium</strong></div>
+                      <div class="atlas-thinking-row"><span>Effort</span><strong id="atlasThinkingTime">8 minutes</strong></div>
+                    </div>
+                  </section>
+                </div>
+                <div class="atlas-impact-strip">
+                  <div class="atlas-decision-metric">
+                    <span>Outcome</span>
+                    <strong id="atlasCommandBenefit">Clarity, momentum, focus</strong>
+                  </div>
+                  <div class="atlas-decision-metric">
+                    <span>Effort</span>
+                    <strong id="atlasCommandTime">8 minutes</strong>
+                  </div>
+                  <div class="atlas-decision-metric">
+                    <span>Risk if ignored</span>
+                    <strong id="atlasCommandRisk">Medium</strong>
+                  </div>
+                  <div class="atlas-decision-metric">
+                    <span>Confidence</span>
+                    <strong id="atlasCommandConfidenceMetric">Medium</strong>
+                  </div>
+                </div>
+              </article>
 
               <div class="life-tree-visual">
                 <div class="life-tree-canopy" aria-hidden="true"></div>
@@ -7046,8 +7838,13 @@
                   </div>
                   <button class="btn small" type="button" data-open-tab="money" style="margin-top:16px;width:100%;">View Finances</button>
                 </article>
-                <article class="tree-card atlas-quote">
-                  <div><span>"</span><br>The strongest life<br>is built one decision<br>at a time.<br><small>- Atlas</small></div>
+                <article class="tree-card">
+                  <h3>Daily Brief</h3>
+                  <div class="tree-card-list tree-brief-list" id="atlasDailyBriefList"></div>
+                </article>
+                <article class="tree-card">
+                  <h3>Daily Debrief</h3>
+                  <div class="tree-card-list tree-brief-list" id="atlasDailyDebriefList"></div>
                 </article>
                 <article class="tree-card">
                   <h3>Upcoming</h3>
@@ -7096,6 +7893,10 @@
                   <span id="todayScoreChartRange">Recent score trend</span>
                   <span id="todayScoreChartHighLow">High 0 / Low 0</span>
                 </div>
+                <details class="tree-score-explain" open>
+                  <summary id="lifeScoreExplainSummary">Why this score</summary>
+                  <div class="tree-score-explain-list" id="lifeScoreExplainList"></div>
+                </details>
                 <button class="btn small" id="todayOpenAtlasBtn" type="button" style="width:100%;margin-top:14px;">View Insights</button>
               </article>
 
@@ -7107,11 +7908,11 @@
 
               <article class="tree-card">
                 <h3>Quick Add</h3>
-                <div class="tree-card-list">
-                  <button class="tree-quick-row" type="button" data-quick-action="expense"><span>$</span><strong>Expense</strong><span>+</span></button>
-                  <button class="tree-quick-row" type="button" data-quick-action="task"><span>[]</span><strong>Task</strong><span>+</span></button>
-                  <button class="tree-quick-row" type="button" data-quick-action="goal"><span>o</span><strong>Goal</strong><span>+</span></button>
-                  <button class="tree-quick-row" type="button" data-open-tab="documents"><span>#</span><strong>Note</strong><span>+</span></button>
+                <div class="tree-quick-grid">
+                  <button class="tree-quick-row" type="button" data-quick-action="expense"><span>$</span><strong>Expense</strong><span>Track cost</span></button>
+                  <button class="tree-quick-row" type="button" data-quick-action="task"><span>TK</span><strong>Task</strong><span>Add action</span></button>
+                  <button class="tree-quick-row" type="button" data-quick-action="goal"><span>GL</span><strong>Goal</strong><span>Move forward</span></button>
+                  <button class="tree-quick-row" type="button" data-open-tab="documents"><span>NT</span><strong>Note</strong><span>Save thought</span></button>
                 </div>
               </article>
 
@@ -7174,6 +7975,15 @@
                 <button class="btn small" id="closeTreeDetailBtn" type="button" aria-label="Close life area details">Close</button>
               </div>
               <div class="tree-detail-grid">
+                <article class="tree-detail-section wide tree-detail-summary">
+                  <h3>Atlas Summary</h3>
+                  <p id="treeDetailNarrative">Atlas is reading this life area from local LifeOps records.</p>
+                  <div class="summary-metrics">
+                    <div><span>Open work</span><strong id="treeDetailOpenWork">0 items</strong></div>
+                    <div><span>Recent signal</span><strong id="treeDetailRecentSignal">No signal yet</strong></div>
+                    <div><span>Privacy</span><strong id="treeDetailPrivacy">Private</strong></div>
+                  </div>
+                </article>
                 <article class="tree-detail-section">
                   <h3>Current Score</h3>
                   <strong id="treeDetailScore" style="font-size:44px;color:#ffd66b;">0%</strong>
@@ -8511,7 +9321,7 @@
   </div>
 
   <script>
-    const appVersion = "1.31.1";
+    const appVersion = "1.34.0";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -9556,30 +10366,27 @@
       const mission = answers.dailyStruggle ? `Build a calmer system for ${String(answers.dailyStruggle).slice(0, 80)}` : priorities.length ? `Improve ${priorities.slice(0, 3).join(", ")}` : "Build a useful daily operating system";
       const modules = (onboarding.recommendedModules || []).join(", ") || "Dashboard, Goals, History, Atlas";
       const coachingStyle = answers.atlasInvolvement || state.companion?.coachingStyle || "Light guidance";
+      const firstMission = atlasFirstMission(answers);
       const rows = [
-        ["Primary mission", mission],
-        ["Top three priorities", priorities.slice(0, 3).join(", ") || "Money, Health, Goals"],
-        ["Strongest area", strongest],
-        ["Biggest opportunity", weakest],
-        ["Recommended modules", modules],
-        ["Atlas coaching style", coachingStyle],
-        ["First mission", atlasFirstMission(answers)],
-        ["Blueprint status", onboarding.path === "deep" || onboarding.deepCompleted ? "Deep personalization complete." : `LifeOps is ready. Complete ${atlasDeepPersonalizationQuestions().length} more optional questions to improve Atlas recommendations.`]
+        ["Mission", mission],
+        ["Priority", priorities.slice(0, 3).join(", ") || "Money, Health, Goals"],
+        ["Atlas mode", coachingStyle],
+        ["Prepared", modules]
       ];
+      const missionTarget = document.getElementById("atlasFinalFirstMission");
+      if (missionTarget) missionTarget.textContent = firstMission;
       const grid = document.getElementById("atlasFinalSummary");
       if (grid) {
         grid.innerHTML = "";
         rows.forEach(([title, text]) => {
           const item = document.createElement("div");
-          item.className = "item";
-          item.innerHTML = `<div><div class="item-title"></div><div class="item-meta"></div></div>`;
-          item.querySelector(".item-title").textContent = title;
-          item.querySelector(".item-meta").textContent = text;
+          item.className = "atlas-ready-chip";
+          item.innerHTML = `<span></span><strong></strong>`;
+          item.querySelector("span").textContent = title;
+          item.querySelector("strong").textContent = text;
           grid.appendChild(item);
         });
       }
-      const score = document.getElementById("atlasFinalLifeScore");
-      if (score) score.textContent = lifeScore();
     }
 
     function cleanNumber(value, min = 0, max = Number.MAX_SAFE_INTEGER) {
@@ -10312,6 +11119,231 @@
       ];
     }
 
+    function renderTreeCompactRows(id, rows, fallback = "No local data yet.") {
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.innerHTML = "";
+      const safeRows = (rows || []).filter(row => row && row[0]);
+      (safeRows.length ? safeRows : [["Atlas", fallback]]).forEach(([label, value]) => {
+        const row = document.createElement("div");
+        row.className = "tree-list-row";
+        row.innerHTML = `<span class="tree-check"></span><div><strong></strong><small></small></div>`;
+        row.querySelector(".tree-check").textContent = "";
+        row.querySelector("strong").textContent = label;
+        row.querySelector("small").textContent = value || "";
+        target.appendChild(row);
+      });
+    }
+
+    function lifeScoreParts() {
+      return [
+        { label: "Money", score: moneyHealthScore(), weight: .20, source: "Cash flow, savings, emergency fund, and daily money check." },
+        { label: "Nutrition", score: nutritionHealthScore(), weight: .18, source: "Calories, protein, fat, and food budget." },
+        { label: "Fitness", score: fitnessHealthScore(), weight: .18, source: "Workout target, steps, and logged workout minutes." },
+        { label: "Wellness", score: wellnessHealthScore(), weight: .18, source: "Sleep, water, mood, stress, and energy." },
+        { label: "Goals", score: goalCompletion(), weight: .16, source: "Average long-term goal progress." },
+        { label: "Daily checks", score: dailyCompletion(), weight: .10, source: "Budget, workout, water, and sleep checks." }
+      ].map(part => ({
+        ...part,
+        score: Math.max(0, Math.min(100, Math.round(cleanNumber(part.score)))),
+        contribution: cleanNumber(part.score) * part.weight
+      }));
+    }
+
+    function renderLifeScoreExplanation(context, top, chartStats) {
+      const target = document.getElementById("lifeScoreExplainList");
+      if (!target) return;
+      const score = context.lifeScore.score;
+      const change = cleanNumber(chartStats?.change);
+      const changeText = change > 0 ? `up ${Math.round(change)} points across the recent trend` : change < 0 ? `down ${Math.abs(Math.round(change))} points across the recent trend` : "holding steady across the recent trend";
+      const parts = lifeScoreParts();
+      const strongest = [...parts].sort((a, b) => b.contribution - a.contribution)[0];
+      const weakest = [...parts].sort((a, b) => a.score - b.score)[0];
+      const summary = document.getElementById("lifeScoreExplainSummary");
+      if (summary) summary.textContent = `Why ${score}`;
+      const rows = [
+        { label: "Formula", value: `${score}/100 from six weighted areas. The bars below show each current area score and weighted point impact.` },
+        { label: "Trend", value: `Life Score is ${changeText}.` },
+        { label: "Biggest lift", value: `${strongest.label} contributes about ${strongest.contribution.toFixed(1)} points right now.` },
+        { label: "Largest drag", value: `${weakest.label} is the lowest area at ${weakest.score}/100.` },
+        { label: "Fastest move", value: top?.action || recommendedFallbackAction(context.lifeScore.weakestArea) },
+        ...parts.map(part => ({
+          label: part.label,
+          value: `${part.score}/100`,
+          meta: `${Math.round(part.weight * 100)}% weight - ${part.contribution.toFixed(1)} pts`,
+          width: part.score,
+          factor: true
+        }))
+      ];
+      target.innerHTML = "";
+      rows.forEach(rowData => {
+        const row = document.createElement("div");
+        row.className = rowData.factor ? "tree-score-explain-row score-factor-row" : "tree-score-explain-row";
+        if (rowData.factor) {
+          row.innerHTML = `<div><span></span><strong></strong></div><em></em><div class="score-factor-bar"><i></i></div>`;
+          row.querySelector("span").textContent = rowData.label;
+          row.querySelector("strong").textContent = rowData.value;
+          row.querySelector("em").textContent = rowData.meta;
+          row.querySelector("i").style.setProperty("--score-width", `${Math.max(0, Math.min(100, cleanNumber(rowData.width)))}%`);
+        } else {
+          row.innerHTML = `<span></span><strong></strong>`;
+          row.querySelector("span").textContent = rowData.label;
+          row.querySelector("strong").textContent = rowData.value;
+        }
+        target.appendChild(row);
+      });
+      const scoreLabel = document.getElementById("todayScoreDelta");
+      if (scoreLabel && score < 60) scoreLabel.textContent = "Buildable";
+    }
+
+    function atlasIgnoredSignal(priorities) {
+      const ignored = priorities.slice(1, 3).map(item => `${item.category}: ${item.title}`);
+      if (!ignored.length) return "No stronger competing signal found.";
+      return priorities.length > 3 ? `${ignored.join("; ")}; view all in Atlas.` : ignored.join("; ");
+    }
+
+    function atlasChosenOverLabel(priorities) {
+      const top = priorities[0];
+      const next = priorities[1];
+      if (!top) return "Atlas needs more local records before it can compare priorities.";
+      if (!next) return "No other current signal is stronger than this action.";
+      const topUrgency = cleanNumber(top.urgency, 0, 10);
+      const nextUrgency = cleanNumber(next.urgency, 0, 10);
+      return `${top.category} outranks ${next.category} because it is ${topUrgency}/10 urgency versus ${nextUrgency}/10, with clearer evidence right now.`;
+    }
+
+    function atlasDependencyLabel(action) {
+      const category = String(action?.category || "").toLowerCase();
+      if (action?.incomplete) return action.incomplete;
+      if (category.includes("finance")) return "Open Money and confirm the bill, cash flow, or payment plan before adding new commitments.";
+      if (category.includes("nutrition")) return "Use a saved meal, grocery option, or food log so the budget and macro impact stays visible.";
+      if (category.includes("fitness")) return "Pick a realistic workout window or log the workout already completed.";
+      if (category.includes("wellness")) return "Update sleep, energy, stress, or water so Atlas can judge recovery more accurately.";
+      if (category.includes("education")) return "Open Education and confirm the next course, assignment, or deadline.";
+      if (category.includes("career")) return "Open Career and confirm the application, interview, resume, or follow-up status.";
+      if (category.includes("privacy")) return "Review the document label before sharing, exporting, or using voice output.";
+      if (category.includes("data")) return "Add one dated record, goal, meal, workout, or task so Atlas has enough local evidence.";
+      return "No blocker detected. This can be started from the related section.";
+    }
+
+    function atlasRiskLabel(action) {
+      const urgency = cleanNumber(action?.urgency ?? action?.severity ?? 0);
+      if (urgency >= 8) return "High";
+      if (urgency >= 5) return "Medium";
+      return "Low";
+    }
+
+    function atlasBenefitLabel(context, action) {
+      return Array.isArray(action?.impacts) && action.impacts.length
+        ? action.impacts.slice(0, 3).join(", ")
+        : `${context.lifeScore.weakestArea || "Momentum"}, planning, focus`;
+    }
+
+    function atlasOutcomeLabel(context, action) {
+      const impacts = Array.isArray(action?.impacts) ? action.impacts.filter(Boolean) : [];
+      const cleaned = impacts
+        .map(item => String(item).replace(/Life Score/gi, "momentum"))
+        .slice(0, 3);
+      if (cleaned.length) return `This should improve ${cleaned.join(", ").toLowerCase()} without adding extra noise.`;
+      return `This should improve clarity in ${String(context.lifeScore.weakestArea || "today's plan").toLowerCase()}.`;
+    }
+
+    function atlasAttentionReason(action) {
+      const found = action?.found || action?.title || "Atlas found one local signal that deserves attention.";
+      const why = action?.why || action?.reason || "It has the clearest impact right now.";
+      return `${found} ${why}`;
+    }
+
+    function renderAtlasCommandCenter(context, priorities, chartStats) {
+      const top = priorities[0] || atlasRecommendation();
+      const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+      };
+      const evidence = Array.isArray(top.evidence) && top.evidence.length
+        ? top.evidence.slice(0, 3).join("; ")
+        : top.meta || top.found || "Atlas is using the strongest available local signal.";
+      const confidence = top.confidence || context.confidence || "Medium";
+      const chosenOver = atlasChosenOverLabel(priorities);
+      const dependency = atlasDependencyLabel(top);
+      const outcome = atlasOutcomeLabel(context, top);
+      setText("atlasCommandConfidence", `${confidence} confidence`);
+      setText("atlasCommandAction", top.action || "Add one LifeOps record so Atlas can rank your next action.");
+      setText("atlasCommandReason", atlasAttentionReason(top));
+      setText("atlasCommandWhyNow", top.found || top.title || "This is the strongest current LifeOps signal.");
+      setText("atlasCommandEvidence", evidence);
+      setText("atlasCommandOutcome", outcome);
+      setText("atlasCommandChosenOver", chosenOver);
+      setText("atlasCommandDependency", dependency);
+      setText("atlasThinkingPriority", top.category || context.lifeScore.weakestArea || "Daily focus");
+      setText("atlasThinkingReason", top.found || top.title || "This is the strongest current LifeOps signal.");
+      setText("atlasThinkingIgnored", atlasIgnoredSignal(priorities));
+      setText("atlasThinkingEvidence", evidence);
+      setText("atlasThinkingFreshness", top.freshness || context.freshness || "Current local data");
+      setText("atlasCommandBenefit", atlasOutcomeLabel(context, top).replace(/^This should /, ""));
+      setText("atlasCommandTime", top.time || top.estimate || "8 minutes");
+      setText("atlasCommandRisk", atlasRiskLabel(top));
+      setText("atlasCommandConfidenceMetric", confidence);
+      setText("atlasThinkingBenefit", atlasBenefitLabel(context, top));
+      setText("atlasThinkingTime", top.time || top.estimate || "8 minutes");
+      setText("atlasThinkingRisk", atlasRiskLabel(top));
+      const start = document.getElementById("atlasCommandStartBtn");
+      if (start) start.dataset.openAtlasTab = top.tab || "dashboard";
+      renderLifeScoreExplanation(context, top, chartStats);
+      renderTreeCompactRows("atlasStatusList", atlasStatusRows(context, priorities, chartStats));
+      renderTreeCompactRows("atlasDailyBriefList", atlasDailyBriefRows(context, priorities));
+      renderTreeCompactRows("atlasDailyDebriefList", atlasDailyDebriefRows(context, priorities, chartStats));
+    }
+
+    function atlasStatusRows(context, priorities = evaluateAtlasPriorities(context), chartStats = scoreTrendStats(scoreTrendValues(14))) {
+      const top = priorities[0];
+      const change = cleanNumber(chartStats?.change);
+      const trend = change > 0 ? "Momentum is improving." : change < 0 ? "Momentum needs attention." : "Momentum is steady.";
+      return [
+        ["Mode", "Local only. No remote AI connection."],
+        ["State", `${top?.confidence || context.confidence || "Medium"} confidence. ${trend}`],
+        ["Watching", top?.category || context.lifeScore.weakestArea || "Daily focus"]
+      ];
+    }
+
+    function atlasDailyBriefRows(context, priorities = evaluateAtlasPriorities(context)) {
+      const top = priorities[0];
+      const upcoming = homeUpcomingItems().slice(0, 2);
+      const workoutText = context.fitness.hasWorkoutGoal
+        ? `${context.fitness.workoutsDone} of ${context.fitness.workoutGoal} workouts complete.`
+        : `${context.fitness.workoutsLogged} workout record${context.fitness.workoutsLogged === 1 ? "" : "s"} logged.`;
+      const cashText = context.finance.cashLeft < 0
+        ? "Cash flow needs attention before new commitments."
+        : context.finance.upcomingBills.length
+          ? "Cash flow is stable, but upcoming payments should stay visible."
+          : "Cash flow is stable based on current local entries.";
+      const display = displayName();
+      const nameLine = display ? `${timeGreeting()}, ${display}.` : `${timeGreeting()}.`;
+      const proteinLine = context.nutrition.hasTargets && context.nutrition.proteinRemaining > 0
+        ? `You are about ${Math.round(context.nutrition.proteinRemaining)}g short of your protein target.`
+        : "Nutrition is waiting for the next useful meal log.";
+      const upcomingLine = upcoming.length ? `Coming up: ${upcoming.map(item => item.title).join("; ")}.` : "No urgent dated items are crowding today.";
+      const actionText = String(top?.action || "choosing one realistic action").replace(/[.]+$/, "");
+      const reasonText = String(top?.why || "Atlas needs more local data to rank a stronger action.").replace(/[.]+$/, "");
+      return [
+        ["Brief", `${nameLine} Today's biggest opportunity is ${actionText}. ${reasonText}.`],
+        ["Signals", `${cashText} ${proteinLine} ${workoutText}`],
+        ["Upcoming", upcomingLine]
+      ];
+    }
+
+    function atlasDailyDebriefRows(context, priorities = evaluateAtlasPriorities(context), chartStats = scoreTrendStats(scoreTrendValues(14))) {
+      const completedTasks = state.tasks.filter(task => task.done).length;
+      const completedHabits = (state.dailyChecks || []).filter(check => check.done).length;
+      const change = cleanNumber(chartStats?.change);
+      const changeText = change > 0 ? `Life Score improved ${Math.round(change)} points.` : change < 0 ? `Life Score slipped ${Math.abs(Math.round(change))} points.` : "Life Score held steady.";
+      return [
+        ["Debrief", `You made progress today: ${completedTasks} task${completedTasks === 1 ? "" : "s"} and ${completedHabits} habit check${completedHabits === 1 ? "" : "s"} complete. ${changeText}`],
+        ["Recent win", recentWinText()],
+        ["Tomorrow", `The next best setup is: ${state.profile.tomorrowFocus || priorities[0]?.action || "set one realistic priority for tomorrow."}`]
+      ];
+    }
+
     function atlasRowsFromAction(action, context = getAtlasContext()) {
       return [
         ["What I found", action.found],
@@ -10558,27 +11590,121 @@
       return Math.max(0, Math.min(100, Math.round(cleanNumber(lookup[area], lifeScore()))));
     }
 
+    function dateSignal(date, fallback = "No date") {
+      const days = daysUntil(date);
+      if (!date) return fallback;
+      if (days === null) return `Date: ${date}`;
+      if (days < 0) return `${Math.abs(days)} day${Math.abs(days) === 1 ? "" : "s"} ago`;
+      if (days === 0) return "Today";
+      return `In ${days} day${days === 1 ? "" : "s"}`;
+    }
+
+    function areaMatch(value, terms) {
+      const text = String(value || "").toLowerCase();
+      return terms.some(term => text.includes(term.toLowerCase()));
+    }
+
+    function treeAreaTerms(area) {
+      return {
+        mind: ["Wellness", "Mind", "Mood", "Stress", "Sleep", "Focus"],
+        finance: ["Money", "Finance", "Bill", "Debt", "Savings", "Emergency"],
+        education: ["Education", "School", "Course", "Assignment", "Exam", "Learning"],
+        career: ["Career", "Job", "Interview", "Resume", "Portfolio", "Application"],
+        health: ["Health", "Fitness", "Nutrition", "Workout", "Meal", "Protein", "Steps"],
+        relationships: ["Relationships", "Family", "Friend", "Connection", "Shared"],
+        growth: ["Goals", "Growth", "Habit", "Reading", "Learning", "Milestone"],
+        foundation: ["Foundation", "Documents", "Housing", "Insurance", "Emergency", "Bills"]
+      }[area] || [];
+    }
+
+    function scoreBand(score) {
+      if (score >= 75) return "Stable";
+      if (score >= 60) return "Building";
+      if (score >= 45) return "Watch";
+      return "Needs attention";
+    }
+
     function treeAreaRows(area) {
       const config = treeAreaConfig[area] || treeAreaConfig.foundation;
-      const goals = state.goals.filter(goal => [config.category, config.title, "Personal"].includes(goal.area)).slice(0, 3);
-      const tasks = state.tasks.filter(task => task.area === config.category || task.area === config.title).slice(0, 3);
-      const recent = {
-        mind: [[`${state.profile.sleepHours || 0}h sleep`, "Latest wellness input"], [`Stress ${state.profile.stress || 0}/5`, "Current check-in"]],
-        finance: [[money(cashLeft()), "Estimated cash remaining"], [`${state.expenses.length} expense records`, "Bills and costs tracked"]],
-        education: [[`${state.educationCourses.length} courses`, "Course records"], [`${state.educationAssignments.length} assignments`, "Assignment records"]],
-        career: [[`${state.careerApplications.length} applications`, "Career pipeline"], [`${state.careerInterviews.length} interviews`, "Interview records"]],
-        health: [[`${state.workouts.length} workouts`, "Workout records"], [`${mealTotals().protein}g protein`, "Nutrition logged"]],
-        relationships: [[`${state.connections.length} connections`, "Local profiles"], [`${state.sharedGoals.length} shared goals`, "Sharing preview"]],
-        growth: [[`${state.goals.length} goals`, "Goal records"], [`${state.planActions.filter(action => action.done).length} actions done`, "Weekly actions"]],
-        foundation: [[`${state.documents.length} documents`, "Document references"], [`${state.expenses.filter(item => item.dueDate).length} dated bills`, "Core obligations"]]
-      }[area] || [];
+      const terms = treeAreaTerms(area);
+      const matchingGoals = state.goals
+        .filter(goal => areaMatch(goal.area, terms) || areaMatch(goal.name, terms))
+        .slice(0, 4);
+      const matchingTasks = state.tasks
+        .filter(task => areaMatch(task.area, terms) || areaMatch(task.name, terms))
+        .slice(0, 4);
+      const matchingActions = state.planActions
+        .filter(action => areaMatch(action.area, terms) || areaMatch(action.goal, terms) || areaMatch(action.name, terms))
+        .slice(0, 4);
+      const billRows = state.expenses
+        .filter(item => item.dueDate || ["Bill", "Debt Payment"].includes(item.type))
+        .sort((a, b) => (daysUntil(a.dueDate) ?? 9999) - (daysUntil(b.dueDate) ?? 9999))
+        .slice(0, 4)
+        .map(item => [item.name, `${item.type} / ${money(cleanNumber(item.amount))} / ${dateSignal(item.dueDate, "No due date")}`]);
+      const mealTotalsNow = mealTotals();
+      const activityByArea = {
+        mind: [
+          [`${cleanNumber(state.profile.sleepHours)}h sleep`, `Goal ${cleanNumber(state.profile.sleepGoal)}h / Stress ${cleanNumber(state.profile.stress)}/5`],
+          [`Mood ${cleanNumber(state.profile.mood)}/5`, `Energy ${cleanNumber(state.profile.energy)}/5 / Water ${cleanNumber(state.profile.waterCups)} cups`]
+        ],
+        finance: [
+          [money(cashLeft()), "Estimated monthly cash remaining"],
+          [`${state.expenses.length} expense records`, `${state.expenses.filter(item => item.dueDate).length} dated bill or payment records`],
+          ...billRows
+        ],
+        education: [
+          [`${state.educationCourses.length} courses`, "Course and learning path records"],
+          ...state.educationAssignments.slice(0, 3).map(item => [item.title, `${item.course || "Course not set"} / ${dateSignal(item.dueDate, "No due date")}`]),
+          ...state.educationGoals.slice(0, 2).map(item => [item.title, `${percent(item.progress)} complete / target ${item.targetDate || "not set"}`])
+        ],
+        career: [
+          [`${state.careerApplications.length} applications`, `${state.careerInterviews.length} interviews / ${state.careerSkills.length} skills`],
+          ...state.careerApplications.slice(0, 3).map(item => [item.company || item.position || "Career record", `${item.status || "Status not set"} / ${dateSignal(item.followUpDate, "No follow-up date")}`]),
+          ...state.careerGoals.slice(0, 2).map(item => [item.title, `${percent(item.progress)} complete / target ${item.targetDate || "not set"}`])
+        ],
+        health: [
+          [`${state.workouts.length} workouts`, `${cleanNumber(state.profile.workoutsDone)} of ${cleanNumber(state.profile.workoutGoal)} weekly target`],
+          [`${state.meals.length} meals`, `${Math.round(mealTotalsNow.protein)}g protein / ${money(mealTotalsNow.cost)} food cost`],
+          [`${cleanNumber(state.profile.stepsToday)} steps`, `Goal ${cleanNumber(state.profile.stepGoal)} steps today`]
+        ],
+        relationships: [
+          [`${state.connections.length} connection profiles`, "Local preview only"],
+          [`${state.sharedGoals.length} shared goals`, `${state.sharedLists.length} shared lists / ${state.sharedChallenges.length} challenges`],
+          ...state.sharedPlans.slice(0, 2).map(item => [item.title, `${item.privacy || "Only me"} / ${dateSignal(item.date, "No date")}`])
+        ],
+        growth: [
+          [`${state.goals.length} goals`, `${Math.round(goalCompletion())}% average progress`],
+          [`${state.planActions.filter(action => action.done).length} actions complete`, `${state.planActions.filter(action => !action.done).length} open weekly actions`],
+          ...state.timeline.slice(-2).reverse().map(item => [item.title, `${item.category || "Milestone"} / ${item.date || "No date"}`])
+        ],
+        foundation: [
+          [`${state.documents.length} document references`, `${state.documents.filter(item => item.sensitivity === "Sensitive").length} marked sensitive`],
+          [`${state.expenses.filter(item => item.dueDate).length} dated obligations`, `${contextualUpcomingCount()} important upcoming item${contextualUpcomingCount() === 1 ? "" : "s"}`],
+          ...billRows
+        ]
+      };
+      const recent = activityByArea[area] || [];
+      const goalRows = [
+        ...matchingGoals.map(goal => [goal.name, `${percent(goal.progress)} complete${goal.targetDate ? ` / target ${goal.targetDate}` : ""}`]),
+        ...matchingActions.map(action => [action.name, `${action.done ? "Complete" : "Open"} / ${action.impact || "Normal"} impact${action.deadline ? ` / ${dateSignal(action.deadline)}` : ""}`]),
+        ...matchingTasks.map(task => [task.name, task.done ? "Complete" : "Open task"])
+      ].slice(0, 6);
+      const openCount = [...matchingTasks, ...matchingActions].filter(item => !item.done).length + matchingGoals.filter(goal => cleanNumber(goal.progress) < 100).length;
       return {
         activity: recent.length ? recent : [["No recent activity", "Add one update to activate this area"]],
-        goals: [
-          ...goals.map(goal => [goal.name, `${goal.progress || 0}% complete`]),
-          ...tasks.map(task => [task.name, task.done ? "Complete" : "Open"])
-        ].slice(0, 5)
+        goals: goalRows,
+        openCount,
+        recentSignal: recent[0]?.[0] || "No signal yet",
+        privacy: area === "relationships" ? "Only me / local preview" : "Private by default"
       };
+    }
+
+    function treeAreaNarrative(area, score, rows) {
+      const config = treeAreaConfig[area] || treeAreaConfig.foundation;
+      const status = scoreBand(score);
+      const signal = rows.recentSignal || "local data";
+      const openText = rows.openCount === 1 ? "1 open item" : `${rows.openCount || 0} open items`;
+      return `${config.title} is ${status.toLowerCase()} at ${score}/100. Atlas is using ${signal} plus ${openText} to choose the next practical action.`;
     }
 
     function renderTreeDetailList(id, rows) {
@@ -10614,10 +11740,14 @@
       setText("treeDetailCategory", config.category);
       setText("treeDetailTitle", config.title);
       setText("treeDetailSubtitle", config.modules.join(", "));
+      setText("treeDetailNarrative", treeAreaNarrative(area, score, rows));
+      setText("treeDetailOpenWork", rows.openCount === 1 ? "1 item" : `${rows.openCount || 0} items`);
+      setText("treeDetailRecentSignal", rows.recentSignal || "No signal yet");
+      setText("treeDetailPrivacy", rows.privacy || "Private by default");
       setText("treeDetailScore", `${score}%`);
-      setText("treeDetailScoreMeta", score >= 70 ? "Stable area. Keep reinforcing it." : score >= 50 ? "Watch area. One update can improve clarity." : "Needs attention. Start with one small action.");
+      setText("treeDetailScoreMeta", `${scoreBand(score)} area. ${score >= 70 ? "Keep reinforcing what is working." : score >= 50 ? "One focused update can improve clarity." : "Start with one small action to regain control."}`);
       setText("treeDetailAction", config.action);
-      setText("treeDetailActionMeta", `Rule used: ${config.title} panel uses local score, recent records, goals, and open tasks.`);
+      setText("treeDetailActionMeta", `Rule used: ${config.title} uses local score, recent activity, dated records, goals, and open work.`);
       renderTreeDetailList("treeDetailActivity", rows.activity);
       renderTreeDetailList("treeDetailGoals", rows.goals);
       const addBtn = document.getElementById("treeDetailAddBtn");
@@ -10993,6 +12123,7 @@
       if (todayChartRange) todayChartRange.textContent = `${chartValues.length} point Life Score trend`;
       const todayChartHighLow = document.getElementById("todayScoreChartHighLow");
       if (todayChartHighLow) todayChartHighLow.textContent = `High ${Math.round(chartStats.high)} / Low ${Math.round(chartStats.low)}`;
+      renderAtlasCommandCenter(context, priorities, chartStats);
       renderLifeTreeDashboard(context, score, chartStats);
 
       const priorityList = document.getElementById("todayPriorityList");
@@ -11007,7 +12138,7 @@
             row.innerHTML = `<span class="tree-check"></span><div><strong></strong><small></small></div><span></span>`;
             row.querySelector(".tree-check").textContent = index === 0 ? "*" : "";
             row.querySelector("strong").textContent = priority.title;
-            row.querySelector("small").textContent = priority.time;
+            row.querySelector("small").textContent = `${priority.time} - urgency ${Math.round(cleanNumber(priority.urgency, 0))}/10`;
             row.querySelector("span:last-child").textContent = index === 0 ? "Now" : "";
             row.addEventListener("click", () => activateTab(priority.tab, sectionPrimary[priority.tab] || null));
             priorityList.appendChild(row);
@@ -15314,6 +16445,11 @@
     });
     document.getElementById("atlasCenterVoiceBtn")?.addEventListener("click", playMorningBriefing);
     document.getElementById("atlasCenterBriefingBtn")?.addEventListener("click", playMorningBriefing);
+    document.getElementById("atlasCommandAskBtn")?.addEventListener("click", () => setAtlasCenterPanel(true));
+    document.getElementById("atlasCommandStartBtn")?.addEventListener("click", event => {
+      const tab = event.currentTarget.dataset.openAtlasTab || evaluateAtlasPriorities(getAtlasContext())[0]?.tab || "dashboard";
+      activateTab(tab, sectionPrimary[tab] || null);
+    });
     document.querySelectorAll("[data-tree-area]").forEach(button => {
       button.addEventListener("click", () => setTreeDetailPanel(true, button.dataset.treeArea));
     });
@@ -15410,6 +16546,7 @@
       });
     });
     document.getElementById("todayOpenAtlasBtn")?.addEventListener("click", () => setCompanionDrawer(true));
+    document.getElementById("todayAskAtlasBtn")?.addEventListener("click", () => setAtlasCenterPanel(true));
     document.getElementById("todayStartActionBtn")?.addEventListener("click", () => {
       const priority = evaluateAtlasPriorities(getAtlasContext())[0];
       if (priority?.tab) activateTab(priority.tab, sectionPrimary[priority.tab] || null);

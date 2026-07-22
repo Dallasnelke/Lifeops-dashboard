@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.32.2`
+Current version: `v1.34.0`
 
 ## Mission
 
@@ -16,10 +16,12 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 
 - Premium black and gold LifeOps interface
 - Atlas companion experience with local rule-based recommendations
-- Interactive Life Tree with life categories
-- Life Score trend chart and score explanation
-- Atlas Thinking panel with priority, reason, evidence, freshness, expected benefit, estimated time, and risk
-- Dashboard focused on Life Score, Atlas recommendation, Today's Plan, Quick Add, finances, upcoming items, and weekly reflection
+- Atlas Command Engine focused on the highest-impact next action
+- Atlas Command 2.0 with a clearer "what deserves attention now" recommendation, why-now signal, local evidence, expected outcome, decision trace, effort, risk, dependency, confidence, and freshness
+- Interactive Life Tree with category side panels
+- Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
+- Life Score trend chart with visible weighted score explanation
+- Dashboard focused on Life Score, Atlas recommendation, Today's Plan, Quick Add, finances, upcoming items, and daily reflection
 - Finance tracking for income, expenses, bills, savings, emergency fund progress, and cash flow
 - Nutrition, meals, macros, food budget, wellness, workouts, steps, habits, and daily checks
 - Goals, tasks, weekly actions, history, trends, reports, export tools, and backup/restore
@@ -67,9 +69,7 @@ No external APIs, paid services, remote libraries, analytics, bank connections, 
 
 ## How To Run Locally
 
-Option 1: Open `index.html` or `lifeops-dashboard.html` directly in a browser.
-
-Option 2: Run the local preview server:
+Open `index.html` or `lifeops-dashboard.html` directly in a browser, or run:
 
 ```bash
 node lifeops-preview-server.js
@@ -83,7 +83,7 @@ http://127.0.0.1:4198/lifeops-dashboard.html
 
 ## Data Storage
 
-LifeOps stores current app data locally in the browser using `localStorage` under the app storage key used by the dashboard. Data stays on the current device unless the user exports a JSON backup.
+LifeOps stores current app data locally in the browser using `localStorage`. Data stays on the current device unless the user exports a JSON backup.
 
 Do not store passwords, banking credentials, Social Security numbers, medical credentials, health portal passwords, API keys, or access tokens in LifeOps.
 
@@ -91,7 +91,7 @@ Do not store passwords, banking credentials, Social Security numbers, medical cr
 
 - Use the in-app export tools to download a JSON backup.
 - Use import/restore to load a backup into the same browser or another browser.
-- Imported JSON is treated as user-controlled data and should be reviewed before replacing existing data.
+- Imported JSON should be reviewed before replacing existing data.
 - Old backups remain compatible because newer settings are optional and safe defaults are supplied when fields are missing.
 
 ## Privacy And Security
@@ -108,21 +108,9 @@ LifeOps is local-first in this version.
 
 Future public versions will need authentication, a secure backend, encryption planning, permission controls, OAuth review, privacy policy, terms, and platform-specific security work.
 
-## Mobile And App Store Considerations
-
-The current build is a responsive web prototype. A public mobile app would require additional work:
-
-- Mobile app wrapper or native implementation
-- App Store and Google Play compliance review
-- Secure account system
-- Cloud backups and sync
-- Accessibility review
-- Privacy labels and data disclosures
-- Health integration permissions if Apple Health, Health Connect, Fitbit, Garmin, or similar services are added
-
 ## Integrations Roadmap
 
-Planned integrations are shown as placeholders only. They are not connected yet.
+Planned integrations are placeholders only. They are not connected yet.
 
 - Calendar and tasks: Google Calendar, Apple Calendar, Microsoft Outlook, Google Tasks, Apple Reminders, Todoist
 - Health and fitness: Apple Health, Health Connect, Fitbit, Garmin, Strava
@@ -142,8 +130,8 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Development Roadmap
 
-1. Strengthen the Atlas-first dashboard around next best action, Life Score explanation, and Life Tree interaction.
-2. Add Atlas memory and history so the app can compare today, this week, and prior months.
+1. Strengthen Atlas memory, history comparison, and Life Score explanations.
+2. Expand Life Tree category panels into full module command centers.
 3. Split the single HTML file into maintainable modules when the product is stable enough.
 4. Add secure backend architecture for accounts, cloud backups, and private sync.
 5. Add real AI only after permissions, privacy, and data boundaries are clear.
@@ -157,6 +145,8 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Start the preview server and load the app
 - Navigate every primary section
 - Test dashboard, Atlas, Life Tree, right-side cards, and bottom navigation
+- Test Life Score explanation
+- Test each Life Tree category panel
 - Test add, edit, complete, and delete flows
 - Test export, import, reset, and old backup compatibility
 - Test empty data, invalid numbers, large numbers, missing JSON fields, and corrupted JSON
@@ -167,6 +157,11 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.34.0`: Upgraded Atlas Command into a stronger attention engine with a larger next-action hierarchy, clearer why-now/evidence/outcome signals, and a decision trace that explains what Atlas chose, what it ignored, effort, dependency, risk, confidence, and data freshness.
+- `v1.33.1`: Simplified the Atlas welcome and onboarding completion screens, removed the visible Life Score from the completion screen, and made the final launch moment feel calmer and more premium.
+- `v1.33.0`: Reframed the top dashboard as the Atlas Command Engine, emphasizing one highest-impact action with why-now reasoning, evidence, chosen-over comparison, dependencies, expected benefit, estimated effort, risk, confidence, and freshness.
+- `v1.32.4`: Fixed Life Score explanation row overlap in the narrow side panel.
+- `v1.32.3`: Made Atlas Thinking more visible, added expected benefit/time/risk into the reasoning panel, expanded Life Score into a weighted visible explanation, and upgraded Life Tree side panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity.
 - `v1.32.2`: Refined Atlas-first dashboard layout, centered premium Atlas orb, interactive Life Tree behavior, Life Score chart emphasis, black and gold visual polish, and current GitHub upload package.
 - `v1.31.x`: Premium dashboard polish, LifeOps branding, Atlas movement, and GitHub packaging iterations.
 - `v1.30.x`: Life Tree dashboard concept, Atlas center experience, startup and UI direction.
