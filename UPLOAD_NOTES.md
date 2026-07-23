@@ -1,6 +1,6 @@
 # LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v1.34.0`.
+Use this package as the clean GitHub base for LifeOps `v1.34.1`.
 
 ## Upload These
 
@@ -37,6 +37,6 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v1.34.0`
+Current packaged version: `v1.34.1`
 
-Package date: `2026-07-22`
+Package date: `2026-07-23`

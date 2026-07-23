@@ -1474,7 +1474,7 @@
     #atlasOnboardingFinal {
       text-align: center;
       place-items: center;
-      gap: 18px;
+      gap: 14px;
       padding: clamp(10px, 2vw, 18px) 0 0;
     }
 
@@ -1547,22 +1547,22 @@
     .atlas-ready-title {
       margin: 0;
       color: var(--text);
-      font-size: clamp(32px, 6vw, 58px);
+      font-size: clamp(34px, 5.4vw, 54px);
       line-height: 1;
       letter-spacing: 0;
       text-wrap: balance;
     }
 
     .atlas-ready-line {
-      margin: -4px 0 2px;
+      margin: -2px 0 2px;
       color: var(--muted);
-      font-size: clamp(15px, 2vw, 18px);
+      font-size: clamp(14px, 1.8vw, 17px);
       line-height: 1.45;
       max-width: 620px;
     }
 
     .atlas-ready-mission {
-      width: min(640px, 100%);
+      width: min(560px, 100%);
       border: 1px solid color-mix(in srgb, var(--primary) 26%, var(--border));
       border-radius: 22px;
       background:
@@ -1590,22 +1590,22 @@
     }
 
     .atlas-ready-chips {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      width: min(760px, 100%);
+      width: min(720px, 100%);
     }
 
     .atlas-ready-chip {
       display: grid;
       gap: 4px;
-      min-width: min(210px, 100%);
+      min-width: 0;
       padding: 12px 14px;
       border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
       border-radius: 16px;
       background: color-mix(in srgb, var(--card-bg) 84%, #000);
       text-align: left;
+      overflow: hidden;
     }
 
     .atlas-ready-chip span {
@@ -1620,11 +1620,17 @@
       color: var(--text);
       font-size: 13px;
       line-height: 1.35;
+      overflow-wrap: anywhere;
     }
 
     .atlas-ready-actions {
       justify-content: center !important;
       margin-top: 2px;
+      flex-wrap: wrap;
+    }
+
+    .atlas-ready-actions .btn {
+      min-width: 150px;
     }
 
     #atlasOnboardingInterview .split:first-child {
@@ -6591,7 +6597,8 @@
       }
 
       .onboarding-answer-grid.cols,
-      .onboarding-summary-grid {
+      .onboarding-summary-grid,
+      .atlas-ready-chips {
         grid-template-columns: 1fr;
       }
 
@@ -6832,10 +6839,10 @@
 
       <section id="atlasOnboardingWelcome">
         <div class="onboarding-kicker">Atlas</div>
-        <h1 class="onboarding-title" id="atlasOnboardingTitle">Let&apos;s find what matters next.</h1>
-        <p class="onboarding-copy" id="atlasOnboardingDescription">A short local setup helps Atlas shape your first command view.</p>
+        <h1 class="onboarding-title" id="atlasOnboardingTitle">Start with Atlas.</h1>
+        <p class="onboarding-copy" id="atlasOnboardingDescription">Answer a few questions. Skip anytime.</p>
         <div class="actions" style="justify-content: flex-start; margin-top: 20px;">
-          <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Begin</button>
+          <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Start</button>
           <button class="btn" id="learnMoreAtlasOnboardingBtn" type="button">Learn More</button>
           <button class="btn" id="skipAtlasOnboardingBtn" type="button">Skip for Now</button>
         </div>
@@ -6849,7 +6856,7 @@
           </div>
           <span class="pill" id="atlasTimeRemaining">About 5 min</span>
         </div>
-        <p class="onboarding-copy" id="atlasAcknowledgement">Atlas asks one question at a time and updates your local profile silently.</p>
+        <p class="onboarding-copy" id="atlasAcknowledgement">One question at a time. Local only.</p>
         <div class="onboarding-progress">
           <div class="split">
             <span class="item-meta" id="atlasProgressText">Step 1 of 1</span>
@@ -6884,11 +6891,11 @@
           <span class="brand-fallback" hidden>AT</span>
           <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
         </div>
-        <h2 class="atlas-ready-title">Atlas is ready.</h2>
-        <p class="atlas-ready-line">Your local system is prepared. Start with one focused move.</p>
+        <h2 class="atlas-ready-title">Ready.</h2>
+        <p class="atlas-ready-line">Start with one move.</p>
         <article class="atlas-ready-mission" aria-labelledby="atlasReadyMissionLabel">
           <span id="atlasReadyMissionLabel">First mission</span>
-          <strong id="atlasFinalFirstMission">Open LifeOps and choose one next action.</strong>
+          <strong id="atlasFinalFirstMission">Choose one next action.</strong>
         </article>
         <div class="atlas-ready-chips" id="atlasFinalSummary"></div>
         <div class="actions atlas-ready-actions">
@@ -9321,7 +9328,7 @@
   </div>
 
   <script>
-    const appVersion = "1.34.0";
+    const appVersion = "1.34.1";
     const storageKey = "lifeops-dashboard-v1";
     const state = loadState();
     const chatMessages = [];
@@ -10036,8 +10043,8 @@
       document.getElementById("atlasOnboardingSection").textContent = question.section;
       document.getElementById("atlasQuestionText").textContent = question.question;
       const pathLabel = onboarding.path === "deep" ? "Deep Personalization" : "Essential Setup";
-      document.getElementById("atlasProgressText").textContent = `${question.section} - ${onboarding.currentStep + 1} of ${questions.length}`;
-      document.getElementById("atlasTimeRemaining").textContent = onboarding.path === "deep" ? `Optional - ${Math.max(1, questions.length - onboarding.currentStep)} left` : pathLabel;
+      document.getElementById("atlasProgressText").textContent = `${question.section} ${onboarding.currentStep + 1}/${questions.length}`;
+      document.getElementById("atlasTimeRemaining").textContent = onboarding.path === "deep" ? `${Math.max(1, questions.length - onboarding.currentStep)} optional left` : pathLabel;
       document.getElementById("atlasProgressBar").style.width = percent(((onboarding.currentStep + 1) / questions.length) * 100);
       document.getElementById("atlasTranscript").textContent = onboarding.transcript || "Transcript will appear here.";
       document.getElementById("atlasBackBtn").disabled = onboarding.currentStep === 0;
@@ -10286,7 +10293,7 @@
       const question = currentAtlasQuestion();
       if (!skip && question) applyAtlasOnboardingAnswer(question);
       if (!skip) {
-        const acknowledgements = ["Great. I will use that to shape your dashboard.", "Thanks for sharing that. Next...", "Got it. Atlas is updating your operating system locally."];
+        const acknowledgements = ["Saved.", "Got it.", "Next."];
         document.getElementById("atlasAcknowledgement").textContent = acknowledgements[onboarding.currentStep % acknowledgements.length];
       }
       if (onboarding.currentStep >= atlasOnboardingQuestions().length - 1) {
@@ -10349,29 +10356,27 @@
 
     function atlasFirstMission(answers = atlasOnboarding().answers) {
       const priorities = Array.isArray(answers.priorities) ? answers.priorities : [];
-      if (priorities.includes("Money") || answers.financialGoal) return "Complete one money check today";
-      if (priorities.includes("Health") || priorities.includes("Fitness") || answers.nutritionGoals) return "Complete one health check today";
-      if (priorities.includes("Career") || answers.targetRole) return "Write one career next step";
-      if (priorities.includes("Education") || answers.learningGoals) return "Define one learning milestone";
-      return "Complete one LifeOps mission today";
+      if (priorities.includes("Money") || answers.financialGoal) return "Complete one money check";
+      if (priorities.includes("Health") || priorities.includes("Fitness") || answers.nutritionGoals) return "Complete one health check";
+      if (priorities.includes("Career") || answers.targetRole) return "Write one career step";
+      if (priorities.includes("Education") || answers.learningGoals) return "Set one learning step";
+      return "Choose one next action";
     }
 
     function renderAtlasFinalSummary() {
       const onboarding = atlasOnboarding();
       const answers = onboarding.answers;
       const priorities = Array.isArray(answers.priorities) ? answers.priorities : [];
-      const scoreEntries = scoreBreakdown().sort((a, b) => b[1] - a[1]);
-      const strongest = scoreEntries[0] ? `${scoreEntries[0][0]} (${Math.round(scoreEntries[0][1])})` : "Baseline planning";
-      const weakest = scoreEntries[scoreEntries.length - 1] ? `${scoreEntries[scoreEntries.length - 1][0]} (${Math.round(scoreEntries[scoreEntries.length - 1][1])})` : "More data needed";
-      const mission = answers.dailyStruggle ? `Build a calmer system for ${String(answers.dailyStruggle).slice(0, 80)}` : priorities.length ? `Improve ${priorities.slice(0, 3).join(", ")}` : "Build a useful daily operating system";
-      const modules = (onboarding.recommendedModules || []).join(", ") || "Dashboard, Goals, History, Atlas";
+      const modules = (onboarding.recommendedModules || [])
+        .slice(0, 4)
+        .map(module => String(module).replace(/-/g, " ").replace(/\b\w/g, letter => letter.toUpperCase()))
+        .join(", ") || "Dashboard, Goals, Atlas";
       const coachingStyle = answers.atlasInvolvement || state.companion?.coachingStyle || "Light guidance";
       const firstMission = atlasFirstMission(answers);
       const rows = [
-        ["Mission", mission],
         ["Priority", priorities.slice(0, 3).join(", ") || "Money, Health, Goals"],
         ["Atlas mode", coachingStyle],
-        ["Prepared", modules]
+        ["Ready", modules]
       ];
       const missionTarget = document.getElementById("atlasFinalFirstMission");
       if (missionTarget) missionTarget.textContent = firstMission;

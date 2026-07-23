@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.34.0`
+Current version: `v1.34.1`
 
 ## Mission
 
@@ -157,6 +157,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.34.1`: Polished Atlas onboarding completion with shorter launch copy, cleaner progress acknowledgements, tighter first-mission language, and responsive final summary chips to prevent cramped wrapping.
 - `v1.34.0`: Upgraded Atlas Command into a stronger attention engine with a larger next-action hierarchy, clearer why-now/evidence/outcome signals, and a decision trace that explains what Atlas chose, what it ignored, effort, dependency, risk, confidence, and data freshness.
 - `v1.33.1`: Simplified the Atlas welcome and onboarding completion screens, removed the visible Life Score from the completion screen, and made the final launch moment feel calmer and more premium.
 - `v1.33.0`: Reframed the top dashboard as the Atlas Command Engine, emphasizing one highest-impact action with why-now reasoning, evidence, chosen-over comparison, dependencies, expected benefit, estimated effort, risk, confidence, and freshness.
