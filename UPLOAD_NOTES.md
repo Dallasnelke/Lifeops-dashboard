@@ -1,6 +1,6 @@
 # LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v1.34.1`.
+Use this package as the clean GitHub base for LifeOps `v1.35.0`.
 
 ## Upload These
 
@@ -10,9 +10,12 @@ Upload the contents of this folder to the root of the GitHub repository:
 - `lifeops-dashboard.html`
 - `lifeops-preview-server.js`
 - `README.md`
+- `CHANGELOG.md`
 - `UPLOAD_NOTES.md`
 - `.gitignore`
 - `assets/brand/`
+- `css/`
+- `js/`
 
 Keep the `assets/brand` folder structure exactly the same so logo, favicon, and avatar paths continue working.
 
@@ -37,6 +40,6 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v1.34.1`
+Current packaged version: `v1.35.0`
 
 Package date: `2026-07-23`

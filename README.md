@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.34.1`
+Current version: `v1.35.0`
 
 ## Mission
 
@@ -40,20 +40,40 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 ├── lifeops-preview-server.js
 ├── README.md
 ├── UPLOAD_NOTES.md
+├── CHANGELOG.md
 ├── .gitignore
-└── assets/
-    └── brand/
-        ├── app-icon-192.png
-        ├── app-icon-512.png
-        ├── atlas-avatar-128.png
-        ├── atlas-avatar-256.png
-        ├── atlas-avatar.svg
-        ├── atlas-logo.svg
-        ├── atlas-logo-dark.svg
-        ├── favicon.svg
-        ├── lifeops-icon.svg
-        ├── lifeops-logo.svg
-        └── lifeops-logo-dark.svg
+├── assets/
+│   └── brand/
+├── css/
+│   ├── variables.css
+│   ├── base.css
+│   ├── layout.css
+│   ├── components.css
+│   ├── modules.css
+│   └── responsive.css
+└── js/
+    ├── app.js
+    ├── state.js
+    ├── storage.js
+    ├── navigation.js
+    ├── ui.js
+    ├── atlas/
+    │   ├── atlas-engine.js
+    │   ├── atlas-scoring.js
+    │   ├── atlas-recommendations.js
+    │   └── atlas-explanations.js
+    └── modules/
+        ├── dashboard.js
+        ├── finance.js
+        ├── health.js
+        ├── education.js
+        ├── career.js
+        ├── goals.js
+        ├── calendar.js
+        ├── documents.js
+        ├── relationships.js
+        ├── life-tree.js
+        └── settings.js
 ```
 
 ## Technology
@@ -64,6 +84,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - Browser `localStorage`
 - Local SVG and PNG brand assets
 - Optional local Node.js preview server
+- Local CSS and JavaScript files loaded directly by the browser
 
 No external APIs, paid services, remote libraries, analytics, bank connections, health integrations, or account systems are active in this version.
 
@@ -93,6 +114,8 @@ Do not store passwords, banking credentials, Social Security numbers, medical cr
 - Use import/restore to load a backup into the same browser or another browser.
 - Imported JSON should be reviewed before replacing existing data.
 - Old backups remain compatible because newer settings are optional and safe defaults are supplied when fields are missing.
+- Current storage key remains `lifeops-dashboard-v1`.
+- The Phase 2 modular split did not change the saved data shape. `js/app.js` still contains the active behavior-preserving application bundle; `js/state.js` and `js/storage.js` are prepared as Phase 3 extraction targets.
 
 ## Privacy And Security
 
@@ -132,7 +155,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 1. Strengthen Atlas memory, history comparison, and Life Score explanations.
 2. Expand Life Tree category panels into full module command centers.
-3. Split the single HTML file into maintainable modules when the product is stable enough.
+3. Move state and storage logic from `js/app.js` into `js/state.js` and `js/storage.js`.
 4. Add secure backend architecture for accounts, cloud backups, and private sync.
 5. Add real AI only after permissions, privacy, and data boundaries are clear.
 6. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
@@ -157,6 +180,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.35.0`: Completed Phase 1 audit and Phase 2 modular foundation. Extracted inline CSS into ordered local CSS files, moved the active JavaScript bundle into `js/app.js`, added future module boundary files, preserved `lifeops-dashboard-v1` storage compatibility, and added a changelog.
 - `v1.34.1`: Polished Atlas onboarding completion with shorter launch copy, cleaner progress acknowledgements, tighter first-mission language, and responsive final summary chips to prevent cramped wrapping.
 - `v1.34.0`: Upgraded Atlas Command into a stronger attention engine with a larger next-action hierarchy, clearer why-now/evidence/outcome signals, and a decision trace that explains what Atlas chose, what it ignored, effort, dependency, risk, confidence, and data freshness.
 - `v1.33.1`: Simplified the Atlas welcome and onboarding completion screens, removed the visible Life Score from the completion screen, and made the final launch moment feel calmer and more premium.
