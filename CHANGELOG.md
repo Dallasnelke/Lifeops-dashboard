@@ -1,5 +1,38 @@
 # LifeOps Changelog
 
+## v1.40.0 - Phase 5 Local Atlas Decision Engine
+
+Date: 2026-07-23
+
+### Added
+
+- Added `PHASE5_ATLAS_AUDIT.md`.
+- Added local Atlas modules for candidate types, evidence, module adapters, scoring, explanations, history, actions, engine orchestration, and recommendation compatibility.
+- Added normalized Atlas action candidates across finance, health, goals, education, career, calendar, documents, relationships, and setup completeness.
+- Added deterministic scoring with transparent weights for impact, urgency, risk, confidence, freshness, effort, and dependency readiness.
+- Added local Atlas action history and candidate preferences for completed, snoozed, and dismissed recommendations.
+- Added Atlas Command controls for completing, snoozing, dismissing, viewing alternatives, and recalculating recommendations.
+- Added `tests/atlas-phase5.test.js` with synthetic fixtures.
+
+### Changed
+
+- Atlas Command, Ask Atlas, and the legacy Atlas dashboard card now use the same local decision output.
+- Existing Atlas UI remains visually intact while the recommendation source is centralized in `js/atlas/`.
+- `index.html` and `lifeops-dashboard.html` now load Atlas modules before `js/app.js`.
+- App version updated to `v1.40.0`.
+
+### Preserved
+
+- Storage key remains `lifeops-dashboard-v1`.
+- Schema version remains `1`.
+- Old backups remain compatible; new Atlas fields are optional.
+- No remote AI, backend, authentication, cloud sync, OAuth, external API, or framework was added.
+
+### Notes
+
+- Atlas is still local deterministic intelligence, not a connected AI backend.
+- Life Score is used as one signal only; Atlas ranking also considers urgency, risk, impact, confidence, freshness, effort, and dependencies.
+
 ## v1.37.0 - Phase 4 Navigation, UI Infrastructure, and Controller Extraction
 
 Date: 2026-07-23

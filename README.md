@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.37.0`
+Current version: `v1.40.0`
 
 ## Mission
 
@@ -15,9 +15,9 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 ## Current Features
 
 - Premium black and gold LifeOps interface
-- Atlas companion experience with local rule-based recommendations
-- Atlas Command Engine focused on the highest-impact next action
-- Atlas Command 2.0 with a clearer "what deserves attention now" recommendation, why-now signal, local evidence, expected outcome, decision trace, effort, risk, dependency, confidence, and freshness
+- Atlas companion experience with a local deterministic decision engine
+- Atlas Decision Engine focused on the highest-impact next action
+- Atlas Command 2.0 with a clearer "what deserves attention now" recommendation, why-now signal, local evidence, expected outcome, decision trace, factor contributions, effort, risk, dependency, confidence, and freshness
 - Interactive Life Tree with category side panels
 - Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
 - Life Score trend chart with visible weighted score explanation
@@ -58,10 +58,15 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
     ├── navigation.js
     ├── ui.js
     ├── atlas/
-    │   ├── atlas-engine.js
+    │   ├── atlas-types.js
+    │   ├── atlas-evidence.js
+    │   ├── atlas-candidates.js
     │   ├── atlas-scoring.js
-    │   ├── atlas-recommendations.js
-    │   └── atlas-explanations.js
+    │   ├── atlas-explanations.js
+    │   ├── atlas-history.js
+    │   ├── atlas-actions.js
+    │   ├── atlas-engine.js
+    │   └── atlas-recommendations.js
     └── modules/
         ├── dashboard.js
         ├── finance.js
@@ -115,12 +120,29 @@ Do not store passwords, banking credentials, Social Security numbers, medical cr
 - Imported JSON should be reviewed before replacing existing data.
 - Old backups remain compatible because newer settings are optional and safe defaults are supplied when fields are missing.
 - Current storage key remains `lifeops-dashboard-v1`.
+- Optional Phase 5 fields `atlasHistory` and `atlasCandidateState` are included in new exports and safely default for old backups.
 - `js/state.js` now provides the centralized state interface.
 - `js/storage.js` now owns storage keys, safe parsing, loading, saving, schema detection, migration, import validation, export generation, rollback backups, reset, and storage failure handling.
 - `js/navigation.js` owns primary navigation, secondary tabs, active states, and page-header coordination.
 - `js/ui.js` owns shared formatting, reusable list/card rendering, and modal/focus helpers.
 - `js/modules/` contains the first behavior-preserving module controllers for settings, education, career, calendar, documents, and Life Tree controls.
-- `js/app.js` remains the application coordinator and still contains high-risk Atlas, Life Score, Life Tree rendering, startup/voice, and domain rendering logic until later extractions.
+- `js/atlas/` contains the Phase 5 local Atlas Decision Engine, candidate adapters, scoring, explanations, action logging, and local Atlas history helpers.
+- `js/app.js` remains the application coordinator and still contains Atlas UI rendering, Life Score, Life Tree rendering, startup/voice, and domain rendering logic until later extractions.
+
+## Atlas Decision Engine
+
+Atlas is local and deterministic in this version. It does not call a remote AI service.
+
+The Phase 5 engine:
+
+- Collects normalized action candidates from finance, health, goals, career, education, calendar, documents, relationships, and setup completeness.
+- Scores candidates using transparent weights for impact, urgency, risk, confidence, freshness, effort, and dependency readiness.
+- Excludes completed, dismissed, and actively snoozed recommendations.
+- Produces a top action, alternatives, ignored candidates, insufficient-data flags, setup recommendation, decision trace, and summary.
+- Logs only local action metadata in `atlasHistory`.
+- Stores snoozed, dismissed, and completed recommendation preferences in `atlasCandidateState`.
+
+Life Score is one signal Atlas can consider, but Atlas does not simply choose the lowest score area. Dated obligations, risk, impact, confidence, freshness, effort, and blockers also affect ranking.
 
 ## Privacy And Security
 
@@ -160,8 +182,8 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 1. Strengthen Atlas memory, history comparison, and Life Score explanations.
 2. Expand Life Tree category panels into full module command centers.
-3. Centralize Atlas candidate generation, scoring, and explanations into `js/atlas/`.
-4. Move dashboard and Life Tree rendering into module files gradually.
+3. Move dashboard and Life Tree rendering into module files gradually.
+4. Expand Atlas history comparison and memory summaries while keeping privacy controls clear.
 5. Add secure backend architecture for accounts, cloud backups, and private sync.
 6. Add real AI only after permissions, privacy, and data boundaries are clear.
 7. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
@@ -173,7 +195,9 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Open the app from `lifeops-dashboard.html`
 - Start the preview server and load the app
 - Run `node tests/storage-phase3.test.js`
+- Run `node tests/atlas-phase5.test.js`
 - Run `node tests/phase4-runtime-smoke.test.js` when available, or follow the Phase 4 browser smoke checklist in `PHASE4_EXTRACTION_AUDIT.md`
+- Test Atlas Command buttons: Do this now, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
 - Navigate every primary section
 - Test dashboard, Atlas, Life Tree, right-side cards, and bottom navigation
 - Test Life Score explanation
@@ -188,6 +212,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.40.0`: Completed Phase 5 local Atlas Decision Engine. Added `PHASE5_ATLAS_AUDIT.md`, normalized candidates, local candidate adapters, deterministic scoring, evidence helpers, explanations, local Atlas action history, candidate preference state, Atlas action controls, and synthetic Atlas tests. Schema version remains `1`; new Atlas fields are optional and old backups remain compatible.
 - `v1.37.0`: Completed Phase 4 navigation, UI infrastructure, and controller extraction. Added `PHASE4_EXTRACTION_AUDIT.md`, moved navigation ownership into `js/navigation.js`, moved shared UI helpers into `js/ui.js`, added guarded module controllers for settings, education, career, calendar, documents, and Life Tree, wrapped app startup in `bootstrapLifeOps()`, preserved schema version `1`, and kept Atlas Brain/dashboard redesign out of scope.
 - `v1.36.0`: Completed Phase 3 state and storage foundation. Added centralized `LifeOpsState` and `LifeOpsStorage` APIs, schema versioning, legacy-to-v1 migration, rollback/corrupt-data preservation, storage-owned import/export validation, reset handling, synthetic storage tests, and a Phase 3 audit document.
 - `v1.35.0`: Completed Phase 1 audit and Phase 2 modular foundation. Extracted inline CSS into ordered local CSS files, moved the active JavaScript bundle into `js/app.js`, added future module boundary files, preserved `lifeops-dashboard-v1` storage compatibility, and added a changelog.
