@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.36.0`
+Current version: `v1.37.0`
 
 ## Mission
 
@@ -117,7 +117,10 @@ Do not store passwords, banking credentials, Social Security numbers, medical cr
 - Current storage key remains `lifeops-dashboard-v1`.
 - `js/state.js` now provides the centralized state interface.
 - `js/storage.js` now owns storage keys, safe parsing, loading, saving, schema detection, migration, import validation, export generation, rollback backups, reset, and storage failure handling.
-- `js/app.js` still contains the active behavior-preserving application bundle and uses the state/storage APIs.
+- `js/navigation.js` owns primary navigation, secondary tabs, active states, and page-header coordination.
+- `js/ui.js` owns shared formatting, reusable list/card rendering, and modal/focus helpers.
+- `js/modules/` contains the first behavior-preserving module controllers for settings, education, career, calendar, documents, and Life Tree controls.
+- `js/app.js` remains the application coordinator and still contains high-risk Atlas, Life Score, Life Tree rendering, startup/voice, and domain rendering logic until later extractions.
 
 ## Privacy And Security
 
@@ -170,6 +173,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Open the app from `lifeops-dashboard.html`
 - Start the preview server and load the app
 - Run `node tests/storage-phase3.test.js`
+- Run `node tests/phase4-runtime-smoke.test.js` when available, or follow the Phase 4 browser smoke checklist in `PHASE4_EXTRACTION_AUDIT.md`
 - Navigate every primary section
 - Test dashboard, Atlas, Life Tree, right-side cards, and bottom navigation
 - Test Life Score explanation
@@ -184,6 +188,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.37.0`: Completed Phase 4 navigation, UI infrastructure, and controller extraction. Added `PHASE4_EXTRACTION_AUDIT.md`, moved navigation ownership into `js/navigation.js`, moved shared UI helpers into `js/ui.js`, added guarded module controllers for settings, education, career, calendar, documents, and Life Tree, wrapped app startup in `bootstrapLifeOps()`, preserved schema version `1`, and kept Atlas Brain/dashboard redesign out of scope.
 - `v1.36.0`: Completed Phase 3 state and storage foundation. Added centralized `LifeOpsState` and `LifeOpsStorage` APIs, schema versioning, legacy-to-v1 migration, rollback/corrupt-data preservation, storage-owned import/export validation, reset handling, synthetic storage tests, and a Phase 3 audit document.
 - `v1.35.0`: Completed Phase 1 audit and Phase 2 modular foundation. Extracted inline CSS into ordered local CSS files, moved the active JavaScript bundle into `js/app.js`, added future module boundary files, preserved `lifeops-dashboard-v1` storage compatibility, and added a changelog.
 - `v1.34.1`: Polished Atlas onboarding completion with shorter launch copy, cleaner progress acknowledgements, tighter first-mission language, and responsive final summary chips to prevent cramped wrapping.

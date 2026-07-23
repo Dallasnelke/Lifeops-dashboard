@@ -1,5 +1,36 @@
 # LifeOps Changelog
 
+## v1.37.0 - Phase 4 Navigation, UI Infrastructure, and Controller Extraction
+
+Date: 2026-07-23
+
+### Added
+
+- Added `PHASE4_EXTRACTION_AUDIT.md`.
+- Added `js/navigation.js` as the owner of primary navigation, secondary tabs, active states, and page-header rendering.
+- Added `js/ui.js` as the owner of shared formatting helpers, reusable list/card renderers, edit modal behavior, and modal focus trapping.
+- Added guarded module controllers for settings, education, career, calendar, documents, and Life Tree controls.
+- Added explicit `bootstrapLifeOps()`, shared-infrastructure initialization, and module-controller initialization.
+
+### Changed
+
+- `js/app.js` now delegates navigation to `LifeOpsNavigation`.
+- `js/app.js` now delegates shared UI helpers to `LifeOpsUI`.
+- Top-level startup is now coordinated through a guarded bootstrap function.
+- Stable module controls are initialized once through module-controller APIs instead of remaining as ungrouped app-level bindings.
+- `index.html` and `lifeops-dashboard.html` now load navigation, UI, and module-controller scripts before `js/app.js`.
+
+### Preserved
+
+- Storage key remains `lifeops-dashboard-v1`.
+- Schema version remains `1`.
+- Existing data, imports, exports, reset behavior, startup, voice controls, Atlas onboarding, Atlas command, Life Score, Life Tree, dashboard visuals, navigation labels, and module renderers are preserved.
+
+### Notes
+
+- Atlas Brain, dashboard redesign, Life Timeline expansion, integrations, cloud sync, and storage-schema changes were intentionally not included.
+- Some high-risk renderers and Atlas/Life Score logic remain in `js/app.js` until Phase 5.
+
 ## v1.36.0 - Phase 3 State, Storage, and Migration Foundation
 
 Date: 2026-07-23
