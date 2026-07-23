@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.35.0`
+Current version: `v1.36.0`
 
 ## Mission
 
@@ -115,7 +115,9 @@ Do not store passwords, banking credentials, Social Security numbers, medical cr
 - Imported JSON should be reviewed before replacing existing data.
 - Old backups remain compatible because newer settings are optional and safe defaults are supplied when fields are missing.
 - Current storage key remains `lifeops-dashboard-v1`.
-- The Phase 2 modular split did not change the saved data shape. `js/app.js` still contains the active behavior-preserving application bundle; `js/state.js` and `js/storage.js` are prepared as Phase 3 extraction targets.
+- `js/state.js` now provides the centralized state interface.
+- `js/storage.js` now owns storage keys, safe parsing, loading, saving, schema detection, migration, import validation, export generation, rollback backups, reset, and storage failure handling.
+- `js/app.js` still contains the active behavior-preserving application bundle and uses the state/storage APIs.
 
 ## Privacy And Security
 
@@ -155,17 +157,19 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 1. Strengthen Atlas memory, history comparison, and Life Score explanations.
 2. Expand Life Tree category panels into full module command centers.
-3. Move state and storage logic from `js/app.js` into `js/state.js` and `js/storage.js`.
-4. Add secure backend architecture for accounts, cloud backups, and private sync.
-5. Add real AI only after permissions, privacy, and data boundaries are clear.
-6. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
-7. Prepare a production deployment and mobile app strategy.
+3. Centralize Atlas candidate generation, scoring, and explanations into `js/atlas/`.
+4. Move dashboard and Life Tree rendering into module files gradually.
+5. Add secure backend architecture for accounts, cloud backups, and private sync.
+6. Add real AI only after permissions, privacy, and data boundaries are clear.
+7. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
+8. Prepare a production deployment and mobile app strategy.
 
 ## Testing Checklist
 
 - Open the app from `index.html`
 - Open the app from `lifeops-dashboard.html`
 - Start the preview server and load the app
+- Run `node tests/storage-phase3.test.js`
 - Navigate every primary section
 - Test dashboard, Atlas, Life Tree, right-side cards, and bottom navigation
 - Test Life Score explanation
@@ -180,6 +184,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.36.0`: Completed Phase 3 state and storage foundation. Added centralized `LifeOpsState` and `LifeOpsStorage` APIs, schema versioning, legacy-to-v1 migration, rollback/corrupt-data preservation, storage-owned import/export validation, reset handling, synthetic storage tests, and a Phase 3 audit document.
 - `v1.35.0`: Completed Phase 1 audit and Phase 2 modular foundation. Extracted inline CSS into ordered local CSS files, moved the active JavaScript bundle into `js/app.js`, added future module boundary files, preserved `lifeops-dashboard-v1` storage compatibility, and added a changelog.
 - `v1.34.1`: Polished Atlas onboarding completion with shorter launch copy, cleaner progress acknowledgements, tighter first-mission language, and responsive final summary chips to prevent cramped wrapping.
 - `v1.34.0`: Upgraded Atlas Command into a stronger attention engine with a larger next-action hierarchy, clearer why-now/evidence/outcome signals, and a decision trace that explains what Atlas chose, what it ignored, effort, dependency, risk, confidence, and data freshness.
