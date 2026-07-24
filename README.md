@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v2.0.0`
+Current version: `v2.10.0`
 
 ## Mission
 
@@ -24,6 +24,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - "How far I have come" local progress summary
 - Local Atlas Memory with user-controlled preferences, corrections, routines, constraints, conflict handling, sensitive/hidden controls, and privacy-safe summary export
 - Life Graph with local nodes, relationships, dependency analysis, leverage scoring, path inspection, privacy-safe export, and Atlas-visible relationship explanations
+- Atlas Command Center with durable local commands, source context, plan steps, work sessions, command history, alternatives, and before/after summaries
 - Atlas correction flow so users can tell Atlas when a recommendation used the wrong assumption
 - Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
 - Life Score trend chart with visible weighted score explanation
@@ -73,6 +74,15 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
     â”‚   â”œâ”€â”€ atlas-actions.js
     â”‚   â”œâ”€â”€ atlas-engine.js
     â”‚   â””â”€â”€ atlas-recommendations.js
+    â”œâ”€â”€ command/
+    â”‚   â”œâ”€â”€ command-types.js
+    â”‚   â”œâ”€â”€ command-context.js
+    â”‚   â”œâ”€â”€ command-plan.js
+    â”‚   â”œâ”€â”€ command-session.js
+    â”‚   â”œâ”€â”€ command-history.js
+    â”‚   â”œâ”€â”€ command-engine.js
+    â”‚   â”œâ”€â”€ command-actions.js
+    â”‚   â””â”€â”€ command-renderer.js
     â””â”€â”€ modules/
         â”œâ”€â”€ dashboard.js
         â”œâ”€â”€ finance.js
@@ -84,6 +94,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
         â”œâ”€â”€ documents.js
         â”œâ”€â”€ relationships.js
         â”œâ”€â”€ life-tree.js
+        â”œâ”€â”€ command-center.js
         â””â”€â”€ settings.js
 ```
 
@@ -151,7 +162,26 @@ The Life Graph includes:
 - Atlas integration that can add graph candidates and disclose which graph relationships influenced a recommendation.
 - Privacy-safe graph export that excludes hidden and sensitive relationships by default.
 
-Graph fields are optional in imports. Older backups migrate safely to schema version `2` by adding empty `graphNodes` and `graphEdges` arrays.
+Graph fields are optional in imports. Older backups migrate safely by adding empty `graphNodes` and `graphEdges` arrays.
+
+## Atlas Command Center
+
+Phase 9 adds a local Atlas Command Center. It does not use remote AI. It converts the current deterministic Atlas recommendation into a durable local command object with:
+
+- why now
+- expected outcome
+- expected benefit
+- evidence summary
+- graph, memory, timeline, and Life Score context
+- dependencies, blockers, unlocks, and alternatives
+- plan steps
+- optional local work session
+- command history
+- before/after result summary
+
+Command context is labeled as recorded fact, user confirmed, inference, stale, missing, or privacy excluded. This is intended to make Atlas feel useful while keeping recommendations auditable.
+
+Phase 9 updates storage to schema version `3` while preserving the existing `lifeops-dashboard-v1` localStorage key. Older backups migrate safely by adding optional `commandCenter` and `commandHistory` fields.
 ## Backup And Restore
 
 - Use the in-app export tools to download a JSON backup.
@@ -251,8 +281,9 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Run `node tests/timeline-phase6.test.js`
 - Run `node tests/memory-phase7.test.js`
 - Run `node tests/graph-phase8.test.js`
+- Run `node tests/command-phase9.test.js`
 - Run `node tests/phase4-runtime-smoke.test.js` when available, or follow the Phase 4 browser smoke checklist in `PHASE4_EXTRACTION_AUDIT.md`
-- Test Atlas Command buttons: Do this now, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
+- Test Atlas Command buttons: Do this now, Build Plan, Start Session, Pause, Resume, Stop, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
 - Test Timeline: add, edit, pin, hide, restore, delete, search, filters, proposals, copy summary, and hidden/sensitive behavior
 - Test Atlas Memory: add, edit, hide, disable, delete, filters, conflict handling, Correct Atlas, and privacy-safe export
 - Test Life Graph: visual graph, filters, manual relationship add/edit/confirm/hide/delete, selected-node explanation, Atlas graph influence, and privacy-safe export
@@ -270,6 +301,8 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v2.10.0`: Completed Phase 9 Atlas Command Center and graph-driven planning workspace. Added `PHASE9_COMMAND_CENTER_AUDIT.md`, `js/command/` modules, `js/modules/command-center.js`, durable `commandCenter` and `commandHistory` state, command context from Atlas, Life Graph, Atlas Memory, Timeline, Life Score, tasks, and plan actions, local plan steps, local work sessions, command history, before/after summaries, privacy-safe command export helpers, and `tests/command-phase9.test.js`. Storage schema is now `3`; old backups migrate safely from legacy/v1/v2 while keeping the same `lifeops-dashboard-v1` key.
+- `v2.0.0`: Completed Phase 8 local Life Graph and dependency intelligence. Added `PHASE8_LIFE_GRAPH_AUDIT.md`, `js/graph/` modules, `js/modules/graph.js`, graph source nodes, relationship edges, dependency analysis, path inspection, Atlas graph candidates, privacy-safe graph export, and `tests/graph-phase8.test.js`. Storage schema moved to `2`; old backups remain compatible.
 - `v1.60.0`: Completed Phase 7 Timeline modularization and local Atlas Memory privacy layer. Added `PHASE7_MEMORY_PRIVACY_AUDIT.md`, `js/memory/` modules, `js/modules/memory.js`, `js/timeline/timeline-renderer.js`, stronger Timeline privacy controls, Atlas correction memory flow, memory conflict resolution, Atlas memory influence explanations, privacy-safe summary export, and `tests/memory-phase7.test.js`. Schema version remains `1`; old backups remain compatible and missing `atlasMemory` safely defaults to an empty local memory list.
 - `v1.50.0`: Completed Phase 6 local-first Life Timeline and Progress Memory. Added `PHASE6_TIMELINE_AUDIT.md`, `js/timeline/` modules, `js/modules/timeline.js`, normalized Timeline events, optional `timelineProposals`, safe automatic events, proposal confirmation, Timeline filters/search/pinning/hide/restore/edit/delete, progress-memory observations, "How far I have come" summary, Timeline Atlas signal adapter, and synthetic Timeline tests. Schema version remains `1`; old Timeline records and old backups remain compatible.
 - `v1.40.0`: Completed Phase 5 local Atlas Decision Engine. Added `PHASE5_ATLAS_AUDIT.md`, normalized candidates, local candidate adapters, deterministic scoring, evidence helpers, explanations, local Atlas action history, candidate preference state, Atlas action controls, and synthetic Atlas tests. Schema version remains `1`; new Atlas fields are optional and old backups remain compatible.

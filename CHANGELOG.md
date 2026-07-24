@@ -1,5 +1,38 @@
-﻿# LifeOps Changelog
+# LifeOps Changelog
 
+## v2.10.0 - Phase 9 Atlas Command Center And Graph-Driven Planning Workspace
+
+Date: 2026-07-24
+
+### Added
+
+- Added `PHASE9_COMMAND_CENTER_AUDIT.md`.
+- Added `js/command/` modules for command types, context assembly, plan steps, work sessions, history, engine orchestration, actions, and rendering.
+- Added `js/modules/command-center.js` as the guarded Atlas Command Center module controller.
+- Added durable local `commandCenter` and `commandHistory` state.
+- Added command context from the Atlas Decision Engine, Life Graph, Atlas Memory, Life Timeline, Life Score, open tasks, and plan actions.
+- Added local command plan steps, work session lifecycle, command alternatives, command history, and before/after summaries.
+- Added privacy-safe command export helper behavior.
+- Added `tests/command-phase9.test.js`.
+
+### Changed
+
+- Storage schema is now `3` while preserving the existing `lifeops-dashboard-v1` storage key.
+- Legacy/no-schema backups migrate through schema `1`, schema `2`, and schema `3`.
+- Schema `2` backups migrate to schema `3` with optional `commandCenter` and `commandHistory` defaults.
+- The existing Atlas command card now renders a focused command workspace without changing the dashboard route or core business logic.
+- The app version is now `v2.10.0`.
+
+### Preserved
+
+- Existing dashboard, Atlas Decision Engine, Life Score, Life Tree, Timeline, Atlas Memory, Life Graph, import/export/reset, startup, voice, navigation, and module behavior are preserved.
+- No remote AI, backend, authentication, cloud sync, OAuth, external API, analytics, framework, or account system was added.
+
+### Notes
+
+- Atlas Command Center is deterministic local planning, not a remote AI assistant.
+- Command context is labeled as recorded fact, user confirmed, inference, stale, missing, or privacy excluded.
+- Sensitive details are not copied into command history by default.
 ## v2.0.0 - Phase 8 Local Life Graph And Dependency Intelligence
 
 Date: 2026-07-23
@@ -246,5 +279,6 @@ Date: 2026-07-23
 
 - This is a behavior-preserving modular foundation, not a full logic rewrite.
 - `js/app.js` remains the active app bundle. Later phases should move state, storage, Atlas scoring, navigation, and module renderers into the prepared files in controlled steps.
+
 
 
