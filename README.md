@@ -1,8 +1,8 @@
-# LifeOps
+﻿# LifeOps
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.60.0`
+Current version: `v2.0.0`
 
 ## Mission
 
@@ -23,6 +23,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - Timeline milestones with normalized event fields, filters, search, pinned items, hidden/sensitive controls, and proposed-event confirmation
 - "How far I have come" local progress summary
 - Local Atlas Memory with user-controlled preferences, corrections, routines, constraints, conflict handling, sensitive/hidden controls, and privacy-safe summary export
+- Life Graph with local nodes, relationships, dependency analysis, leverage scoring, path inspection, privacy-safe export, and Atlas-visible relationship explanations
 - Atlas correction flow so users can tell Atlas when a recommendation used the wrong assumption
 - Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
 - Life Score trend chart with visible weighted score explanation
@@ -40,50 +41,50 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 
 ```text
 .
-├── index.html
-├── lifeops-dashboard.html
-├── lifeops-preview-server.js
-├── README.md
-├── UPLOAD_NOTES.md
-├── CHANGELOG.md
-├── .gitignore
-├── assets/
-│   └── brand/
-├── css/
-│   ├── variables.css
-│   ├── base.css
-│   ├── layout.css
-│   ├── components.css
-│   ├── modules.css
-│   └── responsive.css
-└── js/
-    ├── app.js
-    ├── state.js
-    ├── storage.js
-    ├── navigation.js
-    ├── ui.js
-    ├── atlas/
-    │   ├── atlas-types.js
-    │   ├── atlas-evidence.js
-    │   ├── atlas-candidates.js
-    │   ├── atlas-scoring.js
-    │   ├── atlas-explanations.js
-    │   ├── atlas-history.js
-    │   ├── atlas-actions.js
-    │   ├── atlas-engine.js
-    │   └── atlas-recommendations.js
-    └── modules/
-        ├── dashboard.js
-        ├── finance.js
-        ├── health.js
-        ├── education.js
-        ├── career.js
-        ├── goals.js
-        ├── calendar.js
-        ├── documents.js
-        ├── relationships.js
-        ├── life-tree.js
-        └── settings.js
+â”œâ”€â”€ index.html
+â”œâ”€â”€ lifeops-dashboard.html
+â”œâ”€â”€ lifeops-preview-server.js
+â”œâ”€â”€ README.md
+â”œâ”€â”€ UPLOAD_NOTES.md
+â”œâ”€â”€ CHANGELOG.md
+â”œâ”€â”€ .gitignore
+â”œâ”€â”€ assets/
+â”‚   â””â”€â”€ brand/
+â”œâ”€â”€ css/
+â”‚   â”œâ”€â”€ variables.css
+â”‚   â”œâ”€â”€ base.css
+â”‚   â”œâ”€â”€ layout.css
+â”‚   â”œâ”€â”€ components.css
+â”‚   â”œâ”€â”€ modules.css
+â”‚   â””â”€â”€ responsive.css
+â””â”€â”€ js/
+    â”œâ”€â”€ app.js
+    â”œâ”€â”€ state.js
+    â”œâ”€â”€ storage.js
+    â”œâ”€â”€ navigation.js
+    â”œâ”€â”€ ui.js
+    â”œâ”€â”€ atlas/
+    â”‚   â”œâ”€â”€ atlas-types.js
+    â”‚   â”œâ”€â”€ atlas-evidence.js
+    â”‚   â”œâ”€â”€ atlas-candidates.js
+    â”‚   â”œâ”€â”€ atlas-scoring.js
+    â”‚   â”œâ”€â”€ atlas-explanations.js
+    â”‚   â”œâ”€â”€ atlas-history.js
+    â”‚   â”œâ”€â”€ atlas-actions.js
+    â”‚   â”œâ”€â”€ atlas-engine.js
+    â”‚   â””â”€â”€ atlas-recommendations.js
+    â””â”€â”€ modules/
+        â”œâ”€â”€ dashboard.js
+        â”œâ”€â”€ finance.js
+        â”œâ”€â”€ health.js
+        â”œâ”€â”€ education.js
+        â”œâ”€â”€ career.js
+        â”œâ”€â”€ goals.js
+        â”œâ”€â”€ calendar.js
+        â”œâ”€â”€ documents.js
+        â”œâ”€â”€ relationships.js
+        â”œâ”€â”€ life-tree.js
+        â””â”€â”€ settings.js
 ```
 
 ## Technology
@@ -136,6 +137,21 @@ Phase 7 adds a local Atlas Memory layer. Memories can store user-controlled pref
 
 Sensitive memories do not feed Atlas unless explicitly allowed. Hidden, disabled, expired, deleted, and superseded memories are excluded from Atlas. The privacy-safe summary export excludes sensitive, hidden, disabled, superseded, and export-blocked details.
 
+## Life Graph And Dependency Intelligence
+
+Phase 8 adds a local-first Life Graph. The graph is not a social graph and not a remote AI service. It is a deterministic relationship layer that helps Atlas understand how local goals, tasks, deadlines, milestones, documents, memory, and life areas connect.
+
+The Life Graph includes:
+
+- Normalized graph nodes for goals, tasks, plan actions, deadlines, education items, career items, calendar events, documents, milestones, Atlas Memory, and core life areas.
+- Normalized relationship edges such as supports, advances, depends on, blocks, prepares for, protects, evidence for, scheduled by, and part of.
+- Manual relationship creation, edit, confirm, hide, delete, and privacy controls.
+- Deterministic dependency analysis for blockers, cycles, orphan items, stale relationships, upstream/downstream paths, and leverage scoring.
+- A local visual graph view under More -> Life Graph.
+- Atlas integration that can add graph candidates and disclose which graph relationships influenced a recommendation.
+- Privacy-safe graph export that excludes hidden and sensitive relationships by default.
+
+Graph fields are optional in imports. Older backups migrate safely to schema version `2` by adding empty `graphNodes` and `graphEdges` arrays.
 ## Backup And Restore
 
 - Use the in-app export tools to download a JSON backup.
@@ -146,6 +162,7 @@ Sensitive memories do not feed Atlas unless explicitly allowed. Hidden, disabled
 - Optional Phase 5 fields `atlasHistory` and `atlasCandidateState` are included in new exports and safely default for old backups.
 - Optional Phase 6 field `timelineProposals` is included in new exports and safely defaults for old backups.
 - Optional Phase 7 field `atlasMemory` is included in new exports and safely defaults for old backups.
+- Phase 8 upgrades storage schema to `2` and adds optional `graphNodes` and `graphEdges` arrays. Old schema `1` and no-schema backups migrate automatically without changing the storage key.
 - `js/state.js` now provides the centralized state interface.
 - `js/storage.js` now owns storage keys, safe parsing, loading, saving, schema detection, migration, import validation, export generation, rollback backups, reset, and storage failure handling.
 - `js/navigation.js` owns primary navigation, secondary tabs, active states, and page-header coordination.
@@ -154,6 +171,8 @@ Sensitive memories do not feed Atlas unless explicitly allowed. Hidden, disabled
 - `js/atlas/` contains the Phase 5 local Atlas Decision Engine, candidate adapters, scoring, explanations, action logging, and local Atlas history helpers.
 - `js/timeline/` contains the Phase 6 local Timeline normalization, event generation, CRUD helpers, filtering, progress-memory insights, and Atlas-safe timeline signal.
 - `js/memory/` contains the Phase 7 local Atlas Memory normalization, actions, conflict resolution, memory engine, and renderer helpers.
+- `js/graph/` contains the Phase 8 local Life Graph types, normalization, source-node generation, inferred edges, analysis, actions, imports, engine facade, and renderer helpers.
+- `js/modules/graph.js` contains the guarded Life Graph module controller.
 - `js/app.js` remains the application coordinator and still contains Atlas UI rendering, Life Score, Life Tree rendering, startup/voice, and domain rendering logic until later extractions.
 
 ## Atlas Decision Engine
@@ -168,8 +187,8 @@ The Phase 5 engine:
 - Produces a top action, alternatives, ignored candidates, insufficient-data flags, setup recommendation, decision trace, and summary.
 - Logs only local action metadata in `atlasHistory`.
 - Stores snoozed, dismissed, and completed recommendation preferences in `atlasCandidateState`.
-- Reads concise Timeline signals and Atlas Memory only when the user-controlled privacy settings allow it.
-- Shows memory usage in Atlas explanation rows when a local memory affected recommendation ranking.
+- Reads concise Timeline signals, Atlas Memory, and Life Graph relationships only when user-controlled privacy settings allow it.
+- Shows memory and graph relationship usage in Atlas explanation rows when either local layer affected recommendation ranking.
 
 Life Score is one signal Atlas can consider, but Atlas does not simply choose the lowest score area. Dated obligations, risk, impact, confidence, freshness, effort, and blockers also affect ranking.
 
@@ -184,8 +203,8 @@ LifeOps is local-first in this version.
 - No real health integration is active.
 - No real OAuth integration is active.
 - No data is transmitted externally by the app.
-- Timeline events, Timeline proposals, Progress Memory, and Atlas Memory are stored locally in browser data and exported only when the user exports a JSON backup.
-- Privacy-safe summary export excludes sensitive, hidden, disabled, superseded, and export-blocked details.
+- Timeline events, Timeline proposals, Progress Memory, Atlas Memory, and Life Graph relationships are stored locally in browser data and exported only when the user exports a JSON backup.
+- Privacy-safe summary export excludes sensitive, hidden, disabled, superseded, export-blocked, and Atlas-blocked graph details.
 
 Future public versions will need authentication, a secure backend, encryption planning, permission controls, OAuth review, privacy policy, terms, and platform-specific security work.
 
@@ -209,18 +228,19 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Browser startup sound and speech can be blocked until a user interacts with the page.
 - Financial, medical, tax, and legal sections organize information only and do not provide professional advice.
 - Timeline dates depend on available local timestamps; older records without completion dates may use target dates or current local state.
+- Life Graph relationships are deterministic and inspectable, but inferred links are suggestions and should be reviewed by the user before being treated as confirmed dependencies.
 
 ## Development Roadmap
 
-1. Improve Atlas Memory review tools with stronger bulk cleanup and conflict explanations.
-2. Expand Timeline and Atlas Memory use in dashboard explanations while keeping hidden/sensitive exclusions strict.
-3. Move dashboard, Life Tree, and remaining Atlas UI rendering further out of `js/app.js`.
-4. Expand Life Tree category panels into full module command centers.
-5. Add secure backend architecture for accounts, cloud backups, and private sync.
-6. Add real AI only after permissions, privacy, and data boundaries are clear.
-7. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
-8. Prepare a production deployment and mobile app strategy.
-
+1. Build Phase 9 Atlas Brain UI on top of the local Life Graph, keeping every recommendation explainable and privacy-scoped.
+2. Improve Atlas Memory review tools with stronger bulk cleanup and conflict explanations.
+3. Expand Timeline, Atlas Memory, and Life Graph use in dashboard explanations while keeping hidden/sensitive exclusions strict.
+4. Move dashboard, Life Tree, and remaining Atlas UI rendering further out of `js/app.js`.
+5. Expand Life Tree category panels into full module command centers.
+6. Add secure backend architecture for accounts, cloud backups, and private sync.
+7. Add real AI only after permissions, privacy, and data boundaries are clear.
+8. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
+9. Prepare a production deployment and mobile app strategy.
 ## Testing Checklist
 
 - Open the app from `index.html`
@@ -230,10 +250,12 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Run `node tests/atlas-phase5.test.js`
 - Run `node tests/timeline-phase6.test.js`
 - Run `node tests/memory-phase7.test.js`
+- Run `node tests/graph-phase8.test.js`
 - Run `node tests/phase4-runtime-smoke.test.js` when available, or follow the Phase 4 browser smoke checklist in `PHASE4_EXTRACTION_AUDIT.md`
 - Test Atlas Command buttons: Do this now, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
 - Test Timeline: add, edit, pin, hide, restore, delete, search, filters, proposals, copy summary, and hidden/sensitive behavior
 - Test Atlas Memory: add, edit, hide, disable, delete, filters, conflict handling, Correct Atlas, and privacy-safe export
+- Test Life Graph: visual graph, filters, manual relationship add/edit/confirm/hide/delete, selected-node explanation, Atlas graph influence, and privacy-safe export
 - Navigate every primary section
 - Test dashboard, Atlas, Life Tree, right-side cards, and bottom navigation
 - Test Life Score explanation
@@ -283,3 +305,4 @@ Ads are not recommended for the core product because privacy and trust are major
 - Keep calculations transparent and explainable.
 - Avoid speculative investing, trading, gambling, or manipulative reward mechanics.
 - Keep the design calm, premium, accessible, and practical.
+

@@ -1,5 +1,38 @@
-# LifeOps Changelog
+﻿# LifeOps Changelog
 
+## v2.0.0 - Phase 8 Local Life Graph And Dependency Intelligence
+
+Date: 2026-07-23
+
+### Added
+
+- Added `PHASE8_LIFE_GRAPH_AUDIT.md`.
+- Added `js/graph/` modules for graph types, normalization, source-node generation, inferred edges, analysis, paths, actions, import validation, engine orchestration, and rendering.
+- Added `js/modules/graph.js` as the guarded Life Graph module controller.
+- Added a Life Graph section under More for visual graph review, filters, selected-item explanations, manual relationship creation, relationship management, and privacy-safe export.
+- Added graph source nodes for local goals, tasks, plan actions, expenses, education, career, calendar, documents, timeline events, Atlas Memory, and core life areas.
+- Added deterministic graph insights for blockers, cycles, orphan items, stale relationships, upstream/downstream paths, and leverage scoring.
+- Added Atlas graph candidates and graph relationship influence rows in Atlas explanations.
+- Added `tests/graph-phase8.test.js` and optional `tests/browser-phase8-smoke.js`.
+
+### Changed
+
+- Storage schema is now `2` while preserving the existing `lifeops-dashboard-v1` storage key.
+- Legacy/no-schema backups migrate to schema `1`, then schema `1` backups migrate to schema `2` with empty `graphNodes` and `graphEdges` arrays.
+- Future exports include optional `graphNodes` and `graphEdges` arrays.
+- Privacy-safe summary export can include a privacy-filtered graph summary.
+- The app version is now `v2.0.0`.
+
+### Preserved
+
+- Existing dashboard, Atlas Decision Engine, Life Score, Life Tree, Timeline, Atlas Memory, import/export/reset, startup, voice, navigation, and module behavior are preserved.
+- No remote AI, backend, authentication, cloud sync, OAuth, external API, analytics, framework, or account system was added.
+
+### Notes
+
+- Life Graph is local deterministic dependency intelligence, not a remote AI memory system.
+- Hidden and sensitive graph nodes or relationships are excluded from Atlas by default unless explicitly allowed.
+- Inferred graph relationships are explainable suggestions and can be confirmed, hidden, edited, or deleted by the user.
 ## v1.60.0 - Phase 7 Timeline Privacy And Local Atlas Memory
 
 Date: 2026-07-23
@@ -213,3 +246,5 @@ Date: 2026-07-23
 
 - This is a behavior-preserving modular foundation, not a full logic rewrite.
 - `js/app.js` remains the active app bundle. Later phases should move state, storage, Atlas scoring, navigation, and module renderers into the prepared files in controlled steps.
+
+

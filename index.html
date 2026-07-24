@@ -184,7 +184,7 @@
             <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
           </span>
         </button>
-        <span class="app-version" id="appVersionLabel">Version 1.60.0</span>
+        <span class="app-version" id="appVersionLabel">Version 2.0.0</span>
       </div>
     </aside>
 
@@ -316,6 +316,7 @@
               <button class="btn" data-open-tab="connections">Connections</button>
               <button class="btn" data-open-tab="privacy">Privacy Center</button>
               <button class="btn" data-open-tab="integrations">Integrations</button>
+              <button class="btn" data-open-tab="graph">Life Graph</button>
               <button class="btn" data-open-tab="history">History</button>
               <button class="btn" data-open-tab="reports">Reports</button>
               <button class="btn" data-open-tab="coach">LifeOps Coach</button>
@@ -412,7 +413,7 @@
           <article class="panel">
             <h3>Developer Tools</h3>
             <div class="list">
-              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 1.60.0</div></div></div>
+              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.0.0</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Implementation</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -2119,6 +2120,65 @@
         </div>
       </section>
 
+      <section id="graph" class="tab">
+        <div class="section-heading">
+          <div>
+            <h2>Life Graph</h2>
+            <p>See how goals, tasks, milestones, decisions, memory, deadlines, and life areas connect locally.</p>
+          </div>
+          <button class="btn" id="exportGraphSafeBtn" type="button">Export Safe Graph</button>
+        </div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Visual Graph</h3>
+            <p class="about-lede">A limited neighborhood view. Use the relationship list for the complete accessible fallback.</p>
+            <input id="graphSelectedNodeInput" type="hidden">
+            <div id="graphVisual" class="graph-visual" aria-live="polite"></div>
+          </article>
+          <article class="panel">
+            <h3>Graph Explanation</h3>
+            <div id="graphSummaryList" class="list"></div>
+            <h3 style="margin-top: 18px;">Selected Item</h3>
+            <div id="graphSelectedList" class="list"></div>
+          </article>
+        </div>
+        <div class="grid cols-2" style="margin-top: 16px;">
+          <article class="panel">
+            <h3>Connect Two Items</h3>
+            <p class="about-lede">Create a confirmed local relationship. Atlas can use it only if you allow it.</p>
+            <div class="form-grid" style="margin-top: 12px;">
+              <label class="wide">From item<select id="graphFromNodeInput"><option value="">Choose source item</option></select></label>
+              <label class="wide">To item<select id="graphToNodeInput"><option value="">Choose connected item</option></select></label>
+              <label>Relationship<select id="graphRelationshipTypeInput"><option value="supports">supports</option><option value="advances">advances</option><option value="depends_on">depends on</option><option value="blocks">blocks</option><option value="prepares_for">prepares for</option><option value="protects">protects</option><option value="related_to">related to</option><option value="part_of">part of</option></select></label>
+              <label>Strength<input id="graphStrengthInput" type="number" min="0" max="1" step="0.05" value="0.6"></label>
+              <label>Confidence<input id="graphConfidenceInput" type="number" min="0" max="1" step="0.05" value="0.7"></label>
+              <label class="wide">Explanation<textarea id="graphExplanationInput" maxlength="260" placeholder="Example: This task unlocks the portfolio goal."></textarea></label>
+              <label class="check-row"><input id="graphSensitiveInput" type="checkbox">Sensitive relationship</label>
+              <label class="check-row"><input id="graphHiddenInput" type="checkbox">Hide relationship</label>
+              <label class="check-row"><input id="graphAllowAtlasInput" type="checkbox" checked>Allow Atlas to use</label>
+              <button class="btn primary" id="addGraphRelationshipBtn" type="button">Add Relationship</button>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Graph Insights</h3>
+            <div id="graphInsightList" class="list"></div>
+            <h3 style="margin-top: 18px;">Leverage Weights</h3>
+            <div id="graphWeightsList" class="list"></div>
+          </article>
+        </div>
+        <article class="panel" style="margin-top: 16px;">
+          <h3>Relationship List</h3>
+          <div class="form-grid" style="margin-bottom: 12px;">
+            <label class="wide">Search<input id="graphSearchInput" placeholder="Search graph items and relationships"></label>
+            <label>Node type<select id="graphNodeTypeFilter"><option value="">All node types</option></select></label>
+            <label>Category<select id="graphCategoryFilter"><option value="">All categories</option></select></label>
+            <label>Relationship<select id="graphRelationshipFilter"><option value="">All relationships</option></select></label>
+            <label>Status<select id="graphStatusFilter"><option value="">All</option><option value="confirmed">Confirmed</option><option value="inferred">Inferred</option><option value="blocked">Blocked</option><option value="hidden">Hidden</option></select></label>
+            <label>Atlas use<select id="graphAtlasFilter"><option value="">All</option><option value="allowed">Allowed</option><option value="blocked">Blocked</option></select></label>
+          </div>
+          <div id="graphRelationshipList" class="timeline-list"></div>
+        </article>
+      </section>
       <section id="memory" class="tab">
         <div class="section-heading">
           <div>
@@ -2778,6 +2838,17 @@
   <script src="js/memory/memory-engine.js"></script>
   <script src="js/memory/memory-renderer.js"></script>
   <script src="js/modules/memory.js"></script>
+  <script src="js/graph/graph-types.js"></script>
+  <script src="js/graph/graph-normalization.js"></script>
+  <script src="js/graph/graph-nodes.js"></script>
+  <script src="js/graph/graph-edges.js"></script>
+  <script src="js/graph/graph-analysis.js"></script>
+  <script src="js/graph/graph-paths.js"></script>
+  <script src="js/graph/graph-actions.js"></script>
+  <script src="js/graph/graph-import.js"></script>
+  <script src="js/graph/graph-engine.js"></script>
+  <script src="js/graph/graph-renderer.js"></script>
+  <script src="js/modules/graph.js"></script>
   <script src="js/atlas/atlas-types.js"></script>
   <script src="js/atlas/atlas-evidence.js"></script>
   <script src="js/atlas/atlas-candidates.js"></script>
