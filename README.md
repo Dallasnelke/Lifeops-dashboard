@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v1.40.0`
+Current version: `v1.60.0`
 
 ## Mission
 
@@ -19,6 +19,11 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - Atlas Decision Engine focused on the highest-impact next action
 - Atlas Command 2.0 with a clearer "what deserves attention now" recommendation, why-now signal, local evidence, expected outcome, decision trace, factor contributions, effort, risk, dependency, confidence, and freshness
 - Interactive Life Tree with category side panels
+- Local-first Life Timeline and Progress Memory system
+- Timeline milestones with normalized event fields, filters, search, pinned items, hidden/sensitive controls, and proposed-event confirmation
+- "How far I have come" local progress summary
+- Local Atlas Memory with user-controlled preferences, corrections, routines, constraints, conflict handling, sensitive/hidden controls, and privacy-safe summary export
+- Atlas correction flow so users can tell Atlas when a recommendation used the wrong assumption
 - Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
 - Life Score trend chart with visible weighted score explanation
 - Dashboard focused on Life Score, Atlas recommendation, Today's Plan, Quick Add, finances, upcoming items, and daily reflection
@@ -113,6 +118,24 @@ LifeOps stores current app data locally in the browser using `localStorage`. Dat
 
 Do not store passwords, banking credentials, Social Security numbers, medical credentials, health portal passwords, API keys, or access tokens in LifeOps.
 
+## Life Timeline, Progress Memory, And Atlas Memory
+
+The Phase 6 Timeline is local-first memory, not a social feed or full activity log.
+
+Timeline events are normalized with fields for date, title, description, category, source module, event type, significance, direction, status, related goal or decision, related Life Score, tags, evidence summary, user confirmation, automatic status, sensitive flag, pinned flag, hidden flag, and metadata.
+
+The Timeline supports add, edit, delete, hide, restore, pin, filters, search, suggested milestones, pinned milestones, progress observations, and a copyable "How far I have come" summary.
+
+Automatic events are intentionally sparse. LifeOps may create safe broad events such as completed goals, onboarding completed, emergency fund target reached, selected career or education milestones, completed Atlas actions, and Life Score threshold crossings. Sensitive or uncertain events become proposals instead of being published automatically.
+
+Timeline observations are labeled as patterns or observations. They do not diagnose behavior and do not claim that one event caused another.
+
+Hidden events do not appear in default views and are excluded from Atlas and progress summaries. Sensitive events are excluded from Atlas by default and show limited details in summaries unless the user explicitly allows a specific item.
+
+Phase 7 adds a local Atlas Memory layer. Memories can store user-controlled preferences, corrections, stable facts, routines, temporary context, constraints, communication preferences, milestone summaries, and user instructions. Atlas Memory stays local, supports hidden and sensitive flags, resolves simple conflicts, and exposes which memories influenced a recommendation.
+
+Sensitive memories do not feed Atlas unless explicitly allowed. Hidden, disabled, expired, deleted, and superseded memories are excluded from Atlas. The privacy-safe summary export excludes sensitive, hidden, disabled, superseded, and export-blocked details.
+
 ## Backup And Restore
 
 - Use the in-app export tools to download a JSON backup.
@@ -121,12 +144,16 @@ Do not store passwords, banking credentials, Social Security numbers, medical cr
 - Old backups remain compatible because newer settings are optional and safe defaults are supplied when fields are missing.
 - Current storage key remains `lifeops-dashboard-v1`.
 - Optional Phase 5 fields `atlasHistory` and `atlasCandidateState` are included in new exports and safely default for old backups.
+- Optional Phase 6 field `timelineProposals` is included in new exports and safely defaults for old backups.
+- Optional Phase 7 field `atlasMemory` is included in new exports and safely defaults for old backups.
 - `js/state.js` now provides the centralized state interface.
 - `js/storage.js` now owns storage keys, safe parsing, loading, saving, schema detection, migration, import validation, export generation, rollback backups, reset, and storage failure handling.
 - `js/navigation.js` owns primary navigation, secondary tabs, active states, and page-header coordination.
 - `js/ui.js` owns shared formatting, reusable list/card rendering, and modal/focus helpers.
 - `js/modules/` contains the first behavior-preserving module controllers for settings, education, career, calendar, documents, and Life Tree controls.
 - `js/atlas/` contains the Phase 5 local Atlas Decision Engine, candidate adapters, scoring, explanations, action logging, and local Atlas history helpers.
+- `js/timeline/` contains the Phase 6 local Timeline normalization, event generation, CRUD helpers, filtering, progress-memory insights, and Atlas-safe timeline signal.
+- `js/memory/` contains the Phase 7 local Atlas Memory normalization, actions, conflict resolution, memory engine, and renderer helpers.
 - `js/app.js` remains the application coordinator and still contains Atlas UI rendering, Life Score, Life Tree rendering, startup/voice, and domain rendering logic until later extractions.
 
 ## Atlas Decision Engine
@@ -141,6 +168,8 @@ The Phase 5 engine:
 - Produces a top action, alternatives, ignored candidates, insufficient-data flags, setup recommendation, decision trace, and summary.
 - Logs only local action metadata in `atlasHistory`.
 - Stores snoozed, dismissed, and completed recommendation preferences in `atlasCandidateState`.
+- Reads concise Timeline signals and Atlas Memory only when the user-controlled privacy settings allow it.
+- Shows memory usage in Atlas explanation rows when a local memory affected recommendation ranking.
 
 Life Score is one signal Atlas can consider, but Atlas does not simply choose the lowest score area. Dated obligations, risk, impact, confidence, freshness, effort, and blockers also affect ranking.
 
@@ -155,6 +184,8 @@ LifeOps is local-first in this version.
 - No real health integration is active.
 - No real OAuth integration is active.
 - No data is transmitted externally by the app.
+- Timeline events, Timeline proposals, Progress Memory, and Atlas Memory are stored locally in browser data and exported only when the user exports a JSON backup.
+- Privacy-safe summary export excludes sensitive, hidden, disabled, superseded, and export-blocked details.
 
 Future public versions will need authentication, a secure backend, encryption planning, permission controls, OAuth review, privacy policy, terms, and platform-specific security work.
 
@@ -171,19 +202,20 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Known Limitations
 
-- Single-file app architecture is convenient but will become harder to maintain as features grow.
+- The app is now split across local CSS and JavaScript modules, but `js/app.js` still contains a large amount of UI orchestration.
 - Atlas is rule-based locally, not a real AI backend.
 - No real accounts, cloud sync, or multi-device backup.
 - Sharing and integrations are local prototypes only.
 - Browser startup sound and speech can be blocked until a user interacts with the page.
 - Financial, medical, tax, and legal sections organize information only and do not provide professional advice.
+- Timeline dates depend on available local timestamps; older records without completion dates may use target dates or current local state.
 
 ## Development Roadmap
 
-1. Strengthen Atlas memory, history comparison, and Life Score explanations.
-2. Expand Life Tree category panels into full module command centers.
-3. Move dashboard and Life Tree rendering into module files gradually.
-4. Expand Atlas history comparison and memory summaries while keeping privacy controls clear.
+1. Improve Atlas Memory review tools with stronger bulk cleanup and conflict explanations.
+2. Expand Timeline and Atlas Memory use in dashboard explanations while keeping hidden/sensitive exclusions strict.
+3. Move dashboard, Life Tree, and remaining Atlas UI rendering further out of `js/app.js`.
+4. Expand Life Tree category panels into full module command centers.
 5. Add secure backend architecture for accounts, cloud backups, and private sync.
 6. Add real AI only after permissions, privacy, and data boundaries are clear.
 7. Add OAuth integrations gradually, starting with lower-risk calendar and task data.
@@ -196,8 +228,12 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Start the preview server and load the app
 - Run `node tests/storage-phase3.test.js`
 - Run `node tests/atlas-phase5.test.js`
+- Run `node tests/timeline-phase6.test.js`
+- Run `node tests/memory-phase7.test.js`
 - Run `node tests/phase4-runtime-smoke.test.js` when available, or follow the Phase 4 browser smoke checklist in `PHASE4_EXTRACTION_AUDIT.md`
 - Test Atlas Command buttons: Do this now, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
+- Test Timeline: add, edit, pin, hide, restore, delete, search, filters, proposals, copy summary, and hidden/sensitive behavior
+- Test Atlas Memory: add, edit, hide, disable, delete, filters, conflict handling, Correct Atlas, and privacy-safe export
 - Navigate every primary section
 - Test dashboard, Atlas, Life Tree, right-side cards, and bottom navigation
 - Test Life Score explanation
@@ -212,6 +248,8 @@ Real integrations require secure authentication, user consent, OAuth where appli
 
 ## Version History
 
+- `v1.60.0`: Completed Phase 7 Timeline modularization and local Atlas Memory privacy layer. Added `PHASE7_MEMORY_PRIVACY_AUDIT.md`, `js/memory/` modules, `js/modules/memory.js`, `js/timeline/timeline-renderer.js`, stronger Timeline privacy controls, Atlas correction memory flow, memory conflict resolution, Atlas memory influence explanations, privacy-safe summary export, and `tests/memory-phase7.test.js`. Schema version remains `1`; old backups remain compatible and missing `atlasMemory` safely defaults to an empty local memory list.
+- `v1.50.0`: Completed Phase 6 local-first Life Timeline and Progress Memory. Added `PHASE6_TIMELINE_AUDIT.md`, `js/timeline/` modules, `js/modules/timeline.js`, normalized Timeline events, optional `timelineProposals`, safe automatic events, proposal confirmation, Timeline filters/search/pinning/hide/restore/edit/delete, progress-memory observations, "How far I have come" summary, Timeline Atlas signal adapter, and synthetic Timeline tests. Schema version remains `1`; old Timeline records and old backups remain compatible.
 - `v1.40.0`: Completed Phase 5 local Atlas Decision Engine. Added `PHASE5_ATLAS_AUDIT.md`, normalized candidates, local candidate adapters, deterministic scoring, evidence helpers, explanations, local Atlas action history, candidate preference state, Atlas action controls, and synthetic Atlas tests. Schema version remains `1`; new Atlas fields are optional and old backups remain compatible.
 - `v1.37.0`: Completed Phase 4 navigation, UI infrastructure, and controller extraction. Added `PHASE4_EXTRACTION_AUDIT.md`, moved navigation ownership into `js/navigation.js`, moved shared UI helpers into `js/ui.js`, added guarded module controllers for settings, education, career, calendar, documents, and Life Tree, wrapped app startup in `bootstrapLifeOps()`, preserved schema version `1`, and kept Atlas Brain/dashboard redesign out of scope.
 - `v1.36.0`: Completed Phase 3 state and storage foundation. Added centralized `LifeOpsState` and `LifeOpsStorage` APIs, schema versioning, legacy-to-v1 migration, rollback/corrupt-data preservation, storage-owned import/export validation, reset handling, synthetic storage tests, and a Phase 3 audit document.

@@ -1,6 +1,6 @@
 # LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v1.40.0`.
+Use this package as the clean GitHub base for LifeOps `v1.60.0`.
 
 ## Upload These
 
@@ -14,6 +14,8 @@ Upload the contents of this folder to the root of the GitHub repository:
 - `PHASE3_STORAGE_AUDIT.md`
 - `PHASE4_EXTRACTION_AUDIT.md`
 - `PHASE5_ATLAS_AUDIT.md`
+- `PHASE6_TIMELINE_AUDIT.md`
+- `PHASE7_MEMORY_PRIVACY_AUDIT.md`
 - `UPLOAD_NOTES.md`
 - `.gitignore`
 - `assets/brand/`
@@ -44,6 +46,6 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v1.40.0`
+Current packaged version: `v1.60.0`
 
 Package date: `2026-07-23`

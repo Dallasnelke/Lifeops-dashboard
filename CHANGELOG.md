@@ -1,5 +1,77 @@
 # LifeOps Changelog
 
+## v1.60.0 - Phase 7 Timeline Privacy And Local Atlas Memory
+
+Date: 2026-07-23
+
+### Added
+
+- Added `PHASE7_MEMORY_PRIVACY_AUDIT.md`.
+- Added `js/timeline/timeline-renderer.js` and moved Timeline DOM rendering, filters, privacy summaries, form parsing, proposal rendering, and Home preview rendering out of `js/app.js`.
+- Added `js/memory/` modules for Atlas Memory normalization, actions, conflict resolution, memory engine behavior, and rendering.
+- Added `js/modules/memory.js` as the guarded Atlas Memory module controller.
+- Added a local Atlas Memory section under More for preferences, corrections, stable facts, routines, temporary context, constraints, communication preferences, milestone summaries, and user instructions.
+- Added Atlas correction buttons that let the user save a local correction memory when Atlas uses the wrong assumption.
+- Added privacy-safe summary export for local memory and timeline summaries.
+- Added `tests/memory-phase7.test.js`.
+
+### Changed
+
+- Timeline privacy controls now include Atlas use, progress summary use, export use, hidden, sensitive, and privacy note fields.
+- Sensitive Timeline events and sensitive memories stay out of Atlas by default, but can be explicitly allowed by the user.
+- Hidden, disabled, expired, deleted, and superseded memories are excluded from Atlas.
+- Atlas explanations now show whether local memory influenced a recommendation.
+- Memory conflict grouping now lets explicit corrections supersede older memories with the same category and title.
+- The app version is now `v1.60.0`.
+
+### Preserved
+
+- Storage key remains `lifeops-dashboard-v1`.
+- Schema version remains `1`.
+- Old backups remain compatible; missing `atlasMemory` safely defaults to an empty local list.
+- Existing dashboard, Atlas Decision Engine, Life Score, Life Tree, import/export/reset, startup, voice, navigation, and module behavior are preserved.
+- No remote AI, backend, authentication, cloud sync, OAuth, external API, analytics, framework, or account system was added.
+
+### Notes
+
+- Atlas Memory is a local user-controlled memory layer, not a remote AI memory service.
+- Privacy-safe exports exclude sensitive, hidden, disabled, superseded, and export-blocked details.
+
+## v1.50.0 - Phase 6 Local Life Timeline And Progress Memory
+
+Date: 2026-07-23
+
+### Added
+
+- Added `PHASE6_TIMELINE_AUDIT.md`.
+- Added `js/timeline/` modules for normalization, safe event generation, Timeline actions, progress insights, and engine orchestration.
+- Added `js/modules/timeline.js` as the Timeline module controller.
+- Added normalized Timeline event fields while preserving legacy milestone import compatibility.
+- Added optional `timelineProposals` for suggested milestones that need confirmation.
+- Added Timeline filters, search, pinned milestones, suggested milestones, progress-memory observations, and "How far I have come" copy summary.
+- Added user actions for create, edit, delete, hide, restore, pin, confirm proposal, and reject proposal.
+- Added a low-priority Atlas Timeline candidate adapter that excludes hidden and sensitive events.
+- Added `tests/timeline-phase6.test.js`.
+
+### Changed
+
+- Timeline rendering now uses the Phase 6 Timeline engine instead of the old generated-row-only renderer.
+- Legacy manual milestones are normalized into the new event shape during save/import.
+- The app version is now `v1.50.0`.
+
+### Preserved
+
+- Storage key remains `lifeops-dashboard-v1`.
+- Schema version remains `1`.
+- Old Timeline records and old backups remain compatible.
+- Existing Atlas Decision Engine, Life Score, Life Tree, import/export/reset, startup, voice, navigation, and module behavior are preserved.
+- No remote AI, backend, authentication, cloud sync, OAuth, external API, analytics, or framework was added.
+
+### Notes
+
+- Timeline observations are local patterns, not diagnoses or proof of causation.
+- Sensitive and hidden Timeline events are excluded from Atlas by default.
+
 ## v1.40.0 - Phase 5 Local Atlas Decision Engine
 
 Date: 2026-07-23

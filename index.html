@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -184,7 +184,7 @@
             <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
           </span>
         </button>
-        <span class="app-version" id="appVersionLabel">Version 1.0.0</span>
+        <span class="app-version" id="appVersionLabel">Version 1.60.0</span>
       </div>
     </aside>
 
@@ -412,7 +412,7 @@
           <article class="panel">
             <h3>Developer Tools</h3>
             <div class="list">
-              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 1.7.0</div></div></div>
+              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 1.60.0</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Implementation</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -964,6 +964,7 @@
                       <button class="btn" id="atlasCommandSnoozeBtn" type="button">Snooze</button>
                       <button class="btn" id="atlasCommandDismissBtn" type="button">Dismiss</button>
                       <button class="btn" id="atlasCommandAlternativesBtn" type="button">Alternatives</button>
+                      <button class="btn" id="atlasCommandCorrectBtn" type="button">Correct Atlas</button>
                       <button class="btn" id="atlasCommandRecalculateBtn" type="button">Recalculate</button>
                     </div>
                   </section>
@@ -1617,10 +1618,41 @@
       </section>
 
       <section id="timeline" class="tab">
+        <div class="section-heading">
+          <div>
+            <h2>Life Timeline</h2>
+            <p>Meaningful milestones, changes, and progress memory. Everything stays local unless you export it.</p>
+          </div>
+          <button class="btn primary" id="openTimelineMilestoneBtn" type="button">Add Milestone</button>
+        </div>
+
         <div class="grid cols-2">
           <article class="panel">
+            <h3>Progress Memory</h3>
+            <p class="about-lede">Observations are based only on saved local data. They do not prove causation.</p>
+            <div id="timelineProgressSummaryList" class="list"></div>
+          </article>
+
+          <article class="panel">
+            <h3>How Far I Have Come</h3>
+            <label>
+              Range
+              <select id="timelineRangeSelect">
+                <option value="30">30 days</option>
+                <option value="90" selected>90 days</option>
+                <option value="365">1 year</option>
+                <option value="all">All time</option>
+              </select>
+            </label>
+            <pre id="timelineHowFarText" class="report-preview" aria-live="polite"></pre>
+            <button class="btn secondary" id="timelineCopySummaryBtn" type="button">Copy Summary</button>
+          </article>
+        </div>
+
+        <div class="grid cols-2" style="margin-top: 16px;">
+          <article class="panel">
             <h3>Add Manual Milestone</h3>
-            <p class="about-lede">Timeline items are local only. Shared status is metadata for future permissions and does not send anything.</p>
+            <p class="about-lede">Use this for meaningful events, not every task. Hidden events stay out of Atlas and summaries.</p>
             <div class="form-grid" style="margin-top: 12px;">
               <label class="wide">
                 Title
@@ -1634,12 +1666,35 @@
                 Category
                 <select id="timelineCategoryInput">
                   <option>Money</option>
+                  <option>Foundation</option>
                   <option>Health</option>
                   <option>Career</option>
                   <option>Education</option>
                   <option>Goals</option>
                   <option>Relationships</option>
                   <option>Personal</option>
+                </select>
+              </label>
+              <label>
+                Event type
+                <select id="timelineEventTypeInput">
+                  <option value="milestone">Milestone</option>
+                  <option value="achievement">Achievement</option>
+                  <option value="decision">Decision</option>
+                  <option value="transition">Transition</option>
+                  <option value="completion">Completion</option>
+                  <option value="progress">Progress</option>
+                  <option value="reflection">Reflection</option>
+                  <option value="setback">Setback</option>
+                </select>
+              </label>
+              <label>
+                Significance
+                <select id="timelineSignificanceInput">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                  <option value="major">Major</option>
                 </select>
               </label>
               <label>
@@ -1658,19 +1713,124 @@
                 Note
                 <textarea id="timelineNoteInput" maxlength="240" placeholder="Optional note"></textarea>
               </label>
+              <label class="check-row">
+                <input id="timelinePinnedInput" type="checkbox">
+                Pin this milestone
+              </label>
+              <label class="check-row">
+                <input id="timelineSensitiveInput" type="checkbox">
+                Mark as sensitive
+              </label>
+              <label class="check-row">
+                <input id="timelineHiddenInput" type="checkbox">
+                Hide from default views
+              </label>
+              <label class="check-row">
+                <input id="timelineAllowAtlasInput" type="checkbox">
+                Allow Atlas to use this event
+              </label>
+              <label class="check-row">
+                <input id="timelineIncludeProgressInput" type="checkbox" checked>
+                Include in progress summaries
+              </label>
+              <label class="check-row">
+                <input id="timelineIncludeExportInput" type="checkbox" checked>
+                Include in privacy-safe exports
+              </label>
+              <label class="wide">
+                Tags
+                <input id="timelineTagsInput" maxlength="120" placeholder="Optional: career, interview, milestone">
+              </label>
+              <label class="wide">
+                Privacy note
+                <textarea id="timelinePrivacyNoteInput" maxlength="180" placeholder="Optional local note about how this event should be handled"></textarea>
+              </label>
               <button class="btn primary" id="addTimelineBtn" type="button">Add Milestone</button>
             </div>
           </article>
 
           <article class="panel">
+            <h3>Pinned Milestones</h3>
+            <div id="timelinePinnedList" class="list"></div>
+            <h3 style="margin-top: 18px;">Timeline Privacy</h3>
+            <p class="about-lede">Aggregate counts only. Sensitive titles are not shown here.</p>
+            <div id="timelinePrivacySummaryList" class="list"></div>
+            <h3 style="margin-top: 18px;">Suggested Milestones</h3>
+            <p class="about-lede">Sensitive or uncertain items require confirmation before they become Timeline memory.</p>
+            <div id="timelineProposalList" class="list"></div>
+          </article>
+        </div>
+
+        <article class="panel" style="margin-top: 16px;">
+          <h3>Timeline Controls</h3>
+          <div class="form-grid">
+            <label class="wide">
+              Search
+              <input id="timelineSearchInput" placeholder="Search title, note, category, or tags">
+            </label>
+            <label>
+              Category
+              <select id="timelineCategoryFilter">
+                <option value="">All categories</option>
+              </select>
+            </label>
+            <label>
+              Type
+              <select id="timelineTypeFilter">
+                <option value="">All types</option>
+              </select>
+            </label>
+            <label>
+              Year
+              <select id="timelineYearFilter">
+                <option value="">All years</option>
+              </select>
+            </label>
+            <label>
+              Significance
+              <select id="timelineSignificanceFilter">
+                <option value="">All significance</option>
+              </select>
+            </label>
+            <label>
+              Source
+              <select id="timelineSourceFilter">
+                <option value="">All sources</option>
+              </select>
+            </label>
+            <label>
+              Origin
+              <select id="timelineOriginFilter">
+                <option value="">Manual and automatic</option>
+                <option value="manual">User-created</option>
+                <option value="automatic">Automatic</option>
+              </select>
+            </label>
+            <label>
+              Sort
+              <select id="timelineSortSelect">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="significance">Significance</option>
+              </select>
+            </label>
+            <label class="check-row">
+              <input id="timelineShowHiddenToggle" type="checkbox">
+              Show hidden events
+            </label>
+          </div>
+        </article>
+
+        <div class="grid cols-2" style="margin-top: 16px;">
+          <article class="panel">
             <h3>Timeline Summary</h3>
             <div id="timelineSummaryList" class="list"></div>
           </article>
+          <article class="panel">
+            <h3>Life Timeline</h3>
+            <div id="timelineList" class="timeline-list"></div>
+          </article>
         </div>
-        <article class="panel" style="margin-top: 16px;">
-          <h3>Life Timeline</h3>
-          <div id="timelineList" class="timeline-list"></div>
-        </article>
       </section>
 
       <section id="wellness" class="tab">
@@ -1959,6 +2119,56 @@
         </div>
       </section>
 
+      <section id="memory" class="tab">
+        <div class="section-heading">
+          <div>
+            <h2>Atlas Memory</h2>
+            <p>Atlas only remembers what you permit. Keep preferences, corrections, routines, and context local and inspectable.</p>
+          </div>
+          <button class="btn" id="memorySafeExportBtn" type="button">Export Safe Summary</button>
+        </div>
+        <div class="grid cols-2">
+          <article class="panel">
+            <h3>Add Memory</h3>
+            <p class="about-lede">Use this for stable preferences or corrections that should improve Atlas recommendations.</p>
+            <div class="form-grid" style="margin-top: 12px;">
+              <label class="wide">Title<input id="memoryTitleInput" maxlength="100" placeholder="Example: Prefer evening workouts"></label>
+              <label>Type<select id="memoryTypeInput"><option value="preference">Preference</option><option value="stable_fact">Stable fact</option><option value="temporary_context">Temporary context</option><option value="correction">Correction</option><option value="goal_context">Goal context</option><option value="routine">Routine</option><option value="constraint">Constraint</option><option value="communication_preference">Communication preference</option><option value="milestone_summary">Milestone summary</option><option value="user_instruction">User instruction</option></select></label>
+              <label>Category<select id="memoryCategoryInput"><option>Atlas</option><option>Finance</option><option>Career</option><option>Education</option><option>Health</option><option>Fitness</option><option>Nutrition</option><option>Wellness</option><option>Goals</option><option>Relationships</option><option>Productivity</option><option>Accessibility</option><option>Personal</option><option>System</option></select></label>
+              <label class="wide">Value<textarea id="memoryValueInput" maxlength="500" placeholder="What should Atlas remember?"></textarea></label>
+              <label class="wide">Summary<textarea id="memorySummaryInput" maxlength="240" placeholder="Short version shown in explanations"></textarea></label>
+              <label>Confidence<input id="memoryConfidenceInput" type="number" min="0" max="1" step="0.05" value="0.8"></label>
+              <label>Expires<input id="memoryExpiresInput" type="date"></label>
+              <label class="check-row"><input id="memorySensitiveInput" type="checkbox">Mark as sensitive</label>
+              <label class="check-row"><input id="memoryHiddenInput" type="checkbox">Hide from Atlas</label>
+              <label class="check-row"><input id="memoryAllowAtlasInput" type="checkbox">Allow Atlas to use this memory</label>
+              <label class="wide">Tags<input id="memoryTagsInput" maxlength="120" placeholder="Optional: career, schedule, preference"></label>
+              <button class="btn primary" id="addMemoryBtn" type="button">Add Memory</button>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Memory Summary</h3>
+            <div id="memorySummaryList" class="list"></div>
+            <h3 style="margin-top: 18px;">Conflicts</h3>
+            <div id="memoryConflictList" class="list"></div>
+          </article>
+        </div>
+        <article class="panel" style="margin-top: 16px;">
+          <h3>Memory Controls</h3>
+          <div class="form-grid">
+            <label class="wide">Search<input id="memorySearchInput" placeholder="Search memories"></label>
+            <label>Type<select id="memoryTypeFilter"><option value="">All types</option></select></label>
+            <label>Category<select id="memoryCategoryFilter"><option value="">All categories</option></select></label>
+            <label>Status<select id="memoryStatusFilter"><option value="">All statuses</option></select></label>
+            <label>Atlas use<select id="memoryAtlasFilter"><option value="">All</option><option value="allowed">Allowed</option><option value="blocked">Blocked</option></select></label>
+          </div>
+        </article>
+        <article class="panel" style="margin-top: 16px;">
+          <h3>Local Memory</h3>
+          <div id="memoryList" class="timeline-list"></div>
+        </article>
+      </section>
+
       <section id="coach" class="tab">
         <article class="panel home-companion-card" style="margin-bottom: 16px;">
           <div class="split">
@@ -2232,6 +2442,7 @@
               <div class="actions">
                 <button class="btn primary" id="atlasStartTaskBtn" type="button">Open Related Area</button>
                 <button class="btn" id="atlasExplainMoreBtn" type="button">Explain Why</button>
+                <button class="btn" id="atlasCorrectBtn" type="button">Correct Atlas</button>
               </div>
             </div>
             <div class="atlas-micro-grid" aria-label="Atlas signal summary">
@@ -2554,6 +2765,19 @@
   <script src="js/modules/finance.js"></script>
   <script src="js/modules/dashboard.js"></script>
   <script src="js/modules/life-tree.js"></script>
+  <script src="js/timeline/timeline-normalization.js"></script>
+  <script src="js/timeline/timeline-events.js"></script>
+  <script src="js/timeline/timeline-actions.js"></script>
+  <script src="js/timeline/timeline-insights.js"></script>
+  <script src="js/timeline/timeline-engine.js"></script>
+  <script src="js/timeline/timeline-renderer.js"></script>
+  <script src="js/modules/timeline.js"></script>
+  <script src="js/memory/memory-normalization.js"></script>
+  <script src="js/memory/memory-conflicts.js"></script>
+  <script src="js/memory/memory-actions.js"></script>
+  <script src="js/memory/memory-engine.js"></script>
+  <script src="js/memory/memory-renderer.js"></script>
+  <script src="js/modules/memory.js"></script>
   <script src="js/atlas/atlas-types.js"></script>
   <script src="js/atlas/atlas-evidence.js"></script>
   <script src="js/atlas/atlas-candidates.js"></script>
