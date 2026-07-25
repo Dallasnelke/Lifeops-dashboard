@@ -1,6 +1,6 @@
 ﻿# LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v2.11.0`.
+Use this package as the clean GitHub base for LifeOps `v2.12.0`.
 
 ## Upload These
 
@@ -58,7 +58,7 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v2.11.0`
+Current packaged version: `v2.12.0`
 
 Package date: `2026-07-25`
 
@@ -66,7 +66,9 @@ Package date: `2026-07-25`
 
 - Upload `PHASE10_ONBOARDING_REDESIGN_AUDIT.md` and `tests/onboarding-phase10.test.js` with this release.
 - Keep the existing storage key. The app migrates old backups to schema version `4` automatically.
-- Phase 10 adds optional onboarding mission fields, Blueprint Mission buckets, a live Life Map, and first-command state.
+- Phase 10/10.1 adds optional onboarding mission fields, Blueprint Mission buckets, a live Life Map, first-command state, and the `v2.12.0` seven-screen setup refinement.
+- The first-launch setup is now Today's Win, Biggest Blocker, Desired Outcome, Optional Deadline, Available Time, Energy Level, and Guidance Style.
+- Complete My Blueprint now lives under Settings and no longer blocks launch.
 - Do not upload personal JSON exports or browser localStorage dumps.
 
 ## Phase 9 Notes

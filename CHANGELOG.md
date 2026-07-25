@@ -1,5 +1,24 @@
 ﻿# LifeOps Changelog
 
+## v2.12.0 - Atlas Onboarding Master Refactor
+
+Date: 2026-07-25
+
+### Changed
+
+- Reduced first-launch Atlas onboarding from eight essential missions to seven focused screens: Today's Win, Biggest Blocker, Desired Outcome, Optional Deadline, Available Time, Energy Level, and Guidance Style.
+- Removed launch-blocking review, privacy, and first-command screens from initial setup.
+- Simplified the Ready screen so it shows only the mission, today's priority, recommended action, estimated time, why Atlas chose it, and the Launch Atlas action.
+- Moved Complete My Blueprint out of first launch and into Settings.
+- Added safe default assumptions so users can skip onboarding and still launch Atlas with a useful local command.
+- Updated Live Life Map labels and compact layout to reflect the seven setup signals.
+- Updated button wiring with guarded listeners and removed the old Traditional Forms diversion from the main setup path.
+
+### Preserved
+
+- Existing Atlas branding, black/gold theme, Live Life Map, Mission card, Ready screen, Command Center, Life Graph, Timeline, Atlas Memory, storage key, schema `4`, import/export behavior, and old backup compatibility are preserved.
+- No backend, cloud sync, account system, external AI service, remote API, analytics, framework, or paid dependency was added.
+
 ## v2.11.0 - Phase 10 Atlas Onboarding Missions And Live Life Map
 
 Date: 2026-07-25

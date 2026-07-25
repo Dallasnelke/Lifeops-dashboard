@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v2.11.0`
+Current version: `v2.12.0`
 
 ## Mission
 
@@ -25,7 +25,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - Local Atlas Memory with user-controlled preferences, corrections, routines, constraints, conflict handling, sensitive/hidden controls, and privacy-safe summary export
 - Life Graph with local nodes, relationships, dependency analysis, leverage scoring, path inspection, privacy-safe export, and Atlas-visible relationship explanations
 - Atlas Command Center with durable local commands, source context, plan steps, work sessions, command history, alternatives, and before/after summaries
-- Eight-mission onboarding that feeds Atlas Decision Engine, Life Graph, Timeline, Atlas Memory when allowed, and Command Center without remote AI
+- Seven-screen Atlas setup that feeds Atlas Decision Engine, Life Graph, Timeline, safe local defaults, and Command Center without remote AI
 - Atlas correction flow so users can tell Atlas when a recommendation used the wrong assumption
 - Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
 - Life Score trend chart with visible weighted score explanation
@@ -34,7 +34,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - Nutrition, meals, macros, food budget, wellness, workouts, steps, habits, and daily checks
 - Goals, tasks, weekly actions, history, trends, reports, export tools, and backup/restore
 - Education, career, calendar, document, timeline, privacy, connections, sharing, and integrations prototype sections
-- Atlas onboarding redesigned into eight short essential missions with a live Life Map, local privacy defaults, real first command generation, and optional Blueprint Missions
+- Atlas onboarding redesigned into seven fast setup screens with a live Life Map, local privacy defaults, real first command generation, and optional Blueprint under Settings
 - Local startup animation, LifeOps Pulse, and optional browser voice briefing
 - Local data persistence with JSON export and import
 - Responsive desktop, tablet, and mobile layout
@@ -303,6 +303,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 ## Version History
 
 
+- `v2.12.0`: Refactored Atlas onboarding into a maximum seven-screen first-launch setup: Today's Win, Biggest Blocker, Desired Outcome, Optional Deadline, Available Time, Energy Level, and Guidance Style. Removed launch-blocking review, privacy, and first-command screens; simplified the Ready screen to Mission, Today's Priority, Recommended Action, Estimated Time, and Why Atlas Chose It; moved Complete My Blueprint to Settings; added safe default launch behavior when onboarding is skipped; kept schema `4`, the existing `lifeops-dashboard-v1` storage key, Live Life Map, Atlas branding, black/gold theme, Command Center, Life Graph, Timeline, and old backup compatibility.
 - `v2.11.0`: Redesigned Atlas onboarding from the long form into eight short essential missions: Today's Win, Main Blocker, Important Outcome, Realistic Capacity, Atlas Style, Life Map review, Privacy, and First Command. Added a live Life Map panel, schema `4` migration for old onboarding answers into Blueprint Missions, real first-command generation through Command Center, Life Graph onboarding nodes/edges, optional Atlas Memory only when allowed, a setup Timeline event, `PHASE10_ONBOARDING_REDESIGN_AUDIT.md`, and `tests/onboarding-phase10.test.js`. Existing storage key `lifeops-dashboard-v1` is preserved and old v3 backups migrate safely.
 - `v2.10.0`: Completed Phase 9 Atlas Command Center and graph-driven planning workspace. Added `PHASE9_COMMAND_CENTER_AUDIT.md`, `js/command/` modules, `js/modules/command-center.js`, durable `commandCenter` and `commandHistory` state, command context from Atlas, Life Graph, Atlas Memory, Timeline, Life Score, tasks, and plan actions, local plan steps, local work sessions, command history, before/after summaries, privacy-safe command export helpers, and `tests/command-phase9.test.js`. Storage schema was `3` in v2.10.0; v2.11.0 migrates to schema `4` while keeping the same `lifeops-dashboard-v1` key.
 - `v2.0.0`: Completed Phase 8 local Life Graph and dependency intelligence. Added `PHASE8_LIFE_GRAPH_AUDIT.md`, `js/graph/` modules, `js/modules/graph.js`, graph source nodes, relationship edges, dependency analysis, path inspection, Atlas graph candidates, privacy-safe graph export, and `tests/graph-phase8.test.js`. Storage schema moved to `2`; old backups remain compatible.
