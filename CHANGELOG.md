@@ -1,5 +1,34 @@
-# LifeOps Changelog
+﻿# LifeOps Changelog
 
+## v2.11.0 - Phase 10 Atlas Onboarding Missions And Live Life Map
+
+Date: 2026-07-25
+
+### Added
+
+- Added `PHASE10_ONBOARDING_REDESIGN_AUDIT.md` documenting the old onboarding flow, state paths, migration plan, and old-question mapping.
+- Added `tests/onboarding-phase10.test.js` to guard the eight essential missions, live Life Map markup, schema 4 migration, and first-command wiring.
+- Added an eight-mission Atlas onboarding flow: Today's Win, Main Blocker, Important Outcome, Realistic Capacity, Atlas Style, Life Map, Privacy, and First Command.
+- Added a visible live Life Map panel during onboarding on desktop and a compact responsive layout on mobile.
+- Added onboarding integration with the real Atlas Command Center, Life Graph, Timeline, and optional Atlas Memory.
+
+### Changed
+
+- Storage schema is now `4` while preserving the existing `lifeops-dashboard-v1` storage key.
+- Schema `3` backups migrate to schema `4` by preserving old onboarding answers and moving detailed answers into Blueprint Mission buckets.
+- The first launch setup now focuses on one useful local command instead of a long questionnaire.
+- Voice controls and transcript stay hidden unless voice mode is active.
+- The app version is now `v2.11.0`.
+
+### Preserved
+
+- Existing dashboard, navigation, storage rollback/corrupt preservation, import/export/reset, Atlas Decision Engine, Command Center, Life Graph, Timeline, Atlas Memory, startup, voice controls, and module behavior are preserved.
+- No backend, cloud sync, account system, remote AI service, OAuth, analytics, framework, or paid dependency was added.
+
+### Notes
+
+- Blueprint Missions are optional follow-up data buckets. They do not block first launch.
+- Atlas Memory only receives onboarding context when the user explicitly allows local memory during setup.
 ## v2.10.0 - Phase 9 Atlas Command Center And Graph-Driven Planning Workspace
 
 Date: 2026-07-24
@@ -279,6 +308,8 @@ Date: 2026-07-23
 
 - This is a behavior-preserving modular foundation, not a full logic rewrite.
 - `js/app.js` remains the active app bundle. Later phases should move state, storage, Atlas scoring, navigation, and module renderers into the prepared files in controlled steps.
+
+
 
 
 

@@ -1,6 +1,6 @@
-# LifeOps GitHub Upload Notes
+﻿# LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v2.10.0`.
+Use this package as the clean GitHub base for LifeOps `v2.11.0`.
 
 ## Upload These
 
@@ -20,6 +20,7 @@ Upload the contents of the GitHub-ready folder to the root of the GitHub reposit
 - `PHASE7_MEMORY_PRIVACY_AUDIT.md`
 - `PHASE8_LIFE_GRAPH_AUDIT.md`
 - `PHASE9_COMMAND_CENTER_AUDIT.md`
+- `PHASE10_ONBOARDING_REDESIGN_AUDIT.md`
 - `assets/brand/`
 - `css/`
 - `js/`
@@ -31,6 +32,7 @@ Upload the contents of the GitHub-ready folder to the root of the GitHub reposit
   - includes `js/modules/command-center.js`
 - `tests/`
   - includes `tests/command-phase9.test.js`
+  - includes `tests/onboarding-phase10.test.js`
 
 Keep the `assets/brand` folder structure exactly the same so logo, favicon, and avatar paths continue working.
 
@@ -56,14 +58,22 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v2.10.0`
+Current packaged version: `v2.11.0`
 
-Package date: `2026-07-24`
+Package date: `2026-07-25`
+
+## Phase 10 Notes
+
+- Upload `PHASE10_ONBOARDING_REDESIGN_AUDIT.md` and `tests/onboarding-phase10.test.js` with this release.
+- Keep the existing storage key. The app migrates old backups to schema version `4` automatically.
+- Phase 10 adds optional onboarding mission fields, Blueprint Mission buckets, a live Life Map, and first-command state.
+- Do not upload personal JSON exports or browser localStorage dumps.
 
 ## Phase 9 Notes
 
 - Upload the full `js/command/` folder and `tests/command-phase9.test.js` with this release.
-- Keep the existing storage key. The app migrates old backups to schema version `3` automatically.
-- Phase 9 adds optional `commandCenter` and `commandHistory` fields to exported backups.
+- Phase 9 added optional `commandCenter` and `commandHistory` fields to exported backups. Schema 3 backups now migrate onward to schema 4 in v2.11.0.
 - Atlas Command Center is local deterministic planning. It is not a remote AI system.
 - Do not upload personal JSON exports or browser localStorage dumps.
+
+
