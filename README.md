@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v2.14.3`
+Current version: `v2.15.0`
 
 ## Mission
 
@@ -285,7 +285,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 - Run `node tests/graph-phase8.test.js`
 - Run `node tests/command-phase9.test.js`
 - Run `node tests/phase4-runtime-smoke.test.js` when available, or follow the Phase 4 browser smoke checklist in `PHASE4_EXTRACTION_AUDIT.md`
-- Test Atlas Command buttons: Do this now, Build Plan, Start Session, Pause, Resume, Stop, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
+- Test Atlas Command buttons: Start Command, Build Plan, Start Session, Pause, Resume, Stop, Mark Complete, Snooze, Dismiss, Alternatives, Recalculate, and Ask Atlas
 - Test Timeline: add, edit, pin, hide, restore, delete, search, filters, proposals, copy summary, and hidden/sensitive behavior
 - Test Atlas Memory: add, edit, hide, disable, delete, filters, conflict handling, Correct Atlas, and privacy-safe export
 - Test Life Graph: visual graph, filters, manual relationship add/edit/confirm/hide/delete, selected-node explanation, Atlas graph influence, and privacy-safe export
@@ -304,6 +304,7 @@ Real integrations require secure authentication, user consent, OAuth where appli
 ## Version History
 
 
+- `v2.15.0`: Added the Phase 11 Atlas-first audit and made Atlas Command the dominant Home starting point with clearer Start Here framing, visible priority, recommended action, why-now evidence, expected benefit, effort, risk, and confidence labels. Added a bounded large-graph analysis path so stress-test graph builds remain responsive on lower-memory laptops. Preserved command engine logic, onboarding, schema `4`, storage key, import/export behavior, Life Tree, Life Score, Timeline, and old backup compatibility.
 - `v2.14.3`: Strengthened the Atlas welcome composition with a larger centered orb, tighter companion-style card, stronger gold core glow, and clearer centered greeting stack. Preserved setup flow, button handlers, schema `4`, storage key, and backup compatibility.
 - `v2.14.2`: Added a minimal Atlas greeting to the first welcome screen: centered animated orb, subtle listening/thinking pulse, and "Let's get started." without explanatory onboarding copy. Preserved setup flow, button handlers, schema `4`, storage key, and backup compatibility.
 - `v2.14.1`: Refined the first Atlas welcome into an interaction-first screen with a centered clickable Atlas orb, warmer motion, narrower card, primary Begin action, and secondary Skip for now action. Preserved the existing five-question setup, Ready screen, schema `4`, storage key, and backup compatibility.

@@ -1,6 +1,6 @@
 ﻿# LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v2.14.3`.
+Use this package as the clean GitHub base for LifeOps `v2.15.0`.
 
 ## Upload These
 
@@ -21,6 +21,7 @@ Upload the contents of the GitHub-ready folder to the root of the GitHub reposit
 - `PHASE8_LIFE_GRAPH_AUDIT.md`
 - `PHASE9_COMMAND_CENTER_AUDIT.md`
 - `PHASE10_ONBOARDING_REDESIGN_AUDIT.md`
+- `PHASE11_ATLAS_FIRST_AUDIT.md`
 - `assets/brand/`
 - `css/`
 - `js/`
@@ -58,9 +59,16 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v2.14.3`
+Current packaged version: `v2.15.0`
 
-Package date: `2026-07-25`
+Package date: `2026-07-26`
+
+## Phase 11 Notes
+
+- Upload `PHASE11_ATLAS_FIRST_AUDIT.md` with this release.
+- Phase 11 keeps the existing deterministic local Atlas Command system and makes it the dominant Home starting point.
+- The storage key remains `lifeops-dashboard-v1` and schema remains `4`.
+- No real AI API, cloud service, account system, or external integration was added.
 
 ## Phase 10 Notes
 

@@ -194,7 +194,7 @@
             <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
           </span>
         </button>
-        <span class="app-version" id="appVersionLabel">Version 2.14.3</span>
+        <span class="app-version" id="appVersionLabel">Version 2.15.0</span>
       </div>
     </aside>
 
@@ -423,7 +423,7 @@
           <article class="panel">
             <h3>Developer Tools</h3>
             <div class="list">
-              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.14.3</div></div></div>
+              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.15.0</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Implementation</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -734,7 +734,7 @@
             <h3>Developer Tools</h3>
             <p class="about-lede">Version, storage, privacy, and backup tools remain local-first for this release.</p>
             <div class="list">
-              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 2.14.3</div></div></div>
+              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 2.15.0</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Architecture</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -956,23 +956,19 @@
               <article class="tree-card atlas-command-card" aria-labelledby="atlasCommandTitle">
                 <div class="atlas-command-head">
                   <div>
-                    <span class="tree-live-label">Atlas Command</span>
-                    <h2 id="atlasCommandTitle">Next highest impact action</h2>
+                    <span class="tree-live-label">Start Here</span>
+                    <h2 id="atlasCommandTitle">Atlas Command</h2>
                   </div>
                   <span class="pill" id="atlasCommandConfidence">Local confidence</span>
                 </div>
                 <div class="atlas-command-grid">
                   <section aria-label="Atlas recommended action">
-                    <div class="atlas-command-kicker">This deserves attention now</div>
+                    <div class="atlas-command-kicker">Recommended action</div>
+                    <div class="atlas-priority-pill"><span>Priority</span><strong id="atlasCommandPriority">Daily focus</strong></div>
                     <div class="atlas-command-action" id="atlasCommandAction">Atlas is reading local LifeOps signals.</div>
                     <p class="atlas-attention-line" id="atlasCommandReason">Add or update LifeOps data so Atlas can rank the next action with local evidence.</p>
-                    <div class="atlas-command-signals" aria-label="Atlas attention signals">
-                      <div class="atlas-signal-card"><span>Why now</span><strong id="atlasCommandWhyNow">Atlas prioritizes urgent dated items first.</strong></div>
-                      <div class="atlas-signal-card"><span>Evidence</span><strong id="atlasCommandEvidence">Local-only data.</strong></div>
-                      <div class="atlas-signal-card"><span>Expected result</span><strong id="atlasCommandOutcome">More clarity and momentum today.</strong></div>
-                    </div>
                     <div class="atlas-command-actions">
-                      <button class="btn primary" id="atlasCommandStartBtn" type="button">Do this now</button>
+                      <button class="btn primary" id="atlasCommandStartBtn" type="button">Start Command</button>
                       <button class="btn" id="atlasCommandAskBtn" type="button">Ask Atlas</button>
                       <button class="btn" id="atlasCommandCompleteBtn" type="button">Mark Complete</button>
                       <button class="btn" id="atlasCommandSnoozeBtn" type="button">Snooze</button>
@@ -980,6 +976,11 @@
                       <button class="btn" id="atlasCommandAlternativesBtn" type="button">Alternatives</button>
                       <button class="btn" id="atlasCommandCorrectBtn" type="button">Correct Atlas</button>
                       <button class="btn" id="atlasCommandRecalculateBtn" type="button">Recalculate</button>
+                    </div>
+                    <div class="atlas-command-signals" aria-label="Atlas attention signals">
+                      <div class="atlas-signal-card"><span>Why now</span><strong id="atlasCommandWhyNow">Atlas prioritizes urgent dated items first.</strong></div>
+                      <div class="atlas-signal-card"><span>Evidence</span><strong id="atlasCommandEvidence">Local-only data.</strong></div>
+                      <div class="atlas-signal-card"><span>Expected benefit</span><strong id="atlasCommandOutcome">More clarity and momentum today.</strong></div>
                     </div>
                   </section>
                   <section class="atlas-thinking-panel" aria-label="Atlas thinking">

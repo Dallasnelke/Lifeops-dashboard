@@ -1,5 +1,26 @@
 ﻿# LifeOps Changelog
 
+## v2.15.0 - Atlas-First Command Hierarchy
+
+Date: 2026-07-26
+
+### Added
+
+- Added `PHASE11_ATLAS_FIRST_AUDIT.md` documenting onboarding, Atlas Command, Life Score, modal, storage, and event-listener risks before behavior work.
+
+### Changed
+
+- Made Atlas Command the dominant Home starting point with clearer `Start Here` framing.
+- Added a visible Priority field to the command card.
+- Renamed the primary command button to `Start Command`.
+- Strengthened the command card visual hierarchy, command metrics, and expected-benefit language.
+- Reduced Life Score side-card dominance while preserving its explanation and chart.
+- Optimized large Life Graph analysis by avoiding repeated edge scans and using a bounded leverage estimate for oversized external graph inputs.
+
+### Preserved
+
+- Existing command engine logic, onboarding, schema `4`, storage key, import/export behavior, Life Tree, Life Score, Timeline, voice/startup, and old backup compatibility are preserved.
+
 ## v2.14.3 - Centered Atlas Companion Welcome
 
 Date: 2026-07-26
