@@ -1,6 +1,6 @@
 ﻿# LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v2.12.0`.
+Use this package as the clean GitHub base for LifeOps `v2.14.0`.
 
 ## Upload These
 
@@ -58,7 +58,7 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v2.12.0`
+Current packaged version: `v2.14.0`
 
 Package date: `2026-07-25`
 
@@ -66,8 +66,9 @@ Package date: `2026-07-25`
 
 - Upload `PHASE10_ONBOARDING_REDESIGN_AUDIT.md` and `tests/onboarding-phase10.test.js` with this release.
 - Keep the existing storage key. The app migrates old backups to schema version `4` automatically.
-- Phase 10/10.1 adds optional onboarding mission fields, Blueprint Mission buckets, a live Life Map, first-command state, and the `v2.12.0` seven-screen setup refinement.
-- The first-launch setup is now Today's Win, Biggest Blocker, Desired Outcome, Optional Deadline, Available Time, Energy Level, and Guidance Style.
+- Phase 10/10.3 adds optional onboarding mission fields, Blueprint Mission buckets, a vertical Life Map progress timeline, first-command state, and the `v2.14.0` friction-reduced setup refinement.
+- The first-launch setup is now Today's Biggest Win, Biggest Blocker, Desired Outcome, Optional Deadline, Guidance Style, and Ready.
+- Realistic Capacity is no longer a first-launch question. Atlas uses a safe short default estimate and can collect more detail later.
 - Complete My Blueprint now lives under Settings and no longer blocks launch.
 - Do not upload personal JSON exports or browser localStorage dumps.
 

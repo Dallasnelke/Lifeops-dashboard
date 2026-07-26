@@ -1,5 +1,40 @@
 ﻿# LifeOps Changelog
 
+## v2.14.0 - Atlas Onboarding Friction Reduction
+
+Date: 2026-07-26
+
+### Changed
+
+- Removed Realistic Capacity from first-launch onboarding.
+- Kept a safe 15-minute default estimate internally so Atlas can still produce a useful first mission.
+- Improved the Ready screen payoff with clearer "Start here" copy, one stronger mission card, and cleaner summary chips for priority, action, estimated time, and reason.
+- Updated onboarding tests, version labels, README, and upload notes.
+
+### Preserved
+
+- Existing storage key, schema `4`, import/export behavior, Blueprint in Settings, Atlas branding, black/gold theme, Command Center, Life Graph, Timeline, and old backup compatibility are preserved.
+- No backend, cloud sync, account system, external AI service, framework, or paid dependency was added.
+
+## v2.13.0 - First-Principles Atlas Onboarding
+
+Date: 2026-07-25
+
+### Changed
+
+- Rebuilt first-launch Atlas onboarding into six focused questions plus one Ready screen.
+- Replaced early category-choice screens with large text areas for Today's Biggest Win, Biggest Blocker, and Desired Outcome.
+- Replaced the right-side Life Map card grid with a vertical progress timeline that only expands completed answers.
+- Added a dedicated Realistic Capacity screen with a time slider and Low/Medium/High energy choices.
+- Simplified guidance choices to Light Guidance, Balanced, and Coach Mode.
+- Kept Blueprint outside launch under Settings, where it now saves one optional answer at a time.
+- Updated onboarding defaults, timing helpers, Life Map labels, tests, and documentation for the new flow.
+
+### Preserved
+
+- Existing Atlas branding, black/gold theme, Ready screen, Command Center, Life Graph, Timeline, Atlas Memory, storage key, schema `4`, import/export behavior, and old backup compatibility are preserved.
+- No backend, cloud sync, account system, external AI service, remote API, analytics, framework, or paid dependency was added.
+
 ## v2.12.0 - Atlas Onboarding Master Refactor
 
 Date: 2026-07-25

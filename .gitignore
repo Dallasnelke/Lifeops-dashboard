@@ -1,8 +1,11 @@
 # Local development and backup files
 work/
+backups/
+outputs/
 *.bak
 *.tmp
 *.log
+*.zip
 
 # LifeOps personal exports and imports
 lifeops-backup-*.json
