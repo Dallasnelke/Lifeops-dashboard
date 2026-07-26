@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v2.14.0`
+Current version: `v2.14.3`
 
 ## Mission
 
@@ -26,6 +26,7 @@ The app connects personal data into a Life Score, Atlas recommendations, a visua
 - Life Graph with local nodes, relationships, dependency analysis, leverage scoring, path inspection, privacy-safe export, and Atlas-visible relationship explanations
 - Atlas Command Center with durable local commands, source context, plan steps, work sessions, command history, alternatives, and before/after summaries
 - Five-question Atlas setup plus one Ready screen that feeds Atlas Decision Engine, Life Graph, Timeline, safe local defaults, and Command Center without remote AI
+- Interactive Atlas-first welcome screen with a centered clickable orb, a short "Let's get started." greeting, minimal visible copy, and two launch choices
 - Atlas correction flow so users can tell Atlas when a recommendation used the wrong assumption
 - Category panels with local summaries, open work, recent signals, privacy status, goals, tasks, and activity
 - Life Score trend chart with visible weighted score explanation
@@ -303,6 +304,9 @@ Real integrations require secure authentication, user consent, OAuth where appli
 ## Version History
 
 
+- `v2.14.3`: Strengthened the Atlas welcome composition with a larger centered orb, tighter companion-style card, stronger gold core glow, and clearer centered greeting stack. Preserved setup flow, button handlers, schema `4`, storage key, and backup compatibility.
+- `v2.14.2`: Added a minimal Atlas greeting to the first welcome screen: centered animated orb, subtle listening/thinking pulse, and "Let's get started." without explanatory onboarding copy. Preserved setup flow, button handlers, schema `4`, storage key, and backup compatibility.
+- `v2.14.1`: Refined the first Atlas welcome into an interaction-first screen with a centered clickable Atlas orb, warmer motion, narrower card, primary Begin action, and secondary Skip for now action. Preserved the existing five-question setup, Ready screen, schema `4`, storage key, and backup compatibility.
 - `v2.14.0`: Removed Realistic Capacity from first-launch onboarding to reduce friction. Atlas now uses a safe short default estimate internally, while the launch flow asks only Today's Biggest Win, Biggest Blocker, Desired Outcome, Optional Deadline, and Guidance Style before the Ready screen. Improved the Ready screen hierarchy with a stronger "Start here" payoff, one primary mission, clearer reason/estimated-time chips, and preserved schema `4`, `lifeops-dashboard-v1`, Blueprint in Settings, Atlas branding, Command Center, import/export, and old backup compatibility.
 - `v2.13.0`: Rebuilt Atlas onboarding from first principles. The first-launch flow now asks six focused questions and uses the seventh screen as the Ready mission screen: Today's Biggest Win, Biggest Blocker, Desired Outcome, Optional Deadline, Realistic Capacity, Guidance Style, and Ready. Replaced choice-heavy early screens with large text answers, replaced the right panel with a simple vertical Life Map progress timeline, added a slider for capacity, reduced placeholder content, kept Blueprint out of launch under Settings, and preserved schema `4`, `lifeops-dashboard-v1`, Atlas branding, black/gold theme, Command Center, Life Graph, Timeline, import/export, and old backup compatibility.
 - `v2.12.0`: Refactored Atlas onboarding into a maximum seven-screen first-launch setup: Today's Win, Biggest Blocker, Desired Outcome, Optional Deadline, Available Time, Energy Level, and Guidance Style. Removed launch-blocking review, privacy, and first-command screens; simplified the Ready screen to Mission, Today's Priority, Recommended Action, Estimated Time, and Why Atlas Chose It; moved Complete My Blueprint to Settings; added safe default launch behavior when onboarding is skipped; kept schema `4`, the existing `lifeops-dashboard-v1` storage key, Live Life Map, Atlas branding, black/gold theme, Command Center, Life Graph, Timeline, and old backup compatibility.

@@ -1,5 +1,49 @@
 ﻿# LifeOps Changelog
 
+## v2.14.3 - Centered Atlas Companion Welcome
+
+Date: 2026-07-26
+
+### Changed
+
+- Enlarged and recentered the Atlas welcome orb.
+- Tightened the first-launch card into a true centered companion greeting stack.
+- Increased the soft gold core glow and ring depth so the first screen reads more clearly.
+
+### Preserved
+
+- Existing onboarding state, setup questions, Ready screen, button handlers, storage key, schema `4`, import/export behavior, and old backup compatibility are preserved.
+
+## v2.14.2 - Atlas Greeting Refinement
+
+Date: 2026-07-26
+
+### Changed
+
+- Added a minimal visible Atlas greeting: "Let's get started."
+- Kept the first screen interaction-led with the animated clickable Atlas orb as the primary focus.
+- Added a subtle listening/thinking pulse to make Atlas feel more alive without adding fake AI behavior.
+
+### Preserved
+
+- Existing onboarding state, setup questions, Ready screen, button handlers, storage key, schema `4`, import/export behavior, and old backup compatibility are preserved.
+
+## v2.14.1 - Interactive Atlas Welcome
+
+Date: 2026-07-26
+
+### Changed
+
+- Reworked the first Atlas welcome screen into an interaction-first entry moment.
+- Centered the Atlas emblem, made it clickable, narrowed the welcome card, and removed visible explanatory setup copy.
+- Renamed the secondary launch action from "Launch with Defaults" to "Skip for now".
+- Added a subtle gold breathing glow and ring motion behind the Atlas emblem.
+
+### Preserved
+
+- Existing onboarding state, setup questions, Ready screen, storage key, schema `4`, import/export behavior, Atlas branding, Command Center, Life Graph, Timeline, and old backup compatibility are preserved.
+- No backend, cloud sync, account system, external AI service, framework, or paid dependency was added.
+
 ## v2.14.0 - Atlas Onboarding Friction Reduction
 
 Date: 2026-07-26
