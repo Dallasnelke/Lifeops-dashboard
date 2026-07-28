@@ -48,12 +48,12 @@
       </div>
 
       <section id="atlasOnboardingWelcome">
-        <h1 class="sr-only" id="atlasOnboardingTitle">Atlas setup</h1>
-        <p class="sr-only" id="atlasOnboardingDescription">Atlas is ready. Begin setup or skip for now. LifeOps stores setup answers locally.</p>
-        <p class="atlas-welcome-line" aria-hidden="true">Let's get started.</p>
+        <h1 class="atlas-welcome-title" id="atlasOnboardingTitle">Welcome to LifeOps</h1>
+        <p class="atlas-welcome-copy" id="atlasOnboardingDescription">Understand your life. Choose your next move.</p>
         <div class="actions onboarding-welcome-actions">
-          <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Begin</button>
-          <button class="btn" id="skipAtlasOnboardingBtn" type="button">Skip for now</button>
+          <button class="btn primary" id="beginAtlasOnboardingBtn" type="button">Create my profile</button>
+          <button class="btn" id="atlasSignInFutureBtn" type="button" disabled aria-disabled="true" title="Secure account sync is planned for a future version.">Sign in</button>
+          <button class="btn" id="skipAtlasOnboardingBtn" type="button">Explore a demo</button>
         </div>
       </section>
 
@@ -109,13 +109,14 @@
           <span class="brand-fallback" hidden>AT</span>
           <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
         </div>
-        <h2 class="atlas-ready-title">Start here.</h2>
-        <p class="atlas-ready-line">Atlas found one move worth your attention.</p>
+        <h2 class="atlas-ready-title">Atlas is ready.</h2>
+        <p class="atlas-ready-line">Ready to launch.</p>
         <article class="atlas-ready-mission atlas-ready-primary" aria-labelledby="atlasReadyMissionLabel">
           <span id="atlasReadyMissionLabel">First mission</span>
           <strong id="atlasFinalFirstMission">Choose one next action.</strong>
         </article>
-        <div class="atlas-ready-chips" id="atlasFinalSummary"></div>
+        <p class="atlas-ready-reason" id="atlasFinalReason" hidden>Atlas chose this from your setup answers.</p>
+        <div class="atlas-ready-chips" id="atlasFinalSummary" hidden></div>
         <div class="actions atlas-ready-actions">
           <button class="btn primary" id="launchLifeOpsBtn" type="button">Launch Atlas</button>
           <button class="btn" id="completeAtlasBlueprintBtn" type="button" hidden>Complete My Blueprint</button>
@@ -194,7 +195,7 @@
             <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
           </span>
         </button>
-        <span class="app-version" id="appVersionLabel">Version 2.15.0</span>
+        <span class="app-version" id="appVersionLabel">Version 2.16.3</span>
       </div>
     </aside>
 
@@ -423,7 +424,7 @@
           <article class="panel">
             <h3>Developer Tools</h3>
             <div class="list">
-              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.15.0</div></div></div>
+              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.16.3</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Implementation</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -734,7 +735,7 @@
             <h3>Developer Tools</h3>
             <p class="about-lede">Version, storage, privacy, and backup tools remain local-first for this release.</p>
             <div class="list">
-              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 2.15.0</div></div></div>
+              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 2.16.3</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Architecture</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -872,7 +873,7 @@
       </section>
 
             <section id="today" class="tab active tree-mode">
-        <div class="today-command">
+        <div class="today-shell">
           <div class="life-tree-shell" aria-label="LifeOps tree dashboard">
             <aside class="tree-app-rail" aria-label="LifeOps tree navigation">
               <div class="tree-brand-row">

@@ -1,6 +1,6 @@
 ﻿# LifeOps GitHub Upload Notes
 
-Use this package as the clean GitHub base for LifeOps `v2.15.0`.
+Use this package as the clean GitHub base for LifeOps `v2.16.3`.
 
 ## Upload These
 
@@ -59,14 +59,40 @@ For GitHub Pages, keep `index.html` in the repo root. It is a copy of the curren
 
 ## Current Version
 
-Current packaged version: `v2.15.0`
+Current packaged version: `v2.16.3`
 
-Package date: `2026-07-26`
+Package date: `2026-07-28`
+
+## Phase 12 Onboarding Launch Patch Notes
+
+- Atlas ready screen now focuses on a single first mission.
+- The launch mission is based on the user's setup answers first.
+- Existing overdue bills, tasks, or demo data no longer take over the onboarding ready screen.
+- Extra summary chips were hidden so launch feels cleaner and less crowded.
+
+## Phase 12 Navigation Patch Notes
+
+- Life Tree navigation now behaves like a sticky app dock.
+- Medium-width dashboard cards no longer scroll underneath the left tree app rail.
+- Navigation remains grouped by Core, Life, Personal, and System.
+
+## Phase 12 Patch Notes
+
+- Fixed the blank onboarding answer panels by giving onboarding its own renderer name.
+- Tightened onboarding layout so choices, text fields, and Life Map progress fit cleanly.
+- Improved the final Atlas ready screen.
+
+## Phase 12 Notes
+
+- Atlas onboarding now uses the profile-first question flow from the latest product prompt.
+- Required setup asks for preferred name, improvement areas, Atlas behavior, privacy mode, and one immediate-value concern.
+- Old detailed setup questions remain compatible as deeper context but no longer block launch.
 
 ## Phase 11 Notes
 
 - Upload `PHASE11_ATLAS_FIRST_AUDIT.md` with this release.
 - Phase 11 keeps the existing deterministic local Atlas Command system and makes it the dominant Home starting point.
+- Phase 11.1 updates the first-time welcome actions and removes the misleading `today-command` wrapper name.
 - The storage key remains `lifeops-dashboard-v1` and schema remains `4`.
 - No real AI API, cloud service, account system, or external integration was added.
 

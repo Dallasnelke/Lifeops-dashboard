@@ -1,5 +1,76 @@
 ﻿# LifeOps Changelog
 
+## v2.16.3 - Atlas Onboarding Launch Simplification
+
+Date: 2026-07-28
+
+### Changed
+
+- Simplified the final Atlas onboarding screen to show one first mission, one short launch status, and one concise reason.
+- Made the first launch mission come from the user's onboarding answers instead of letting existing dashboard alerts override it.
+- Narrowed and centered the ready screen so it feels like a launch handoff instead of a summary report.
+
+### Preserved
+
+- Existing onboarding questions, local storage compatibility, Command Center integration, Life Graph updates, Atlas Memory hooks, Timeline event creation, import/export, and dashboard functionality are preserved.
+
+## v2.16.2 - Life Tree Navigation Dock Polish
+
+Date: 2026-07-28
+
+### Changed
+
+- Made the Life Tree left app rail behave like a sticky dock with its own internal scroll area.
+- Increased the rail width slightly and tightened item spacing so Core, Life, Personal, and System apps are easier to scan.
+- Adjusted medium-width dashboard layout so the right-side cards start to the right of the rail instead of spanning underneath it.
+
+### Preserved
+
+- Existing navigation targets, Life Tree interactions, dashboard cards, storage schema `4`, import/export, and local data compatibility are preserved.
+
+## v2.16.1 - Onboarding Layout And Choice Renderer Fix
+
+Date: 2026-07-28
+
+### Fixed
+
+- Fixed blank onboarding answer panels caused by a function-name collision between the onboarding choice renderer and the dashboard mission-card renderer.
+- Hid the clipped Atlas orb during question screens and made the question layout content-sized instead of a giant empty panel.
+- Improved the final `Atlas is ready` screen with tighter spacing and clearer handoff copy.
+
+### Verified
+
+- Browser-smoked a fresh onboarding run through name, focus areas, Atlas behavior, privacy, today prompt, and final launch screen.
+- Added a regression assertion so the onboarding renderer cannot collide with the dashboard `renderMissionCards` function again unnoticed.
+
+## v2.16.0 - Profile-First Atlas Onboarding Questions
+
+Date: 2026-07-26
+
+### Changed
+
+- Replaced the required first-launch Atlas questions with the prompt-aligned profile-first flow: preferred name, improvement areas, Atlas behavior, privacy mode, and immediate-value prompt.
+- Limited improvement area selection to three choices and mapped those choices into module recommendations and first-command context.
+- Kept privacy local-first; the synced account choice is labeled as coming later and does not activate cloud sync.
+
+### Preserved
+
+- Existing command generation, onboarding completion, Life Graph updates, local Atlas Memory, Timeline event creation, schema `4`, storage key, import/export behavior, and old backup compatibility are preserved.
+
+## v2.15.1 - First-Time Welcome And Command Naming Cleanup
+
+Date: 2026-07-26
+
+### Changed
+
+- Updated the first-time welcome screen to show `Create my profile`, `Sign in`, and `Explore a demo`.
+- Kept `Sign in` disabled and labeled as a future secure account state so the app does not imply fake authentication or cloud sync.
+- Renamed the misleading `today-command` wrapper to `today-shell` in both app entry files and CSS.
+
+### Preserved
+
+- Existing onboarding handlers, Atlas Command engine logic, schema `4`, storage key, import/export behavior, Life Tree, Timeline, and old backup compatibility are preserved.
+
 ## v2.15.0 - Atlas-First Command Hierarchy
 
 Date: 2026-07-26

@@ -2,7 +2,7 @@
 
 LifeOps is a local-first personal operating system for tracking money, health, goals, career, education, calendar items, habits, documents, relationships, and daily priorities from one premium dashboard.
 
-Current version: `v2.15.0`
+Current version: `v2.16.3`
 
 ## Mission
 
@@ -304,6 +304,11 @@ Real integrations require secure authentication, user consent, OAuth where appli
 ## Version History
 
 
+- `v2.16.3`: Simplified the Atlas onboarding ready screen so it prepares to launch with one clear first mission and one concise reason based on the user's setup answers. Existing dashboard alerts no longer override the onboarding launch mission.
+- `v2.16.2`: Improved the Life Tree dashboard navigation so the Core/Life/System app rail behaves like a sticky dock with its own scroll area. Medium-width layouts now keep score, plan, and quick-add cards to the right of the rail instead of sliding underneath it. Preserved all navigation targets, app data, storage schema `4`, and import/export behavior.
+- `v2.16.1`: Fixed the onboarding screens that were rendering as giant empty cards by removing a JavaScript function-name collision between onboarding mission cards and dashboard mission cards. Tightened the onboarding layout, hid the clipped orb during question screens, made choice cards visible and content-sized, improved the final Atlas ready screen, and added a regression test for the renderer collision.
+- `v2.16.0`: Replaced the actual launch-blocking Atlas onboarding questions with the profile-first flow: preferred name, up to three improvement areas, Atlas behavior, privacy mode, and one immediate-value prompt. The old blocker/outcome/deadline/capacity style setup no longer blocks launch; defaults and compatibility mapping preserve first-command generation, local memory, graph context, schema `4`, storage key, and old backups.
+- `v2.15.1`: Aligned the first-time welcome screen with the profile-first product direction: Create my profile, disabled future-state Sign in, and Explore a demo. Renamed the misleading `today-command` dashboard wrapper to `today-shell` so the visible Atlas Command card is the single command surface. Preserved onboarding handlers, command engine logic, schema `4`, storage key, and backup compatibility.
 - `v2.15.0`: Added the Phase 11 Atlas-first audit and made Atlas Command the dominant Home starting point with clearer Start Here framing, visible priority, recommended action, why-now evidence, expected benefit, effort, risk, and confidence labels. Added a bounded large-graph analysis path so stress-test graph builds remain responsive on lower-memory laptops. Preserved command engine logic, onboarding, schema `4`, storage key, import/export behavior, Life Tree, Life Score, Timeline, and old backup compatibility.
 - `v2.14.3`: Strengthened the Atlas welcome composition with a larger centered orb, tighter companion-style card, stronger gold core glow, and clearer centered greeting stack. Preserved setup flow, button handlers, schema `4`, storage key, and backup compatibility.
 - `v2.14.2`: Added a minimal Atlas greeting to the first welcome screen: centered animated orb, subtle listening/thinking pulse, and "Let's get started." without explanatory onboarding copy. Preserved setup flow, button handlers, schema `4`, storage key, and backup compatibility.
