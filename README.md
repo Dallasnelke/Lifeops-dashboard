@@ -1,47 +1,46 @@
 # LifeOps Atlas Foundation
 
-LifeOps Atlas Foundation is the current focused MVP for LifeOps. It combines a minimal first-launch setup, a single command-focused dashboard, and the Atlas AI companion.
+LifeOps Atlas Foundation is currently reset to a wordless Atlas visual prototype. The active product surface is the Atlas AI presence, with the rest of LifeOps intentionally paused until the visual and intelligence foundation is strong.
 
-The product is intentionally narrowed to the foundation:
+The product is intentionally narrowed to:
 
-- Dashboard
-- Atlas
-- Local profile setup
-- Privacy controls
-- Server-side AI route
+- Atlas visual presence
+- Local cinematic reference asset
+- Hidden/paused chat foundation
+- Hidden/paused character settings
+- Server-side AI route preserved for later
 
 Older LifeOps modules are preserved in the main repository for later reuse, but they are not the visible focus of this MVP.
 
 ## Current Experience
 
-The app starts with a modular Atlas setup flow:
+The app opens directly to a full-screen Atlas visual scene. There are no visible words, onboarding gates, dashboard cards, or chat panels in the active first screen.
 
-1. Name
-2. Atlas personality
-3. Character prototype customization
-4. Voice direction
-5. Focus areas
-6. Challenges
-7. Daily rhythm
-8. Memory permissions
-9. Review
-10. Completion scene
+Preserved for later development:
 
-After setup, the dashboard shows:
+- Chat
+- Server-side OpenAI route
+- Streaming responses
+- Optional local conversation memory
+- Character customization
+- Voice controls when the browser supports them
+- Privacy information
 
-- Greeting
-- One Atlas Command
-- Priority
-- Estimated time
-- Guidance style
-- Reason
-- Risk if ignored
-- Evidence
-- Atlas companion launcher
+Atlas is an AI companion. It can help organize thoughts and suggest next actions, but it should not replace qualified professional advice.
 
-## Onboarding Architecture
+## Visual Asset
 
-The onboarding system is now separated from `app/page.tsx`.
+The current active scene uses this local asset:
+
+```text
+public/atlas-visual-reference.png
+```
+
+This is a prototype visual direction. A production 3D character should eventually replace it with a proper model/rendering pipeline.
+
+## Paused Onboarding Architecture
+
+The previous onboarding system remains in the codebase for reference, but it is not mounted by `app/page.tsx` in the current Atlas-only reset.
 
 Core files:
 
@@ -61,7 +60,7 @@ components/atlas-character/CharacterRenderer.tsx
 
 The current `CharacterRenderer` is a CSS/React prototype model. It is intentionally labeled as a prototype and is built behind a component boundary so a future Three.js, glTF, or VRM renderer can replace it without rebuilding the onboarding flow.
 
-## Onboarding Persistence
+## Paused Onboarding Persistence
 
 Onboarding profile data is stored locally under:
 
@@ -69,7 +68,15 @@ Onboarding profile data is stored locally under:
 lifeops-onboarding-profile-v1
 ```
 
-The profile is versioned and sanitized on load. Missing fields receive safe defaults so future migrations can be added without breaking old profiles.
+The profile is versioned and sanitized on load, but the active Atlas-only route does not require onboarding completion.
+
+Current profile version:
+
+```text
+2
+```
+
+Version 2 adds nutrition-specific fields for goal, optional body baseline, eating style, food preferences, daily rhythm, common challenges, tracking preference, privacy permissions, and the generated first plan. Old version 1 profiles are migrated safely. Legacy general focus areas are preserved as legacy context and are not treated as confirmed nutrition data.
 
 ## Atlas AI
 
@@ -114,14 +121,11 @@ Atlas stores optional local data in the browser:
 - Atlas conversation and preferences: `atlas-mvp-session-v1`
 - LifeOps onboarding profile: `lifeops-onboarding-profile-v1`
 
-Stored locally:
+Stored locally by the active Atlas system:
 
-- Display name
-- Focus areas
-- Atlas guidance style
-- Today's concern
 - Conversation history if local memory is enabled
 - Atlas character preferences
+- Atlas guidance style
 
 Not stored by Atlas:
 
@@ -192,12 +196,13 @@ Current automated coverage includes:
 - The original LifeOps modules are preserved separately and should be reintroduced one by one only after the foundation is strong.
 - Browser speech recognition support varies by browser.
 - The rate limiter is in-memory and resets when the server restarts.
+- Atlas nutrition guidance is general wellness support only, not medical advice.
 
 ## Recommended Build Order
 
-1. Stabilize the foundation dashboard and onboarding.
-2. Improve Atlas Command quality and explanation.
+1. Make Atlas useful without any LifeOps modules.
+2. Improve prompt quality, safety boundaries, and response structure.
 3. Add persistent database-backed memory.
 4. Add accounts and cloud backup.
-5. Reintroduce LifeOps modules one at a time.
+5. Add onboarding back only after Atlas has a strong core experience.
 6. Build the 3D Atlas character after the intelligence layer is useful.
