@@ -1,208 +1,228 @@
 # LifeOps Atlas Foundation
 
-LifeOps Atlas Foundation is currently reset to a wordless Atlas visual prototype. The active product surface is the Atlas AI presence, with the rest of LifeOps intentionally paused until the visual and intelligence foundation is strong.
+LifeOps Atlas Foundation is the reset MVP for Atlas: a premium black-and-gold AI companion interface focused on the Atlas character, chat, customization, privacy, and a server-side AI route.
 
-The product is intentionally narrowed to:
-
-- Atlas visual presence
-- Local cinematic reference asset
-- Hidden/paused chat foundation
-- Hidden/paused character settings
-- Server-side AI route preserved for later
-
-Older LifeOps modules are preserved in the main repository for later reuse, but they are not the visible focus of this MVP.
+The old LifeOps dashboard modules are intentionally paused. This project is now the foundation for building Atlas first, then reconnecting LifeOps features later.
 
 ## Current Experience
 
-The app opens directly to a full-screen Atlas visual scene. There are no visible words, onboarding gates, dashboard cards, or chat panels in the active first screen.
+The app opens to a full-screen Atlas visual scene. The main character is now rendered with a local WebGL layer instead of only a flat image or SVG. The SVG character remains as a graceful fallback if WebGL is unavailable.
 
-Preserved for later development:
+Current first screen:
 
-- Chat
-- Server-side OpenAI route
-- Streaming responses
-- Optional local conversation memory
-- Character customization
-- Voice controls when the browser supports them
-- Privacy information
+- Full-screen black-and-gold Atlas stage
+- Native WebGL 3D character placeholder
+- Metallic black body material
+- Config-driven black/graphite humanoid body
+- Gold chest core with dark outer housing
+- Minimal abstract face with controlled eye/sensor styles
+- Soft lighting and idle breathing motion
+- State-driven visual behavior
+- Click Atlas to open the assistant
 
-Atlas is an AI companion. It can help organize thoughts and suggest next actions, but it should not replace qualified professional advice.
+## Renderer Architecture
 
-## Visual Asset
+The rest of the app renders Atlas through:
 
-The current active scene uses this local asset:
-
-```text
-public/atlas-visual-reference.png
+```tsx
+<AtlasStage />
 ```
 
-This is a prototype visual direction. A production 3D character should eventually replace it with a proper model/rendering pipeline.
+`components/atlas/AtlasStage.tsx` is the stable boundary. It currently delegates to `AtlasWebGLStage`, a native WebGL renderer that builds Atlas from procedural ellipsoid body parts. This keeps the prototype local, fast, and dependency-light while leaving room to replace the internals with a real GLB/VRM model later.
 
-## Paused Onboarding Architecture
-
-The previous onboarding system remains in the codebase for reference, but it is not mounted by `app/page.tsx` in the current Atlas-only reset.
-
-Core files:
+The reusable avatar configuration lives in:
 
 ```text
-lib/onboarding/types.ts
-lib/onboarding/options.ts
-lib/onboarding/content.ts
-lib/onboarding/profile.ts
-lib/onboarding/repository.ts
-lib/onboarding/analytics.ts
-components/onboarding/FoundationOnboarding.tsx
-components/onboarding/OnboardingProgress.tsx
-components/onboarding/OnboardingNavigation.tsx
-components/onboarding/OnboardingStepLayout.tsx
-components/atlas-character/CharacterRenderer.tsx
+lib/atlas/avatar-config.ts
 ```
 
-The current `CharacterRenderer` is a CSS/React prototype model. It is intentionally labeled as a prototype and is built behind a component boundary so a future Three.js, glTF, or VRM renderer can replace it without rebuilding the onboarding flow.
+The config includes proportions, materials, face style, core intensity, glow, orbit intensity, particles, environment preset, and a `futureMapping` block that documents how each concept can later map to morph targets, materials, mesh swaps, bone scaling, attachments, and animation states.
 
-## Paused Onboarding Persistence
+## Atlas Character States
 
-Onboarding profile data is stored locally under:
+Atlas supports these visual states:
+
+- Idle
+- Listening
+- Thinking
+- Speaking
+- Success
+- Attention
+- Error
+
+These states are connected to the assistant flow so Atlas can visually react while the user speaks, sends a message, receives a response, or stops generation.
+
+## Character Customization
+
+The Character Studio currently supports:
+
+- Atlas name
+- Voice style
+- Appearance preset
+- Accent/glow color
+- Motion level
+- Visual intensity
+- Character form preference
+- Personality
+- Coaching style
+
+Preferences are stored locally in the browser when local memory is enabled.
+
+Current appearance presets:
+
+- Minimal: quiet silhouette, low particles, subtle orbit system
+- Sentinel: balanced flagship form with stronger shoulders, core, and cinematic depth
+- Ethereal: slimmer, longer, more energetic orbit and seam behavior
+
+## AI Architecture
+
+The app includes a server-side OpenAI route at:
 
 ```text
-lifeops-onboarding-profile-v1
+app/api/atlas/route.ts
 ```
 
-The profile is versioned and sanitized on load, but the active Atlas-only route does not require onboarding completion.
+The route streams Atlas responses and is designed to produce practical command-style guidance. Atlas should answer with:
 
-Current profile version:
+- Priority
+- Recommended action
+- Reason
+- Evidence
+- Estimated time
+- Risk if ignored
+
+The route requires local environment variables:
 
 ```text
-2
+OPENAI_API_KEY=your_key_here
+OPENAI_MODEL=your_model_here
 ```
 
-Version 2 adds nutrition-specific fields for goal, optional body baseline, eating style, food preferences, daily rhythm, common challenges, tracking preference, privacy permissions, and the generated first plan. Old version 1 profiles are migrated safely. Legacy general focus areas are preserved as legacy context and are not treated as confirmed nutrition data.
+Use .env.local for real keys. Do not upload .env.local to GitHub.
 
-## Atlas AI
+## Local-First Storage
 
-Atlas uses a server-side Next.js API route at:
+Atlas stores local session data under this browser storage key:
 
 ```text
-POST /api/atlas
+atlas-mvp-session-v1
 ```
 
-The OpenAI API key stays server-side and must be stored in `.env.local`.
+Stored data includes:
 
-Required:
+- Conversation ID
+- Chat messages
+- Atlas preferences
+
+The current MVP does not use a cloud database, accounts, or sync.
+
+## Privacy Notes
+
+- Data is local by default in this MVP.
+- Do not store passwords, banking credentials, health credentials, or private account tokens in localStorage.
+- AI calls only happen through the server route when configured with an API key.
+- The app should not claim that external integrations are connected until real OAuth and security architecture exist.
+
+## Project Structure
+
+```text
+app/
+  page.tsx                 Main Atlas visual shell
+  globals.css              Global visual system and layout
+  api/atlas/route.ts       Server-side Atlas AI route
+components/atlas/
+  AtlasWebGLStage.tsx      Native WebGL 3D Atlas renderer
+  AtlasChat.tsx            Assistant modal shell
+  AtlasCharacterStudio.tsx Customization controls
+  AtlasComposer.tsx        Chat input
+  AtlasMessage.tsx         Message rendering
+  AtlasOrb.tsx             Compact Atlas orb
+  AtlasPrivacy.tsx         Privacy information
+  AtlasSettings.tsx        Local settings
+  AtlasStateIndicator.tsx  State label
+hooks/
+  useAtlasChat.ts
+  useAtlasSpeechRecognition.ts
+  useAtlasSpeechSynthesis.ts
+lib/atlas/
+  schemas.ts
+  storage.ts
+  types.ts
+  instructions.ts
+  lifeops-context.ts
+  history.ts
+  rate-limit.ts
+tests/
+  *.test.ts
+public/
+  Local visual assets
+```
+
+## Current Avatar Limitations
+
+Atlas is still a procedural prototype, not a final production 3D character. The current WebGL renderer uses generated sphere geometry scaled into a humanoid silhouette. Final realism will require:
+
+- An optimized GLB/VRM humanoid model
+- Custom PBR materials
+- Rigged idle/listening/thinking/speaking animations
+- Facial morph targets or shader-driven sensor expressions
+- Real attachment points for core, seams, orbit effects, and accessories
+- Texture maps for roughness, metalness, emission, and normal detail
+
+## Run Locally
+
+Install dependencies if needed:
 
 ```bash
-OPENAI_API_KEY=your_server_side_key_here
+pnpm install
 ```
 
-Optional:
+Start development mode:
 
 ```bash
-OPENAI_MODEL=gpt-4.1-mini
+pnpm dev
 ```
 
-Never commit `.env.local`, real API keys, personal backups, bank credentials, health credentials, passwords, or authentication tokens.
-
-## LifeOps Bridge
-
-The existing LifeOps dashboard can still open Atlas through the local bridge:
-
-```text
-js/atlas/atlas-mvp-bridge.js
-```
-
-That bridge sends a summarized read-only LifeOps context snapshot by browser `postMessage`.
-
-Atlas does not receive broad direct access to LifeOps `localStorage`.
-
-## Local Storage
-
-Atlas stores optional local data in the browser:
-
-- Atlas conversation and preferences: `atlas-mvp-session-v1`
-- LifeOps onboarding profile: `lifeops-onboarding-profile-v1`
-
-Stored locally by the active Atlas system:
-
-- Conversation history if local memory is enabled
-- Atlas character preferences
-- Atlas guidance style
-
-Not stored by Atlas:
-
-- OpenAI API key
-- Passwords
-- Bank credentials
-- Social Security numbers
-- Authentication tokens
-
-## Local Setup
-
-Install dependencies:
+Run production build locally:
 
 ```bash
-npm install
+pnpm build
+pnpm start
 ```
 
-Start locally:
-
-```bash
-npm run dev
-```
-
-Open:
+Current local preview used during development:
 
 ```text
 http://127.0.0.1:4300/
 ```
 
-To test from another device on the same Wi-Fi, run Next with a network host:
+## Verification Checklist
 
-```bash
-npx next dev -H 0.0.0.0 -p 4300
-```
+Before uploading or sharing:
 
-Then open the computer's local network IP from the other device.
+- TypeScript passes
+- ESLint passes on source folders
+- Tests pass
+- Production build passes
+- App loads at local URL
+- WebGL canvas initializes
+- No browser console errors
+- Atlas opens assistant on click
+- Assistant closes cleanly
+- Character Studio shows voice, color, motion, personality, and coaching controls
+- No .env.local, .next, node_modules, or private data is uploaded
 
-## Testing
+## Latest Verified Changes
 
-Run:
+- Added native WebGL Atlas render layer.
+- Preserved SVG fallback.
+- Added state-aware breathing and glow behavior.
+- Added voice style preference.
+- Wired voice style into browser speech synthesis.
+- Preserved chat, privacy, local storage, tests, and AI route.
 
-```bash
-npm run typecheck
-npm run lint
-npm run test
-npm run build
-```
+## Next Development Steps
 
-Current automated coverage includes:
-
-- Request validation
-- Message length limits
-- History truncation
-- Preference validation
-- Local storage save/load/clear
-- Rate limiting
-- Chat streaming state transitions
-- Stop-generation handling
-- Read-only LifeOps context validation
-
-## Current Limitations
-
-- No authenticated accounts yet.
-- No database memory yet.
-- No real cloud sync yet.
-- No mobile app shell yet.
-- No full 3D Atlas character yet.
-- The original LifeOps modules are preserved separately and should be reintroduced one by one only after the foundation is strong.
-- Browser speech recognition support varies by browser.
-- The rate limiter is in-memory and resets when the server restarts.
-- Atlas nutrition guidance is general wellness support only, not medical advice.
-
-## Recommended Build Order
-
-1. Make Atlas useful without any LifeOps modules.
-2. Improve prompt quality, safety boundaries, and response structure.
-3. Add persistent database-backed memory.
-4. Add accounts and cloud backup.
-5. Add onboarding back only after Atlas has a strong core experience.
-6. Build the 3D Atlas character after the intelligence layer is useful.
+1. Replace the procedural WebGL placeholder with a real optimized GLB character model.
+2. Build an Atlas Command UI that displays priority, reason, evidence, estimated time, and risk.
+3. Add a safe read-only bridge from LifeOps data back into Atlas.

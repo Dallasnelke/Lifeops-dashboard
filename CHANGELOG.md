@@ -1,5 +1,50 @@
 ﻿# LifeOps Changelog
 
+## v2.18.0 - Atlas MVP Bridge
+
+Date: 2026-08-04
+
+### Added
+
+- Added a read-only bridge from the local LifeOps app to the standalone Atlas MVP running at `http://127.0.0.1:4300/`.
+- Added a floating Atlas launcher in LifeOps that sends a summarized local context snapshot by `postMessage` instead of exposing full localStorage.
+- Added LifeOps context support to the Atlas MVP request schema, server prompt, chat UI, and tests.
+- Added Atlas Command response guidance for priority, recommended action, reason, evidence, estimated time, and risk if ignored.
+
+### Preserved
+
+- LifeOps storage schema `4`, localStorage key, import/export, calculations, navigation, onboarding, Life Tree, Life Score, Command Center, and existing local data remain unchanged.
+
+## v2.17.0 - Atlas-First Home Polish
+
+Date: 2026-08-03
+
+### Changed
+
+- Made Atlas Command the clearest first action on Home by reducing competing visual weight and keeping the main recommendation prominent.
+- Moved secondary command controls into a compact More menu while preserving their existing button IDs and handlers.
+- Added a dedicated Atlas Status support card to the right panel so Atlas feels present without crowding the main command.
+- Collapsed the Life Score explanation by default so users can inspect the score when needed without it taking over the first screen.
+- Improved laptop, tablet, and mobile layering for the tree rail, side panels, command card, and support cards.
+
+### Preserved
+
+- Storage schema `4`, localStorage key, import/export, Atlas Command Center logic, Life Tree, onboarding, voice/startup, calculations, existing data, and all navigation targets remain unchanged.
+
+## v2.16.4 - Phone And Tablet Preview Server
+
+Date: 2026-08-01
+
+### Changed
+
+- Updated `lifeops-preview-server.js` to listen on the local network by default so phones and tablets on the same Wi-Fi can open LifeOps.
+- Added network URL output for available IPv4 addresses while preserving the laptop localhost URL.
+- Added README instructions for opening the app from another device and for the common Windows Firewall issue.
+
+### Preserved
+
+- Application UI, storage schema `4`, localStorage key, import/export, dashboard behavior, onboarding, Atlas logic, and all app data remain unchanged.
+
 ## v2.16.3 - Atlas Onboarding Launch Simplification
 
 Date: 2026-07-28
@@ -498,6 +543,7 @@ Date: 2026-07-23
 
 - This is a behavior-preserving modular foundation, not a full logic rewrite.
 - `js/app.js` remains the active app bundle. Later phases should move state, storage, Atlas scoring, navigation, and module renderers into the prepared files in controlled steps.
+
 
 
 

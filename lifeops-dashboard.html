@@ -195,7 +195,7 @@
             <img class="brand-img" src="assets/brand/atlas-avatar.svg" alt="" onerror="this.hidden=true; this.previousElementSibling.hidden=false">
           </span>
         </button>
-        <span class="app-version" id="appVersionLabel">Version 2.16.3</span>
+        <span class="app-version" id="appVersionLabel">Version 2.18.0</span>
       </div>
     </aside>
 
@@ -424,7 +424,7 @@
           <article class="panel">
             <h3>Developer Tools</h3>
             <div class="list">
-              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.16.3</div></div></div>
+              <div class="item"><div><div class="item-title">Application version</div><div class="item-meta" id="moreVersionLabel">Version 2.18.0</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Implementation</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -735,7 +735,7 @@
             <h3>Developer Tools</h3>
             <p class="about-lede">Version, storage, privacy, and backup tools remain local-first for this release.</p>
             <div class="list">
-              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 2.16.3</div></div></div>
+              <div class="item"><div><div class="item-title">Version</div><div class="item-meta" id="settingsVersionLabel">Version 2.18.0</div></div></div>
               <div class="item"><div><div class="item-title">Storage key</div><div class="item-meta">lifeops-dashboard-v1</div></div></div>
               <div class="item"><div><div class="item-title">Architecture</div><div class="item-meta">Single-file HTML, CSS, and vanilla JavaScript.</div></div></div>
             </div>
@@ -972,11 +972,16 @@
                       <button class="btn primary" id="atlasCommandStartBtn" type="button">Start Command</button>
                       <button class="btn" id="atlasCommandAskBtn" type="button">Ask Atlas</button>
                       <button class="btn" id="atlasCommandCompleteBtn" type="button">Mark Complete</button>
-                      <button class="btn" id="atlasCommandSnoozeBtn" type="button">Snooze</button>
-                      <button class="btn" id="atlasCommandDismissBtn" type="button">Dismiss</button>
-                      <button class="btn" id="atlasCommandAlternativesBtn" type="button">Alternatives</button>
-                      <button class="btn" id="atlasCommandCorrectBtn" type="button">Correct Atlas</button>
-                      <button class="btn" id="atlasCommandRecalculateBtn" type="button">Recalculate</button>
+                      <details class="atlas-command-more">
+                        <summary>More</summary>
+                        <div>
+                          <button class="btn" id="atlasCommandSnoozeBtn" type="button">Snooze</button>
+                          <button class="btn" id="atlasCommandDismissBtn" type="button">Dismiss</button>
+                          <button class="btn" id="atlasCommandAlternativesBtn" type="button">Alternatives</button>
+                          <button class="btn" id="atlasCommandCorrectBtn" type="button">Correct Atlas</button>
+                          <button class="btn" id="atlasCommandRecalculateBtn" type="button">Recalculate</button>
+                        </div>
+                      </details>
                     </div>
                     <div class="atlas-command-signals" aria-label="Atlas attention signals">
                       <div class="atlas-signal-card"><span>Why now</span><strong id="atlasCommandWhyNow">Atlas prioritizes urgent dated items first.</strong></div>
@@ -1014,7 +1019,7 @@
                     <strong id="atlasCommandConfidenceMetric">Medium</strong>
                   </div>
                 </div>
-                <section class="atlas-command-workspace" id="atlasCommandCenterWorkspace" aria-label="Atlas command planning workspace">
+                <section class="atlas-command-workspace" id="atlasCommandCenterWorkspace" data-command-status="waiting" aria-label="Atlas command planning workspace">
                   <div class="command-workspace-head">
                     <div>
                       <span class="tree-live-label">Command workspace</span>
@@ -1187,11 +1192,22 @@
                   <span id="todayScoreChartRange">Recent score trend</span>
                   <span id="todayScoreChartHighLow">High 0 / Low 0</span>
                 </div>
-                <details class="tree-score-explain" open>
+                <details class="tree-score-explain">
                   <summary id="lifeScoreExplainSummary">Why this score</summary>
                   <div class="tree-score-explain-list" id="lifeScoreExplainList"></div>
                 </details>
                 <button class="btn small" id="todayOpenAtlasBtn" type="button" style="width:100%;margin-top:14px;">View Insights</button>
+              </article>
+
+              <article class="tree-card atlas-status-card">
+                <div class="split">
+                  <div>
+                    <span class="tree-live-label">Atlas Status</span>
+                    <h3>Watching Today</h3>
+                  </div>
+                  <span class="atlas-status-orb" aria-hidden="true">A</span>
+                </div>
+                <div class="tree-card-list tree-brief-list" id="atlasStatusList"></div>
               </article>
 
               <article class="tree-card">
@@ -2940,8 +2956,12 @@
   <script src="js/command/command-renderer.js"></script>
   <script src="js/modules/command-center.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/atlas/atlas-mvp-bridge.js"></script>
 </body>
 </html>
+
+
+
 
 
 
