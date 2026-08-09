@@ -1,0 +1,32 @@
+{
+  "name": "lifeops-atlas-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --import tsx tests/*.test.ts",
+    "format": "prettier --check ."
+  },
+  "dependencies": {
+    "next": "^16.2.12",
+    "openai": "^7.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "eslint": "9.39.2",
+    "eslint-config-next": "^16.2.12",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.5",
+    "typescript": "5.9.3"
+  }
+}
